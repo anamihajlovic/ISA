@@ -2,6 +2,11 @@ package com.isa.model;
 
 import java.util.Date;
 
+import javax.persistence.Entity;
+import javax.persistence.Table;
+
+@Entity
+@Table(name="bartenders")
 public class Bartender extends User {
 	
 	private Date birthDate;
