@@ -1,4 +1,4 @@
-package com.isa.model;
+/*package com.isa.model;
 
 import javax.persistence.Entity;
 import javax.persistence.Table;
@@ -10,3 +10,4 @@ public class SystemManager extends User {
 	public SystemManager() {}
 
 }
+*/

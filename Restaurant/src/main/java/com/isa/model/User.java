@@ -23,6 +23,7 @@ public abstract class User {
 	
 	@Column(name="password", nullable=false)
 	private String password;
+	
 	@Column(name="first_name", nullable=false)
 	private String firstName;
 	
@@ -32,9 +33,7 @@ public abstract class User {
 	@Column(name="address", nullable=false)
 	private String address;
 	
-	public User() {
-		
-	}
+	public User() {}
 	
 	
 	public Integer getId() {

@@ -1,4 +1,4 @@
-package com.isa.model;
+/*package com.isa.model;
 
 import java.util.Date;
 
@@ -40,3 +40,4 @@ public class Bartender extends User {
 	}
 	
 }
+*/

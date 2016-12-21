@@ -1,4 +1,4 @@
-package com.isa.model;
+/*package com.isa.model;
 
 import java.util.Date;
 
@@ -58,3 +58,4 @@ public class Waiter extends User {
 		this.beginShift = beginShift;
 	}	
 }
+*/
