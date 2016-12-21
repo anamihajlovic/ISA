@@ -6,8 +6,8 @@ import javax.persistence.Table;
 @Entity
 @Table(name="guests")
 public class Guest extends User {
+	
+	
 
-	public Guest() {
-		
-	}
+	public Guest() {}
 }
