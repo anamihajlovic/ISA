@@ -1,17 +1,44 @@
--- USER
-insert into users(email, password, first_name, last_name, address) values ('jelenakalabic@gmail.com', 'volimAnu', 'Jelena', 'Kalabic', 'Ulica i broj 12, Cerevic')
-insert into users(email, password, first_name, last_name, address) values ('tamaramrksic@gmail.com', 'iJaVolimAnu', 'Tamara', 'Mrksic', 'Ulica i broj bb, Veternik')
-insert into users(email, password, first_name, last_name, address) values ('anamihajlovic@gmail.com', 'pass', 'Ana', 'Mihajlovic', 'Ulica i broj 40, Novi Sad')
+-- USERS
+insert into guests(email, password, first_name, last_name,first_login,user_role) values ('jelenakalabic@gmail.com', 'volimAnu', 'Jelena', 'Kalabic',true,'guest')
+insert into guests(email, password, first_name, last_name,first_login,user_role) values ('tamaramrksic@gmail.com', 'iJaVolimAnu', 'Tamara', 'Mrksic',true,'guest')
 
---GUESTS
-insert into guests(id, test) values (1, 'gdg')
+insert into bidders(email, password, first_name, last_name,first_login,user_role) values ('anamihajlovic@gmail.com', 'pass', 'Ana', 'Mihajlovic',true,'bidder')
+
+insert into cooks(email, password, first_name, last_name,birthday,shoes_size,clothes_size,first_login,user_role) values ('email1','pass1','first1','last2','1994-07-27','no39','M',true,'cook')
+
+insert into restaurant_managers(email, password, first_name, last_name,first_login,user_role) values ('email2','pass2','first2','last3',true,'resManager')
+insert into restaurant_managers(email, password, first_name, last_name,first_login,user_role) values ('email3','pass3','first3','last3',true,'resManager')
+
+insert into system_managers(email, password, first_name, last_name,preset_manager,first_login,user_role)values('email4','pass4','first4','last4','yes',true,'sysManager')
+
 
 -- RESTAURANTS
-insert into restaurants(name, restaurant_type, rating, rating_counter) values ('La forzza', 'italijanski', 0.0, 0)
-insert into restaurants(name, restaurant_type, rating, rating_counter) values ('Lanterna', 'italijanski', 0.0, 0)
-insert into restaurants(name, restaurant_type, rating, rating_counter) values ('Tapas', 'meksicki', 0.0, 0)
-insert into restaurants(name, restaurant_type, rating, rating_counter) values ('Kao kod kuce', 'domaca kuhinja', 0.0, 0)
-insert into restaurants(name, restaurant_type, rating, rating_counter) values ('Brzi Gonzales', 'meksicki restoran', 0.0, 0)
-insert into restaurants(name, restaurant_type, rating, rating_counter) values ('Dva stapica', 'kineska hrana', 0.0, 0)
-insert into restaurants(name, restaurant_type, rating, rating_counter) values ('Zmaj', 'kineski', 0.0, 0)
+insert into restaurants(name, restaurant_type, street, city, country,ratings) values ('Lanterna', 'italijanski','Bulevar Oslobodjenja 55','Novi Sad','Srbija',0.0 )
+insert into restaurants(name, restaurant_type, street, city, country,ratings) values ('Veliki', 'srpski','Pasiceva 15','Novi Sad','Srbija',0.0 )
 
+--RESTAURANT BIDDERS
+insert into restaurant_bidders(restaurant_id, bidder_id)values(1,1)
+
+
+--RESTAURANT MANAGERS IN RESTAURANTS
+insert into res_managers_in_restuarants(restaurant_id,res_manager_id)values(1,1)
+
+--DISH
+insert into dish(name,text, price)values('Pica','',250)
+insert into dish(name,text, price)values('Testo','',400)
+insert into dish(name,text, price)values('Palacinke','',200)
+
+--DRINK
+insert into drink(name,text, price)values('Sok','',130)
+insert into drink(name,text, price)values('Kafa','',120)
+insert into drink(name,text, price)values('Caj','',110)
+
+--MENU
+insert into restuarant_menu(restaurant_id,dish_id)values(1,1)
+insert into restuarant_menu(restaurant_id,dish_id)values(1,2)
+insert into restuarant_menu(restaurant_id,dish_id)values(2,3)
+
+--DRINK_CARD
+insert into restaurant_drink_card(restaurant_id,drink_id)values(1,1)
+insert into restaurant_drink_card(restaurant_id,drink_id)values(1,2)
+insert into restaurant_drink_card(restaurant_id,drink_id)values(2,3)

@@ -1,4 +1,5 @@
-package com.isa.model;
+package com.isa.bartender;
+
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -7,20 +8,19 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
-import com.isa.user.User;
+import com.isa.employed.Employed;
 
 @Entity
-@Table(name="guests")
-public class Guest extends User {
+@Table(name="bartenders")
+public class Bartender extends Employed{
 	
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	@Column(name = "guest_id")
+	@Column(name = "bartender_id")
 	private Long id;
-	
+	public Bartender() {}
 
-	public Guest() {}
 
-	
 	
 }
