@@ -18,6 +18,8 @@ public class Bidder extends User {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name = "bidder_id")
 	private Long id;
+	
+	public Bidder() {}
 
 	public Bidder(Long id) {
 		super();

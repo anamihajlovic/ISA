@@ -1,4 +1,4 @@
-package com.isa.model;
+package com.isa.guest;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -20,6 +20,21 @@ public class Guest extends User {
 	
 
 	public Guest() {}
+	
+	public Guest(Long id) {
+		super();
+		this.id = id;
+	}
+
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
+	
+	
 
 	
 	

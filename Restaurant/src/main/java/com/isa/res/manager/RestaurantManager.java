@@ -19,15 +19,17 @@ public class RestaurantManager extends User {
 	@Column(name = "res_manager_id")
 	private Long id;
 	
+	public RestaurantManager() {}
 	
 	public RestaurantManager(Long id) {
 		super();
 		this.id = id;
 	}
-	public RestaurantManager() {}
+	
 	public Long getId() {
 		return id;
 	}
+	
 	public void setId(Long id) {
 		this.id = id;
 	}

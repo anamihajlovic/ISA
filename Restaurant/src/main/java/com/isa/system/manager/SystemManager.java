@@ -27,6 +27,12 @@ public class SystemManager extends User {
 	private Preset preset;
 
 	SystemManager() {}
+	
+	public SystemManager(Long id, Preset preset) {
+		super();
+		this.id = id;
+		this.preset = preset;
+	}
 
 	public Long getId() {
 		return id;
@@ -44,11 +50,7 @@ public class SystemManager extends User {
 		this.preset = preset;
 	}
 
-	public SystemManager(Long id, Preset preset) {
-		super();
-		this.id = id;
-		this.preset = preset;
-	}
+	
 	
 	
 	

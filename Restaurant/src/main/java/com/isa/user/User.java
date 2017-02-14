@@ -96,6 +96,7 @@ public abstract class User {
 		this.userRole = userRole;
 	}
 
+
 	public Boolean getFirstLogIn() {
 		return firstLogIn;
 	}

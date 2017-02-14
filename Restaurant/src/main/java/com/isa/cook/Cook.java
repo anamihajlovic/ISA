@@ -19,14 +19,18 @@ public class Cook extends Employed {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name = "cook_id")
 	private Long id;
+	
 	public Cook() {}
+	
 	public Cook(Long id) {
 		super();
 		this.id = id;
 	}
+	
 	public Long getId() {
 		return id;
 	}
+	
 	public void setId(Long id) {
 		this.id = id;
 	}

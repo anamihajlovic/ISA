@@ -23,7 +23,7 @@ public class SystemManagerServiceImp implements SystemManagerService{
 	
 	@Override
 	public List<SystemManager> findAll() {
-		return (List<com.isa.system.manager.SystemManager>)repository.findAll();
+		return (List<SystemManager>)repository.findAll();
 	}
 
 

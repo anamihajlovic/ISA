@@ -5,10 +5,7 @@ import java.util.List;
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
-
-import com.isa.restaurant.Restaurant;
 
 
 @Service
@@ -25,7 +22,7 @@ public class RestaurantManagerServiceImp  implements RestaurantManagerService{
 
 	@Override
 	public List<RestaurantManager> findAll() {
-		return (List<com.isa.res.manager.RestaurantManager>) (repository.findAll());
+		return (List<RestaurantManager>) (repository.findAll());
 	}
 
 
