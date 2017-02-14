@@ -1,10 +1,12 @@
 package com.isa.system.manager;
 
-import java.util.List;
-
 public interface SystemManagerService {
 	
-	List<SystemManager> findAll();
+	SystemManager findByEMail(String email);
+	
+	SystemManager findByEMailAndPassword(String email, String password);
+	
+	/*List<SystemManager> findAll();
 
 	SystemManager save(SystemManager systemManager);
 
@@ -14,6 +16,6 @@ public interface SystemManagerService {
 
 	SystemManager findOneWithMail(String mail);
 	
-	void delete(Long id);
+	void delete(Long id);*/
 
 }

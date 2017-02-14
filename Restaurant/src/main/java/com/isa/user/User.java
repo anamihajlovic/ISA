@@ -13,13 +13,15 @@ import javax.persistence.InheritanceType;
 import javax.persistence.MappedSuperclass;
 import javax.persistence.Table;
 
+import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.NotBlank;
 
 
 @MappedSuperclass
-public abstract class User {
+public class User {
 
 	@NotBlank
+	@Email
 	@Column(name="email", unique=true, nullable=false)
 	private String email;
 	
@@ -47,7 +49,6 @@ public abstract class User {
 	public User() {}
 
 	public User(String email, String password, String firstName, String lastName, Role userRole, Boolean firstLogIn) {
-		super();
 		this.email = email;
 		this.password = password;
 		this.firstName = firstName;

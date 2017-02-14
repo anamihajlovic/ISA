@@ -4,12 +4,12 @@ insert into guests(email, password, first_name, last_name,first_login,user_role)
 
 insert into bidders(email, password, first_name, last_name,first_login,user_role) values ('anamihajlovic@gmail.com', 'pass', 'Ana', 'Mihajlovic',true,'bidder')
 
-insert into cooks(email, password, first_name, last_name,birthday,shoes_size,clothes_size,first_login,user_role) values ('email1','pass1','first1','last2','1994-07-27','no39','M',true,'cook')
+insert into cooks(email, password, first_name, last_name,birthday,shoes_size,clothes_size,first_login,user_role) values ('cook1@gmail.com','cook1','cook1','cook1','1994-07-27','no39','M',true,'cook')
 
-insert into restaurant_managers(email, password, first_name, last_name,first_login,user_role) values ('email2','pass2','first2','last3',true,'resManager')
-insert into restaurant_managers(email, password, first_name, last_name,first_login,user_role) values ('email3','pass3','first3','last3',true,'resManager')
+insert into restaurant_managers(email, password, first_name, last_name,first_login,user_role) values ('resman1@gmail.com','resman1','resman1','resman1',true,'resManager')
+insert into restaurant_managers(email, password, first_name, last_name,first_login,user_role) values ('resman2@gmail.com','resman2','resman2','resman2',true,'resManager')
 
-insert into system_managers(email, password, first_name, last_name,preset_manager,first_login,user_role)values('email4','pass4','first4','last4','yes',true,'sysManager')
+insert into system_managers(email, password, first_name, last_name,preset_manager,first_login,user_role)values('sysman1@gmail.com','sysman1','sysman1','sysman1','yes',true,'sysManager')
 
 
 -- RESTAURANTS
@@ -17,7 +17,7 @@ insert into restaurants(name, restaurant_type, street, city, country,ratings) va
 insert into restaurants(name, restaurant_type, street, city, country,ratings) values ('Veliki', 'srpski','Pasiceva 15','Novi Sad','Srbija',0.0 )
 
 --RESTAURANT BIDDERS
-insert into restaurant_bidders(restaurant_id, bidder_id)values(1,1)
+insert into restaurant_bidders(restaurant_id, bidder_id) values(1,1)
 
 
 --RESTAURANT MANAGERS IN RESTAURANTS

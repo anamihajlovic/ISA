@@ -10,18 +10,27 @@ import org.springframework.stereotype.Service;
 
 @Service
 @Transactional
-public class SystemManagerServiceImp implements SystemManagerService{
+public class SystemManagerServiceImp implements SystemManagerService {
 
 	
 	private final SystemManagerRepository repository;
 
 	@Autowired
 	public SystemManagerServiceImp(SystemManagerRepository repository) {
-		super();
 		this.repository = repository;
 	}
-	
+
 	@Override
+	public SystemManager findByEMail(String email) {
+		return repository.findByEmail(email);
+	}
+
+	@Override
+	public SystemManager findByEMailAndPassword(String email, String password) {
+		return repository.findByEmailAndPassword(email, password);
+	}
+	
+	/*@Override
 	public List<SystemManager> findAll() {
 		return (List<SystemManager>)repository.findAll();
 	}
@@ -50,7 +59,7 @@ public class SystemManagerServiceImp implements SystemManagerService{
 	public void delete(Long id) {
 		// TODO Auto-generated method stub
 		
-	}
+	}*/
 
 
 

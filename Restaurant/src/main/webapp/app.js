@@ -10,4 +10,10 @@ angular.module('restaurants', ['ui.router', 'common.services','common.controller
           	templateUrl : 'login.html',
           	controller : 'commonController'
         })
+        
+        .state('guest', {
+        	url : '/guest',
+          	templateUrl : 'html/guest/guestHome.html',
+            //controller : 'guestController'
+         }) 
 });
