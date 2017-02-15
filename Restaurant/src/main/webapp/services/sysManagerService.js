@@ -6,4 +6,9 @@ sysManagerServices.service('sysManagerService',['$http', function($http) {
 		alert("sysService " + resManager)
 		return $http.post("/sysManager/newResManager", resManager);
 	}
+	
+	this.findAllFreeRestaurantManagers = function(){
+		alert("uslo i u service")
+		return $http.get("/sysManager/freeResManager");
+	}
 }]); 

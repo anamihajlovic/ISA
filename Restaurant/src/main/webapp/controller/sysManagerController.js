@@ -23,12 +23,19 @@ sysManagerModule.controller('sysManagerController', ['$scope', 'sysManagerServic
 					
 					}
 
-
-			
 			});
 		}
+
+	////////////////////////////////////////////////////	
+	$scope.freeRestaurantManagers = function () {  
+		alert("uslo u controller")
 		
-		
+		var request = sysManagerService.findAllFreeRestaurantManagers().then(
+			function (response) {
+				$scope.freeRestaurantManagers = response.data;
+			}
+		); 	
+	};
 		
 		
 }]);
