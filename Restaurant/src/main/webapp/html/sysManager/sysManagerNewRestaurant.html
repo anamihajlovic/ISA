@@ -1,0 +1,30 @@
+<div>
+<div class = "col-sm-4">
+</div>
+<div class = "col-sm-4">
+<form action="" method="post">
+    <label>Name</label>
+    <input type="text" class="form-control" ng-model = "$parent.restaurant.name" >  
+
+    <label>Country</label>
+    <input type="text" class="form-control" ng-model = "$parent.restaurant.country" >  
+
+    <label>City</label>
+    <input type="text" class="form-control" ng-model = "$parent.restaurant.city">  
+
+    <label>Street</label>
+    <input type="text" class="form-control" ng-model = "$parent.restaurant.street" >  
+
+    <label>Type</label>
+    <input type="text" class="form-control" ng-model = "$parent.restaurant.restaurant_type">  
+
+    <label>Restaurant manager</label>
+    <select class="form-control"  ng-model="$parent.restaurant.restaurantManager.id" >
+   		<option value="" disabled="" selected="">Select manager</option>
+     	<option ng-repeat="manager in freeRestaurantManagers" value="{{ manager.id }}">{{manager.firstname}}</option>
+	</select>
+<button class="btn btn-default" ng-click="saveRestaurant()"><span class="glyphicon glyphicon-ok" ></span> Create</button>
+<button class="btn btn-default" ng-click="cancel()"><span class="glyphicon glyphicon-remove" ></span> Cancel</button>
+</form>
+</div>
+</div>

@@ -27,5 +27,11 @@ angular.module('restaurants', ['ui.router', 'common.services','common.controller
            	url : '/newResManager',
             templateUrl : 'html/sysManager/sysManagerNewResManager.html',
             }) 
+            
+            
+            .state('sysManager.newRestaurant', {
+               	url : '/newRestaurant',
+                templateUrl : 'html/sysManager/sysManagerNewRestaurant.html',
+                }) 
          
 });
