@@ -55,12 +55,12 @@ public class UserController {
 				errors += "email";
 			if (bindingResult.hasFieldErrors("password"))
 				errors += "password";
-			return new User("neuspesno@gmail.com", errors, "neuspesno","neuspesno", Role.guest, false);
+			return new User("neuspesno@gmail.com", errors, "neuspesno","neuspesno", Role.guest, false, false);
 		}
 		
 		System.out.println("Pogodjena metoda login " + userData.getEmail() + userData.getPassword());
 		
-		User user = new User("neuspesno@gmail.com", "neuspesno", "neuspesno","neuspesno", Role.guest, false);
+		User user = new User("neuspesno@gmail.com", "neuspesno", "neuspesno","neuspesno", Role.guest, false, false);
 		
 		if (guestService.findByEMailAndPassword(userData.getEmail(), userData.getPassword()) != null) {
 			user = guestService.findByEMailAndPassword(userData.getEmail(), userData.getPassword());

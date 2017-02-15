@@ -1,29 +1,154 @@
-<div class="col-md-6 col-md-offset-3">
-    <h2>Register</h2>
-    <form name="signUpForm">
-        <div class="form-group">
-            <label for="username">First name</label>
-            <input type="text" name="firstName" id="firstName" class="form-control" required />
-        </div>
-        <div class="form-group">
-            <label for="username">Last name</label>
-            <input type="text" name="lastName" id="lastName" class="form-control" required />
-        </div>
-        <div class="form-group">
-            <label for="username">Email</label>
-            <input type="email" name="email" id="email" class="form-control" required />
-        </div>
-        <div class="form-group">
-            <label for="password">Password</label>
-            <input type="password" name="password" id="password" class="form-control" required />
-        </div>
-        <div class="form-group">
-            <label for="password">Repeat password</label>
-            <input type="password" name="repeatedPassword" id="repeatedPassword" class="form-control" required />
-        </div>
-        <div class="form-actions">
-            <button type="submit">Sign up</button>
-            <a href="#" class="btn btn-link">Cancel</a>
-        </div>
-    </form>
-</div>
+
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<!-- Website Font style -->
+	    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.1/css/font-awesome.min.css">
+		
+		<!-- Google Fonts -->
+		<link href='https://fonts.googleapis.com/css?family=Passion+One' rel='stylesheet' type='text/css'>
+		<link href='https://fonts.googleapis.com/css?family=Oxygen' rel='stylesheet' type='text/css'>
+
+<style type="text/css">
+
+
+h1.title { 
+	font-size: 50px;
+	font-family: 'Passion One', cursive; 
+	font-weight: 400; 
+}
+
+hr{
+	width: 10%;
+	color: #fff;
+}
+
+.form-group{
+	margin-bottom: 5px;
+}
+
+label{
+	margin-bottom: 15px;
+}
+
+input,
+input::-webkit-input-placeholder {
+    font-size: 11px;
+    padding-top: 3px;
+}
+
+.main-login{
+ 	background-color: #fff;
+    /* shadows and rounded borders */
+    -moz-border-radius: 2px;
+    -webkit-border-radius: 2px;
+    border-radius: 2px;
+    -moz-box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.3);
+    -webkit-box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.3);
+    box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.3);
+
+}
+
+.main-center{
+ 	margin-top: 5px;
+ 	margin: 0 auto;
+ 	max-width: 330px;
+    padding: 20px 20px;
+
+}
+
+.login-button{
+	margin-top: 5px;
+}
+
+.help-block {
+    color: red;
+}
+
+
+</style>
+
+		<nav class="navbar  navbar-inverse" role="navigation"> 
+      
+    		 <div class="navbar-header navbar-left">
+      			<a class="navbar-brand" data-ui-sref=".">Restaurants</a>
+    		</div>
+
+		<ul class="nav navbar-nav navbar-right">
+        	 <li><a data-ui-sref="login"><span class="glyphicon glyphicon-log-in"></span> Log in </a></li>
+    	</ul>
+
+ 		</nav>
+		<div class="container">
+			<div class="row">
+				<div class="panel-heading">
+	               <div class="panel-title text-center">
+	               		<h1 class="title">Register</h1>
+	               		<hr />
+	               	</div>
+	            </div> 
+				<div class="main-login main-center">
+					<form class="form-horizontal" method="post" action="" name="form" novalidate="novalidate">
+							<div>
+								<label for="firstName" class="cols-sm-2 control-label">First name</label>
+							</div>
+							<div class="input-group" ng-class="{ 'has-error': form.firstName.$dirty && form.firstName.$error.required }">
+								<span class="input-group-addon"><i class="fa fa-user"></i></span>
+								<input type="text" class="form-control" ng-model="guest.firstName" name="firstName" placeholder="Enter your first name" required="required"/>
+							</div>
+							<span class="help-block" ng-show = "form.firstName.$dirty && form.firstName.$invalid">
+                       		 <span ng-show = "form.firstName.$error.required">First name is required.</span>
+                     		</span> 
+							
+							<div>
+							<label for="lastName" class="cols-sm-2 control-label">Last name</label>
+							</div>
+							
+							<div class="input-group" ng-class="{ 'has-error': form.lastName.$dirty && form.lastName.$error.required }">
+								<span class="input-group-addon"><i class="fa fa-user"></i></span>
+								<input type="text" class="form-control" ng-model="guest.lastName" name="lastName"  placeholder="Enter your last name" required="required"/>
+							</div>
+							
+							<span class="help-block" ng-show = "form.lastName.$dirty && form.lastName.$invalid">
+								<span ng-show="form.lastName.$error.required" class="help-block">Last name is required.</span>
+                     		</span> 
+
+							<div>
+							<label for="email" class="cols-sm-2 control-label">Email </label>
+							</div>
+							<div class="input-group" ng-class="{ 'has-error': form.email.$dirty && form.email.$error.required }">
+								<span class="input-group-addon"><i class="fa fa-envelope"></i></span>
+								<input type="text" class="form-control" ng-model="guest.email" name="email" placeholder="Enter your email address" required="required"/>
+							</div>
+
+							<span class="help-block" ng-show = "form.email.$dirty && form.email.$invalid">
+								<span ng-show = "form.email.$error.required">Email is required.</span>
+                     		</span> 						
+
+							<div>
+							<label for="password" class="cols-sm-2 control-label">Password</label>
+							</div>
+							<div class="input-group" ng-class="{ 'has-error': form.password.$dirty && form.password.$error.required }">
+								<span class="input-group-addon"><i class="fa fa-lock"></i></span>
+								<input type="password" class="form-control" ng-model="guest.password" name="password" placeholder="Enter your password" required="required"/>
+							</div>
+							<span class="help-block" ng-show = "form.password.$dirty && form.password.$invalid">
+                       		 	<span ng-show = "form.password.$error.required">Password is required.</span>
+                     		</span> 
+
+							<div>
+							<label for="confirm" class="cols-sm-2 control-label">Confirm Password</label>
+							</div>
+							<div class="input-group" ng-class="{ 'has-error': form.confirm.$dirty && form.confirm.$error.required }">
+								<span class="input-group-addon"><i class="fa fa-lock"></i></span>
+								<input type="password" class="form-control" ng-model="guest.confirm" name="confirm" placeholder="Confirm your password" required="required"/>
+							</div>
+
+							<span class="help-block" ng-show = "form.confirm.$dirty && form.confirm.$invalid">
+								<span ng-show="form.confirm.$error.required" class="help-block">Confirm password is required.</span>
+                     		</span> 
+						<div class="form-group">
+							<button type="button" ng-disabled="form.$invalid" class="btn btn-primary btn-lg btn-block login-button">Register</button>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>

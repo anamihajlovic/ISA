@@ -40,19 +40,27 @@ public class User {
 	@Enumerated(EnumType.STRING)
 	@Column(name="user_role", nullable=false)
 	private Role userRole;
+	
+	@Column(name="active", nullable=true)
+	private Boolean active;
+	
+	//da li da imamo polje koje ce cuvati aktivacioni kod i mora biti unique, ili cemo racunati na to da nece u istom trenutku 
+	//vise osoba imati isti aktivacioni kod?
 
-	@Column(name="first_login", nullable=false)
+	@Column(name="first_login", nullable=true)
 	private Boolean firstLogIn;
+	
 	
 	public User() {}
 
-	public User(String email, String password, String firstName, String lastName, Role userRole, Boolean firstLogIn) {
+	public User(String email, String password, String firstName, String lastName, Role userRole, Boolean firstLogIn, Boolean active) {
 		this.email = email;
 		this.password = password;
 		this.firstName = firstName;
 		this.lastName = lastName;
 		this.userRole = userRole;
 		this.firstLogIn = firstLogIn;
+		this.active = active;
 	}
 
 	public String getEmail() {

@@ -23,6 +23,12 @@ angular.module('restaurants', ['ui.router', 'common.services','common.controller
                  }}
         })
         
+        .state('register', {
+        	url: '/register',
+        	templateUrl: 'signUp.html',
+        	//controller: 'guestController'
+        })
+        
         .state('guest', {
         	url : '/guest',
           	templateUrl : 'html/guest/guestHome.html',
