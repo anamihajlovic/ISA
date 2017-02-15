@@ -36,6 +36,8 @@ commonModule.controller('commonController', ['$scope', 'commonService','$locatio
 							
 					} else {
 						toastr.error("Incorrect username and/or password!");
+						$scope.user.email = "";
+						$scope.user.password = "";
 					}
 
 

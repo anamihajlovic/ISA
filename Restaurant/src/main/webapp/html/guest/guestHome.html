@@ -1,24 +1,29 @@
-<title>Guest home page</title>
+<style type="text/css">
 
-<link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
-<link rel="stylesheet"href="css/toastr.min.css"/>
+</style>
 
-<nav class="navbar navbar-inverse">
-  <div class="container-fluid">
-    <div class="navbar-header">
-      <a class="navbar-brand" href="#" id="title">Restaurants</a>
-    </div>
-    <ul class="nav navbar-nav">
-      <li class="active"><a href="#">Home</a></li>
-      </ul>
+<nav class="navbar  navbar-inverse" role="navigation"> 
 
-    <ul class="nav navbar-nav navbar-right">
-      <li><a href="#" id="signUp"><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>
-      <li><a href="#" id="singOut"><span class="glyphicon glyphicon-log-in"></span> Sign out</a></li>
+      <div class="navbar-header navbar-left">
+      	<p class="navbar-brand" >Welcome, guest</p>
+   	 </div>
+      <ul class="nav navbar-nav">
+     <li><button data-ui-sref="" class="btn btn-default navbar-btn" ><span class="glyphicon glyphicon-list"></span> List </button></li>
+	
+	<li><button  data-ui-sref="" class="btn btn-default navbar-btn"><span class="glyphicon glyphicon-user"></span> Add </button></li>
+
+	<li><button  data-ui-sref="" class="btn btn-default navbar-btn"><span class="glyphicon glyphicon-plus"></span> New </button> </li>
+
+	<li><button  data-ui-sref="" class="btn btn-default navbar-btn"><span class="glyphicon glyphicon-user"></span> Profile</button></li>
+	</ul>
+	<ul class="nav navbar-nav navbar-right">
+         <li><a href="" data-ui-sref=""><span class="glyphicon glyphicon-log-out"></span> Log out </a></li>
     </ul>
-    </div>
-</nav>
 
-<div>
-	<ui-view></ui-view>
+ </nav>
+ 
+ 
+ <div>
+ <div data-ui-view></div>
+
 </div>
