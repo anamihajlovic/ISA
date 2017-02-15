@@ -1,5 +1,6 @@
 'use-strict';
-angular.module('restaurants', ['ui.router', 'common.services','common.controller'])
+angular.module('restaurants', ['ui.router', 'common.services','common.controller',
+									'sysManager.services','sysManager.controller'])
 .config(function($stateProvider, $urlRouterProvider) {
         $urlRouterProvider.otherwise('/login');
         
@@ -16,4 +17,15 @@ angular.module('restaurants', ['ui.router', 'common.services','common.controller
           	templateUrl : 'html/guest/guestHome.html',
             //controller : 'guestController'
          }) 
+         .state('sysManager', {
+         	url : '/sysManager',
+           	templateUrl : 'html/sysManager/sysManagerHome.html',
+             controller : 'sysManagerController'
+          }) 
+          
+          .state('sysManager.newResManager', {
+           	url : '/newResManager',
+            templateUrl : 'html/sysManager/sysManagerNewResManager.html',
+            }) 
+         
 });

@@ -20,6 +20,7 @@ commonModule.controller('commonController', ['$scope', 'commonService','$locatio
 							//console.log($location);
 						} else if ($scope.data.userRole == "sysManager") {
 							console.log("sysManager je");
+							$location.path('sysManager');
 
 						} else if ($scope.data.userRole == "resManager") {
 							console.log("resManager je");
