@@ -38,11 +38,9 @@ public class User {
 	private String lastName;
 	
 	@Enumerated(EnumType.STRING)
-	@NotBlank
 	@Column(name="user_role", nullable=false)
 	private Role userRole;
 
-	@NotBlank
 	@Column(name="first_login", nullable=false)
 	private Boolean firstLogIn;
 	

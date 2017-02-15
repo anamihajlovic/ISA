@@ -28,7 +28,7 @@ public class SystemManagerController {
 	public RestaurantManager saveResManager(@RequestBody RestaurantManager restaurantManager) {
 		System.out.println("uslo");
 		if (restaurantManager != null){
-		restaurantManager.setId(null);
+		//restaurantManager.setId(null);//mozda ovo ne bi trebalo dirati jer ovo baza sama regulise
 		restaurantManager.setFirstLogIn(true);
 		restaurantManager.setUserRole(Role.resManager);
 		restaurantManagerService.save(restaurantManager);

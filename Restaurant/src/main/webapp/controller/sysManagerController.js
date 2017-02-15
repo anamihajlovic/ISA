@@ -7,7 +7,9 @@ sysManagerModule.controller('sysManagerController', ['$scope', 'sysManagerServic
 		
 	$scope.saveManager= function () {    
 			
+				alert("pre requesta " + $scope.resManager);
 				var request = sysManagerService.saveResManager($scope.resManager).then(function(response) {
+			
 				$scope.data = response.data;
 				alert(response.data)
 				return response;
