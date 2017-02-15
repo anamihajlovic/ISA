@@ -9,15 +9,23 @@ import org.springframework.stereotype.Service;
 
 
 @Service
-@Transactional
 public class RestaurantManagerServiceImp  implements RestaurantManagerService{
 
 	private final RestaurantManagerRepository repository;
 
 	@Autowired
 	public RestaurantManagerServiceImp(RestaurantManagerRepository repository) {
-		super();
 		this.repository = repository;
+	}
+	
+	@Override
+	public RestaurantManager findByMail(String mail) {
+		return repository.findByEmail(mail);
+	}
+	
+	@Override
+	public RestaurantManager findByMailAndPassword(String email, String password) {
+		return repository.findByEmailAndPassword(email, password);
 	}
 
 	@Override
@@ -38,13 +46,7 @@ public class RestaurantManagerServiceImp  implements RestaurantManagerService{
 		return repository.findOne(id);
 	}
 
-	@Override
-	public RestaurantManager findByMailAndPassword(String email, String password) {
-		return repository.findByEmailAndPassword(email, password);
-	}
+	
 
-	@Override
-	public RestaurantManager findByMail(String mail) {
-		return repository.findByEmail(mail);
-	}
+	
 }

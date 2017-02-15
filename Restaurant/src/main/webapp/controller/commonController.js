@@ -21,7 +21,18 @@ commonModule.controller('commonController', ['$scope', 'commonService','$locatio
 						} else if ($scope.data.userRole == "sysManager") {
 							console.log("sysManager je");
 
+						} else if ($scope.data.userRole == "resManager") {
+							console.log("resManager je");
+						} else if ($scope.data.userRole == "waiter") {
+							console.log("waiter je");
+						} else if ($scope.data.userRole == "cook") {
+							console.log("cook je");
+						} else if ($scope.data.userRole == "bartender") {
+							console.log("bartender je");
+						} else if ($scope.data.userRole == "bidder") {
+							console.log("bidder je");
 						}
+							
 							
 					} else {
 						toastr.error("Incorrect username and/or password!");

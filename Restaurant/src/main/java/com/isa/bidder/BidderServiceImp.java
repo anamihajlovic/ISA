@@ -1,9 +1,5 @@
 package com.isa.bidder;
 
-import java.util.List;
-
-import javax.transaction.Transactional;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -11,20 +7,30 @@ import com.isa.restaurant.RestaurantRepository;
 
 
 @Service
-@Transactional
-public class BodderServiceImp implements BidderService {
+public class BidderServiceImp implements BidderService {
 
 	private final BidderRepository repository;
 	private final RestaurantRepository repositoryRestaurant;
 
 	@Autowired
-	public BodderServiceImp(BidderRepository repository, RestaurantRepository repositoryRestaurant) {
-		super();
+	public BidderServiceImp(BidderRepository repository, RestaurantRepository repositoryRestaurant) {
 		this.repository = repository;
 		this.repositoryRestaurant = repositoryRestaurant;
 	}
 
 	@Override
+	public Bidder findByEMail(String email) {
+		return repository.findByEmail(email);
+	}
+
+	@Override
+	public Bidder findByEMailAndPassword(String email, String password) {
+		return repository.findByEmailAndPassword(email, password);
+	}
+	
+	
+
+/*	@Override
 	public List<Bidder> findAll() {
 		return (List<Bidder>) (repository.findAll());
 	}
@@ -52,6 +58,6 @@ public class BodderServiceImp implements BidderService {
 	@Override
 	public Bidder findOneWithMail(String mail) {
 		return repository.findByEmail(mail);
-	}
+	}*/
 
 }

@@ -10,7 +10,7 @@ import com.isa.restaurant.RestaurantService;
 
 
 @RestController
-@RequestMapping("/bidder")
+@RequestMapping("/bidders")
 public class BidderController {
 	
 	private final BidderService bidderService;

@@ -38,7 +38,6 @@ public class SystemManagerController {
 	
 	@Autowired
 	public SystemManagerController(HttpSession httpSession, SystemManagerService systemManagerService,RestaurantManagerService restaurantManagerService, RestaurantService restaurantService) {
-		super();
 		this.httpSession = httpSession;
 		this.systemManagerService = systemManagerService;
 		this.restaurantManagerService = restaurantManagerService;

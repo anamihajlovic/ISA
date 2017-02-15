@@ -28,8 +28,6 @@ import com.isa.res.manager.*;
 import com.isa.restaurant.*;
 
 
-
-
 @RestController
 @RequestMapping("/restaurantManager")
 public class RestaurantManagerController {
