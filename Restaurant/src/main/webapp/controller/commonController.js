@@ -3,9 +3,9 @@ var commonModule = angular.module('common.controller', []);
 
 commonModule.controller('commonController', ['$scope', 'commonService','$location',
   	function ($scope,commonService, $location) {
-	
 		
-		$scope.submitLogin = function () {            
+		
+		$scope.submitLogin = function () {    
 				var request = commonService.login($scope.user).then(function(response) {
 				$scope.data = response.data;
 				return response;
@@ -15,36 +15,47 @@ commonModule.controller('commonController', ['$scope', 'commonService','$locatio
 					if($scope.data.firstName != "neuspesno") {
 						toastr.success("Welcome, " + $scope.data.firstName + "!");
 						if ($scope.data.userRole == "guest") {
-							console.log("gost je");
 							$location.path('guest');
-							//console.log($location);
 						} else if ($scope.data.userRole == "sysManager") {
-							console.log("sysManager je");
 							$location.path('sysManager');
-
 						} else if ($scope.data.userRole == "resManager") {
-							console.log("resManager je");
+							
 						} else if ($scope.data.userRole == "waiter") {
-							console.log("waiter je");
+							
 						} else if ($scope.data.userRole == "cook") {
-							console.log("cook je");
+							
 						} else if ($scope.data.userRole == "bartender") {
-							console.log("bartender je");
+							
 						} else if ($scope.data.userRole == "bidder") {
-							console.log("bidder je");
+							
 						}
 							
-							
 					} else {
-						toastr.error("Incorrect username and/or password!");
-						$scope.user.email = "";
-						$scope.user.password = "";
+						if ($scope.data.password == "neuspesno") {
+							toastr.error("Incorrect username and/or password!");
+							$scope.user.email = "";
+							$scope.user.password = "";
+						} else {
+							var message = "";
+							if ($scope.data.password.indexOf("email") != -1)
+								message += "Email field can't be empty. Email pattern must be example@example.com.<br\>"
+							if ($scope.data.password.indexOf("password") != -1)
+								message +="Password field can't be empty."
+							
+							toastr.error(message);
+						}
 					}
 
-
-			
 			});
 		}
+		
+		/*$scope.logout = function() {
+			commonService.logout().then(function(reponse) {
+				alert("log ouut")
+				toastr.success("Goodbye");
+				$location.path('login');
+			});
+		}*/
 		
 		
 		

@@ -12,6 +12,17 @@ angular.module('restaurants', ['ui.router', 'common.services','common.controller
           	controller : 'commonController'
         })
         
+        .state('logout', {
+        	url :'/logout',
+        	//templateUrl : '',
+        	resolve: {
+        		promiseObj:  function($http,$location){
+        			toastr.success("Goodbye");
+        			$location.path('login');
+                    return $http.get("/users/logout");
+                 }}
+        })
+        
         .state('guest', {
         	url : '/guest',
           	templateUrl : 'html/guest/guestHome.html',
