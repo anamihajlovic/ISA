@@ -25,6 +25,7 @@ commonModule.controller('commonController', ['$scope', 'commonService','$locatio
 						} else if ($scope.data.userRole == "cook") {
 							
 						} else if ($scope.data.userRole == "bartender") {
+							$location.path('bartender')
 							
 						} else if ($scope.data.userRole == "bidder") {
 							

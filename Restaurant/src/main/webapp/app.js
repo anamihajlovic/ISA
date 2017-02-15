@@ -1,6 +1,9 @@
 'use-strict';
-angular.module('restaurants', ['ui.router', 'common.services','common.controller',
-									'sysManager.services','sysManager.controller'])
+angular.module('restaurants', [ 'ui.router', 
+	  							'common.services','common.controller',
+								'sysManager.services','sysManager.controller',
+								'bartender.services', 'bartender.controller'								
+							   ])
 .config(function($stateProvider, $urlRouterProvider) {
         $urlRouterProvider.otherwise('/login');
         
@@ -50,5 +53,17 @@ angular.module('restaurants', ['ui.router', 'common.services','common.controller
                	url : '/newRestaurant',
                 templateUrl : 'html/sysManager/sysManagerNewRestaurant.html',
                 }) 
+                
+                
+           .state('bartender', {
+        	   url : '/bartender',
+        	   templateUrl : 'html/bartender/bartenderHome.html',
+        	   controller : 'bartenderController'
+           })
+           
+           .state('bartender.updateInfo', {
+        	   url : '/bartender',
+        	   templateUrl : 'html/bartender/employeeUpdateInfo.html',
+           })
          
 });
