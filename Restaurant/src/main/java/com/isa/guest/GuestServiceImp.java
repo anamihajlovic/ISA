@@ -27,6 +27,13 @@ public class GuestServiceImp implements GuestService {
 	public Guest save(Guest guest) {
 		return repository.save(guest);
 	}
+
+	@Override
+	public void activateAccount(String activationCode) {
+		Guest guest = repository.findByActivationCode(activationCode);
+		guest.setActive(true);
+		repository.save(guest);//da li postoji pametniji nacin?
+	}
 	
 	
 

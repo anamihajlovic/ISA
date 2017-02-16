@@ -33,6 +33,15 @@ angular.module('restaurants', [ 'ui.router',
         	controller: 'guestController'
         })
         
+        .state('activateAccount', {
+        	url: '/activateAccount/:activationCode',
+        	templateUrl: 'html/guest/activationMessage.html',
+        	resolve: {
+        		promiseObj:  function($http, $stateParams){
+                return $http.post("/guests/activateAccount/"+ $stateParams.activationCode);
+             }}
+        })
+        
         .state('guest', {
         	url : '/guest',
           	templateUrl : 'html/guest/guestHome.html',
