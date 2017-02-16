@@ -2,7 +2,8 @@
 angular.module('restaurants', [ 'ui.router', 
 	  							'common.services','common.controller',
 								'sysManager.services','sysManager.controller',
-								'bartender.services', 'bartender.controller'								
+								'bartender.services', 'bartender.controller',
+								'guest.services', 'guest.controller'
 							   ])
 .config(function($stateProvider, $urlRouterProvider) {
         $urlRouterProvider.otherwise('/login');
@@ -29,13 +30,13 @@ angular.module('restaurants', [ 'ui.router',
         .state('register', {
         	url: '/register',
         	templateUrl: 'signUp.html',
-        	//controller: 'guestController'
+        	controller: 'guestController'
         })
         
         .state('guest', {
         	url : '/guest',
           	templateUrl : 'html/guest/guestHome.html',
-            //controller : 'guestController'
+            controller : 'guestController'
          }) 
          .state('sysManager', {
          	url : '/sysManager',

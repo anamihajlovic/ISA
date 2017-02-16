@@ -139,14 +139,15 @@ input::-webkit-input-placeholder {
 							</div>
 							<div class="input-group" ng-class="{ 'has-error': form.confirm.$dirty && form.confirm.$error.required }">
 								<span class="input-group-addon"><i class="fa fa-lock"></i></span>
-								<input type="password" class="form-control" ng-model="guest.confirm" name="confirm" placeholder="Confirm your password" required="required"/>
+								<input type="password" class="form-control" ng-model="guest.confirm" name="confirm" placeholder="Confirm your password" match-password="guest.password" required="required"/>
 							</div>
 
 							<span class="help-block" ng-show = "form.confirm.$dirty && form.confirm.$invalid">
 								<span ng-show="form.confirm.$error.required" class="help-block">Confirm password is required.</span>
+								<span ng-show="form.confirm.$error.matchPassword && !form.confirm.$error.required" class="help-block">Confirm password must be equal to password value.</span>
                      		</span> 
 						<div class="form-group">
-							<button type="button" ng-disabled="form.$invalid" class="btn btn-primary btn-lg btn-block login-button">Register</button>
+							<button type="button" ng-click="submitRegister()" ng-disabled="form.$invalid" class="btn btn-primary btn-lg btn-block login-button">Register</button>
 						</div>
 					</form>
 				</div>

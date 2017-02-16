@@ -53,14 +53,14 @@ public class User {
 	
 	public User() {}
 
-	public User(String email, String password, String firstName, String lastName, Role userRole, Boolean firstLogIn, Boolean active) {
+	public User(String email, String password, String firstName, String lastName, Role userRole) {
 		this.email = email;
 		this.password = password;
 		this.firstName = firstName;
 		this.lastName = lastName;
 		this.userRole = userRole;
-		this.firstLogIn = firstLogIn;
-		this.active = active;
+		this.firstLogIn = true;
+		this.active = false;
 	}
 
 	public String getEmail() {

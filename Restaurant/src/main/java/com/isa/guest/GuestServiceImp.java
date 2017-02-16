@@ -22,6 +22,12 @@ public class GuestServiceImp implements GuestService {
 	public Guest findByEMailAndPassword(String email, String password) {
 		return repository.findByEmailAndPassword(email, password);
 	}
+
+	@Override
+	public Guest save(Guest guest) {
+		return repository.save(guest);
+	}
+	
 	
 
 }
