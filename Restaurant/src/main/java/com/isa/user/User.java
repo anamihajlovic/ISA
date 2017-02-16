@@ -111,6 +111,15 @@ public class User {
 	public void setFirstLogIn(Boolean firstLogIn) {
 		this.firstLogIn = firstLogIn;
 	}
+	
+	
+	public Boolean getActive() {
+		return active;
+	}
+
+	public void setActive(Boolean active) {
+		this.active = active;
+	}
 
 	@Override
 	public String toString() {

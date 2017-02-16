@@ -1,0 +1,20 @@
+<div>
+<div class = "col-sm-4">
+</div>
+<div class = "col-sm-4">
+<form action="">
+
+	<label>Email</label>
+	<input type = "text" class = "form-control" ng-model = "$parent.systemManager.email" style="background-color : grey" disabled>
+
+	<label>Firstname</label>
+	<input type = "text" class = "form-control" ng-model = "$parent.systemManager.firstName"> 
+
+	<label>Lastname</label>
+	<input type = "text" class = "form-control" ng-model = "$parent.systemManager.lastName" >  
+    
+<button class = "btn btn-default" ng-click = "update()"><span class = "glyphicon glyphicon-ok"></span>Update</button>
+<button class = "btn btn-default" ng-click = "cancel()"><span class = "glyphicon glyphicon-remove"></span>Cancel</button>
+</form>
+</div>
+</div>

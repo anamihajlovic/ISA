@@ -8,6 +8,9 @@ public interface RestaurantManagerRepository extends PagingAndSortingRepository<
 	public RestaurantManager findByEmailAndPassword(String email, String password);
 
 	public RestaurantManager findByEmail(String email);
+	
+	public RestaurantManager findOne(Long id);
+	
 
 
 }

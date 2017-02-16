@@ -49,10 +49,15 @@ angular.module('restaurants', [ 'ui.router',
             }) 
             
             
-            .state('sysManager.newRestaurant', {
-               	url : '/newRestaurant',
-                templateUrl : 'html/sysManager/sysManagerNewRestaurant.html',
-                }) 
+           .state('sysManager.newRestaurant', {
+           	url : '/newRestaurant',
+            templateUrl : 'html/sysManager/sysManagerNewRestaurant.html',
+            }) 
+            
+           .state('sysManager.updateSysManager', {
+             url : '/updateSysManager',
+           templateUrl : 'html/sysManager/sysManagerUpdateProfile.html',
+           })
                 
                 
            .state('bartender', {
