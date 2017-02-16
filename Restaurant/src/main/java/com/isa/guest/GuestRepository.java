@@ -1,5 +1,6 @@
 package com.isa.guest;
 
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.PagingAndSortingRepository;
 
 public interface GuestRepository extends PagingAndSortingRepository<Guest, Long> {
@@ -10,5 +11,8 @@ public interface GuestRepository extends PagingAndSortingRepository<Guest, Long>
 	
 	@SuppressWarnings("unchecked")
 	public Guest save(Guest guest);
+	
+	public Guest findByActivationCode(String activationCode);
+	
 
 }

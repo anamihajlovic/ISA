@@ -33,6 +33,15 @@ angular.module('restaurants', [ 'ui.router',
         	controller: 'guestController'
         })
         
+        .state('activateAccount', {
+        	url: '/activateAccount/:activationCode',
+        	templateUrl: 'html/guest/activationMessage.html',
+        	resolve: {
+        		promiseObj:  function($http, $stateParams){
+                return $http.post("/guests/activateAccount/"+ $stateParams.activationCode);
+             }}
+        })
+        
         .state('guest', {
         	url : '/guest',
           	templateUrl : 'html/guest/guestHome.html',
@@ -60,8 +69,17 @@ angular.module('restaurants', [ 'ui.router',
              url : '/updateSysManager',
            templateUrl : 'html/sysManager/sysManagerUpdateProfile.html',
            })
-                
-                
+          
+          .state('sysManager.newSysManager', {
+              url : '/newSysManager',
+             templateUrl : 'html/sysManager/sysManagerNewSysManager.html',
+          })
+             
+        .state('sysManager.list', {
+              url : '/list',
+             templateUrl : 'html/sysManager/sysManagerList.html',
+          })
+             
            .state('bartender', {
         	   url : '/bartender',
         	   templateUrl : 'html/employees/bartenderHome.html',

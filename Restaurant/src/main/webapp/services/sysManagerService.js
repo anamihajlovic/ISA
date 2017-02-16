@@ -26,6 +26,19 @@ sysManagerServices.service('sysManagerService',['$http', function($http) {
 		alert("id je " + systemManager.id)		
 		return $http.put("/sysManager/"+systemManager.id, systemManager);
 	}
+	this.saveSysManager = function(sysManager) {
+		alert("sysService " + sysManager)
+		return $http.post("/sysManager/newSysManager", sysManager);
+	}
+	this.findAllRestaurantManagers = function(){
+		//alert("uslo i u service")
+		return $http.get("/sysManager/ResManagers");
+	}
+	
+	this.findAllRestaurants = function(){
+		//alert("uslo i u service")
+		return $http.get("/sysManager/Restaurants");
+	}
 	
 	
 }]); 

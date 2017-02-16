@@ -44,9 +44,6 @@ public class User {
 	@Column(name="active", nullable=true)
 	private Boolean active;
 	
-	//da li da imamo polje koje ce cuvati aktivacioni kod i mora biti unique, ili cemo racunati na to da nece u istom trenutku 
-	//vise osoba imati isti aktivacioni kod?
-
 	@Column(name="first_login", nullable=true)
 	private Boolean firstLogIn;
 	
@@ -126,6 +123,9 @@ public class User {
 		return "User [email=" + email + "firstName"+firstName+"lastName"+lastName+"firstLogIn"+firstLogIn+
 				"password"+password+"userRole"+userRole+"]";
 	}
+
+	
+	
 	
 	
 	
