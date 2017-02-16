@@ -46,6 +46,7 @@ angular.module('restaurants', [ 'ui.router',
           .state('sysManager.newResManager', {
            	url : '/newResManager',
             templateUrl : 'html/sysManager/sysManagerNewResManager.html',
+            
             }) 
             
             
@@ -57,13 +58,18 @@ angular.module('restaurants', [ 'ui.router',
                 
            .state('bartender', {
         	   url : '/bartender',
-        	   templateUrl : 'html/bartender/bartenderHome.html',
+        	   templateUrl : 'html/employees/bartenderHome.html',
         	   controller : 'bartenderController'
            })
            
            .state('bartender.updateInfo', {
         	   url : '/bartender',
-        	   templateUrl : 'html/bartender/employeeUpdateInfo.html',
+        	   templateUrl : 'html/employees/employeeUpdateInfo.html',
+           })
+           
+           .state('bartender.changePassword', {
+        	   url : '/bartender',
+        	   templateUrl : 'html/employees/changePassword.html',
            })
          
 });

@@ -5,9 +5,12 @@ bartenderModule.controller('bartenderController', ['$scope', 'bartenderService',
 	function ($scope, bartenderService, $location) {
 	
 		
-	$scope.updateInfo = function () {    			
-				alert("Update info");
-
+		$scope.updateInfo = function () {    			
+			alert("Update info");	
+		}
+		
+		$scope.changePassword = function() {
+			alert("Pass change");
 		}
 		
 				
