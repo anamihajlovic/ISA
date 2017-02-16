@@ -17,7 +17,7 @@ sysManagerModule.controller('sysManagerController', ['$scope', 'sysManagerServic
 			}
 		);
 	}
-	checkRights();
+	checkRights();	
 	$scope.saveManager= function () {    
 			
 				alert("pre requesta " + $scope.resManager);

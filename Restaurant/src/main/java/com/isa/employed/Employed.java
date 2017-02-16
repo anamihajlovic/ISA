@@ -28,7 +28,7 @@ public class Employed extends User{
 	private ShoesSize shoesSize;
 	
 	@Column
-	@NotBlank
+	@NotNull
 	@Temporal(TemporalType.DATE)
 	private Date birthday;
 	
