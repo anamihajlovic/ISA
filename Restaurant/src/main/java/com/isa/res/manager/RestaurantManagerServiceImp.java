@@ -6,7 +6,7 @@ import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
+import jersey.repackaged.com.google.common.collect.Lists;
 
 @Service
 public class RestaurantManagerServiceImp  implements RestaurantManagerService{
@@ -30,7 +30,7 @@ public class RestaurantManagerServiceImp  implements RestaurantManagerService{
 
 	@Override
 	public List<RestaurantManager> findAll() {
-		return (List<RestaurantManager>) (repository.findAll());
+		return Lists.newArrayList(repository.findAll());
 	}
 
 

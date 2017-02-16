@@ -5,31 +5,27 @@ import java.util.List;
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 
 import com.isa.restaurant.RestaurantRepository;
 
 import com.isa.restaurant.RestaurantService;
-import com.isa.restaurant.Restaurant;
+
+import jersey.repackaged.com.google.common.collect.Lists;
+
 
 @Service
 @Transactional
 public class RestaurantServiceImp implements RestaurantService{
-	
-	private final RestaurantRepository repository;
 
 	@Autowired
-	public RestaurantServiceImp(RestaurantRepository repository) {
-		super();
-		this.repository = repository;
-	}
-
+	private RestaurantRepository repository;
 
 	@Override
 	public List<Restaurant> findAll() {
-		return (List<Restaurant>) (repository.findAll());
+		return Lists.newArrayList(repository.findAll());
 	}
-
 
 
 	@Override
@@ -46,5 +42,12 @@ public class RestaurantServiceImp implements RestaurantService{
 	public void delete(Long id) {
 		repository.delete(id);
 	}
+
+
+	/*@Override
+	public List<Long> findEmployedResManagers() {
+		return repository.getEmployedResManagers();
+		
+	}*/
 
 }

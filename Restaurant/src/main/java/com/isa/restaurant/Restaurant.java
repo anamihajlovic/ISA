@@ -53,7 +53,6 @@ public class Restaurant {
 	private String street;
 	
 	@Column
-	@NotBlank
 	private Double ratings;
 	
 	

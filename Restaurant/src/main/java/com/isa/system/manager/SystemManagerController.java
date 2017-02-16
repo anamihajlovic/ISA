@@ -59,15 +59,43 @@ public class SystemManagerController {
 	@GetMapping(path = "/freeResManager")
 	public List<RestaurantManager> findAllFreeRestaurantManagers() {
 		System.out.println("uslo");
-		// ovo ce se kasnije promeniti da ide odmah na bazu, sa posebnim upitom
-		List<RestaurantManager> managers = restaurantManagerService.findAll();
-		List<Restaurant> restaurants = restaurantService.findAll();
 		
+		
+		List<Restaurant> restaurants = restaurantService.findAll();
+		System.out.println("i ovde");
+		System.out.println(restaurants.isEmpty());
+		// ovo ce se kasnije promeniti da ide odmah na bazu, sa posebnim upitom
+	    List<RestaurantManager> managers = restaurantManagerService.findAll();
+	    System.out.println("iiii ovde");
+		System.out.println(managers.isEmpty());
 		List<RestaurantManager> result = new ArrayList<RestaurantManager>();
-
+		for (RestaurantManager m : managers){
+			for (Restaurant r : restaurants){
+				for (RestaurantManager rr : r.getRestaurantManagers()){
+					if (m.getId()!=rr.getId()){
+						result.add(m);
+						System.out.println(m.getId());
+					}
+					
+					}
+			}
+		}
+	
 		return result;
 	}
-
+	@PostMapping(path = "/newRestaurant")
+	public Restaurant saveRestaurant(@RequestBody Restaurant restaurant) {
+		System.out.println("uslo u restorane");
+		if (restaurant != null){
+			restaurant.setRatings(0.0);	
+			restaurantService.save(restaurant);
+		return restaurant;
+	}
+		else
+			return null;
+		
+	}
+	
 
 
 

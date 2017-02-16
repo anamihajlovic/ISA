@@ -28,7 +28,7 @@ sysManagerModule.controller('sysManagerController', ['$scope', 'sysManagerServic
 
 	////////////////////////////////////////////////////	
 	$scope.freeRestaurantManagers = function () {  
-		alert("uslo u controller")
+		//alert("uslo u controller")
 		
 		var request = sysManagerService.findAllFreeRestaurantManagers().then(
 			function (response) {
@@ -36,6 +36,26 @@ sysManagerModule.controller('sysManagerController', ['$scope', 'sysManagerServic
 			}
 		); 	
 	};
-		
+	//////////////////////////////	
+	
+	$scope.saveRestaurant= function () {    
+		alert("uslo u controller")
+		var request = sysManagerService.saveRestaurant($scope.restaurant).then(function(response) {
+	
+		$scope.data = response.data;
+		alert(response.data)
+		return response;
+	});			
+		request.then(function (data) {
+			if($scope.data != null) {
+				toastr.success("Success!");	
+					
+			} else {
+				toastr.error("Something wrong");
+			
+			}
+
+	});
+}
 		
 }]);
