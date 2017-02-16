@@ -18,6 +18,9 @@ public class Guest extends User {
 	@Column(name = "guest_id")
 	private Long id;
 	
+	@Column(name = "guest_aCode", nullable=true)
+	private String activationCode;
+	
 
 	public Guest() {}
 	
@@ -33,6 +36,16 @@ public class Guest extends User {
 	public void setId(Long id) {
 		this.id = id;
 	}
+
+	public String getActivationCode() {
+		return activationCode;
+	}
+
+	public void setActivationCode(String activationCode) {
+		this.activationCode = activationCode;
+	}
+	
+	
 	
 	
 

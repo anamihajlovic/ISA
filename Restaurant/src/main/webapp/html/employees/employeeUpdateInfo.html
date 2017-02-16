@@ -1,1 +1,27 @@
-<p> IZMENNI SVOJE PODATKE </p>
+<div>
+<div class = "col-sm-4">
+</div>
+<div class = "col-sm-4"  class="input-group">
+<form action="">
+
+    <label>First name</label>
+    <input type="text" ng-model = "$parent.employee.firstName" class="form-control" name="firstName" >  
+
+    <label>Last name</label>
+    <input type="text" ng-model = "$parent.employee.lastName" class="form-control" name="lastName" >  
+
+    <label>Birthday</label>
+    <input type="date" ng-model = "$parent.employee.birthday" class="form-control" name="birthday" >  
+
+    <label>Clothes size</label>
+    <input type="text" ng-model = "$parent.employee.clothesSize" class="form-control" name="clothesSize" >  
+    
+     <label>Shoe size</label>
+    <input type="text" ng-model = "$parent.employee.shoesSize" class="form-control" name="shoesSize" >  
+
+<button class="btn btn-default" ng-click="updateInfo()"><span class="glyphicon glyphicon-ok" ></span> Save changes</button>
+<button class="btn btn-default" ng-click = "cancel()"><span class="glyphicon glyphicon-remove" ></span> Cancel</button>
+</form>
+
+</div>
+</div>

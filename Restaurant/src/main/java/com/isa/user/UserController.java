@@ -64,39 +64,30 @@ public class UserController {
 		
 		if (guestService.findByEMailAndPassword(userData.getEmail(), userData.getPassword()) != null) {
 			user = guestService.findByEMailAndPassword(userData.getEmail(), userData.getPassword());
-			System.out.println("Baza vratila " + user.getEmail() + " " + user.getFirstName() + " " + user.getLastName()
-			+ " " + user.getUserRole());
+			
+			if (!user.getActive())
+				user = new User("neuspesno@gmail.com", "neuspesno", "neuspesno","neuspesno", Role.guest);
 			
 		} else if (systemManagerService.findByEMailAndPassword(userData.getEmail(), userData.getPassword()) != null) {
 			user = systemManagerService.findByEMailAndPassword(userData.getEmail(), userData.getPassword());
-			System.out.println("Baza vratila " + user.getEmail() + " " + user.getFirstName() + " " + user.getLastName()
-			+ " " + user.getUserRole());
+
 		} else if (restaurantManagerService.findByMailAndPassword(userData.getEmail(), userData.getPassword()) != null) {
 			user = restaurantManagerService.findByMailAndPassword(userData.getEmail(), userData.getPassword());
-			System.out.println("Baza vratila " + user.getEmail() + " " + user.getFirstName() + " " + user.getLastName()
-			+ " " + user.getUserRole());
+
 		} else if (waiterService.findByEMailAndPassword(userData.getEmail(), userData.getPassword()) != null) {
 			user = waiterService.findByEMailAndPassword(userData.getEmail(), userData.getPassword());
-			System.out.println("Baza vratila " + user.getEmail() + " " + user.getFirstName() + " " + user.getLastName()
-			+ " " + user.getUserRole());
+
 		} else if (cookService.findByEMailAndPassword(userData.getEmail(), userData.getPassword()) != null) {
 			user = cookService.findByEMailAndPassword(userData.getEmail(), userData.getPassword());
-			System.out.println("Baza vratila " + user.getEmail() + " " + user.getFirstName() + " " + user.getLastName()
-			+ " " + user.getUserRole());
 		} else if (bartenderService.findByEMailAndPassword(userData.getEmail(), userData.getPassword()) != null) {
 			user = bartenderService.findByEMailAndPassword(userData.getEmail(), userData.getPassword());
-			System.out.println("Baza vratila " + user.getEmail() + " " + user.getFirstName() + " " + user.getLastName()
-			+ " " + user.getUserRole());
 		} else if (bidderService.findByEMailAndPassword(userData.getEmail(), userData.getPassword()) != null) {
 			user = bidderService.findByEMailAndPassword(userData.getEmail(), userData.getPassword());
-			System.out.println("Baza vratila " + user.getEmail() + " " + user.getFirstName() + " " + user.getLastName()
-			+ " " + user.getUserRole());
 		}
 		
 		if (!user.getEmail().equals("neuspesno@gmail.com"))
 			httpSession.setAttribute("user", user);
 		
-		System.out.println("user " + user.getEmail());
 		return user;
 	}
 	

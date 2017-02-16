@@ -6,4 +6,7 @@ public interface BartenderService {
 	
 	Bartender findByEMailAndPassword(String email, String password);
 
+	Bartender findOne(Long id);
+	
+	void save(Bartender bartender);
 }

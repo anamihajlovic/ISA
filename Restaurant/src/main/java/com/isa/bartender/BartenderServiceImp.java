@@ -23,4 +23,17 @@ public class BartenderServiceImp implements BartenderService {
 		return repository.findByEmailAndPassword(email, password);
 	}
 
+	@Override
+	public Bartender findOne(Long id) {		
+		return repository.findOne(id);
+	}
+
+	@Override
+	public void save(Bartender bartender) {		
+		repository.save(bartender);
+	}
+	
+	
+	
+
 }

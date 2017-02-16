@@ -20,6 +20,7 @@ sysManagerServices.service('sysManagerService',['$http', function($http) {
 		alert("uslo i u service")
 		return $http.post("/sysManager/newRestaurant", restaurant);
 	}
+	
 	this.updateSysManager = function(systemManager) {
 		alert("sysService " + systemManager)
 		alert("id je " + systemManager.id)		
