@@ -34,14 +34,12 @@ commonModule.controller('commonController', ['$scope', 'commonService','$locatio
 					} else {
 						if ($scope.data.password == "neuspesno") {
 							toastr.error("Incorrect username and/or password!");
-							$scope.user.email = "";
-							$scope.user.password = "";
 						} else {
 							var message = "";
 							if ($scope.data.password.indexOf("email") != -1)
-								message += "Email field can't be empty. Email pattern must be example@example.com.<br\>"
+								message += "Email field can't be empty. <br\>Email pattern must be example@example.com.<br\>";
 							if ($scope.data.password.indexOf("password") != -1)
-								message +="Password field can't be empty."
+								message +="Password field can't be empty.";
 							
 							toastr.error(message);
 						}

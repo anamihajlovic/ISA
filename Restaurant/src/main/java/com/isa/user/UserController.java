@@ -47,8 +47,9 @@ public class UserController {
 	}
 	
 	@PostMapping(path="/login")
-	public User login(@Valid @RequestBody LoginData userData,  BindingResult bindingResult) {
-		
+	public User login(@Valid @RequestBody LoginData userData, BindingResult bindingResult) {
+		System.out.println("Pogodjena metoda login " + userData.getEmail() + userData.getPassword());
+
 		String errors = "";
 		if (bindingResult.hasErrors()) {
 			if (bindingResult.hasFieldErrors("email")) 
@@ -58,7 +59,6 @@ public class UserController {
 			return new User("neuspesno@gmail.com", errors, "neuspesno","neuspesno", Role.guest);
 		}
 		
-		System.out.println("Pogodjena metoda login " + userData.getEmail() + userData.getPassword());
 		
 		User user = new User("neuspesno@gmail.com", "neuspesno", "neuspesno","neuspesno", Role.guest);
 		
@@ -96,6 +96,7 @@ public class UserController {
 		if (!user.getEmail().equals("neuspesno@gmail.com"))
 			httpSession.setAttribute("user", user);
 		
+		System.out.println("user " + user.getEmail());
 		return user;
 	}
 	

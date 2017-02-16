@@ -1,6 +1,6 @@
 -- USERS
-insert into guests(email, password, first_name, last_name,first_login,user_role) values ('jelenakalabic@gmail.com', 'Jelena', 'Jelena', 'Kalabic',true,'guest')
-insert into guests(email, password, first_name, last_name,first_login,user_role) values ('tamaramrksic@gmail.com', 'Tamara', 'Tamara', 'Mrksic',true,'guest')
+insert into guests(email, password, first_name, last_name,user_role, first_login, active) values ('jelena@gmail.com', 'Jelena', 'Jelena', 'Kalabic','guest', false, true)
+insert into guests(email, password, first_name, last_name,user_role, first_login, active) values ('tamaramrksic@gmail.com', 'Tamara', 'Tamara', 'Mrksic','guest', false, true)
 
 insert into bidders(email, password, first_name, last_name,first_login,user_role) values ('anamihajlovic@gmail.com', 'pass', 'Ana', 'Mihajlovic',true,'bidder')
 
