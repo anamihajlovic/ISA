@@ -1,0 +1,23 @@
+<div>
+<div class = "col-sm-4">
+</div>
+<div class = "col-sm-4"  class="input-group">
+<form action="" method="post">
+    <label>Firstname</label>
+    <input type="text" ng-model="$parent.sysManager.firstName" class="form-control" name="firstName" >  
+
+    <label>Lastname</label>
+    <input type="text" ng-model="$parent.sysManager.lastName" class="form-control" name="lastName" >  
+
+    <label>Mail</label>
+    <input type="text" ng-model="$parent.sysManager.email" class="form-control" name="email" >  
+
+    <label>Password</label>
+    <input type="password" ng-model="$parent.sysManager.password" class="form-control" name="password" >  
+
+<button class="btn btn-default" ng-click="saveSysManager()"><span class="glyphicon glyphicon-ok" ></span> Create</button>
+<button class="btn btn-default" ng-click="cancel()"><span class="glyphicon glyphicon-remove" ></span> Cancel</button>
+</form>
+
+</div>
+</div>

@@ -81,8 +81,6 @@ public class SystemManagerController {
 	@GetMapping(path = "/freeResManager")
 	public List<RestaurantManager> findAllFreeRestaurantManagers() {
 		//System.out.println("uslo");
-		
-		
 		List<Restaurant> restaurants = restaurantService.findAll();
 		//System.out.println("i ovde");
 		//System.out.println(restaurants.isEmpty());
@@ -109,6 +107,19 @@ public class SystemManagerController {
 	
 		return result;
 	}
+	
+	@GetMapping(path = "/ResManagers")
+	public List<RestaurantManager> findAllRestaurantManagers() {
+	    List<RestaurantManager> managers = restaurantManagerService.findAll();
+		return managers;
+	}
+	
+	@GetMapping(path = "/Restaurants")
+	public List<Restaurant> findAllRestaurants() {
+	    List<Restaurant> restaurants =restaurantService.findAll();
+		return restaurants;
+	}
+	
 	@PostMapping(path = "/newRestaurant")
 	public Restaurant saveRestaurant(@RequestBody RestaurantPojo restaurant) {
 		System.out.println("uslo u restorane");
@@ -141,4 +152,21 @@ public class SystemManagerController {
 		return systemManagerService.save(systemManager);
 	}
 
+	
+	@PostMapping(path = "/newSysManager")
+	public SystemManager saveSysManager(@RequestBody SystemManager systemManager) {
+		//System.out.println("uslo");
+		if (systemManager != null){
+		//restaurantManager.setId(null);//mozda ovo ne bi trebalo dirati jer ovo baza sama regulise
+			systemManager.setFirstLogIn(true);
+			systemManager.setUserRole(Role.sysManager);
+			systemManager.setPreset(Preset.no);
+		//restaurantManager.setActive(false);
+		systemManagerService.save(systemManager);
+		return systemManager;
+	}
+		else
+			return null;
+		
+	}
 }
