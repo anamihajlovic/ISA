@@ -5,7 +5,13 @@ angular.module('restaurants', [ 'ui.router',
 								'bartender.services', 'bartender.controller',
 								'guest.services', 'guest.controller',
 								'resManager.services','resManager.controller',
+
+								'employee.services',
+								'cook.services', 'cook.controller',
+								'waiter.services', 'waiter.controller',
+								'guest.services', 'guest.controller'
 							   ])
+							   
 .config(function($stateProvider, $urlRouterProvider) {
         $urlRouterProvider.otherwise('/login');
         
@@ -86,25 +92,62 @@ angular.module('restaurants', [ 'ui.router',
         templateUrl : 'html/resManager/resManagerHome.html',
           controller : 'resManagerController'
         }) 
-      .state('resManager.newEmployed', {
-       	url : '/newEmployed',
-        templateUrl : 'html/resManager/resManagerNewEmployed.html'
+      .state('resManager.newEmployee', {
+       	url : '/newEmployee',
+        templateUrl : 'html/resManager/resManagerNewEmployee.html'
         }) 
              
            .state('bartender', {
         	   url : '/bartender',
         	   templateUrl : 'html/employees/bartenderHome.html',
-        	   controller : 'bartenderController'
+        	   controller: 'bartenderController'
+        	   
            })
            
            .state('bartender.updateInfo', {
-        	   url : '/bartender',
-        	   templateUrl : 'html/employees/employeeUpdateInfo.html',
+        	   url : '/updateInfo',
+        	   templateUrl : 'html/employees/employeeUpdateInfo.html',        	   
            })
            
            .state('bartender.changePassword', {
-        	   url : '/bartender',
-        	   templateUrl : 'html/employees/changePassword.html',
+        	   url : '/changePassword',
+        	   templateUrl : 'changePassword.html',
            })
+           
+           .state('waiter' , {
+        	  url: '/waiter',
+        	  templateUrl: 'html/employees/waiterHome.html',
+        	  controller: 'waiterController'
+        	 
+           })
+           
+           .state('waiter.updateInfo' , {
+        	  url: '/updateInfo',
+        	  templateUrl: 'html/employees/employeeUpdateInfo.html',        	 
+        	 
+           })
+           
+           .state('waiter.changePassword', {
+        	   url : '/changePassword',
+        	   templateUrl : 'changePassword.html',
+           })
+                    
+           
+           .state('cook' , {  
+        	  url: '/cook', 
+        	  templateUrl: 'html/employees/cookHome.html',
+        	  controller: 'cookController'        	          	
+           })
+           
+           .state('cook.updateInfo', {
+        	  url: '/updateInfo', 
+         	  templateUrl: 'html/employees/employeeUpdateInfo.html',         	    
+           })
+           
+           .state('cook.changePassword', {
+        	   url : '/changePassword',
+        	   templateUrl : 'changePassword.html',
+           })
+                     
          
 });

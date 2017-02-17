@@ -1,9 +1,9 @@
-var bartenderModule = angular.module('bartender.controller', []);
+var cookModule = angular.module('cook.controller', []);
 
 
-bartenderModule.controller('bartenderController', ['$scope', 'bartenderService', 'employeeService', '$location',
+cookModule.controller('cookController', ['$scope', 'cookService', 'employeeService', '$location',
 	
-	function ($scope, bartenderService, employeeService, $location) {
+	function ($scope, cookService, employeeService, $location) {
 	
 		function isLoggedIn() {
 			employeeService.getEmployee().then(function (response) {				
@@ -18,8 +18,7 @@ bartenderModule.controller('bartenderController', ['$scope', 'bartenderService',
 		isLoggedIn();
 		
 		
-		$scope.updateInfo = function () {    			
-			alert("Update bar");			
+		$scope.updateInfo = function () {    							
 			var request = employeeService.updateInfo($scope.employee).then(function(response){
 				$scope.data = response.data;
 				alert(response.data);
@@ -28,8 +27,8 @@ bartenderModule.controller('bartenderController', ['$scope', 'bartenderService',
 			
 			request.then(function (data) {
 				if($scope.data != null) {
-					toastr.success("Bartender info is updated");
-					$location.path('bartender');
+					toastr.success("Cook info is updated");
+					$location.path('cook');
 						
 				} else {
 					toastr.error("Something wrong");
@@ -39,9 +38,7 @@ bartenderModule.controller('bartenderController', ['$scope', 'bartenderService',
 		}
 		
 		$scope.changePassword = function() {
-			alert("Pass bar change");				
+			alert("Pass cook change");				
 		}
-		
-		
 				
 }]);
