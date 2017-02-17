@@ -167,11 +167,10 @@ sysManagerModule.controller('sysManagerController', ['$scope', 'sysManagerServic
 
 	
 	$scope.buttonDeleteResManager= function (event) {    
-		alert("bilo sta")
-		alert(event.target.id)
+		//alert(event.target.id)
 		var request = sysManagerService.buttonDeleteResManager(event).then(function(response) {
 		$scope.data = response.data;
-		alert(response.data)
+		//alert(response.data)
 		return response;
 	});			
 		request.then(function (data) {
@@ -187,11 +186,10 @@ sysManagerModule.controller('sysManagerController', ['$scope', 'sysManagerServic
 	});
 }
 	$scope.buttonDeleteRestaurant= function (event) {    
-		alert("bilo sta")
-		alert(event.target.id)
+		//alert(event.target.id)
 		var request = sysManagerService.buttonDeleteRestaurant(event).then(function(response) {
 		$scope.data = response.data;
-		alert(response.data)
+		//alert(response.data)
 		return response;
 	});			
 		request.then(function (data) {
@@ -206,8 +204,21 @@ sysManagerModule.controller('sysManagerController', ['$scope', 'sysManagerServic
 
 	});
 }
-	
-	
+
+	  $scope.open = function($event) {
+	    $event.preventDefault();
+	    $event.stopPropagation();
+
+	    $scope.opened = true;
+	  };
+
+	  $scope.dateOptions = {
+	    formatYear: 'yy',
+	    startingDay: 1
+	  };
+
+
+	  $scope.format = 'dd-MMMM-yyyy';
 	
 	
 	

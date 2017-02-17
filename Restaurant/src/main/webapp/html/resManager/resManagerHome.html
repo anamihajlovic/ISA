@@ -1,0 +1,30 @@
+<style type="text/css">
+
+</style>
+
+<nav class="navbar  navbar-inverse" role="navigation"> 
+
+      <div class="navbar-header navbar-left">
+      	<p class="navbar-brand" >Welcome, {{restaurantManager.firstName+" "+ restaurantManager.lastName}}</p>
+   	 </div>
+      <ul class="nav navbar-nav navbar-left">
+     <li><a><button data-ui-sref=".list" class="btn btn-default navbar-btn" ><span class="glyphicon glyphicon-list"></span> List </button>
+	
+	<button  data-ui-sref=".newEmployed" class="btn btn-default navbar-btn"><span class="glyphicon glyphicon-user"></span> New employed</button>
+
+	<button  data-ui-sref=".newRestaurant" data-ng-click =" freeRestaurantManagers()" class="btn btn-default navbar-btn"><span class="glyphicon glyphicon-plus"></span> New  Restaurant</button> 
+	<button data-ui-sref=".updateSysManager"  class="btn btn-default navbar-btn"><span class="glyphicon glyphicon-user"></span> Update profile</button>
+	<button data-ui-sref=".newSysManager"	id="newSysManager" class="btn btn-default navbar-btn"><span class="glyphicon glyphicon-user"></span> New system manager</button></a></li>
+	</ul>
+	<ul class="nav navbar-nav navbar-right">
+         <li><a  data-ui-sref="logout"><span class="glyphicon glyphicon-log-out"></span> Log out </a></li>
+    <li><a ></a></li>
+    </ul>
+
+ </nav>
+ 
+ 
+ <div>
+ <div data-ui-view></div>
+
+</div>

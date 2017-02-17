@@ -17,17 +17,17 @@ sysManagerServices.service('sysManagerService',['$http', function($http) {
 	}
 	
 	this.saveRestaurant = function(restaurant) {
-		alert("uslo i u service")
+		//alert("uslo i u service")
 		return $http.post("/sysManager/newRestaurant", restaurant);
 	}
 	
 	this.updateSysManager = function(systemManager) {
-		alert("sysService " + systemManager)
-		alert("id je " + systemManager.id)		
+		//alert("sysService " + systemManager)
+		//alert("id je " + systemManager.id)		
 		return $http.put("/sysManager/"+systemManager.id, systemManager);
 	}
 	this.saveSysManager = function(sysManager) {
-		alert("sysService " + sysManager)
+		//alert("sysService " + sysManager)
 		return $http.post("/sysManager/newSysManager", sysManager);
 	}
 	this.findAllRestaurantManagers = function(){
@@ -40,11 +40,11 @@ sysManagerServices.service('sysManagerService',['$http', function($http) {
 		return $http.get("/sysManager/Restaurants");
 	}
 	this.buttonDeleteResManager = function(event){
-		alert(event.target.id)
+		//alert(event.target.id)
 	return $http.put("/sysManager/deleteResMen/"+event.target.id);
 	}
 	this.buttonDeleteRestaurant = function(event){
-		alert(event.target.id)
+		//alert(event.target.id)
 	return $http.put("/sysManager/deleteRestaurant/"+event.target.id);
 	}
 }]); 

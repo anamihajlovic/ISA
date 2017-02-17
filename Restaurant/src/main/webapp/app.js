@@ -3,7 +3,8 @@ angular.module('restaurants', [ 'ui.router',
 	  							'common.services','common.controller',
 								'sysManager.services','sysManager.controller',
 								'bartender.services', 'bartender.controller',
-								'guest.services', 'guest.controller'
+								'guest.services', 'guest.controller',
+								'resManager.services','resManager.controller',
 							   ])
 .config(function($stateProvider, $urlRouterProvider) {
         $urlRouterProvider.otherwise('/login');
@@ -79,6 +80,16 @@ angular.module('restaurants', [ 'ui.router',
               url : '/list',
              templateUrl : 'html/sysManager/sysManagerList.html',
           })
+          
+       .state('resManager', {
+       	url : '/resManager',
+        templateUrl : 'html/resManager/resManagerHome.html',
+          controller : 'resManagerController'
+        }) 
+      .state('resManager.newEmployed', {
+       	url : '/newEmployed',
+        templateUrl : 'html/resManager/resManagerNewEmployed.html'
+        }) 
              
            .state('bartender', {
         	   url : '/bartender',

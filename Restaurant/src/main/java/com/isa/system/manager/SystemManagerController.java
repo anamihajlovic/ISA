@@ -173,10 +173,13 @@ public class SystemManagerController {
 	
 	@PutMapping(path = "/deleteResMen/{id}")
 	public String deleteResManager(@PathVariable Long id) {
-		int brojac = 0;
 		if(id!=null){
-
-		restaurantManagerService.delete(id);
+			try {
+				restaurantManagerService.delete(id);
+			} catch (Exception e) {
+				// TODO: handle exception
+			}
+		
 	
 	return "yes";
 		}else return "no";	
