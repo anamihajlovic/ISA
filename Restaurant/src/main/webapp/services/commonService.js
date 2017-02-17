@@ -6,6 +6,11 @@ commonServices.service('commonService',['$http', function($http) {
 		return $http.post("/users/login", user);
 	}
 	
+	this.getActiveUser = function() {			
+		return $http.get("/users/getActiveUser");
+	}
+	
+	
 	/*this.logout = function() {
 		alert("service logout");
 		return $http.get("/users/logout");

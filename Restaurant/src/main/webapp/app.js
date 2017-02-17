@@ -51,6 +51,12 @@ angular.module('restaurants', [ 'ui.router',
           	templateUrl : 'html/guest/guestHome.html',
             controller : 'guestController'
          }) 
+         
+         .state('guest.updateProfile', {
+        	url: '/updateProfile',
+        	templateUrl: 'html/guest/guestProfile.html'
+        })
+         
          .state('sysManager', {
          	url : '/sysManager',
            	templateUrl : 'html/sysManager/sysManagerHome.html',

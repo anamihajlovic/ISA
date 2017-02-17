@@ -9,5 +9,7 @@ public interface GuestService {
 	Guest save(Guest guest);
 	
 	void activateAccount(String activationCode);
+	
+	void delete (Long id);
 
 }

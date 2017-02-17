@@ -6,4 +6,8 @@ guestServices.service('guestService', ['$http', function($http) {
 		return $http.post("/guests/register", guest);
 	}
 	
+	this.updateProfile = function(guest) {
+		return $http.post("/guests/updateProfile", guest);
+	}
+	
 }]);

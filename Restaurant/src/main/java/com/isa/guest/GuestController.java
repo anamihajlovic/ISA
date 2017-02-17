@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.isa.bartender.Bartender;
 import com.isa.user.Role;
 
 @RestController
@@ -89,6 +90,8 @@ public class GuestController {
 				mailSender.send(email);
 			} catch (Exception ex) {
 				System.out.println("Email nije poslat.");
+				response = "FAILURE";
+				guestService.delete(guest.getId());//ako je bilo problema sa slanjem mail-a, da obrise prethodno dodatog gosta
 			}
 			
 			
@@ -101,7 +104,31 @@ public class GuestController {
 	@PostMapping(path = "/activateAccount/{activationCode}")
 	@ResponseStatus(HttpStatus.OK)
 	public void activateGuest(@PathVariable String activationCode) {
-		guestService.activateAccount(activationCode);
+		
+		try {
+			guestService.activateAccount(activationCode);
+		} catch (Exception ex) {
+			System.out.println("Greska prilikom aktiviranja naloga.");
+		}
+		
+	}
+	
+	//@PostMapping(path = "updateProfile/{id}")
+	@PostMapping(path = "/updateProfile")
+	public Guest updateProfile(@Valid @RequestBody Guest guest) {
+		System.out.println("updateProfile " + guest.getId() + " " + guest.getFirstName() + " " + guest.getLastName());
+		
+		try {
+			guestService.save(guest);
+		} catch (Exception ex) {
+			System.out.println("Greska prilikom updateProfile-a guest-a.");
+			guest = null;
+		}
+		
+		if(guest != null)
+			httpSession.setAttribute("user", guest);
+		
+		return guest;
 	}
 
 }

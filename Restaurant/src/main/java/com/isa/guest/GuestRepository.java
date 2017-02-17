@@ -14,5 +14,7 @@ public interface GuestRepository extends PagingAndSortingRepository<Guest, Long>
 	
 	public Guest findByActivationCode(String activationCode);
 	
+	public void delete(Long id);
+	
 
 }

@@ -32,7 +32,12 @@ public class GuestServiceImp implements GuestService {
 	public void activateAccount(String activationCode) {
 		Guest guest = repository.findByActivationCode(activationCode);
 		guest.setActive(true);
-		repository.save(guest);//da li postoji pametniji nacin?
+		repository.save(guest);
+	}
+
+	@Override
+	public void delete(Long id) {
+		repository.delete(id);
 	}
 	
 	
