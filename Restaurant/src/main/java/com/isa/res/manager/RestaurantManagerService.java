@@ -14,6 +14,8 @@ public interface RestaurantManagerService {
 	RestaurantManager save(RestaurantManager restaurantManager);
 
 	RestaurantManager findOne(Long id);
+	
+	void delete(Long id);
 
 	
 }

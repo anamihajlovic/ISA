@@ -8,6 +8,7 @@ import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -169,4 +170,25 @@ public class SystemManagerController {
 			return null;
 		
 	}
+	
+	@PutMapping(path = "/deleteResMen/{id}")
+	public String deleteResManager(@PathVariable Long id) {
+		int brojac = 0;
+		if(id!=null){
+
+		restaurantManagerService.delete(id);
+	
+	return "yes";
+		}else return "no";	
+	}
+	
+	@PutMapping(path = "/deleteRestaurant/{id}")
+	public String deleteRestaurant(@PathVariable Long id) {
+		if(id!=null){		
+			restaurantService.delete(id);
+		return "yes";
+			}else return "no";	
+	}
+	
+	
 }

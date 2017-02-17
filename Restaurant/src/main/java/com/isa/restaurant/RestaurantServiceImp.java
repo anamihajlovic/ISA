@@ -44,6 +44,15 @@ public class RestaurantServiceImp implements RestaurantService{
 	}
 
 
+	@Override
+	public void deleteResManager(Long id, Long idd) {
+		// TODO Auto-generated method stub
+		repository.findOne(id).getRestaurantManagers().remove(idd);
+		
+	}
+
+
+
 	/*@Override
 	public List<Long> findEmployedResManagers() {
 		return repository.getEmployedResManagers();

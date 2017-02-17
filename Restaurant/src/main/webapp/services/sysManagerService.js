@@ -39,6 +39,12 @@ sysManagerServices.service('sysManagerService',['$http', function($http) {
 		//alert("uslo i u service")
 		return $http.get("/sysManager/Restaurants");
 	}
-	
-	
+	this.buttonDeleteResManager = function(event){
+		alert(event.target.id)
+	return $http.put("/sysManager/deleteResMen/"+event.target.id);
+	}
+	this.buttonDeleteRestaurant = function(event){
+		alert(event.target.id)
+	return $http.put("/sysManager/deleteRestaurant/"+event.target.id);
+	}
 }]); 
