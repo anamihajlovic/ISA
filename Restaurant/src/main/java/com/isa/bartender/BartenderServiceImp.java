@@ -29,8 +29,8 @@ public class BartenderServiceImp implements BartenderService {
 	}
 
 	@Override
-	public void save(Bartender bartender) {		
-		repository.save(bartender);
+	public Bartender save(Bartender bartender) {		
+		return repository.save(bartender);
 	}
 	
 	
