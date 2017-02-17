@@ -99,5 +99,11 @@ public class UserController {
 		
 		return "OK";
 	}
+	
+	@GetMapping(path="/getActiveUser")
+	public User getActiveUser() {		
+		User activeUser = (User)httpSession.getAttribute("user");
+		return activeUser;
+	}
 
 }

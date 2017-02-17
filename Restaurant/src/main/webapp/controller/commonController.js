@@ -22,11 +22,13 @@ commonModule.controller('commonController', ['$scope', 'commonService','$locatio
 						} else if ($scope.data.userRole == "resManager") {
 							
 						} else if ($scope.data.userRole == "waiter") {
+							$location.path('waiter');
 							
 						} else if ($scope.data.userRole == "cook") {
+							$location.path('cook');
 							
 						} else if ($scope.data.userRole == "bartender") {
-							$location.path('bartender')
+							$location.path('bartender');
 							
 						} else if ($scope.data.userRole == "bidder") {
 							

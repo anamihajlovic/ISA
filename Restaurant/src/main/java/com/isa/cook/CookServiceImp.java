@@ -3,6 +3,8 @@ package com.isa.cook;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.isa.bartender.Bartender;
+
 @Service
 public class CookServiceImp implements CookService {
 	
@@ -21,6 +23,16 @@ public class CookServiceImp implements CookService {
 	@Override
 	public Cook findByEMailAndPassword(String email, String password) {
 		return repository.findByEmailAndPassword(email, password);
+	}
+	
+	@Override
+	public Cook findOne(Long id) {		
+		return repository.findOne(id);
+	}
+
+	@Override
+	public void save(Cook cook) {		
+		repository.save(cook);
 	}
 
 }
