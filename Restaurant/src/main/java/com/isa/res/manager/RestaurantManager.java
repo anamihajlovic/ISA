@@ -6,8 +6,10 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import com.isa.restaurant.Restaurant;
 import com.isa.user.User;
 
 @Entity
@@ -15,9 +17,10 @@ import com.isa.user.User;
 public class RestaurantManager extends User {	
 	
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue
 	@Column(name = "res_manager_id")
 	private Long id;
+	
 	
 	public RestaurantManager() {}
 	
@@ -34,11 +37,6 @@ public class RestaurantManager extends User {
 		this.id = id;
 	}
 	
-	@Override
-	public String toString() {
-		return "RestauranManager [id=" + id + "]";
-	}
-
 
 	
 

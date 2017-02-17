@@ -16,5 +16,6 @@ public interface RestaurantService {
 
 	void delete(Long id);
 	
+	void deleteResManager(Long id, Long idd);
 	//List<Long> findEmployedResManagers();
 }

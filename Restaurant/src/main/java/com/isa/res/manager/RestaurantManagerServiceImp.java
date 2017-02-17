@@ -46,6 +46,12 @@ public class RestaurantManagerServiceImp  implements RestaurantManagerService{
 		return repository.findOne(id);
 	}
 
+	@Override
+	public void delete(Long id) {
+		repository.delete(id);
+		
+	}
+
 	
 
 	

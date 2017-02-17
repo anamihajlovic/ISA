@@ -54,7 +54,7 @@ sysManagerModule.controller('sysManagerController', ['$scope', 'sysManagerServic
 		); 	
 	};
 	AllResManagers();
-$scope.viewAll = function() {  
+	function AllRestaurants(){  
 		//alert("uslo u controller")		
 		var request = sysManagerService.findAllRestaurants().then(
 			function (response) {
@@ -62,7 +62,7 @@ $scope.viewAll = function() {
 			}
 		); 	
 	};
-
+	AllRestaurants();
 	
 	
 	
@@ -162,12 +162,50 @@ $scope.viewAll = function() {
 
 	});
 }
+///////////////////////////////////////////////	
 	
+
 	
-	
-	
-	
-	
+	$scope.buttonDeleteResManager= function (event) {    
+		alert("bilo sta")
+		alert(event.target.id)
+		var request = sysManagerService.buttonDeleteResManager(event).then(function(response) {
+		$scope.data = response.data;
+		alert(response.data)
+		return response;
+	});			
+		request.then(function (data) {
+			if($scope.data != "no") {
+				toastr.success("Success!");	
+				AllResManagers();
+				AllRestaurants();
+			} else {
+				toastr.error("Something wrong");
+			
+			}
+
+	});
+}
+	$scope.buttonDeleteRestaurant= function (event) {    
+		alert("bilo sta")
+		alert(event.target.id)
+		var request = sysManagerService.buttonDeleteRestaurant(event).then(function(response) {
+		$scope.data = response.data;
+		alert(response.data)
+		return response;
+	});			
+		request.then(function (data) {
+			if($scope.data != "no") {
+				toastr.success("Success!");	
+				AllResManagers();
+				AllRestaurants();
+			} else {
+				toastr.error("Something wrong");
+			
+			}
+
+	});
+}
 	
 	
 	
