@@ -5,9 +5,9 @@
       	<p class="navbar-brand" >Welcome, {{guest.firstName +" "+ guest.lastName}}</p>
    	 </div>
       <ul class="nav navbar-nav">
-     <li><button data-ui-sref="." class="btn btn-default navbar-btn" ><span class="glyphicon glyphicon-list"></span> List </button></li>
+     <li><button data-ui-sref="." class="btn btn-default navbar-btn" ><span class="glyphicon glyphicon-list"></span> My friends </button></li>
 	
-	<li><button  data-ui-sref="." class="btn btn-default navbar-btn"><span class="glyphicon glyphicon-user"></span> Add </button></li>
+	<li><button  data-ui-sref=".findFriends" ng-click="findFriends()"class="btn btn-default navbar-btn"><span class="glyphicon glyphicon-user"></span> Add friends </button></li>
 
 	<li><button  data-ui-sref="." class="btn btn-default navbar-btn"><span class="glyphicon glyphicon-plus"></span> New </button> </li>
 

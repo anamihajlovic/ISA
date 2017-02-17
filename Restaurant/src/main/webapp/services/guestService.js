@@ -10,4 +10,8 @@ guestServices.service('guestService', ['$http', function($http) {
 		return $http.post("/guests/updateProfile", guest);
 	}
 	
+	this.findFriends = function(id) {
+		return $http.get("/guests/findFriends/" + id);
+	}
+	
 }]);

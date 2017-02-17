@@ -56,6 +56,11 @@ angular.module('restaurants', [ 'ui.router',
         	url: '/updateProfile',
         	templateUrl: 'html/guest/guestProfile.html'
         })
+        
+        .state('guest.findFriends', {
+        	url: 'findFriends',
+        	templateUrl: 'html/guest/addFriends.html'
+        })
          
          .state('sysManager', {
          	url : '/sysManager',

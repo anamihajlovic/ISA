@@ -1,5 +1,7 @@
 package com.isa.guest;
 
+import java.util.List;
+
 public interface GuestService {
 	
 	Guest findByEMail(String email);
@@ -11,5 +13,7 @@ public interface GuestService {
 	void activateAccount(String activationCode);
 	
 	void delete (Long id);
+	
+	List<Guest> findAll();
 
 }

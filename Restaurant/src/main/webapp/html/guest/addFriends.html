@@ -1,0 +1,79 @@
+<link rel="stylesheet" type="text/css" href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css">
+
+<style type="text/css">
+.list-content{
+ min-height:300px;
+ max-width: 400px;
+}
+.list-content .list-group .title{
+  background:#5bc0de;
+  border:2px solid #DDDDDD;
+  font-weight:bold;
+  color:#FFFFFF;
+
+}
+.list-group-item img {
+    height:60px; 
+    width:60px;
+}
+
+.jumbotron .btn {
+    padding: 5px 5px !important;
+    font-size: 12px !important;
+}
+.prj-name {
+    color:#5bc0de;    
+}
+.break{
+    /*width:100%;*/
+    margin:20px;
+}
+.name {
+    color:#5bc0de;    
+}
+
+#search {
+    background-image: url('/css/searchIcon.png'); /* Add a search icon to input */
+    background-position: 0px 5px; /* Position the search icon */
+    background-repeat: no-repeat; /* Do not repeat the icon image */
+    font-size: 16px; /* Increase font-size */
+    padding: 12px 20px 12px 40px; /* Add some padding */
+    border: 1px solid #ddd; /* Add a grey border */
+    margin-bottom: 12px; /* Add some space below the input */
+    width: 100%;
+    
+}
+</style>
+
+<div class="container bootstrap snippet" align="center">
+
+  <div class="header">
+    <h3 class="text-muted prj-name">
+        <span class="fa fa-users fa-2x principal-title"></span>
+        Finding friends
+    </h3>
+  </div>
+
+
+  <div class="jumbotron list-content" >
+    <ul class="list-group">
+    <li> 
+      <input type="text" ng-model="searchText" id="search" placeholder="Search people...">
+    </li>
+      <li class="list-group-item title">
+        Find your friends
+      </li>
+      <li ng-repeat="friend in possibleFriends | filter:searchText" class="list-group-item text-left">
+        <img class="img-thumbnail" src="html/guest/userProfile.png">
+        <label class="name">
+            {{ friend.firstName + " " + friend.lastName }}<br>
+        </label>
+        <label class="pull-right">
+            <a  class="btn btn-success btn-xs glyphicon glyphicon-plus" data-ui-sref="." title="Add"></a>
+            <!--  <a  class="btn btn-danger  btn-xs glyphicon glyphicon-trash" data-ui-sref="." title="Delete"></a>-->
+        </label>
+        <div class="break"></div>
+      </li>
+    </ul>
+  </div>
+  </div>

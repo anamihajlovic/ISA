@@ -78,6 +78,25 @@ guestModule.controller('guestController', ['$scope', 'guestService','commonServi
 			
 		}
 		
+		
+		$scope.findFriends = function() {
+			var request = guestService.findFriends($scope.guest.id).then(function(response){
+				$scope.data = response.data;
+				return response;
+			});
+				
+			request.then(function (data) {
+				if($scope.data.length != 0) {
+					$scope.possibleFriends = $scope.data;
+				} else {
+						toastr.info("You're already friend with everyone or you're waiting for them to accept your friend request! :)");
+					
+				}
+			});
+		}
+		
+		
+		
 }]);
 
 

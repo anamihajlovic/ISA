@@ -1,6 +1,7 @@
 package com.isa.guest;
 
-import org.springframework.data.jpa.repository.Query;
+import java.util.List;
+
 import org.springframework.data.repository.PagingAndSortingRepository;
 
 public interface GuestRepository extends PagingAndSortingRepository<Guest, Long> {
@@ -15,6 +16,8 @@ public interface GuestRepository extends PagingAndSortingRepository<Guest, Long>
 	public Guest findByActivationCode(String activationCode);
 	
 	public void delete(Long id);
+	
+	public List<Guest> findAll();
 	
 
 }
