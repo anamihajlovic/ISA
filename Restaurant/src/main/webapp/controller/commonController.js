@@ -18,6 +18,7 @@ commonModule.controller('commonController', ['$scope', 'commonService','$locatio
 							$location.path('guest');
 						} else if ($scope.data.userRole == "sysManager") {
 							$location.path('sysManager');
+							
 						} else if ($scope.data.userRole == "resManager") {
 							
 						} else if ($scope.data.userRole == "waiter") {

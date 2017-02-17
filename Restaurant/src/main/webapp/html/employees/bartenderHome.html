@@ -1,20 +1,20 @@
 <style type = "text/css">
-
+	.caret{border-bottom:4px}
 </style>
 
 <nav class = "navbar navbar-inverse" role = "navigation">
 
 	<div class = "navbar-header navbar-left">
-		<p class = "navbar-brand">Welcome, bartender</p>
+		<p class="navbar-brand" >Welcome, {{employee.firstName+" "+ employee.lastName}}</p>
 	</div>
 	
 	<ul class = "nav navbar-nav">		
-
+		
 	</ul>
 	
 	<ul class="nav navbar-nav navbar-right">
 		
-		<li><button type="button" class="btn btn-default dropdown-toggle navbar-btn" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="glyphicon glyphicon-cog"> Settings <span class="caret"></span></button>
+		<li><button type="button" class="btn btn-default dropdown-toggle navbar-btn glyphicon glyphicon-cog" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true"> <span class="caret"></span></button>
         	<ul class="dropdown-menu">
           	<li><a data-ui-sref=".updateInfo">Update info</a></li>
           	<li><a data-ui-sref=".changePassword" >Change password</a></li>             	    
