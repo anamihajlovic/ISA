@@ -8,6 +8,6 @@ public interface WaiterService {
 	
 	Waiter findOne(Long id);
 	
-	void save(Waiter waiter);
+	Waiter save(Waiter waiter);
 
 }

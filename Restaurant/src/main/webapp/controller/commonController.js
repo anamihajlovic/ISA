@@ -57,9 +57,7 @@ commonModule.controller('commonController', ['$scope', 'commonService','$locatio
 				toastr.success("Goodbye");
 				$location.path('login');
 			});
-		}*/
-		
-		
+		}*/					
 		
 		
 }]);

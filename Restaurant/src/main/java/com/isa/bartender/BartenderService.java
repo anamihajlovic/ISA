@@ -8,5 +8,5 @@ public interface BartenderService {
 
 	Bartender findOne(Long id);
 	
-	void save(Bartender bartender);
+	Bartender save(Bartender bartender);
 }

@@ -31,8 +31,8 @@ public class CookServiceImp implements CookService {
 	}
 
 	@Override
-	public void save(Cook cook) {		
-		repository.save(cook);
+	public Cook save(Cook cook) {		
+		return repository.save(cook);
 	}
 
 }
