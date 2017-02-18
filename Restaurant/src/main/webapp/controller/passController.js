@@ -20,6 +20,8 @@ passModule.controller('passController', ['$scope', 'commonService', '$location',
 		$scope.newVisible = false;
 		$scope.retypeVisible = false;
 		
+		$scope.newPassFilled = false;
+		
 		$scope.toggleCurrentVisible = function() {
 			$scope.currentVisible = !$scope.currentVisible;
 		}
@@ -32,6 +34,7 @@ passModule.controller('passController', ['$scope', 'commonService', '$location',
 			$scope.retypeVisible = !$scope.retypeVisible;
 		}
 		
+		
 		$scope.changePassword = function () { 				
 			var request = commonService.getActiveUser().then(function(response) {
 				if(response.data != "") {
@@ -42,8 +45,18 @@ passModule.controller('passController', ['$scope', 'commonService', '$location',
 		
 		});
 			
-			request.then(function(data) {				
-				if($scope.current != $scope.activeUser.password)
+			request.then(function(data) {			
+				if($scope.current == $scope.newPassword) {
+					toastr.error("New password must be different from current.");
+					$scope.newPassword = null;
+					$scope.retypedPassword = null;
+					$scope.passForm.retypedPass.$dirty = false;
+					$scope.passForm.newPass.$dirty = false;
+					$scope.newPassFilled = false;									
+				
+				}
+				
+				else if($scope.current != $scope.activeUser.password)
 					toastr.error("Invalid current password");
 				
 				else {					
@@ -59,7 +72,7 @@ passModule.controller('passController', ['$scope', 'commonService', '$location',
 							toastr.success("Password was successfully changed.");							
 							$location.path($scope.activeUser.userRole);
 						} else {
-							toastr.error("Something wrong");						
+							toastr.error("Password change was not successful.");						
 						}
 						
 					});
@@ -106,14 +119,40 @@ passModule.controller('passController', ['$scope', 'commonService', '$location',
 			$location.path($scope.activeUser.userRole);
 		}
 				
-		$scope.clearRetyped = function() {			
+		$scope.clearRetyped = function() {
 			$scope.retypedPassword = "";
-		}	
-		
-		$scope.comparePasswords = function() {
 			
+			if($scope.newPassword != null) {
+				if($scope.newPassword.length == 0) {
+					$scope.newPassFilled = false;					
+				}												
+				else
+					$scope.newPassFilled = true;
+			
+			} else {
+				$scope.newPassFilled = false;
+				$scope.passForm.retypedPass.$dirty = false;
+				$scope.passwordsMismatch = false;
+				
+			}	
 		}
-							
-							
 		
+			$scope.comparePasswords = function() {
+				
+				if($scope.newPassword.length > 0) {
+					if($scope.retypedPassword == null) {
+						$scope.passForm.retypedPass.$invalid = true;
+						$scope.passwordsMismatch = false;						
+					
+					} else if($scope.retypedPassword != $scope.newPassword) {
+						$scope.passForm.retypedPass.$invalid = true;	
+						$scope.passwordsMismatch = true;
+					} else {
+						$scope.passForm.retypedPass.$invalid = false;	
+						$scope.passwordsMismatch = false;					
+					}																			
+				}						
+			}
+							
+						
 }]);

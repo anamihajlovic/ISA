@@ -38,8 +38,9 @@ waiterModule.controller('waiterController', ['$scope', 'waiterService', 'employe
 			});
 		}
 		
-		$scope.changePassword = function() {
-			alert("Pass waiter change");				
+		$scope.cancel = function() {
+			isLoggedIn();
+			$location.path('waiter');
 		}
 		
 		

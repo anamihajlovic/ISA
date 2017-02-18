@@ -30,7 +30,7 @@ public class BartenderController {
 	}
 	
 	@PutMapping(path = "/updateInfo")
-	public Bartender updateBartender(@RequestBody Bartender bartender) {
+	public Bartender updateBartender(@RequestBody Bartender bartender) {				
 		
 		try{
 			bartenderService.save(bartender);
