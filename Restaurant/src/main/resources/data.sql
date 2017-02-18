@@ -13,7 +13,7 @@ insert into bidders(email, password, first_name, last_name,first_login,user_role
 
 insert into cooks(email, password, first_name, last_name,birthday,shoes_size,clothes_size,first_login,user_role) values ('cook1@gmail.com','cook1','cook1','cook1','1994-07-27','no39','M',true,'cook')
 insert into waiters(email, password, first_name, last_name,birthday,shoes_size,clothes_size,first_login,user_role) values ('waiter1@gmail.com','waiter1','waiter1','waiter1','1994-07-25','no39','M',true,'waiter')
-insert into bartenders(email, password, first_name, last_name,birthday,shoes_size,clothes_size,first_login,user_role) values ('bar1@gmail.com','bar1','bar1','bar1','1994-07-25','no39','M',true,'bartender')
+insert into bartenders(email, password, first_name, last_name,birthday,shoes_size,clothes_size,first_login,user_role) values ('bar1@gmail.com','bar1','bar1','bar1','1994-07-25','no42','M',true,'bartender')
 
 insert into restaurant_managers(email, password, first_name, last_name,first_login,user_role) values ('resman1@gmail.com','resman1','first 1','last 1',true,'resManager')
 insert into restaurant_managers(email, password, first_name, last_name,first_login,user_role) values ('resman2@gmail.com','resman2','first 2','last 2',true,'resManager')

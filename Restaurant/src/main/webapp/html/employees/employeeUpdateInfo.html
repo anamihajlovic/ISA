@@ -1,25 +1,84 @@
+<style type = "text/css">
+
+.help-block {
+    color: red;
+}
+
+</style>
+
+
 <div>
 <div class = "col-sm-4">
 </div>
-<div class = "col-sm-4"  class="input-group">
-<form action="">
+<div class = "col-sm-4">
+<form action="" name = "form" novalidate>
 
+	<div ng-class="{ 'has-error': form.firstName.$dirty && form.firstName.$error.required }">
     <label>First name</label>
-    <input type="text" ng-model = "$parent.employee.firstName" class="form-control" name="firstName" >  
-
+    <input type="text" ng-model = "$parent.employee.firstName" class= "form-control" name="firstName" required> 
+     
+	<span class="help-block" ng-show = "form.firstName.$dirty && form.firstName.$invalid">
+    <span ng-show = "form.firstName.$error.required">First name is required.</span>
+    </span>
+    </div>
+             
+    <div ng-class="{ 'has-error': form.lastName.$dirty && form.lastName.$error.required }">          		 
     <label>Last name</label>
-    <input type="text" ng-model = "$parent.employee.lastName" class="form-control" name="lastName" >  
+    <input type="text" ng-model = "$parent.employee.lastName" class= "form-control"" name="lastName" required>  
 
+	<span class="help-block" ng-show = "form.lastName.$dirty && form.lastName.$invalid">
+    <span ng-show = "form.lastName.$error.required">Last name is required.</span>
+    </span>
+    </div>
+
+	<div ng-class="{ 'has-error': form.birthday.$dirty && form.birthday.$error.required }">
     <label>Birthday</label>
-    <input type="date" ng-model = "$parent.employee.birthday" class="form-control" name="birthday" >  
+    <input type="date" ng-model = "$parent.employee.birthday" class="form-control" name="birthday" required>  
 
+	<span class="help-block" ng-show = "form.birthday.$dirty && form.birthday.$invalid">
+    <span ng-show = "form.birthday.$error.required">Birthday is required.</span>
+    </span>
+    </div>
+       
+	<div ng-class="{ 'has-error': form.clothesSize.$dirty && form.clothesSize.$error.required }">	
     <label>Clothes size</label>
-    <input type="text" ng-model = "$parent.employee.clothesSize" class="form-control" name="clothesSize" >  
-    
-     <label>Shoe size</label>
-    <input type="text" ng-model = "$parent.employee.shoesSize" class="form-control" name="shoesSize" >  
-
-<button class="btn btn-default" ng-click="updateInfo()"><span class="glyphicon glyphicon-ok" ></span> Save changes</button>
+    <select class="form-control" ng-model = "$parent.employee.clothesSize" name = "clothesSize" required>
+    <option>XXS</option>
+    <option>XS</option>
+    <option>S</option>
+    <option>M</option>
+    <option>L</option>
+    <option>XL</option>
+    <option>XXL</option>
+    <option>XXXL</option>    
+  	</select> 
+  	    
+    <span class="help-block" ng-show = "form.clothesSize.$dirty && form.clothesSize.$invalid">
+    <span ng-show = "form.clothesSize.$error.required">Clothes size is required.</span>
+    </span>
+    </div>   
+   
+    <div ng-class="{ 'has-error': form.shoesSize.$dirty && form.shoesSize.$error.required }">
+    <label>Shoe size</label>
+    <select class="form-control" ng-model = "$parent.employee.shoesSize" name = "shoesSize" required>
+    <option>no38</option>
+    <option>no39</option>
+    <option>no40</option>
+    <option>no41</option>
+    <option>no42</option>
+    <option>no43</option>
+    <option>no44</option>
+    <option>no45</option>
+    <option>no46</option>    
+  	</select>    
+  	
+    <span class="help-block" ng-show = "form.shoesSize.$dirty && form.shoesSize.$invalid">
+    <span ng-show = "form.shoesSize.$error.required">Shoe size is required.</span>
+    </span>	
+    </div>
+   
+	
+<button class="btn btn-default" ng-disabled="form.$invalid" ng-click="updateInfo()"><span class="glyphicon glyphicon-ok" ></span> Save changes</button>
 <button class="btn btn-default" data-ui-sref = "bartender"><span class="glyphicon glyphicon-remove" ></span> Cancel</button>
 </form>
 

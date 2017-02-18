@@ -8,8 +8,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.isa.bartender.Bartender;
-
 @RestController
 @RequestMapping("/waiters")
 public class WaiterController {
@@ -27,6 +25,7 @@ public class WaiterController {
 	public Waiter updateWaiter(@RequestBody Waiter waiter) {		
 		try{
 			waiterService.save(waiter);
+			httpSession.setAttribute("user", waiter);
 		} catch(Exception e) {
 			System.out.println("Greska pri update-u konobara.");
 			return null;
@@ -40,6 +39,7 @@ public class WaiterController {
 		
 		try{
 			waiterService.save(waiter);
+			httpSession.setAttribute("user", waiter);
 		} catch(Exception e) {
 			System.out.println("Greska pri promeni sifre konobara");
 			return null;

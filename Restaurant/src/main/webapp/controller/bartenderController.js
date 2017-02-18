@@ -31,7 +31,7 @@ bartenderModule.controller('bartenderController', ['$scope', 'bartenderService',
 					$location.path('bartender');
 						
 				} else {
-					toastr.error("Something wrong");
+					toastr.error("Update was unsuccessful");
 				
 				}
 			});

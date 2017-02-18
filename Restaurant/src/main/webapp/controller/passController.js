@@ -4,7 +4,18 @@ var passModule = angular.module('pass.controller', []);
 passModule.controller('passController', ['$scope', 'commonService', '$location',
 	
 	function ($scope, commonService, $location) {
-					
+	
+	function isLoggedIn() {
+		commonService.getActiveUser().then(function (response) {				
+			if(response.data !="") 
+				$scope.activeUser = response.data;									
+			else
+				$location.path('login');
+		});
+	}
+			
+		isLoggedIn();
+		
 		$scope.currentVisible = false;
 		$scope.newVisible = false;
 		$scope.retypeVisible = false;
@@ -21,10 +32,10 @@ passModule.controller('passController', ['$scope', 'commonService', '$location',
 			$scope.retypeVisible = !$scope.retypeVisible;
 		}
 		
-		$scope.changePassword = function () { 						
+		$scope.changePassword = function () { 				
 			var request = commonService.getActiveUser().then(function(response) {
 				if(response.data != "") {
-					$scope.activeUser = response.data;
+					$scope.activeUser = response.data;									
 					return response;
 			} else
 				$location.path('login');
@@ -35,8 +46,7 @@ passModule.controller('passController', ['$scope', 'commonService', '$location',
 				if($scope.current != $scope.activeUser.password)
 					toastr.error("Invalid current password");
 				
-				else {
-					toastr.success("SUPEEEEH");
+				else {					
 					$scope.activeUser.password = $scope.newPassword;
 					var request = commonService.changePassword($scope.activeUser).then(function(response){
 						$scope.data = response.data;
@@ -46,7 +56,8 @@ passModule.controller('passController', ['$scope', 'commonService', '$location',
 					
 					request.then(function (data) {
 						if($scope.data != null) {
-							toastr.success("Password was successfully changed.");													
+							toastr.success("Password was successfully changed.");							
+							$location.path($scope.activeUser.userRole);
 						} else {
 							toastr.error("Something wrong");						
 						}
@@ -55,7 +66,18 @@ passModule.controller('passController', ['$scope', 'commonService', '$location',
 				}
 			});	
 		}
-						
+		
+		$scope.cancel = function() {
+			$location.path($scope.activeUser.userRole);
+		}
+				
+		$scope.clearRetyped = function() {			
+			$scope.retypedPassword = "";
+		}	
+		
+		$scope.comparePasswords = function() {
+			
+		}
 							
 							
 		

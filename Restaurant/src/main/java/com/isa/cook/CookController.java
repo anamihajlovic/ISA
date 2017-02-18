@@ -26,6 +26,7 @@ public class CookController {
 		
 		try{
 			cookService.save(cook);
+			httpSession.setAttribute("user", cook);
 		} catch(Exception e) {
 			System.out.println("Greska pri update-u kuvara.");
 			return null;
@@ -39,6 +40,7 @@ public class CookController {
 		
 		try{
 			cookService.save(cook);
+			httpSession.setAttribute("user", cook);
 		} catch(Exception e) {
 			System.out.println("Greska pri promeni sifre kuvara");
 			return null;

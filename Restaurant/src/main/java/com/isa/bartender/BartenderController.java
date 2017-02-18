@@ -13,19 +13,19 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/bartenders")
 public class BartenderController {
 	
-	private HttpSession session;
+	private HttpSession httpSession;
 	private final BartenderService bartenderService;
 
 	@Autowired
 	public BartenderController(final HttpSession httpSession, final BartenderService bartenderService) {
-		this.session = httpSession;
+		this.httpSession = httpSession;
 		this.bartenderService = bartenderService;
 	}
 	
 	
 	@GetMapping("/getBartender")
 	public Bartender getBartender() {		
-		Bartender bartender = (Bartender) session.getAttribute("user");
+		Bartender bartender = (Bartender) httpSession.getAttribute("user");
 		return bartender;
 	}
 	
@@ -34,6 +34,7 @@ public class BartenderController {
 		
 		try{
 			bartenderService.save(bartender);
+			httpSession.setAttribute("user", bartender);
 		} catch(Exception e) {
 			System.out.println("Greska pri update-u sankera");
 			return null;
@@ -47,6 +48,7 @@ public class BartenderController {
 		
 		try{
 			bartenderService.save(bartender);
+			httpSession.setAttribute("user", bartender);
 		} catch(Exception e) {
 			System.out.println("Greska pri promeni sifre sankera");
 			return null;

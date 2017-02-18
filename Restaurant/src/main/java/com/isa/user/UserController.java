@@ -103,6 +103,7 @@ public class UserController {
 	@GetMapping(path="/getActiveUser")
 	public User getActiveUser() {		
 		User activeUser = (User)httpSession.getAttribute("user");
+		System.out.println("back usert" + activeUser.getPassword());
 		return activeUser;
 	}
 

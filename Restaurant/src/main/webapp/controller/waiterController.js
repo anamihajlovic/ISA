@@ -32,7 +32,7 @@ waiterModule.controller('waiterController', ['$scope', 'waiterService', 'employe
 					$location.path('waiter');
 						
 				} else {
-					toastr.error("Something wrong");
+					toastr.error("Update was unsuccessful");
 				
 				}
 			});

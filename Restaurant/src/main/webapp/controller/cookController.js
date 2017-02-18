@@ -31,7 +31,7 @@ cookModule.controller('cookController', ['$scope', 'cookService', 'employeeServi
 					$location.path('cook');
 						
 				} else {
-					toastr.error("Something wrong");
+					toastr.error("Update was unsuccessful");
 				
 				}
 			});

@@ -1,5 +1,5 @@
 package com.isa.employed;
 
 public enum ClothesSize {
-	 S, M, L, XL, XXL;
+	 XXS, XS, S, M, L, XL, XXL, XXXL;
 }
