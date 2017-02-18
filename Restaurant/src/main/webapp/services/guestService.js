@@ -14,4 +14,16 @@ guestServices.service('guestService', ['$http', function($http) {
 		return $http.get("/guests/findFriends/" + id);
 	}
 	
+	this.getMyFriends = function(id) {
+		return $http.get("/guests/myFriends/" + id);
+	}
+	
+	this.addFriend = function(guestId, addId) {
+		return $http.post("/friendships/addFriend/" + addId, guestId);
+	}
+	
+	this.deleteFriend = function(guestId, deleteId) {
+		return $http.post("/friendships/deleteFriend/" + deleteId, guestId);
+	}
+	
 }]);

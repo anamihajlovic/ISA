@@ -9,6 +9,18 @@ insert into guests(email, password, first_name, last_name,user_role, first_login
 insert into guests(email, password, first_name, last_name,user_role, first_login, active, guest_a_code) values ('bakir@gmail.com', 'baki', 'Bakir', 'Niksic','guest', false, true, 'lwe267cfr')
 insert into guests(email, password, first_name, last_name,user_role, first_login, active, guest_a_code) values ('mirko@gmail.com', 'mirko', 'Mirko', 'Odalovic','guest', false, true, 'law369zde')
 
+
+--FRIENDSHIPS
+insert into friendships(sender_id, receiver_id, status) values (1, 3, 'accepted')
+insert into friendships(sender_id, receiver_id, status) values (1, 6, 'accepted')
+insert into friendships(sender_id, receiver_id, status) values (3, 5, 'accepted')
+insert into friendships(sender_id, receiver_id, status) values (8, 2, 'accepted')
+insert into friendships(sender_id, receiver_id, status) values (7, 1, 'sent')
+insert into friendships(sender_id, receiver_id, status) values (6, 2, 'sent')
+
+
+
+--EMPLOYED
 insert into bidders(email, password, first_name, last_name,first_login,user_role) values ('bid1@gmail.com', 'bid1', 'bid1', 'bid2',true,'bidder')
 insert into bidders(email, password, first_name, last_name,first_login,user_role) values ('bid2@gmail.com', 'bid2', 'bid2', 'bid2',true,'bidder')
 
@@ -86,3 +98,4 @@ insert into restuarant_menu(restaurant_id,dish_id)values(2,3)
 insert into restaurant_drink_card(restaurant_id,drink_id)values(1,1)
 insert into restaurant_drink_card(restaurant_id,drink_id)values(1,2)
 insert into restaurant_drink_card(restaurant_id,drink_id)values(2,3)
+

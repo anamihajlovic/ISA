@@ -19,5 +19,7 @@ public interface GuestRepository extends PagingAndSortingRepository<Guest, Long>
 	
 	public List<Guest> findAll();
 	
+	public Guest findById(Long id);
+	
 
 }

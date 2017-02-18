@@ -21,7 +21,7 @@ public class Guest extends User {
 	@Column(name = "guest_aCode", nullable=true)
 	private String activationCode;
 	
-	@Column(name="active", nullable=true)
+	@Column(name="active", nullable=false)
 	private Boolean active;
 	
 
