@@ -56,7 +56,7 @@ public class BidderController {
 			bidderService.save(bidder);
 			httpSession.setAttribute("user", bidder);
 		} catch(Exception e) {
-			System.out.println("Greska pri promeni sifre sankera");
+			System.out.println("Greska pri promeni sifre ponudjaca.");
 			return null;
 		}
 		

@@ -43,7 +43,7 @@ angular.module('restaurants', [ 'ui.router',
         })
         .state('firstLogIn', {
         	url: '/firstLogIn',
-        	templateUrl: 'firstLogIn.html',
+        	templateUrl: 'changePassword.html',
         	controller: 'commonController',
         	controller:'passController'
         		
