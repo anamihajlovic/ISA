@@ -41,8 +41,9 @@ sysManagerModule.controller('sysManagerController', ['$scope', 'sysManagerServic
 	}
 	$scope.newResManager = function(){
 		checkRights();	
+		alert($scope.form.firstName.$dirty)
 		$scope.resManager.firstName = '';
-	 $scope.hasError = false;
+	 $scope.form.firstName.$dirty = false;
 		$scope.resManager.lastName = '';
 		$scope.resManager.email = '';
 		$scope.resManager.password = '';

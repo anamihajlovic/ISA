@@ -7,7 +7,7 @@
 <form action="" name = "form" id ="resMan" novalidate>
     <label>Firstname</label>
       
-	<div  ng-class="{ 'hasError': form.firstName.$dirty && form.firstName.$error.required }">
+	<div  ng-class="{ 'has-error': form.firstName.$dirty && form.firstName.$error.required }">
 	<input type = "text" class = "form-control" ng-model = "$parent.resManager.firstName" name="firstName" ng-readonly="$parent.infoMode" required="required"> 
 	</div>
 	<span class="help-block" ng-show = "form.firstName.$dirty && form.firstName.$invalid">

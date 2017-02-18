@@ -14,6 +14,7 @@ angular.module('restaurants', [ 'ui.router',
 							   ])
 							   
 .config(function($stateProvider, $urlRouterProvider) {
+	
         $urlRouterProvider.otherwise('/login');
         
         $stateProvider
@@ -82,7 +83,6 @@ angular.module('restaurants', [ 'ui.router',
           .state('sysManager.newResManager', {
            	url : '/newResManager',
             templateUrl : 'html/sysManager/sysManagerNewResManager.html',
-            
             }) 
             
             

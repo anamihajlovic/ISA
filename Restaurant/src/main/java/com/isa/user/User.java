@@ -41,10 +41,9 @@ public class User {
 	@Column(name="user_role", nullable=false)
 	private Role userRole;
 	
-	@Column(name="active", nullable=true)
-	private Boolean active;
 	
 	@Column(name="first_login", nullable=false)
+
 	private Boolean firstLogIn;
 	
 	
@@ -57,7 +56,6 @@ public class User {
 		this.lastName = lastName;
 		this.userRole = userRole;
 		this.firstLogIn = true;
-		this.active = false;
 	}
 
 	public String getEmail() {
@@ -109,14 +107,6 @@ public class User {
 		this.firstLogIn = firstLogIn;
 	}
 	
-	
-	public Boolean getActive() {
-		return active;
-	}
-
-	public void setActive(Boolean active) {
-		this.active = active;
-	}
 
 
 	
