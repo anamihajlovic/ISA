@@ -17,6 +17,7 @@ employeeServices.service('employeeService',['$http', function($http) {
 		
 		else if(employee.userRole == 'bartender')
 			return $http.put("/bartenders/updateInfo", employee);
+		
 	}
 	
 	

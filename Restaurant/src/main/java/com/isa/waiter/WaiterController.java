@@ -35,7 +35,10 @@ public class WaiterController {
 	}
 	
 	@PutMapping(path = "/changePassword")
-	public Waiter changeBartenderPassword(@RequestBody Waiter waiter) {
+	public Waiter changeWaiterPassword(@RequestBody Waiter waiter) {
+		
+		if(waiter.getFirstLogIn())
+			waiter.setFirstLogIn(false);
 		
 		try{
 			waiterService.save(waiter);

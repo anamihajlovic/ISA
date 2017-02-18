@@ -41,7 +41,9 @@ public class User {
 	@Column(name="user_role", nullable=false)
 	private Role userRole;
 	
-	@Column(name="first_login", nullable=true)
+	
+	@Column(name="first_login", nullable=false)
+
 	private Boolean firstLogIn;
 	
 	

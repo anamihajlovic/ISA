@@ -37,8 +37,9 @@ cookModule.controller('cookController', ['$scope', 'cookService', 'employeeServi
 			});
 		}
 		
-		$scope.changePassword = function() {
-			alert("Pass cook change");				
+		$scope.cancel = function() {
+			isLoggedIn();
+			$location.path('cook');
 		}
 				
 }]);

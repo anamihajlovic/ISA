@@ -38,6 +38,9 @@ public class CookController {
 	@PutMapping(path = "/changePassword")
 	public Cook changeCookPassword(@RequestBody Cook cook) {
 		
+		if(cook.getFirstLogIn())
+			cook.setFirstLogIn(false);
+		
 		try{
 			cookService.save(cook);
 			httpSession.setAttribute("user", cook);

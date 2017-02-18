@@ -55,11 +55,11 @@ public class SystemManagerController {
 	
 	
 	@PostMapping(path = "/newResManager")
-	public RestaurantManager saveResManager(@RequestBody RestaurantManager restaurantManager) {
+	public RestaurantManager saveResManager(@Valid @RequestBody RestaurantManager restaurantManager) {
 		//System.out.println("uslo");
 		if (restaurantManager != null){
 		//restaurantManager.setId(null);//mozda ovo ne bi trebalo dirati jer ovo baza sama regulise
-		restaurantManager.setFirstLogIn(true);
+		restaurantManager.setFirstLogIn(false);
 		restaurantManager.setUserRole(Role.resManager);		
 		restaurantManagerService.save(restaurantManager);
 		Restaurant r = restaurantService.findOne(restaurantManager.getIdRestaurant());
@@ -114,7 +114,7 @@ public class SystemManagerController {
 		//System.out.println("uslo");
 		if (systemManager != null){
 		//restaurantManager.setId(null);//mozda ovo ne bi trebalo dirati jer ovo baza sama regulise
-			systemManager.setFirstLogIn(true);
+			systemManager.setFirstLogIn(false);
 			systemManager.setUserRole(Role.sysManager);
 			systemManager.setPreset(Preset.no);
 		//restaurantManager.setActive(false);

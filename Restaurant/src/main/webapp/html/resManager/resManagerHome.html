@@ -10,11 +10,11 @@
       <ul class="nav navbar-nav navbar-center">
      <li><a><button data-ui-sref=".list"  data-ng-click ="viewAll()"class="btn btn-default navbar-btn" ><span class="glyphicon glyphicon-list"></span> List </button>
 	
-	<button  data-ui-sref=".newEmployee" class="btn btn-default navbar-btn"><span class="glyphicon glyphicon-plus"></span> New Employee</button>
+	<button  data-ui-sref=".newEmployee" data-ng-click = "newEmpolyee()"class="btn btn-default navbar-btn"><span class="glyphicon glyphicon-plus"></span> New Employee</button>
 
-	<button  data-ui-sref=".newBidder"  class="btn btn-default navbar-btn"><span class="glyphicon glyphicon-plus"></span> New Bidder</button> 
-	<button data-ui-sref=".updateResManager"  class="btn btn-default navbar-btn"><span class="glyphicon glyphicon-user"></span> Update profile</button>
-	
+	<button  data-ui-sref=".newBidder" data-ng-click = "newBidder()" class="btn btn-default navbar-btn"><span class="glyphicon glyphicon-plus"></span> New Bidder</button> 
+	<button data-ui-sref=".updateResManager"  data-ng-click = "updateResManager()"class="btn btn-default navbar-btn"><span class="glyphicon glyphicon-user"></span> Update profile</button>
+	</a></li>
 	</ul>
 	<ul class="nav navbar-nav navbar-right">
          <li><a  data-ui-sref="logout"><span class="glyphicon glyphicon-log-out"></span> Log out </a></li>

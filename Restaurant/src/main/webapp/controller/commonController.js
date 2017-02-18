@@ -16,22 +16,38 @@ commonModule.controller('commonController', ['$scope', 'commonService','$locatio
 						toastr.success("Welcome, " + $scope.data.firstName + " !");
 						if ($scope.data.userRole == "guest") {
 							$location.path('guest');
+							
 						} else if ($scope.data.userRole == "sysManager") {
 							$location.path('sysManager');
 							
 						} else if ($scope.data.userRole == "resManager") {
 							$location.path('resManager');
+							
 						} else if ($scope.data.userRole == "waiter") {
-							$location.path('waiter');
+							if($scope.data.firstLogIn)
+								$location.path('firstLogIn');
+							else
+								$location.path('waiter');
 							
 						} else if ($scope.data.userRole == "cook") {
-							$location.path('cook');
+							if($scope.data.firstLogIn)
+								$location.path('firstLogIn');
+							else
+								$location.path('cook');
 							
 						} else if ($scope.data.userRole == "bartender") {
-							$location.path('bartender');
+							if($scope.data.firstLogIn)
+								$location.path('firstLogIn');
+							else
+								$location.path('bartender');
 							
 						} else if ($scope.data.userRole == "bidder") {
-							$location.path('bidder');
+							if($scope.data.firstLogIn==true){
+								$location.path('firstLogIn');
+							}else{
+								$location.path('bidder');
+							}
+						
 						}
 							
 					} else {
