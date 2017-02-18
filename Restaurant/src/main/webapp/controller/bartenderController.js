@@ -8,7 +8,7 @@ bartenderModule.controller('bartenderController', ['$scope', 'bartenderService',
 		function isLoggedIn() {
 			employeeService.getEmployee().then(function (response) {				
 					if(response.data !="") 
-						$scope.employee = response.data;						
+						$scope.employee = response.data;																	
 					else
 						$location.path('login');
 				}
@@ -37,9 +37,7 @@ bartenderModule.controller('bartenderController', ['$scope', 'bartenderService',
 			});
 		}
 		
-		$scope.changePassword = function() {
-			alert("Pass bar change");				
-		}				
+						
 		
 				
 }]);
