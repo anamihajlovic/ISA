@@ -3,7 +3,6 @@ package com.isa.cook;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -22,9 +21,30 @@ public class CookController {
 		this.cookService = cookService;
 	}
 	
-	@PutMapping(path = "/{id}")
-	public void updateCook(@PathVariable Long id,@RequestBody Cook cook) {		
-		cookService.save(cook);
+	@PutMapping(path = "/updateInfo")
+	public Cook updateCook(@RequestBody Cook cook) {		
+		
+		try{
+			cookService.save(cook);
+		} catch(Exception e) {
+			System.out.println("Greska pri update-u kuvara.");
+			return null;
+		}
+		
+		return cook;				
+	}
+	
+	@PutMapping(path = "/changePassword")
+	public Cook changeCookPassword(@RequestBody Cook cook) {
+		
+		try{
+			cookService.save(cook);
+		} catch(Exception e) {
+			System.out.println("Greska pri promeni sifre kuvara");
+			return null;
+		}
+		
+		return cook;	
 	}
 
 }

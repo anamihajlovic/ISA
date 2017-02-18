@@ -4,7 +4,6 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -30,10 +29,30 @@ public class BartenderController {
 		return bartender;
 	}
 	
-	@PutMapping(path = "/{id}")
-	public void updateBartender(@PathVariable Long id,@RequestBody Bartender bartender) {
-		System.out.println(bartender.getBirthday());
-		bartenderService.save(bartender);
+	@PutMapping(path = "/updateInfo")
+	public Bartender updateBartender(@RequestBody Bartender bartender) {
+		
+		try{
+			bartenderService.save(bartender);
+		} catch(Exception e) {
+			System.out.println("Greska pri update-u sankera");
+			return null;
+		}
+		
+		return bartender;	
+	}
+	
+	@PutMapping(path = "/changePassword")
+	public Bartender changeBartenderPassword(@RequestBody Bartender bartender) {
+		
+		try{
+			bartenderService.save(bartender);
+		} catch(Exception e) {
+			System.out.println("Greska pri promeni sifre sankera");
+			return null;
+		}
+		
+		return bartender;	
 	}
 	
 	

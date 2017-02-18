@@ -7,10 +7,8 @@ bartenderServices.service('bartenderService',['$http', function($http) {
 		return $http.get("/bartenders/getBartender");
 	}
 	
-	this.updateBartenderInfo = function(bartender) {
-		alert("bartender " + bartender)
-		alert("id je " + bartender.id)		
-		return $http.put("/bartenders/"+bartender.id, bartender);
+	this.updateBartenderInfo = function(bartender) {		
+		return $http.put("/bartenders/updateInfo", bartender);
 	}
 	
 }]); 

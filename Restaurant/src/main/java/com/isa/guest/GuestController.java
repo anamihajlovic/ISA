@@ -1,5 +1,8 @@
 package com.isa.guest;
 
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.List;
 import java.util.UUID;
 
 import javax.servlet.http.HttpSession;
@@ -10,9 +13,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
@@ -89,6 +92,8 @@ public class GuestController {
 				mailSender.send(email);
 			} catch (Exception ex) {
 				System.out.println("Email nije poslat.");
+				response = "FAILURE";
+				guestService.delete(guest.getId());//ako je bilo problema sa slanjem mail-a, da obrise prethodno dodatog gosta
 			}
 			
 			
@@ -101,7 +106,61 @@ public class GuestController {
 	@PostMapping(path = "/activateAccount/{activationCode}")
 	@ResponseStatus(HttpStatus.OK)
 	public void activateGuest(@PathVariable String activationCode) {
-		guestService.activateAccount(activationCode);
+		
+		try {
+			guestService.activateAccount(activationCode);
+		} catch (Exception ex) {
+			System.out.println("Greska prilikom aktiviranja naloga.");
+		}
+		
 	}
+	
+	//@PostMapping(path = "updateProfile/{id}")
+	@PostMapping(path = "/updateProfile")
+	public Guest updateProfile(@Valid @RequestBody Guest guest) {
+		System.out.println("updateProfile " + guest.getId() + " " + guest.getFirstName() + " " + guest.getLastName());
+		
+		try {
+			guestService.save(guest);
+		} catch (Exception ex) {
+			System.out.println("Greska prilikom updateProfile-a guest-a.");
+			guest = null;
+		}
+		
+		if(guest != null)
+			httpSession.setAttribute("user", guest);
+		
+		return guest;
+	}
+	
+	@GetMapping(path = "/findFriends/{id}")
+	public List<Guest> findFriends(@PathVariable Long id) {
+		System.out.println("findFriends " + id);
+		
+	    List<Guest> guests = guestService.findAll();
+	    
+	    for(int i=0; i< guests.size(); i++)
+	    	if (guests.get(i).getId() == id) {
+	    		guests.remove(i);
+	    		System.out.println("Uklonjen korisnik sa id-jem iz liste " + id);
+	    	}
+	    	
+	    System.out.println("velicina liste prijatelja iz findFriends " + guests.size());
+	    List<Guest> sorted = getSortedFriends(guests);
+		return sorted;
+	}
+	
+	private List<Guest> getSortedFriends(List<Guest> friends) {
+		Collections.sort(friends, new Comparator<Guest>() {
+
+			@Override
+			public int compare(Guest g1, Guest g2) {
+				return g1.getLastName().compareTo(g2.getLastName());
+			}
+		});
+		
+		return friends;
+	}
+
 
 }

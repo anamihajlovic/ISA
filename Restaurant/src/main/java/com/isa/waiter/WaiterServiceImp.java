@@ -5,7 +5,6 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.isa.bartender.Bartender;
 
 import jersey.repackaged.com.google.common.collect.Lists;
 
@@ -35,8 +34,8 @@ public class WaiterServiceImp implements WaiterService {
 	}
 
 	@Override
-	public void save(Waiter waiter) {		
-		repository.save(waiter);
+	public Waiter save(Waiter waiter) {		
+		return repository.save(waiter);
 	}
 
 	@Override

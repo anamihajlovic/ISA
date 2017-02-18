@@ -12,10 +12,12 @@ public interface WaiterService {
 	
 	Waiter findOne(Long id);
 	
-	void save(Waiter waiter);
 	
 	List<Waiter> findAll();
 	
 	void delete (Long id);
+
+	Waiter save(Waiter waiter);
+
 
 }

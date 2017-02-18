@@ -1,27 +1,22 @@
 var guestModule = angular.module('guest.controller', []);
 
 
-/*guestModule.directive("matchPassword", function () {
-    return {
-        require: "ngModel",
-        scope: {
-            otherModelValue: "=matchPassword"
-        },
-        link: function(scope, element, attributes, ngModel) {
-            ngModel.$validators.matchPassword = function(modelValue) {
-                return modelValue == scope.otherModelValue;
-            };
 
-            scope.$watch("otherModelValue", function() {
-                ngModel.$validate();
-            });
-        }
-    };
-});*/
+guestModule.controller('guestController', ['$scope', 'guestService','commonService', '$location',
+	function($scope, guestService, commonService,  $location) {
+	
+		function isLoggedIn() {
+			commonService.getActiveUser().then(function (response) {				
+				if(response.data !="") 
+					$scope.guest = response.data;									
+				//else
+					//$location.path('login');
+			}
+		);
+	}
 
-
-guestModule.controller('guestController', ['$scope', 'guestService', '$location',
-	function($scope, guestService, $location) {
+	isLoggedIn();
+	$scope.infoMode = true;
 
 		$scope.submitRegister = function() {
 			var request = guestService.register($scope.guest).then(function(response) {
@@ -60,5 +55,66 @@ guestModule.controller('guestController', ['$scope', 'guestService', '$location'
 
 		}
 		
+		$scope.editProfile = function() {
+			$scope.infoMode = false;
+		}
+		
+		$scope.saveChanges = function() {
+			$scope.infoMode = true;   			
+			var request = guestService.updateProfile($scope.guest).then(function(response){
+				$scope.data = response.data;
+				return response;
+			});
+				
+			request.then(function (data) {
+				if($scope.data != null) {
+					isLoggedIn();
+					toastr.success("Successfully updated profile data.");
+				} else {
+						toastr.error("Profile update was unsuccessful. Please, try again.");
+					
+				}
+			});
+			
+		}
+		
+		
+		$scope.findFriends = function() {
+			var request = guestService.findFriends($scope.guest.id).then(function(response){
+				$scope.data = response.data;
+				return response;
+			});
+				
+			request.then(function (data) {
+				if($scope.data.length != 0) {
+					$scope.possibleFriends = $scope.data;
+				} else {
+						toastr.info("You're already friend with everyone or you're waiting for them to accept your friend request! :)");
+					
+				}
+			});
+		}
+		
+		
+		
 }]);
+
+
+/*guestModule.directive("matchPassword", function () {
+    return {
+        require: "ngModel",
+        scope: {
+            otherModelValue: "=matchPassword"
+        },
+        link: function(scope, element, attributes, ngModel) {
+            ngModel.$validators.matchPassword = function(modelValue) {
+                return modelValue == scope.otherModelValue;
+            };
+
+            scope.$watch("otherModelValue", function() {
+                ngModel.$validate();
+            });
+        }
+    };
+});*/
 

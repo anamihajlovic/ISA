@@ -10,8 +10,9 @@ public interface BartenderService {
 
 	Bartender findOne(Long id);
 	
-	void save(Bartender bartender);
 	
 	List<Bartender> findAll();
 	void delete (Long id);
+	Bartender save(Bartender bartender);
+
 }

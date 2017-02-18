@@ -1,0 +1,100 @@
+	    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.1/css/font-awesome.min.css">
+
+<style type="text/css">
+.panel {
+    background-color: #FFFFFF;
+    border: 1px solid rgba(0, 0, 0, 0);
+    border-radius: 4px 4px 4px 4px;
+    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.05);
+    margin-bottom: 20px;
+    max-width: 300px;
+}   
+
+.panel-primary {
+    border-color: #428BCA;
+}   
+
+.panel-primary > .panel-heading {
+    background-color: #428BCA;
+    border-color: #428BCA;
+    color: #FFFFFF;
+}   
+
+.panel-heading {
+    border-bottom: 1px solid rgba(0, 0, 0, 0);
+    border-top-left-radius: 3px;
+    border-top-right-radius: 3px;
+    padding: 10px 15px;
+}   
+
+.panel-title {
+    font-size: 16px;
+    margin-bottom: 0;
+    margin-top: 0;
+}   
+
+
+
+.panel-body {
+    padding: 2px;
+}   
+
+.help-block {
+    color: red;
+}
+
+
+</style>       
+       
+       
+        <div class="row-fluid user-infos cyruxx" align="center">
+            <div class="span10 offset1">
+                <div class="panel panel-primary">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">Profile information</h3>
+                    </div>
+                    <div class="panel-body">
+                        <div class="row-fluid">
+                            <div class="span3">
+                                <img class="img-circle"
+                                     src="html/guest/userProfile.png"
+                                     alt="User Pic">
+                                     
+                              <form action="" name="form" novalidate="novalidate">
+
+							<label>Email</label>
+							<div class="input-group">
+							<span class="input-group-addon"><i class="fa fa-envelope"></i></span>
+							<input type = "text" class = "form-control" ng-model = "$parent.guest.email"  readonly>
+							</div>
+							<label>First name</label>
+							<div class="input-group" ng-class="{ 'has-error': form.firstName.$dirty && form.firstName.$error.required }">
+							<span class="input-group-addon"><i class="fa fa-user"></i></span>
+							<input type = "text" class = "form-control" ng-model = "$parent.guest.firstName" name="firstName" ng-readonly="$parent.infoMode" required="required"> 
+							</div>
+							<span class="help-block" ng-show = "form.firstName.$dirty && form.firstName.$invalid">
+                       		 <span ng-show = "form.firstName.$error.required">First name is required.</span>
+                     		</span>
+                     		
+                     		<label>Last name</label>
+                     		<div class="input-group" ng-class="{ 'has-error': form.lastName.$dirty && form.lastName.$error.required }">
+                     		<span class="input-group-addon"><i class="fa fa-user"></i></span>
+							<input type = "text" class = "form-control" ng-model = "$parent.guest.lastName" name="lastName" ng-readonly="$parent.infoMode" required="required">  
+   							 </div>
+   							 
+   							 <span class="help-block" ng-show = "form.lastName.$dirty && form.lastName.$invalid">
+								<span ng-show="form.lastName.$error.required" class="help-block">Last name is required.</span>
+                     		</span> 
+							<button class = "btn btn-default" ng-show="$parent.infoMode" ng-click = "editProfile()"><span class = "glyphicon glyphicon-ok"></span>Edit</button>
+							<button class = "btn btn-default" ng-hide="$parent.infoMode" ng-disabled="form.$invalid" ng-click = "saveChanges()"><span class = "glyphicon glyphicon-ok"></span>Save</button>
+							<button class = "btn btn-default" data-ui-sref="guest"><span class = "glyphicon glyphicon-remove"></span>Cancel</button>
+							</form>
+                            </div>
+                            <div>
+
+							</div>
+                        </div>
+                    </div>
+             </div>
+        </div>
+  </div>

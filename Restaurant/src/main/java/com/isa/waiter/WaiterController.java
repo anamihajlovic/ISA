@@ -3,7 +3,6 @@ package com.isa.waiter;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -24,9 +23,29 @@ public class WaiterController {
 		this.waiterService = waiterService;
 	}
 	
-	@PutMapping(path = "/{id}")
-	public void updateWaiter(@PathVariable Long id,@RequestBody Waiter waiter) {		
-		waiterService.save(waiter);
+	@PutMapping(path = "/updateInfo")
+	public Waiter updateWaiter(@RequestBody Waiter waiter) {		
+		try{
+			waiterService.save(waiter);
+		} catch(Exception e) {
+			System.out.println("Greska pri update-u konobara.");
+			return null;
+		}
+		
+		return waiter;					
+	}
+	
+	@PutMapping(path = "/changePassword")
+	public Waiter changeBartenderPassword(@RequestBody Waiter waiter) {
+		
+		try{
+			waiterService.save(waiter);
+		} catch(Exception e) {
+			System.out.println("Greska pri promeni sifre konobara");
+			return null;
+		}
+		
+		return waiter;	
 	}
 
 }

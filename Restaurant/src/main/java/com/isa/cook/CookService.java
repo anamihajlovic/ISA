@@ -12,10 +12,11 @@ public interface CookService {
 	
 	Cook findOne(Long id);
 	
-	void save(Cook cook);
+	Cook save(Cook cook);
 	
 	List<Cook> findAll();
 	
 	void delete (Long id);
+
 
 }

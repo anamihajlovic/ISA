@@ -9,7 +9,8 @@ angular.module('restaurants', [ 'ui.router',
 								'employee.services',
 								'cook.services', 'cook.controller',
 								'waiter.services', 'waiter.controller',
-								'guest.services', 'guest.controller'
+								'guest.services', 'guest.controller',
+								'pass.controller'
 							   ])
 							   
 .config(function($stateProvider, $urlRouterProvider) {
@@ -54,6 +55,17 @@ angular.module('restaurants', [ 'ui.router',
           	templateUrl : 'html/guest/guestHome.html',
             controller : 'guestController'
          }) 
+         
+         .state('guest.updateProfile', {
+        	url: '/updateProfile',
+        	templateUrl: 'html/guest/guestProfile.html'
+        })
+        
+        .state('guest.findFriends', {
+        	url: 'findFriends',
+        	templateUrl: 'html/guest/addFriends.html'
+        })
+         
          .state('sysManager', {
          	url : '/sysManager',
            	templateUrl : 'html/sysManager/sysManagerHome.html',
@@ -137,6 +149,7 @@ angular.module('restaurants', [ 'ui.router',
            .state('bartender.changePassword', {
         	   url : '/changePassword',
         	   templateUrl : 'changePassword.html',
+        	   controller: 'passController'
            })
            
            .state('waiter' , {
@@ -155,6 +168,7 @@ angular.module('restaurants', [ 'ui.router',
            .state('waiter.changePassword', {
         	   url : '/changePassword',
         	   templateUrl : 'changePassword.html',
+        	   controller: 'passController'
            })
                     
            
@@ -172,6 +186,7 @@ angular.module('restaurants', [ 'ui.router',
            .state('cook.changePassword', {
         	   url : '/changePassword',
         	   templateUrl : 'changePassword.html',
+        	   controller: 'passController'
            })
                      
          
