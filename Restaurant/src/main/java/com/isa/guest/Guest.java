@@ -21,12 +21,15 @@ public class Guest extends User {
 	@Column(name = "guest_aCode", nullable=true)
 	private String activationCode;
 	
+	@Column(name="active", nullable=true)
+	private Boolean active;
+	
 
 	public Guest() {}
 	
 	public Guest(Long id) {
-		super();
 		this.id = id;
+		this.active = false;
 	}
 
 	public Long getId() {
@@ -43,6 +46,14 @@ public class Guest extends User {
 
 	public void setActivationCode(String activationCode) {
 		this.activationCode = activationCode;
+	}
+
+	public Boolean getActive() {
+		return active;
+	}
+
+	public void setActive(Boolean active) {
+		this.active = active;
 	}
 	
 	

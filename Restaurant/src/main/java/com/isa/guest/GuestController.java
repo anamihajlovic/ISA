@@ -115,20 +115,18 @@ public class GuestController {
 		
 	}
 	
-	//@PostMapping(path = "updateProfile/{id}")
 	@PostMapping(path = "/updateProfile")
 	public Guest updateProfile(@Valid @RequestBody Guest guest) {
 		System.out.println("updateProfile " + guest.getId() + " " + guest.getFirstName() + " " + guest.getLastName());
 		
 		try {
 			guestService.save(guest);
+			httpSession.setAttribute("user", guest);
 		} catch (Exception ex) {
 			System.out.println("Greska prilikom updateProfile-a guest-a.");
-			guest = null;
+			return null;
 		}
 		
-		if(guest != null)
-			httpSession.setAttribute("user", guest);
 		
 		return guest;
 	}

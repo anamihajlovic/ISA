@@ -7,9 +7,10 @@ guestModule.controller('guestController', ['$scope', 'guestService','commonServi
 	
 		function isLoggedIn() {
 			commonService.getActiveUser().then(function (response) {				
-				if(response.data !="") 
+				if(response.data !="")
 					$scope.guest = response.data;									
 				//else
+					//$scope.callIsLoggedIn = false;
 					//$location.path('login');
 			}
 		);

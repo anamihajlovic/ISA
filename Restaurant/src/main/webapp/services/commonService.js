@@ -7,7 +7,6 @@ commonServices.service('commonService',['$http', function($http) {
 	}
 	
 	this.getActiveUser = function() {
-		alert("U servisu sam");
 		return $http.get("/users/getActiveUser");
 	}
 	

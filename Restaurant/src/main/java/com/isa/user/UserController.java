@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.isa.bartender.BartenderService;
 import com.isa.bidder.BidderService;
 import com.isa.cook.CookService;
+import com.isa.guest.Guest;
 import com.isa.guest.GuestService;
 import com.isa.res.manager.RestaurantManagerService;
 import com.isa.system.manager.SystemManagerService;
@@ -65,7 +66,7 @@ public class UserController {
 		if (guestService.findByEMailAndPassword(userData.getEmail(), userData.getPassword()) != null) {
 			user = guestService.findByEMailAndPassword(userData.getEmail(), userData.getPassword());
 			
-			if (!user.getActive())
+			if (!(((Guest)user).getActive()))
 				user = new User("neuspesno@gmail.com", "neuspesno", "neuspesno","neuspesno", Role.guest);
 			
 		} else if (systemManagerService.findByEMailAndPassword(userData.getEmail(), userData.getPassword()) != null) {
@@ -103,7 +104,7 @@ public class UserController {
 	@GetMapping(path="/getActiveUser")
 	public User getActiveUser() {		
 		User activeUser = (User)httpSession.getAttribute("user");
-		System.out.println("back usert" + activeUser.getPassword());
+		//System.out.println("back usert" + activeUser.getPassword());
 		return activeUser;
 	}
 
