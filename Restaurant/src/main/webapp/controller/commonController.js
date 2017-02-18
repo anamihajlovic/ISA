@@ -13,14 +13,14 @@ commonModule.controller('commonController', ['$scope', 'commonService','$locatio
 			
 				request.then(function (data) {
 					if($scope.data.firstName != "neuspesno") {
-						toastr.success("Welcome, " + $scope.data.firstName + "!");
+						toastr.success("Welcome, " + $scope.data.firstName + " !");
 						if ($scope.data.userRole == "guest") {
 							$location.path('guest');
 						} else if ($scope.data.userRole == "sysManager") {
 							$location.path('sysManager');
 							
 						} else if ($scope.data.userRole == "resManager") {
-							
+							$location.path('resManager');
 						} else if ($scope.data.userRole == "waiter") {
 							$location.path('waiter');
 							
@@ -31,7 +31,7 @@ commonModule.controller('commonController', ['$scope', 'commonService','$locatio
 							$location.path('bartender');
 							
 						} else if ($scope.data.userRole == "bidder") {
-							
+							$location.path('bidder');
 						}
 							
 					} else {

@@ -11,40 +11,42 @@ sysManagerServices.service('sysManagerService',['$http', function($http) {
 		return $http.post("/sysManager/newResManager", resManager);
 	}
 	
-	this.findAllFreeRestaurantManagers = function(){
-		//alert("uslo i u service")
-		return $http.get("/sysManager/freeResManager");
-	}
-	
 	this.saveRestaurant = function(restaurant) {
-		alert("uslo i u service")
+		//alert("uslo i u service")
 		return $http.post("/sysManager/newRestaurant", restaurant);
 	}
 	
 	this.updateSysManager = function(systemManager) {
-		alert("sysService " + systemManager)
-		alert("id je " + systemManager.id)		
+		//alert("sysService " + systemManager)
+		//alert("id je " + systemManager.id)		
 		return $http.put("/sysManager/"+systemManager.id, systemManager);
 	}
 	this.saveSysManager = function(sysManager) {
-		alert("sysService " + sysManager)
+		//alert("sysService " + sysManager)
 		return $http.post("/sysManager/newSysManager", sysManager);
 	}
-	this.findAllRestaurantManagers = function(){
-		//alert("uslo i u service")
-		return $http.get("/sysManager/ResManagers");
+	this.findAllResManagers = function(event){
+		//alert("uslo i u service "+event.target.id)
+		return $http.get("/sysManager/ResManagers/"+event.target.id);
+	}
+	this.showAfterDelResMan = function(sifra){
+		//alert("uslo i u service "+event.target.id)
+		return $http.get("/sysManager/ResManagers/"+sifra.target.id);
 	}
 	
 	this.findAllRestaurants = function(){
 		//alert("uslo i u service")
 		return $http.get("/sysManager/Restaurants");
 	}
+	
 	this.buttonDeleteResManager = function(event){
-		alert(event.target.id)
-	return $http.put("/sysManager/deleteResMen/"+event.target.id);
+		//alert(event.target.id)
+	return $http.delete("/sysManager/deleteResMen/"+event.target.id);
 	}
 	this.buttonDeleteRestaurant = function(event){
-		alert(event.target.id)
-	return $http.put("/sysManager/deleteRestaurant/"+event.target.id);
+		//alert(event.target.id)
+	return $http.delete("/sysManager/deleteRestaurant/"+event.target.id);
 	}
+
+	
 }]); 

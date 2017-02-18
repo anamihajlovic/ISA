@@ -3,6 +3,9 @@ angular.module('restaurants', [ 'ui.router',
 	  							'common.services','common.controller',
 								'sysManager.services','sysManager.controller',
 								'bartender.services', 'bartender.controller',
+								'guest.services', 'guest.controller',
+								'resManager.services','resManager.controller',
+								'bidder.services','bidder.controller',
 								'employee.services',
 								'cook.services', 'cook.controller',
 								'waiter.services', 'waiter.controller',
@@ -95,6 +98,41 @@ angular.module('restaurants', [ 'ui.router',
               url : '/list',
              templateUrl : 'html/sysManager/sysManagerList.html',
           })
+          
+       .state('resManager', {
+       	url : '/resManager',
+        templateUrl : 'html/resManager/resManagerHome.html',
+          controller : 'resManagerController'
+        }) 
+        .state('resManager.updateResManager', {
+       	url : '/updateResManager',
+        templateUrl : 'html/resManager/resManagerUpdateProfile.html',
+        }) 
+        
+      .state('resManager.newEmployee', {
+       	url : '/newEmployee',
+        templateUrl : 'html/resManager/resManagerNewEmployee.html'
+        }) 
+        
+         .state('resManager.newBidder', {
+       	url : '/newBidder',
+        templateUrl : 'html/resManager/resManagerNewBidder.html'
+        }) 
+          .state('resManager.list', {
+              url : '/list',
+             templateUrl : 'html/resManager/resManagerList.html',
+          })
+        .state('bidder', {
+        	   url : '/bidder',
+        	   templateUrl : 'html/bidder/bidderHome.html',
+        	   controller: 'bidderController'
+        	   
+           })
+             .state('bidder.updateBidder', {
+        	   url : '/updateBidder',
+        	   templateUrl : 'html/bidder/bidderUpdateProfile.html',
+        	   
+           })
              
            .state('bartender', {
         	   url : '/bartender',

@@ -1,9 +1,14 @@
 package com.isa.cook;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.isa.bartender.Bartender;
+import com.isa.waiter.Waiter;
+
+import jersey.repackaged.com.google.common.collect.Lists;
 
 @Service
 public class CookServiceImp implements CookService {
@@ -33,6 +38,17 @@ public class CookServiceImp implements CookService {
 	@Override
 	public Cook save(Cook cook) {		
 		return repository.save(cook);
+	}
+
+	@Override
+	public List<Cook> findAll() {
+		return Lists.newArrayList(repository.findAll());
+	}
+
+	@Override
+	public void delete(Long id) {
+		repository.delete(id);
+		
 	}
 
 }

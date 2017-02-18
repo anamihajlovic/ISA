@@ -1,0 +1,62 @@
+<div>
+<div class = "col-sm-4">
+</div>
+<div class = "col-sm-4"  class="input-group">
+<form action="" method="post">
+    <label>Firstname</label>
+    <input type="text" ng-model="$parent.employee.firstName" class="form-control" name="firstName" >  
+
+    <label>Lastname</label>
+    <input type="text" ng-model="$parent.employee.lastName" class="form-control" name="lastName" >  
+
+    <label>Email</label>
+    <input type="text" ng-model="$parent.employee.email" class="form-control" name="email" >  
+
+    <label>Password</label>
+    <input type="password" ng-model="$parent.employee.password" class="form-control" name="password" >  
+    
+     <label>Birthday</label>
+
+ 	<input type="text" ng-model="$parent.employee.birthday" class="form-control" name="birthday"placeholder="yyyy-mm-dd" >  
+
+
+  
+	<label>Clothes size</label> 
+    <select class="form-control"  ng-model="$parent.employee.clothesSize">
+   		<option value="" disabled="" selected="">Select clothes size</option>
+     	<option value="S">S</option>
+		<option value="M">M</option>
+		<option value="L">L</option>
+		<option value="XL">XL</option>
+		<option value="XXL">XXL</option>
+	</select>
+    
+    
+    <label>Shoes size</label>
+     <select class="form-control"  ng-model="$parent.employee.shoesSize">
+   		<option value="" disabled="" selected="">Select shoes size</option>
+     	<option value="no38">38</option>
+		<option value="no39">39</option>
+		<option value="no40">40</option>
+		<option value="no41">41</option>
+		<option value="no42">42</option>
+		<option value="no43">43</option>
+		<option value="no44">44</option>
+		<option value="no45">45</option>
+		<option value="no46">46</option>
+	</select>
+ 
+    <label>Role</label>
+   <select class="form-control"  ng-model="$parent.employee.userRole">
+   		<option value="" disabled="" selected="">Select role</option>
+     	<option value="waiter">waiter</option>
+		<option value="cook">cook</option>
+		<option value="bartender">bartender</option>
+	</select>
+<br>
+<button class="btn btn-default" ng-click="saveEmployee()"><span class="glyphicon glyphicon-ok" ></span> Create</button>
+<button class="btn btn-default" ng-click="cancel()"><span class="glyphicon glyphicon-remove" ></span> Cancel</button>
+</form>
+
+</div>
+</div>

@@ -1,7 +1,11 @@
 package com.isa.bartender;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import jersey.repackaged.com.google.common.collect.Lists;
 
 @Service
 public class BartenderServiceImp implements BartenderService {
@@ -31,6 +35,17 @@ public class BartenderServiceImp implements BartenderService {
 	@Override
 	public Bartender save(Bartender bartender) {		
 		return repository.save(bartender);
+	}
+
+	@Override
+	public List<Bartender> findAll() {
+		return Lists.newArrayList(repository.findAll());
+	}
+
+	@Override
+	public void delete(Long id) {
+		repository.delete(id);
+		
 	}
 	
 	

@@ -1,0 +1,166 @@
+<div>
+<div class = "col-sm-2">
+</div>
+<div class = "col-sm-8">
+	<h4>Waiters:</h4>
+	<table  class="table table-bordered tableBG" border="1">
+		<tbody>
+	        <tr>
+				<th>Id</th>
+				<th>First name</th>
+                <th>Last name</th>
+                <th>Email</th>
+                <th>Birthday</th>
+                <th>Clothes size</th>
+                <th>Shoes size</th>
+                <th></th>
+            </tr>
+			<tr ng-repeat="waiter in waiters">
+				<td> 
+					{{waiter.id}}
+				</td>
+				<td>
+		    		{{waiter.firstName}}	
+				</td>
+            	<td>
+		    		{{waiter.lastName}}	
+				</td>
+            	<td>
+		    		{{waiter.email}}	
+				</td>
+				<td>
+		    		{{waiter.birthday}}	
+				</td>
+				<td>
+		    		{{waiter.clothesSize}}	
+				</td>
+				<td>
+		    		{{waiter.shoesSize}}	
+				</td>
+				<td>
+		    		<button class = "btn btn-link" id={{waiter.id}} ng-click="buttonDeleteWaiter($event)"><span class = "glyphicon glyphicon-remove" style="color:#e60000;"></span></button>
+					
+				</td>
+			</tr>
+        </tbody>
+    </table> 
+  
+    <h4>Cooks:</h4>
+    <table  class="table table-bordered tableBG" border="1">
+		<tbody>
+	        <tr>
+				<th>Id</th>
+				<th>First name</th>
+                <th>Last name</th>
+                <th>Email</th>
+                <th>Birthday</th>
+                <th>Clothes size</th>
+                <th>Shoes size</th>
+                <th></th>
+            </tr>
+			<tr ng-repeat="cook in cooks">
+				<td> 
+					{{cook.id}}
+				</td>
+				<td>
+		    		{{cook.firstName}}	
+				</td>
+            	<td>
+		    		{{cook.lastName}}	
+				</td>
+            	<td>
+		    		{{cook.email}}	
+				</td>
+				<td>
+		    		{{cook.birthday}}	
+				</td>
+				<td>
+		    		{{cook.clothesSize}}	
+				</td>
+				<td>
+		    		{{cook.shoesSize}}	
+				</td>
+				<td>
+		    		<button class = "btn btn-link" id={{cook.id}} ng-click="buttonDeleteCook($event)"><span class = "glyphicon glyphicon-remove" style="color:#e60000;"></span></button>
+					
+				</td>
+			</tr>
+		</tbody>
+    </table> 
+    
+     <h4>Bartenders:</h4>
+    <table  class="table table-bordered tableBG" border="1">
+		<tbody>
+	        <tr>
+				<th>Id</th>
+				<th>First name</th>
+                <th>Last name</th>
+                <th>Email</th>
+                <th>Birthday</th>
+                <th>Clothes size</th>
+                <th>Shoes size</th>
+                <th></th>
+            </tr>
+			<tr ng-repeat="bartender in bartenders">
+				<td> 
+					{{bartender.id}}
+				</td>
+				<td>
+		    		{{bartender.firstName}}	
+				</td>
+            	<td>
+		    		{{bartender.lastName}}	
+				</td>
+            	<td>
+		    		{{bartender.email}}	
+				</td>
+				<td>
+		    		{{bartender.birthday}}	
+				</td>
+				<td>
+		    		{{bartender.clothesSize}}	
+				</td>
+				<td>
+		    		{{bartender.shoesSize}}	
+				</td>
+				<td>
+		    		<button class = "btn btn-link" id={{bartender.id}} ng-click="buttonDeleteBartender($event)"><span class = "glyphicon glyphicon-remove" style="color:#e60000;"></span></button>
+					
+				</td>
+			</tr>
+		</tbody>
+    </table> 
+    
+    <h4>Bidders:</h4>
+	<table  class="table table-bordered tableBG" border="1">
+		<tbody>
+	        <tr>
+				<th>Id</th>
+				<th>First name</th>
+                <th>Last name</th>
+                <th>Mail</th>
+                <th></th>
+            </tr>
+			<tr ng-repeat="bidder in bidders">
+				<td> 
+					{{bidder.id}}
+				</td>
+				<td>
+		    		{{bidder.firstName}}	
+				</td>
+            	<td>
+		    		{{bidder.lastName}}	
+				</td>
+            	<td>
+		    		{{bidder.email}}	
+				</td>
+				<td>
+		    		<button class = "btn btn-link" id={{bidder.id}} ng-click="buttonDeleteBidder($event)"><span class = "glyphicon glyphicon-remove" style="color:#e60000;"></span></button>
+					
+				</td>
+			</tr>
+        </tbody>
+    </table> 
+  
+</div>
+</div>

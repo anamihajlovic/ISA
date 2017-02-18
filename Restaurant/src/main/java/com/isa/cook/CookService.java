@@ -1,5 +1,9 @@
 package com.isa.cook;
 
+import java.util.List;
+
+import com.isa.waiter.Waiter;
+
 public interface CookService {
 	
 	Cook findByEMail(String email);
@@ -9,5 +13,10 @@ public interface CookService {
 	Cook findOne(Long id);
 	
 	Cook save(Cook cook);
+	
+	List<Cook> findAll();
+	
+	void delete (Long id);
+
 
 }

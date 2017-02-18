@@ -2,19 +2,25 @@
 <div class = "col-sm-4">
 </div>
 <div class = "col-sm-4"  class="input-group">
-<form action="" method="post">
+<form action="">
     <label>Firstname</label>
     <input type="text" ng-model="$parent.resManager.firstName" class="form-control" name="firstName" >  
 
     <label>Lastname</label>
     <input type="text" ng-model="$parent.resManager.lastName" class="form-control" name="lastName" >  
 
-    <label>Mail</label>
+    <label>Email</label>
     <input type="text" ng-model="$parent.resManager.email" class="form-control" name="email" >  
 
     <label>Password</label>
     <input type="password" ng-model="$parent.resManager.password" class="form-control" name="password" >  
-
+    
+    <label>Restaurant</label>
+    <select class="form-control"  ng-model="$parent.resManager.idRestaurant">
+   		<option value="" disabled="" selected="">Select Restaurant</option>
+     	<option ng-repeat="restaurant in restaurantss" value="{{ restaurant.id}}">{{restaurant.name}}</option>
+	</select> 
+<br>
 <button class="btn btn-default" ng-click="saveManager()"><span class="glyphicon glyphicon-ok" ></span> Create</button>
 <button class="btn btn-default" ng-click="cancel()"><span class="glyphicon glyphicon-remove" ></span> Cancel</button>
 </form>
