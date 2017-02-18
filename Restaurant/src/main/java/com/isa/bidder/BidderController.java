@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.isa.bartender.Bartender;
 import com.isa.res.manager.RestaurantManager;
 import com.isa.restaurant.RestaurantService;
 
@@ -41,10 +42,27 @@ public class BidderController {
 
 	@PutMapping(path = "/{id}")
 	public Bidder updateResManager(@PathVariable Long id,@RequestBody Bidder bidd) {
-	bidderService.findOne(id);		
-	bidd.setId(id);
+		bidder =  (Bidder) httpSession.getAttribute("user");
+		bidderService.findOne(id);		
+		bidd.setId(id);
 		return bidderService.save(bidd);
 	}	
+	
+	@PutMapping(path = "/firstLogIn")
+	public Bidder changeBidderPassword(@RequestBody Bidder bidder) {
+		
+		try{
+			bidder.setFirstLogIn(false);
+			bidderService.save(bidder);
+			httpSession.setAttribute("user", bidder);
+		} catch(Exception e) {
+			System.out.println("Greska pri promeni sifre sankera");
+			return null;
+		}
+		
+		return bidder;	
+	}
+	
 
 
 }

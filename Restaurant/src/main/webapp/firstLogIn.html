@@ -1,0 +1,68 @@
+<style type = "text/css">
+
+.help-block {
+    color: red;
+}
+
+</style>
+
+<nav class="navbar  navbar-inverse" role="navigation"> 
+      
+     <div class="navbar-header navbar-left">
+      	<a class="navbar-brand" data-ui-sref=".proba">Restaurants</a>
+    </div>
+
+	<ul class="nav navbar-nav navbar-right">
+         <li><a data-ui-sref="register"><span class="glyphicon glyphicon-user"></span> Sign up </a></li>
+    </ul>
+
+ </nav>
+	
+	
+
+<div>
+<div class = "col-lg-4">
+</div>
+
+<div class = "col-lg-4">
+<form action="" name = "form" novalidate>
+
+   
+   <label>Received password</label>
+    <div class="input-group">
+      <input type = "{{ currentVisible ? 'password':'text'  }}" class="form-control" ng-model="current">          
+      <span class="input-group-btn">
+        <button class="btn btn-secondary" type="button" ng-click = "toggleCurrentVisible()"><span class = "{{ currentVisible ? 'glyphicon glyphicon-eye-close' : 'glyphicon glyphicon-eye-open' }}"></span></button>
+      </span>
+      </div>
+   
+  
+   <label>New password</label>
+    <div class="input-group">
+      <input type="{{ newVisible ? 'password':'text'  }}" ng-change = "clearRetyped()" class="form-control" ng-model="newPassword">
+      <span class="input-group-btn">
+        <button class="btn btn-secondary" type="button" ng-click = "toggleNewVisible()"><span class = "{{ newVisible ? 'glyphicon glyphicon-eye-close' : 'glyphicon glyphicon-eye-open' }}"></span></button>
+      </span>
+    </div>
+    
+    <label>Re-type password</label>
+    <div class="input-group">
+      <input type="{{ retypeVisible ? 'password':'text'  }}" class="form-control" ng-model="retypedPassword">
+      <span class="input-group-btn">
+        <button class="btn btn-secondary" type="button" ng-click = "toggleRetypeVisible()"><span class = "{{ retypeVisible ? 'glyphicon glyphicon-eye-close' : 'glyphicon glyphicon-eye-open' }}"></span></button>
+      </span>
+    </div>    
+     <br>
+	<button class="btn btn-default" ng-disabled = "form.$invalid" ng-click="changeFirstPassword()"><span class="glyphicon glyphicon-ok" ></span> Save changes</button>
+	<button class="btn btn-default" ng-click= "cancel()"><span class="glyphicon glyphicon-remove" ></span> Cancel</button>
+  
+   
+  
+
+
+
+  
+</form>
+</div>
+</div>
+

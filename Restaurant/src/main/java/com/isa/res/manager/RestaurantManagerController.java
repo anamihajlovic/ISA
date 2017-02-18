@@ -77,7 +77,6 @@ public class RestaurantManagerController {
 		//System.out.println("uslo");
 		if (emp != null){
 			emp.setFirstLogIn(true);
-			emp.setFirstLogIn(true);
 			waiterService.save(emp);
 			Restaurant r = restaurantService.findOne(restaurantManager.getIdRestaurant());
 			r.getWaiters().add(emp);

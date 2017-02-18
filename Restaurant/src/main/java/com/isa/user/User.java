@@ -44,7 +44,7 @@ public class User {
 	@Column(name="active", nullable=true)
 	private Boolean active;
 	
-	@Column(name="first_login", nullable=true)
+	@Column(name="first_login", nullable=false)
 	private Boolean firstLogIn;
 	
 	

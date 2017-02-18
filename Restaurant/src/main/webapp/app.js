@@ -40,6 +40,13 @@ angular.module('restaurants', [ 'ui.router',
         	templateUrl: 'signUp.html',
         	controller: 'guestController'
         })
+        .state('firstLogIn', {
+        	url: '/firstLogIn',
+        	templateUrl: 'firstLogIn.html',
+        	controller: 'commonController',
+        	controller:'passController'
+        		
+        })
         
         .state('activateAccount', {
         	url: '/activateAccount/:activationCode',
@@ -191,3 +198,5 @@ angular.module('restaurants', [ 'ui.router',
                      
          
 });
+
+

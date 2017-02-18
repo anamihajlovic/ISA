@@ -67,6 +67,41 @@ passModule.controller('passController', ['$scope', 'commonService', '$location',
 			});	
 		}
 		
+		$scope.changeFirstPassword = function () { 				
+			var request = commonService.getActiveUser().then(function(response) {
+				if(response.data != "") {
+					$scope.activeUser = response.data;									
+					return response;
+			} else
+				$location.path('login');
+		
+		});
+			
+			request.then(function(data) {				
+				if($scope.current != $scope.activeUser.password)
+					toastr.error("Invalid received password");
+				
+				else {					
+					$scope.activeUser.password = $scope.newPassword;
+					var request = commonService.changeFirstPassword($scope.activeUser).then(function(response){
+						$scope.data = response.data;
+						alert(response.data);
+						return response;
+					});
+					
+					request.then(function (data) {
+						if($scope.data != null) {
+							toastr.success("Password was successfully changed.");							
+							$location.path($scope.activeUser.userRole);
+						} else {
+							toastr.error("Something wrong");						
+						}
+						
+					});
+				}
+			});	
+		}
+		
 		$scope.cancel = function() {
 			$location.path($scope.activeUser.userRole);
 		}

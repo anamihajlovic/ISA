@@ -31,7 +31,12 @@ commonModule.controller('commonController', ['$scope', 'commonService','$locatio
 							$location.path('bartender');
 							
 						} else if ($scope.data.userRole == "bidder") {
-							$location.path('bidder');
+							if($scope.data.firstLogIn==true){
+								$location.path('firstLogIn');
+							}else{
+								$location.path('bidder');
+							}
+						
 						}
 							
 					} else {

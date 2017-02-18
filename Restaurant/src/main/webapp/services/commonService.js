@@ -23,6 +23,13 @@ commonServices.service('commonService',['$http', function($http) {
 			return $http.put("/bartenders/changePassword", user);
 		
 	}
+	this.changeFirstPassword = function(user) {
+		
+		if(user.userRole == 'bidder')
+			return $http.put("/bidder/firstLogIn", user);
+				
+	}
+	
 	
 	
 	/*this.logout = function() {

@@ -3,7 +3,8 @@ var emailRegex = new RegExp("[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?
 
 sysManagerModule.controller('sysManagerController', ['$scope', 'sysManagerService','$location',
   	function ($scope,sysManagerService, $location) {
-
+	
+	
 	function checkRights() {
 		sysManagerService.checkRights().then(
 			function (response) {
@@ -21,6 +22,39 @@ sysManagerModule.controller('sysManagerController', ['$scope', 'sysManagerServic
 		);
 	}
 	checkRights();	
+	$scope.newSysManager = function(){
+		checkRights();	
+		$scope.sysManager.firstName = '';
+		
+		$scope.sysManager.lastName = '';
+		$scope.sysManager.email = '';
+		$scope.sysManager.password = '';
+	}
+	$scope.newRestaurant = function(){
+		checkRights();
+		$scope.restaurant.name = '';
+		$scope.restaurant.street = '';
+		$scope.restaurant.country = '';
+		$scope.restaurant.restaurant_type = '';
+		$scope.restaurant.city = '';
+		
+	}
+	$scope.newResManager = function(){
+		checkRights();	
+		$scope.resManager.firstName = '';
+	 $scope.hasError = false;
+		$scope.resManager.lastName = '';
+		$scope.resManager.email = '';
+		$scope.resManager.password = '';
+		$scope.resManager.idRestaurant = '';
+		
+
+		
+	}
+	$scope.list= function(){
+		checkRights();		
+	}
+	
 	$scope.saveManager= function () {
 
 				var request = sysManagerService.saveResManager($scope.resManager).then(function(response) {

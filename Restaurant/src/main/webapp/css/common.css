@@ -1,1 +1,5 @@
 tr,td,th {text-align:center;}
+
+.help-block {
+    color: red;
+}
