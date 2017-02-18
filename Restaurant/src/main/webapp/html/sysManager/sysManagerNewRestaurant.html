@@ -17,12 +17,7 @@
 
     <label>Type</label>
     <input type="text" class="form-control" ng-model = "$parent.restaurant.restaurant_type">  
-
-    <label>Restaurant manager</label>
-    <select class="form-control"  ng-model="$parent.restaurant.restaurantManager">
-   		<option value="" disabled="" selected="">Select manager</option>
-     	<option ng-repeat="manager in freeRestaurantManagers" value="{{ manager.id}}">{{manager.firstName+" "+manager.lastName}}</option>
-	</select>
+<br>
 <button class="btn btn-default" ng-click="saveRestaurant()"><span class="glyphicon glyphicon-ok" ></span> Create</button>
 <button class="btn btn-default" ng-click="cancel()"><span class="glyphicon glyphicon-remove" ></span> Cancel</button>
 </form>

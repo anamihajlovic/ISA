@@ -56,7 +56,7 @@ public class Restaurant {
 	private Double ratings;
 	
 	
-	@OneToMany(cascade = {CascadeType.REFRESH, CascadeType.DETACH,CascadeType.MERGE,CascadeType.PERSIST})
+	@OneToMany(cascade = CascadeType.ALL)
 	@JoinTable(name = "res_managers_in_restuarants", joinColumns = @JoinColumn(name = "restaurant_id"), inverseJoinColumns = @JoinColumn(name = "res_manager_id"))
 	private List<RestaurantManager> restaurantManagers;
 
@@ -81,7 +81,7 @@ public class Restaurant {
 	private List<Cook> cooks;
 
 	@OneToMany(cascade = CascadeType.ALL)
-	@JoinTable(name = "RESTAURANT_BARTENDERS", joinColumns = @JoinColumn(name = "restaurant_id"), inverseJoinColumns = @JoinColumn(name = "email"))
+	@JoinTable(name = "RESTAURANT_BARTENDERS", joinColumns = @JoinColumn(name = "restaurant_id"), inverseJoinColumns = @JoinColumn(name = "bartender_id"))
 	private List<Bartender> bartenders;
 
 	public Restaurant() {}

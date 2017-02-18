@@ -1,5 +1,5 @@
 var sysManagerModule = angular.module('sysManager.controller', []);
- 
+var emailRegex = new RegExp("[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?");
 
 sysManagerModule.controller('sysManagerController', ['$scope', 'sysManagerService','$location',
   	function ($scope,sysManagerService, $location) {
@@ -8,9 +8,7 @@ sysManagerModule.controller('sysManagerController', ['$scope', 'sysManagerServic
 		sysManagerService.checkRights().then(
 			function (response) {
 				$scope.systemManager = response.data;
-				if(response.data!="") {
-					toastr.success("tu jee !");	
-					toastr.success($scope.systemManager.preset);	
+				if(response.data!="") {	
 					if ($scope.systemManager.preset=="no"){
 					var dugme = document.getElementById("newSysManager");
 					dugme.style.display = "none";
@@ -23,13 +21,11 @@ sysManagerModule.controller('sysManagerController', ['$scope', 'sysManagerServic
 		);
 	}
 	checkRights();	
-	$scope.saveManager= function () {    
-			
-				alert("pre requesta " + $scope.resManager);
+	$scope.saveManager= function () {
+
 				var request = sysManagerService.saveResManager($scope.resManager).then(function(response) {
-			
 				$scope.data = response.data;
-				alert(response.data)
+
 				return response;
 			});			
 				request.then(function (data) {
@@ -43,17 +39,18 @@ sysManagerModule.controller('sysManagerController', ['$scope', 'sysManagerServic
 
 			});
 		}
-
-	////////////////////////////////////////////////////	
-	function AllResManagers() {  
-		//alert("uslo u controller")		
-		var request = sysManagerService.findAllRestaurantManagers().then(
-			function (response) {
-				$scope.restaurantManagers = response.data;
-			}
-		); 	
+		
+	var sifra;
+	$scope.showManagers = function (event) { 
+		sifra=event;
+		var request = sysManagerService.findAllResManagers(event).then(function(response) {
+		$scope.restaurantManagers = response.data;
+		document.getElementById("modalBtnShow").click();
+		return response;
+	});			
+	
 	};
-	AllResManagers();
+
 	function AllRestaurants(){  
 		//alert("uslo u controller")		
 		var request = sysManagerService.findAllRestaurants().then(
@@ -64,44 +61,8 @@ sysManagerModule.controller('sysManagerController', ['$scope', 'sysManagerServic
 	};
 	AllRestaurants();
 	
-	
-	
-	////////////////////////////////////////
-	$scope.freeRestaurantManagers = function () {  
-		//alert("uslo u controller")
-		
-		var request = sysManagerService.findAllFreeRestaurantManagers().then(
-			function (response) {
-				$scope.freeRestaurantManagers = response.data;
-			}
-		); 	
-	};
-	
-	//////////////////////////////	
-	
-	$scope.saveRestaurant= function () {    
-		alert("uslo u controller")
-		$scope.saveChecked =function () {  
-			$scope.restaurant.restaurantManagers.push($scope.restaurantManagerChecked);
-			alert("dodat "+$scope.restaurant.restaurantManagers)
-		} 
-		var request = sysManagerService.saveRestaurant($scope.restaurant).then(function(response) {
-	
-		$scope.data = response.data;
-		alert(response.data)
-		return response;
-	});			
-		request.then(function (data) {
-			if($scope.data != null) {
-				toastr.success("Success!");	
-					
-			} else {
-				toastr.error("Something wrong");
-			
-			}
 
-	});
-}
+	
 	$scope.saveRestaurant= function () {    
 		alert("uslo u controller")
 		var request = sysManagerService.saveRestaurant($scope.restaurant).then(function(response) {
@@ -176,8 +137,15 @@ sysManagerModule.controller('sysManagerController', ['$scope', 'sysManagerServic
 		request.then(function (data) {
 			if($scope.data != "no") {
 				toastr.success("Success!");	
-				AllResManagers();
-				AllRestaurants();
+				//$("#tbody").empty();
+				
+				var request1 = sysManagerService.showAfterDelResMan(sifra).then(
+						function (response) {						
+							$scope.restaurantManagers = response.data;
+							//alert($scope.restaurantManagers)
+						}
+					); 
+				//document.getElementById("modalBtnShow").click();
 			} else {
 				toastr.error("Something wrong");
 			
@@ -185,17 +153,14 @@ sysManagerModule.controller('sysManagerController', ['$scope', 'sysManagerServic
 
 	});
 }
-	$scope.buttonDeleteRestaurant= function (event) {    
-		//alert(event.target.id)
+	$scope.buttonDeleteRestaurant= function (event) { 
 		var request = sysManagerService.buttonDeleteRestaurant(event).then(function(response) {
 		$scope.data = response.data;
-		//alert(response.data)
 		return response;
 	});			
 		request.then(function (data) {
 			if($scope.data != "no") {
 				toastr.success("Success!");	
-				AllResManagers();
 				AllRestaurants();
 			} else {
 				toastr.error("Something wrong");
@@ -204,21 +169,9 @@ sysManagerModule.controller('sysManagerController', ['$scope', 'sysManagerServic
 
 	});
 }
-
-	  $scope.open = function($event) {
-	    $event.preventDefault();
-	    $event.stopPropagation();
-
-	    $scope.opened = true;
-	  };
-
-	  $scope.dateOptions = {
-	    formatYear: 'yy',
-	    startingDay: 1
-	  };
+	
 
 
-	  $scope.format = 'dd-MMMM-yyyy';
 	
 	
 	

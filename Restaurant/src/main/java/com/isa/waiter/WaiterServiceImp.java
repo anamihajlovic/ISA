@@ -1,9 +1,13 @@
 package com.isa.waiter;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.isa.bartender.Bartender;
+
+import jersey.repackaged.com.google.common.collect.Lists;
 
 @Service
 public class WaiterServiceImp implements WaiterService {
@@ -33,6 +37,17 @@ public class WaiterServiceImp implements WaiterService {
 	@Override
 	public void save(Waiter waiter) {		
 		repository.save(waiter);
+	}
+
+	@Override
+	public List<Waiter> findAll() {
+		return Lists.newArrayList(repository.findAll());
+	}
+
+	@Override
+	public void delete(Long id) {
+		repository.delete(id);
+		
 	}
 
 }

@@ -21,12 +21,15 @@ public class RestaurantManager extends User {
 	@Column(name = "res_manager_id")
 	private Long id;
 	
+	@Column(name = "restaurant_id")
+	private Long idRestaurant;
 	
 	public RestaurantManager() {}
 	
-	public RestaurantManager(Long id) {
+	public RestaurantManager(Long id,Long idRestaurant) {
 		super();
 		this.id = id;
+		this.idRestaurant = idRestaurant;
 	}
 	
 	public Long getId() {
@@ -35,6 +38,14 @@ public class RestaurantManager extends User {
 	
 	public void setId(Long id) {
 		this.id = id;
+	}
+
+	public Long getIdRestaurant() {
+		return idRestaurant;
+	}
+
+	public void setIdRestaurant(Long idRestaurant) {
+		this.idRestaurant = idRestaurant;
 	}
 	
 

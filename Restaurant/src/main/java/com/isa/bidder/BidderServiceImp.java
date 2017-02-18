@@ -1,9 +1,13 @@
 package com.isa.bidder;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.isa.restaurant.RestaurantRepository;
+
+import jersey.repackaged.com.google.common.collect.Lists;
 
 
 @Service
@@ -26,6 +30,27 @@ public class BidderServiceImp implements BidderService {
 	@Override
 	public Bidder findByEMailAndPassword(String email, String password) {
 		return repository.findByEmailAndPassword(email, password);
+	}
+
+	@Override
+	public List<Bidder> findAll() {
+		return Lists.newArrayList(repository.findAll());
+	}
+
+	@Override
+	public Bidder save(Bidder bidder) {
+		return repository.save(bidder);
+	}
+
+	@Override
+	public Bidder findOne(Long id) {
+		return repository.findOne(id);
+	}
+
+	@Override
+	public void delete(Long id) {
+		repository.delete(id);
+		
 	}
 	
 	

@@ -20,7 +20,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.isa.res.manager.*;
 import com.isa.restaurant.Restaurant;
-import com.isa.restaurant.RestaurantPojo;
 import com.isa.restaurant.RestaurantService;
 import com.isa.user.Role;
 
@@ -32,7 +31,7 @@ public class SystemManagerController {
 	private final RestaurantManagerService restaurantManagerService;
 	private final RestaurantService restaurantService;
 	private final SystemManagerService systemManagerService;
-	
+	private  Long idRestaurant;
 	@Autowired
 	public SystemManagerController(final RestaurantManagerService restaurantManagerService,
 			 final RestaurantService restaurantService, HttpSession session,
@@ -61,57 +60,24 @@ public class SystemManagerController {
 		if (restaurantManager != null){
 		//restaurantManager.setId(null);//mozda ovo ne bi trebalo dirati jer ovo baza sama regulise
 		restaurantManager.setFirstLogIn(true);
-		restaurantManager.setUserRole(Role.resManager);
-		//restaurantManager.setActive(false);
+		restaurantManager.setUserRole(Role.resManager);		
 		restaurantManagerService.save(restaurantManager);
-		System.out.println(restaurantManager.getFirstName()+" "+restaurantManager.getLastName()+
-				restaurantManager.getEmail()+" "+restaurantManager.getPassword()+" "+
-				restaurantManager.getFirstLogIn()+" "+restaurantManager.getUserRole()+" "+
-				restaurantManager.getId()
-		
-		
-				
-				);
+		Restaurant r = restaurantService.findOne(restaurantManager.getIdRestaurant());
+		r.getRestaurantManagers().add(restaurantManager);
+		r.setId(restaurantManager.getIdRestaurant());
+		restaurantService.save(r);		
 		return restaurantManager;
 	}
 		else
-			return null;
-		
+			return null;	
 	}
 	
-	@GetMapping(path = "/freeResManager")
-	public List<RestaurantManager> findAllFreeRestaurantManagers() {
+	@GetMapping(path = "/ResManagers/{id}")
+	public List<RestaurantManager> findAllRestaurantManagers(@PathVariable Long id) {
 		//System.out.println("uslo");
-		List<Restaurant> restaurants = restaurantService.findAll();
-		//System.out.println("i ovde");
-		//System.out.println(restaurants.isEmpty());
-		// ovo ce se kasnije promeniti da ide odmah na bazu, sa posebnim upitom
-	    List<RestaurantManager> managers = restaurantManagerService.findAll();
-	   // System.out.println("iiii ovde");
-		//System.out.println(managers.isEmpty());
-		List<RestaurantManager> result = new ArrayList<RestaurantManager>();
-		List<Long>skup = new ArrayList<Long>();
-		for (Restaurant r : restaurants){
-			for (RestaurantManager rr : r.getRestaurantManagers()){
-				
-					skup.add(rr.getId());				
-			}
-		}
-		//System.out.println("skup "+skup);
-		for(RestaurantManager m :managers){
-			if(!skup.contains(m.getId()))
-			{
-				result.add(m);
-			}
-		}
-		
-	
-		return result;
-	}
-	
-	@GetMapping(path = "/ResManagers")
-	public List<RestaurantManager> findAllRestaurantManagers() {
-	    List<RestaurantManager> managers = restaurantManagerService.findAll();
+		idRestaurant = id;
+	    List<RestaurantManager> managers = restaurantService.findOne(id).getRestaurantManagers();
+	    //System.out.println("velicina " +managers.size());
 		return managers;
 	}
 	
@@ -122,23 +88,12 @@ public class SystemManagerController {
 	}
 	
 	@PostMapping(path = "/newRestaurant")
-	public Restaurant saveRestaurant(@RequestBody RestaurantPojo restaurant) {
+	public Restaurant saveRestaurant(@RequestBody Restaurant restaurant) {
 		System.out.println("uslo u restorane");
 		if (restaurant != null){
-			Restaurant r = new Restaurant();
-			r.setName(restaurant.getName());
-			r.setCity(restaurant.getCity());
-			r.setStreet(restaurant.getStreet());
-			r.setCountry(restaurant.getCountry());
-			r.setRestaurant_type(restaurant.getRestaurant_type());			
-			Long id = Long.parseLong(restaurant.getRestaurantManager());
-			RestaurantManager newOne = restaurantManagerService.findOne(id);
-			List<RestaurantManager> newList = new ArrayList <RestaurantManager>();
-			newList.add(newOne);		
-			r.setRestaurantManagers(newList);
-			r.setRatings(0.0);
-			restaurantService.save(r);
-		return r;
+			restaurant.setRatings(0.0);
+			restaurantService.save(restaurant);
+		return restaurant;
 	}
 		else
 			return null;
@@ -171,21 +126,17 @@ public class SystemManagerController {
 		
 	}
 	
-	@PutMapping(path = "/deleteResMen/{id}")
+	@DeleteMapping(path = "/deleteResMen/{id}")
 	public String deleteResManager(@PathVariable Long id) {
 		if(id!=null){
-			try {
-				restaurantManagerService.delete(id);
-			} catch (Exception e) {
-				// TODO: handle exception
-			}
-		
-	
+		RestaurantManager menager = restaurantManagerService.findOne(id);
+		restaurantService.findOne(idRestaurant).getRestaurantManagers().remove(menager);	
+		restaurantManagerService.delete(id);
 	return "yes";
 		}else return "no";	
 	}
 	
-	@PutMapping(path = "/deleteRestaurant/{id}")
+	@DeleteMapping(path = "/deleteRestaurant/{id}")
 	public String deleteRestaurant(@PathVariable Long id) {
 		if(id!=null){		
 			restaurantService.delete(id);
