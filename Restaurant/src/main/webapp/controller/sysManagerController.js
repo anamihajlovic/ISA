@@ -24,29 +24,29 @@ sysManagerModule.controller('sysManagerController', ['$scope', 'sysManagerServic
 	checkRights();	
 	$scope.newSysManager = function(){
 		checkRights();	
-		$scope.sysManager.firstName = '';
+	/*$scope.sysManager.firstName = '';
 		
 		$scope.sysManager.lastName = '';
 		$scope.sysManager.email = '';
-		$scope.sysManager.password = '';
+		$scope.sysManager.password = '';*/
 	}
 	$scope.newRestaurant = function(){
 		checkRights();
-	
+	/*
 		$scope.restaurant.name = '';
 		$scope.restaurant.street = '';
 		$scope.restaurant.country = '';
 		$scope.restaurant.restaurant_type = '';
-		$scope.restaurant.city = '';
+		$scope.restaurant.city = '';*/
 		
 	}
 	$scope.newResManager = function(){
 		checkRights();	
-		$scope.resManager.firstName = null;
+		/*$scope.resManager.firstName = null;
 		$scope.resManager.lastName = null;
 		$scope.resManager.email = null;
 		$scope.resManager.password = null;
-		$scope.resManager.idRestaurant = null;
+		$scope.resManager.idRestaurant = null;*/
 		
 	}
 	$scope.list= function(){

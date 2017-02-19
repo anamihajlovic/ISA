@@ -21,21 +21,21 @@ resManagerModule.controller('resManagerController', ['$scope', 'resManagerServic
 	}
 	$scope.newEmpolyee = function(){
 		checkRights();	
-		$scope.employee.firstName = '';
+		/*$scope.employee.firstName = '';
 		$scope.employee.lastName = '';
 		$scope.employee.email = '';
 		$scope.employee.password = '';
 		$scope.employee.birthday = '';
 		$scope.employee.clothesSize= '';
 		$scope.employee.shoesSize = '';
-		$scope.employee.userRole = '';
+		$scope.employee.userRole = '';*/
 	}
 	$scope.newBidder = function(){
 		checkRights();	
-		$scope.bidder.firstName = '';
+		/*$scope.bidder.firstName = '';
 		$scope.bidder.lastName = '';
 		$scope.bidder.email = '';
-		$scope.bidder.password = '';
+		$scope.bidder.password = '';*/
 	}
 
 	
@@ -51,14 +51,14 @@ resManagerModule.controller('resManagerController', ['$scope', 'resManagerServic
 			request.then(function (data) {
 				if($scope.data == "dodato") {
 					toastr.success("Success!");	
-					$scope.employee.firstName = '';
+					/*$scope.employee.firstName = '';
 					$scope.employee.lastName = '';
 					$scope.employee.email = '';
 					$scope.employee.password = '';
 					$scope.employee.birthday = '';
 					$scope.employee.clothesSize= '';
 					$scope.employee.shoesSize = '';
-					$scope.employee.userRole = '';
+					$scope.employee.userRole = '';*/
 						
 				} else {
 					toastr.error("Something wrong");			
@@ -115,10 +115,10 @@ resManagerModule.controller('resManagerController', ['$scope', 'resManagerServic
 		request.then(function (data) {
 			if($scope.data != null) {
 				toastr.success("Success!");	
-				$scope.bidder.firstName = '';
+				/*$scope.bidder.firstName = '';
 				$scope.bidder.lastName = '';
 				$scope.bidder.email = '';
-				$scope.bidder.password = '';
+				$scope.bidder.password = '';*/
 					
 			} else {
 				toastr.error("Something wrong");
