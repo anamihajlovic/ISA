@@ -48,6 +48,11 @@ public class GuestServiceImp implements GuestService {
 	public List<Guest> findAll() {
 		return Lists.newArrayList(repository.findAll());
 	}
+
+	@Override
+	public Guest findById(Long id) {
+		return repository.findById(id);
+	}
 	
 	
 

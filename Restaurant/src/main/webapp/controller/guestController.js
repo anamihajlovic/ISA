@@ -90,8 +90,59 @@ guestModule.controller('guestController', ['$scope', 'guestService','commonServi
 				if($scope.data.length != 0) {
 					$scope.possibleFriends = $scope.data;
 				} else {
-						toastr.info("You're already friend with everyone or you're waiting for them to accept your friend request! :)");
+						toastr.info("You're already friend with everyone or someone has to accept friend request! :)");
+						$location.path('guest');
 					
+				}
+			});
+		}
+		
+		$scope.addFriend = function(friendId) {
+			var request = guestService.addFriend($scope.guest.id, friendId).then(function(response){
+				$scope.data = response.data;
+				return response;
+			});
+				
+			request.then(function (data) {
+				if($scope.data == "OK") {
+					$scope.searchText = "";//zasto ovo ne isprazni search polje??
+					toastr.success("Successfully sent friend request!");
+					$scope.findFriends();
+				} else {
+						toastr.error("Sending friend request was unsuccessful. Please, try again");
+				}
+			});
+		}
+		
+		$scope.getMyFriends = function() {
+			var request = guestService.getMyFriends($scope.guest.id).then(function(response){
+				$scope.data = response.data;
+				return response;
+			});
+				
+			request.then(function (data) {
+				if($scope.data.length != 0) {
+					$scope.myFriends = $scope.data;
+				} else {
+						toastr.info("You friend list is empty. Go, find you friends and send them friend request! :)");
+						$location.path('guest');
+				}
+			});
+		}
+		
+		$scope.deleteFriend = function(friendId) {
+			var request = guestService.deleteFriend($scope.guest.id, friendId).then(function(response){
+				$scope.data = response.data;
+				return response;
+			});
+				
+			request.then(function (data) {
+				if($scope.data == "OK") {
+					$scope.searchText = "";
+					toastr.success("Successfully deleted friend!");
+					$scope.getMyFriends();
+				} else {
+						toastr.error("Deleting friend was unsuccessful. Please, try again");
 				}
 			});
 		}

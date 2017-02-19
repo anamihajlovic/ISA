@@ -50,46 +50,29 @@
   <div class="header">
     <h3 class="text-muted prj-name">
         <span class="fa fa-users fa-2x principal-title"></span>
-        Finding friends
+        My friends
     </h3>
   </div>
-  
-  
-  
-  <div class="daily" 
-      ng-repeat="daily in dailies | orderBy:'-date' " 
-      ng-show="filteredEntries.length"
-    >
-      {{ daily.date | date:'dd/MM/y' }}
-      <div class="entry" 
-        ng-repeat="entry in filteredEntries = (daily.entries | filter:{ category: 'B'})"
-      >
-        <span>{{ entry.category }}</span>, <span>{{ entry.note }}</span>
-      </div>
-    </div>
-  
 
 
   <div class="jumbotron list-content" >
     <ul class="list-group">
     <li> 
-      <input type="text" data-ng-model="searchText" id="search" placeholder="Search people...">
+      <input type="text" ng-model="searchText" id="search" placeholder="Search friends...">
     </li>
       <li class="list-group-item title">
-        Find your friends
+        My friends
       </li>
-      <li ng-repeat="friend in possibleFriends | filter:searchText" class="list-group-item text-left">
+      <li ng-repeat="friend in myFriends | filter:searchText" class="list-group-item text-left">
         <img class="img-thumbnail" src="html/guest/userProfile.png">
         <label class="name">
             {{ friend.firstName + " " + friend.lastName }}<br>
         </label>
         <label class="pull-right">
-            <a  class="btn btn-success btn-xs glyphicon glyphicon-plus" ng-click="addFriend(friend.id)" data-ui-sref="." title="Add"></a>
-            <!--  <a  class="btn btn-danger  btn-xs glyphicon glyphicon-trash" data-ui-sref="." title="Delete"></a>-->
+           <a  class="btn btn-danger  btn-xs glyphicon glyphicon-trash" ng-click="deleteFriend(friend.id)" data-ui-sref="." title="Delete"></a>
         </label>
         <div class="break"></div>
       </li>
-      
     </ul>
   </div>
   </div>
