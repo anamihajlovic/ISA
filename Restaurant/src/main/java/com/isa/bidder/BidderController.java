@@ -48,11 +48,12 @@ public class BidderController {
 		return bidderService.save(bidd);
 	}	
 	
-	@PutMapping(path = "/firstLogIn")
+	@PutMapping(path = "/changePassword")
 	public Bidder changeBidderPassword(@RequestBody Bidder bidder) {
 		
-		try{
+		if(bidder.getFirstLogIn())
 			bidder.setFirstLogIn(false);
+		try{
 			bidderService.save(bidder);
 			httpSession.setAttribute("user", bidder);
 		} catch(Exception e) {
@@ -62,6 +63,8 @@ public class BidderController {
 		
 		return bidder;	
 	}
+
+	
 	
 
 

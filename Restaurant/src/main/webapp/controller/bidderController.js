@@ -14,7 +14,17 @@ bidderModule.controller('bidderController', ['$scope', 'bidderService','$locatio
 			}
 		);
 	}
-	checkRights();	
+	checkRights();
+	$scope.updateBidder = function(){
+		checkRights();	
+	}
+	$scope.viewAll = function(){
+		checkRights();	
+	}
+	$scope.changePas = function(){
+		checkRights();	
+	}
+	
 	$scope.update= function () {    
 		var request = bidderService.updateBidder($scope.bidder).then(function(response) {
 		$scope.data = response.data;

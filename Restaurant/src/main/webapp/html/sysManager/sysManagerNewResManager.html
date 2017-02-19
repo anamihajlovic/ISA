@@ -4,52 +4,52 @@
 <div class = "col-sm-4">
 </div>
 <div class = "col-sm-4"  class="input-group">
-<form action="" name = "form" id ="resMan" novalidate>
+<form action="" name = "formNRM"  novalidate>
     <label>Firstname</label>
       
-	<div  ng-class="{ 'has-error': form.firstName.$dirty && form.firstName.$error.required }">
-	<input type = "text" class = "form-control" ng-model = "$parent.resManager.firstName" name="firstName" ng-readonly="$parent.infoMode" required="required"> 
+	<div  ng-class="{ 'has-error': formNRM.firstName.$dirty && formNRM.firstName.$error.required }">
+	<input type = "text" class = "form-control" ng-model = "$parent.resManager.firstName" name="firstNameNRM" ng-readonly="$parent.infoMode" required> 
 	</div>
-	<span class="help-block" ng-show = "form.firstName.$dirty && form.firstName.$invalid">
-	<span ng-show = "form.firstName.$error.required">First name is required.</span>
+	<span class="help-block" ng-show = "formNRM.firstName.$dirty && formNRM.firstName.$invalid">
+	<span ng-show = "formNRM.firstName.$error.required">First name is required.</span>
 	</span>
     <label>Lastname</label>
-   <div  ng-class="{ 'has-error': form.lastName.$dirty && form.lastName.$error.required }">
-	<input type = "text" class = "form-control" ng-model = "$parent.resManager.lastName" name="lastName" ng-readonly="$parent.infoMode" required="required"> 
+   <div  ng-class="{ 'has-error': formNRM.lastName.$dirty && formNRM.lastName.$error.required }">
+	<input type = "text" class = "form-control" ng-model = "$parent.resManager.lastName" name="lastName" ng-readonly="$parent.infoMode" required> 
 	</div>
-	<span class="help-block" ng-show = "form.lastName.$dirty && form.lastName.$invalid">
-	<span ng-show = "form.lastName.$error.required">Last name is required.</span>
+	<span class="help-block" ng-show = "formNRM.lastName.$dirty && formNRM.lastName.$invalid">
+	<span ng-show = "formNRM.lastName.$error.required">Last name is required.</span>
 	</span> 
 
     <label>Email</label>
-     <div  ng-class="{ 'has-error': form.email.$dirty && form.email.$error.required }">
-	<input type = "text" class = "form-control" ng-model = "$parent.resManager.email" name="email" ng-readonly="$parent.infoMode" required="required"> 
+     <div  ng-class="{ 'has-error': formNRM.email.$dirty && formNRM.email.$error.required }">
+	<input type = "text" class = "form-control" ng-model = "$parent.resManager.email" name="email" ng-readonly="$parent.infoMode" required> 
 	</div>
-	<span class="help-block" ng-show = "form.email.$dirty && form.email.$invalid">
-	<span ng-show = "form.email.$error.required">Email is required.</span>
+	<span class="help-block" ng-show = "formNRM.email.$dirty && formNRM.email.$invalid">
+	<span ng-show = "formNRM.email.$error.required">Email is required.</span>
 	</span>  
 
     <label>Password</label>
-     <div  ng-class="{ 'has-error': form.password.$dirty && form.password.$error.required }">
-	<input type = "text" class = "form-control" ng-model = "$parent.resManager.password" name="password" ng-readonly="$parent.infoMode" required="required"> 
+     <div  ng-class="{ 'has-error': formNRM.password.$dirty && formNRM.password.$error.required }">
+	<input type = "text" class = "form-control" ng-model = "$parent.resManager.password" name="password" ng-readonly="$parent.infoMode" required> 
 	</div>
-	<span class="help-block" ng-show = "form.password.$dirty && form.password.$invalid">
-	<span ng-show = "form.password.$error.required">Password is required.</span>
+	<span class="help-block" ng-show = "formNRM.password.$dirty && formNRM.password.$invalid">
+	<span ng-show = "formNRM.password.$error.required">Password is required.</span>
 	</span>   
     
     <label>Restaurant</label>
-    <div ng-class="{ 'has-error': form.res.$dirty && form.res.$error.required }">	
+    <div ng-class="{ 'has-error': formNRM.res.$dirty && formNRM.res.$error.required }">	
     <select class="form-control" name='res' ng-model="$parent.resManager.idRestaurant" required >
    		<option value="" disabled="" selected="">Select Restaurant</option>
      	<option ng-repeat="restaurant in restaurantss" value="{{ restaurant.id}}">{{restaurant.name}}</option>
 	</select> 
-	  <span class="help-block" ng-show = "form.res.$dirty && form.res.$invalid">
-    <span ng-show = "form.res.$error.required">Restaurant is required.</span>
+	  <span class="help-block" ng-show = "formNRM.res.$dirty && formNRM.res.$invalid">
+    <span ng-show = "formNRM.res.$error.required">Restaurant is required.</span>
     </span>
     </div>
 <br>
 
-<button class="btn btn-default" ng-disabled="form.$invalid" ng-click="saveManager()"><span class="glyphicon glyphicon-ok" ></span> Create</button>
+<button class="btn btn-default" ng-disabled="formNRM.$invalid" ng-click="saveManager()"><span class="glyphicon glyphicon-ok" ></span> Create</button>
 <button class="btn btn-default" ng-click="cancel()"><span class="glyphicon glyphicon-remove" ></span> Cancel</button>
 </form>
 

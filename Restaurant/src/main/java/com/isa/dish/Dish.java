@@ -2,6 +2,8 @@ package com.isa.dish;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -11,9 +13,11 @@ import javax.validation.constraints.NotNull;
 
 import org.hibernate.validator.constraints.NotBlank;
 
+import com.isa.victual.Victual;
+
 @Entity
-@Table(name="dish")
-public class Dish {
+@Table(name="dishes")
+public class Dish extends Victual{
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
@@ -22,24 +26,28 @@ public class Dish {
 
 	@NotBlank
 	@Column
-	private String name;
-
-	@Column
 	private String text;
-
+	
 	@NotNull
 	@Column
 	@Min(0)
 	private Long price;
-
-	public Dish() {}
 	
-	public Dish(Integer id, String name, String text, Long price) {
-		super();
+	@Enumerated(EnumType.STRING)
+	@NotBlank
+	@Column (name= "dish_type")
+	private DishType dishType;
+
+	public Dish(String name) {
+		super(name);
+		// TODO Auto-generated constructor stub
+	}
+
+	public Dish(String name, Integer id, String text, DishType dishType) {
+		super(name);
 		this.id = id;
-		this.name = name;
 		this.text = text;
-		this.price = price;
+		this.dishType = dishType;
 	}
 
 	public Integer getId() {
@@ -50,20 +58,20 @@ public class Dish {
 		this.id = id;
 	}
 
-	public String getName() {
-		return name;
-	}
-
-	public void setName(String name) {
-		this.name = name;
-	}
-
 	public String getText() {
 		return text;
 	}
 
 	public void setText(String text) {
 		this.text = text;
+	}
+
+	public DishType getDishType() {
+		return dishType;
+	}
+
+	public void setDishType(DishType dishType) {
+		this.dishType = dishType;
 	}
 
 	public Long getPrice() {
@@ -74,6 +82,9 @@ public class Dish {
 		this.price = price;
 	}
 	
+	
+
+
 	
 
 }

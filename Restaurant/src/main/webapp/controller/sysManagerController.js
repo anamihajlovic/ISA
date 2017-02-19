@@ -32,6 +32,7 @@ sysManagerModule.controller('sysManagerController', ['$scope', 'sysManagerServic
 	}
 	$scope.newRestaurant = function(){
 		checkRights();
+	
 		$scope.restaurant.name = '';
 		$scope.restaurant.street = '';
 		$scope.restaurant.country = '';
@@ -41,15 +42,11 @@ sysManagerModule.controller('sysManagerController', ['$scope', 'sysManagerServic
 	}
 	$scope.newResManager = function(){
 		checkRights();	
-		alert($scope.form.firstName.$dirty)
-		$scope.resManager.firstName = '';
-	 $scope.form.firstName.$dirty = false;
-		$scope.resManager.lastName = '';
-		$scope.resManager.email = '';
-		$scope.resManager.password = '';
-		$scope.resManager.idRestaurant = '';
-		
-
+		$scope.resManager.firstName = null;
+		$scope.resManager.lastName = null;
+		$scope.resManager.email = null;
+		$scope.resManager.password = null;
+		$scope.resManager.idRestaurant = null;
 		
 	}
 	$scope.list= function(){

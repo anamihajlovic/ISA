@@ -9,7 +9,7 @@ insert into guests(email, password, first_name, last_name,user_role, first_login
 insert into guests(email, password, first_name, last_name,user_role, first_login, active, guest_a_code) values ('bakir@gmail.com', 'baki', 'Bakir', 'Niksic','guest', false, true, 'lwe267cfr')
 insert into guests(email, password, first_name, last_name,user_role, first_login, active, guest_a_code) values ('mirko@gmail.com', 'mirko', 'Mirko', 'Odalovic','guest', false, true, 'law369zde')
 
-insert into bidders(email, password, first_name, last_name,first_login,user_role) values ('bid1@gmail.com', 'bid1', 'bid1', 'bid2',true,'bidder')
+insert into bidders(email, password, first_name, last_name,first_login,user_role) values ('bid1@gmail.com', 'bid1', 'bid1', 'bid2',false,'bidder')
 insert into bidders(email, password, first_name, last_name,first_login,user_role) values ('bid2@gmail.com', 'bid2', 'bid2', 'bid2',true,'bidder')
 
 
@@ -68,14 +68,24 @@ insert into restaurant_bidders(restaurant_id,bidder_id)values(1,2)
 
 
 --DISH
-insert into dish(name,text, price)values('Pica','',250)
-insert into dish(name,text, price)values('Testo','',400)
-insert into dish(name,text, price)values('Palacinke','',200)
+insert into dishes(name,text, price,dish_type)values('Pica','opis',250,'pizza')
+insert into dishes(name,text, price,dish_type)values('Testo','opis',400,'pasta')
+insert into dishes(name,text, price,dish_type)values('Palacinke','opis',200,'dessert')
 
 --DRINK
-insert into drink(name,text, price)values('Sok','',130)
-insert into drink(name,text, price)values('Kafa','',120)
-insert into drink(name,text, price)values('Caj','',110)
+insert into drinks(name,text, price,drink_type)values('Sok','opis',130,'non_carbonated_drink')
+insert into drinks(name,text, price,drink_type)values('Kafa','opis',120,'hot_drink')
+insert into drinks(name,text, price,drink_type)values('Caj','opis',110,'hot_drink')
+
+
+--WARENHOUSE
+insert into foodstuffs(name,quantity)values('Kafa',120)
+insert into foodstuffs(name,quantity)values('Caj',50)
+insert into foodstuffs(name,quantity)values('Sok',120)
+insert into foodstuffs(name,quantity)values('Jaje',50)
+insert into foodstuffs(name,quantity)values('Paradajz',20)
+insert into foodstuffs(name,quantity)values('Hleb',10)
+
 
 --MENU
 insert into restuarant_menu(restaurant_id,dish_id)values(1,1)

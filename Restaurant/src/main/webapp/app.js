@@ -140,7 +140,12 @@ angular.module('restaurants', [ 'ui.router',
         	   templateUrl : 'html/bidder/bidderUpdateProfile.html',
         	   
            })
-             
+            .state('bidder.changePassword', {
+        	   url : '/changePassword',
+        	   templateUrl : 'changePassword.html',
+        	   controller: 'passController'
+        	   
+           })
            .state('bartender', {
         	   url : '/bartender',
         	   templateUrl : 'html/employees/bartenderHome.html',

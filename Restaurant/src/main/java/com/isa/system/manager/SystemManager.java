@@ -28,11 +28,17 @@ public class SystemManager extends User {
 
 	SystemManager() {}
 	
+	
+	
+
 	public SystemManager(Long id, Preset preset) {
 		super();
 		this.id = id;
 		this.preset = preset;
 	}
+
+
+
 
 	public Long getId() {
 		return id;

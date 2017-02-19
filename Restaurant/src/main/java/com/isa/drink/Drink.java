@@ -2,6 +2,8 @@ package com.isa.drink;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -11,35 +13,42 @@ import javax.validation.constraints.NotNull;
 
 import org.hibernate.validator.constraints.NotBlank;
 
+import com.isa.victual.Victual;
+
 @Entity
-@Table(name="drink")
-public class Drink {
+@Table(name="drinks")
+public class Drink extends Victual{
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name = "drink_id")
 	private Integer id;
-
+	
 	@NotBlank
 	@Column
-	private String name;
-
-	@Column
 	private String text;
-
+	
 	@NotNull
 	@Column
 	@Min(0)
 	private Long price;
 	
-	public Drink(){}
+	@Enumerated(EnumType.STRING)
+	@NotBlank
+	@Column(name= "drink_type")
+	private DrinkType drinkType;
 
-	public Drink(Integer id, String name, String text, Long price) {
-		super();
+	
+	public Drink(String name, Integer id, String text, DrinkType drinkType) {
+		super(name);
 		this.id = id;
-		this.name = name;
 		this.text = text;
-		this.price = price;
+		this.drinkType = drinkType;
+	}
+
+	public Drink(String name) {
+		super(name);
+		// TODO Auto-generated constructor stub
 	}
 
 	public Integer getId() {
@@ -50,20 +59,20 @@ public class Drink {
 		this.id = id;
 	}
 
-	public String getName() {
-		return name;
-	}
-
-	public void setName(String name) {
-		this.name = name;
-	}
-
 	public String getText() {
 		return text;
 	}
 
 	public void setText(String text) {
 		this.text = text;
+	}
+
+	public DrinkType getDrinkType() {
+		return drinkType;
+	}
+
+	public void setDrinkType(DrinkType drinkType) {
+		this.drinkType = drinkType;
 	}
 
 	public Long getPrice() {
@@ -73,7 +82,6 @@ public class Drink {
 	public void setPrice(Long price) {
 		this.price = price;
 	}
-	
-	
 
-}
+	
+}	

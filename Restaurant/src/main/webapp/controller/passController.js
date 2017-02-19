@@ -8,7 +8,12 @@ passModule.controller('passController', ['$scope', 'commonService', '$location',
 	function isLoggedIn() {
 		commonService.getActiveUser().then(function (response) {				
 			if(response.data !="") {
-				$scope.activeUser = response.data;				
+				$scope.activeUser = response.data;	
+				if ($scope.activeUser.firstLogIn ==false ){
+					var navBar = document.getElementById("firstTimeNav");
+					navBar.style.display = "none";
+					
+				}
 			}								
 			else
 				$location.path('login');
@@ -36,7 +41,7 @@ passModule.controller('passController', ['$scope', 'commonService', '$location',
 		}
 		
 		
-		$scope.changePassword = function () { 	
+		$scope.changePassword = function () {
 			alert("Change");
 			var request = commonService.getActiveUser().then(function(response) {
 				if(response.data != "") {

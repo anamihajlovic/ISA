@@ -12,6 +12,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import com.isa.dish.*;
 import com.isa.drink.*;
+import com.isa.foodstuf.Foodstuff;
 import com.isa.res.manager.*;
 import com.isa.bartender.*;
 import com.isa.bidder.*;
@@ -61,6 +62,10 @@ public class Restaurant {
 	private List<RestaurantManager> restaurantManagers;
 
 	@OneToMany(cascade = CascadeType.ALL)
+	@JoinTable(name = "foodstuffs_in_restuarants", joinColumns = @JoinColumn(name = "restaurant_id"), inverseJoinColumns = @JoinColumn(name = "foodstuff_id"))
+	private List<Foodstuff> foodstuffs;
+	
+	@OneToMany(cascade = CascadeType.ALL)
 	@JoinTable(name = "restuarant_menu", joinColumns = @JoinColumn(name = "restaurant_id"), inverseJoinColumns = @JoinColumn(name = "dish_id"))
 	private List<Dish> food;
 
@@ -81,7 +86,7 @@ public class Restaurant {
 	private List<Cook> cooks;
 
 	@OneToMany(cascade = CascadeType.ALL)
-	@JoinTable(name = "RESTAURANT_BARTENDERS", joinColumns = @JoinColumn(name = "restaurant_id"), inverseJoinColumns = @JoinColumn(name = "bartender_id"))
+	@JoinTable(name = "restaurant_bartenders", joinColumns = @JoinColumn(name = "restaurant_id"), inverseJoinColumns = @JoinColumn(name = "bartender_id"))
 	private List<Bartender> bartenders;
 
 	public Restaurant() {}
