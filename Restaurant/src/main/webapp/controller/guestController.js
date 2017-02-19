@@ -108,7 +108,7 @@ guestModule.controller('guestController', ['$scope', 'guestService','commonServi
 				
 			request.then(function (data) {
 				if($scope.data == "OK") {
-					$scope.searchText = "";//zasto ovo ne isprazni search polje??
+					$scope.search.searchText = "";
 					toastr.success("Successfully sent friend request!");
 					$scope.findFriends();
 				} else {

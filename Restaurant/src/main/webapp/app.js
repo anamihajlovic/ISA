@@ -69,6 +69,12 @@ angular.module('restaurants', [ 'ui.router',
         	templateUrl: 'html/guest/guestProfile.html'
         })
         
+        .state('guest.changePassword', {
+        	   url : '/changePassword',
+        	   templateUrl : 'changePassword.html',
+        	   controller: 'passController'
+           })
+        
         .state('guest.findFriends', {
         	url: 'findFriends',
         	templateUrl: 'html/guest/addFriends.html'
