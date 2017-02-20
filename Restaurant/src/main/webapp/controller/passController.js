@@ -42,7 +42,6 @@ passModule.controller('passController', ['$scope', 'commonService', '$location',
 		
 		
 		$scope.changePassword = function () {
-			alert("Change");
 			var request = commonService.getActiveUser().then(function(response) {
 				if(response.data != "") {
 					$scope.activeUser = response.data;									
@@ -70,7 +69,6 @@ passModule.controller('passController', ['$scope', 'commonService', '$location',
 					$scope.activeUser.password = $scope.newPassword;
 					var request = commonService.changePassword($scope.activeUser).then(function(response){
 						$scope.data = response.data;
-						alert(response.data);
 						return response;
 					});
 					
@@ -88,7 +86,6 @@ passModule.controller('passController', ['$scope', 'commonService', '$location',
 		}
 		
 		$scope.changeFirstPassword = function () { 		
-			alert("Change first");
 			var request = commonService.getActiveUser().then(function(response) {
 				if(response.data != "") {
 					$scope.activeUser = response.data;									
@@ -114,7 +111,6 @@ passModule.controller('passController', ['$scope', 'commonService', '$location',
 					$scope.activeUser.password = $scope.newPassword;
 					var request = commonService.changeFirstPassword($scope.activeUser).then(function(response){
 						$scope.data = response.data;
-						alert(response.data);
 						return response;
 					});
 					
@@ -132,10 +128,15 @@ passModule.controller('passController', ['$scope', 'commonService', '$location',
 		}
 		
 		$scope.cancel = function() {
-			if($scope.activeUser.firstLogIn)
-				$location.path('login');
-			else
+			if ($scope.activeUser.userRole == 'guest') {
 				$location.path($scope.activeUser.userRole);
+			}else  {
+				if($scope.activeUser.firstLogIn)
+					$location.path('login');
+				else
+					$location.path($scope.activeUser.userRole);
+			}
+				
 		}
 
 		
