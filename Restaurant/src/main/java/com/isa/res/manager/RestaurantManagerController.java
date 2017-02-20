@@ -82,7 +82,7 @@ public class RestaurantManagerController {
 			emp.setFirstLogIn(true);
 			waiterService.save(emp);
 			Restaurant r = restaurantService.findOne(restaurantManager.getIdRestaurant());	
-			emp.setRestaurant(r);
+			emp.setRestaurantId(r.getId());
 			r.getWaiters().add(emp);
 			r.setId(restaurantManager.getIdRestaurant());
 			restaurantService.save(r);	
@@ -99,7 +99,7 @@ public class RestaurantManagerController {
 			emp.setFirstLogIn(true);
 			cookService.save(emp);
 			Restaurant r = restaurantService.findOne(restaurantManager.getIdRestaurant());
-			emp.setRestaurant(r);
+			emp.setRestaurantId(r.getId());
 			r.getCooks().add(emp);
 			r.setId(restaurantManager.getIdRestaurant());
 			restaurantService.save(r);
@@ -116,7 +116,7 @@ public class RestaurantManagerController {
 			emp.setFirstLogIn(true);
 			bartenderService.save(emp);
 			Restaurant r = restaurantService.findOne(restaurantManager.getIdRestaurant());
-			emp.setRestaurant(r);
+			emp.setRestaurantId(r.getId());
 			r.getBartenders().add(emp);
 			r.setId(restaurantManager.getIdRestaurant());
 			restaurantService.save(r);

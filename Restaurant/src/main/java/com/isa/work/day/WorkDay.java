@@ -30,9 +30,7 @@ public class WorkDay {
 	@Temporal(TemporalType.DATE)
 	private Date day;
 	
-	
-	
-	
+			
 	@OneToMany(cascade = CascadeType.ALL)
 	@JoinTable(name = "work_shifts_in_work_days", joinColumns = @JoinColumn(name = "work_day_id"), inverseJoinColumns = @JoinColumn(name = "work_shift_id"))
 	private List<WorkShift> workShifts; ;

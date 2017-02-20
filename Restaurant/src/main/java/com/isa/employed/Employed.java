@@ -10,6 +10,7 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 
+import com.isa.restaurant.Restaurant;
 import com.isa.user.User;
 
 
@@ -29,14 +30,20 @@ public class Employed extends User{
 	@NotNull
 	@Temporal(TemporalType.DATE)
 	private Date birthday;	
+		
+	@NotNull
+	@Column(name = "restaurant_id")
+	private Long restaurantId;
+	
 	
 	public Employed() {}
 
-	public Employed(ClothesSize clothesSize, ShoesSize shoesSize, Date birthday) {
+	public Employed(ClothesSize clothesSize, ShoesSize shoesSize, Date birthday, Long restaurantId) {
 		super();
 		this.clothesSize = clothesSize;
 		this.shoesSize = shoesSize;
-		this.birthday = birthday;		
+		this.birthday = birthday;	
+		this.restaurantId = restaurantId;
 	}
 
 	public ClothesSize getClothesSize() {
@@ -62,6 +69,13 @@ public class Employed extends User{
 	public void setBirthday(Date birthday) {
 		this.birthday = birthday;
 	}
-	
+
+	public Long getRestaurantId() {
+		return restaurantId;
+	}
+
+	public void setRestaurantId(Long restaurantId) {
+		this.restaurantId = restaurantId;
+	}			
 	
 }
