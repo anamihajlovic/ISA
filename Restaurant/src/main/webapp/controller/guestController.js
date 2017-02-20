@@ -18,6 +18,7 @@ guestModule.controller('guestController', ['$scope', 'guestService','commonServi
 
 	isLoggedIn();
 	$scope.infoMode = true;
+	$scope.brojac = 3;
 
 		$scope.submitRegister = function() {
 			var request = guestService.register($scope.guest).then(function(response) {
