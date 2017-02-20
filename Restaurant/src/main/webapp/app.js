@@ -1,5 +1,6 @@
 'use-strict';
-angular.module('restaurants', [ 'ui.router', 'ui.calendar',
+angular.module('restaurants', [ 'ui.router','ui.calendar' ,
+
 	  							'common.services','common.controller',
 								'sysManager.services','sysManager.controller',
 								'bartender.services', 'bartender.controller',
@@ -128,6 +129,12 @@ angular.module('restaurants', [ 'ui.router', 'ui.calendar',
         templateUrl : 'html/resManager/resManagerUpdateProfile.html',
         }) 
         
+        
+        .state('resManager.updateRestaurant', {
+           	url : '/updateRestaurant',
+            templateUrl : 'html/resManager/resManagerUpdateRestaurant.html',
+            }) 
+            
       .state('resManager.newEmployee', {
        	url : '/newEmployee',
         templateUrl : 'html/resManager/resManagerNewEmployee.html'
@@ -140,6 +147,16 @@ angular.module('restaurants', [ 'ui.router', 'ui.calendar',
           .state('resManager.list', {
               url : '/list',
              templateUrl : 'html/resManager/resManagerList.html',
+          })
+          
+         .state('resManager.menu', {
+              url : '/menu',
+             templateUrl : 'html/resManager/resManagerMenu.html',
+          })
+             
+         .state('resManager.drinkCard', {
+              url : '/drinkCard',
+             templateUrl : 'html/resManager/resManagerDrinkCard.html',
           })
         .state('bidder', {
         	   url : '/bidder',

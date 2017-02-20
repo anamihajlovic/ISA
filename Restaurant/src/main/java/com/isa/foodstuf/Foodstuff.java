@@ -34,9 +34,7 @@ public class Foodstuff  extends Victual{
 		this.quantity = quantity;
 	}
 
-	public Foodstuff(String name) {
-		super(name);
-		// TODO Auto-generated constructor stub
+	public Foodstuff() {
 	}
 
 	public Integer getId() {

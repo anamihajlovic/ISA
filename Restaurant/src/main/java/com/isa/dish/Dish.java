@@ -20,7 +20,7 @@ import com.isa.victual.Victual;
 public class Dish extends Victual{
 	
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue
 	@Column(name = "dish_id")
 	private Integer id;
 
@@ -34,21 +34,22 @@ public class Dish extends Victual{
 	private Long price;
 	
 	@Enumerated(EnumType.STRING)
-	@NotBlank
+	@NotNull
 	@Column (name= "dish_type")
 	private DishType dishType;
 
-	public Dish(String name) {
-		super(name);
-		// TODO Auto-generated constructor stub
-	}
 
-	public Dish(String name, Integer id, String text, DishType dishType) {
-		super(name);
+	public Dish(){}
+
+	public Dish(Integer id, String text, Long price, DishType dishType) {
+		super();
 		this.id = id;
 		this.text = text;
+		this.price = price;
 		this.dishType = dishType;
 	}
+
+
 
 	public Integer getId() {
 		return id;

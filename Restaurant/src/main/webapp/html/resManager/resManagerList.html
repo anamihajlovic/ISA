@@ -161,6 +161,113 @@
 			</tr>
         </tbody>
     </table> 
+    
+    <div>
+	<h4>Foodstuffs:</h4>
+	<table  class="table table-bordered tableBG" border="1">
+		<tbody>
+	        <tr>
+				<th>Id</th>
+				<th>Name</th>
+                <th>Quantity</th>
+                <th></th>
+            </tr>
+			<tr ng-repeat="foodstuff in foodstuffs">
+				<td> 
+					{{foodstuff.id}}
+				</td>
+				<td>
+		    		{{foodstuff.name}}	
+				</td>
+            	<td>
+		    		{{foodstuff.quantity}}	
+				</td>
+				<td>
+				<button class = "btn btn-link" id={{foodstuff.id}} ng-click="buttonShowFoodstuff($event)"><span class = "glyphicon glyphicon-pencil" style="color:yellow;"></span></button>
+		    		<button class = "btn btn-link" id={{foodstuff.id}} ng-click="buttonDeleteFoodstuff($event)"><span class = "glyphicon glyphicon-remove" style="color:#e60000;"></span></button>
+					
+				</td>
+			</tr>
+        </tbody>
+    </table> 
+    
+   <button class = "btn btn-default"  ng-click="buttonAddFoodstuff()"><span class = "glyphicon glyphicon-plus" style="color:black"></span>Add foodstuff</button>	 
+  <!-- ------------------------------------------------------------------------------------------- -->
+  <!-- Trigger the modal with a button -->
+<button type="button" id="modalBtnAddFoodstuff" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModalAddFoodstuff" style="display:none"></button>
+
+<!-- Modal -->
+<div id="myModalAddFoodstuff" class="modal fade"  >
+  <div class="modal-dialog ">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title" id="modalTitle">Add new foodstuff</h4>
+      </div>
+      <div class="modal-body">
+     	<form action="" method="post">
+    <label>Name</label>
+    <input type="text" ng-model="$parent.food.name" class="form-control"  >  
+
+    <label>Quantity</label>
+    <input type="text" ng-model="$parent.food.quantity" class="form-control" >  
+
+<br>
+
+</form> 
+	         			
+      </div>
+      <div class="modal-footer">
+      <button class="btn btn-default" ng-click="saveFoodstuff()"><span class="glyphicon glyphicon-ok" ></span> Create</button>
+		 <button type="button" id ="cancelFoodstuff"class="btn btn-default" data-dismiss="modal">Cancel</button>
+      </div>
+    </div>
+
+  </div>
+</div>	
+  
+  
+  
+  
+  
+  <!-- ---------------------------------------------------------------------------------------------------------------- -->
+<!-- Trigger the modal with a button -->
+<button type="button" id="modalBtnShowFoodstuff" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModalShowFoodstuff" style="display:none"></button>
+
+<!-- Modal -->
+<div id="myModalShowFoodstuff" class="modal fade"  >
+  <div class="modal-dialog ">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title" id="modalTitle">{{foodstuff.name}}</h4>
+      </div>
+      <div class="modal-body">
+     	<label>Quantity</label>
+		<input type = "text" class = "form-control" ng-model = "$parent.foodstuff.quantity" >  
+	         			
+      </div>
+      <div class="modal-footer">
+      <button class = "btn btn-default"  ng-click="buttonUpdateFoodstuff()"><span class = "glyphicon glyphicon-ok" style="color:black"></span>Update</button>	
+        <button type="button" id ="closeFoodstuff"class="btn btn-default" data-dismiss="modal">Cancel</button>
+      </div>
+    </div>
+
+  </div>
+</div>	  
+    
+  
+  
+  
+  
+  
+  
+  
+  
   
 </div>
 </div>

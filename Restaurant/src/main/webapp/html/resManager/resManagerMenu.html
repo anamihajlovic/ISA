@@ -1,0 +1,125 @@
+<div>
+<div class = "col-sm-2">
+</div>
+<div class = "col-sm-8">
+	<h4>Menu:</h4>
+	<table  class="table table-bordered tableBG" border="1">
+		<tbody>
+	        <tr>
+				<th>Id</th>
+				<th>Name</th>
+                <th>Text</th>
+                <th>Price</th>
+                <th>Type</th>
+                <th></th>
+            </tr>
+			<tr ng-repeat="dish in dishes">
+				<td> 
+					{{dish.id}}
+				</td>
+				<td>
+		    		{{dish.name}}	
+				</td>
+            	<td>
+		    		{{dish.text}}	
+				</td>
+				<td>
+		    		{{dish.price}}	
+				</td>
+            	<td>
+		    		{{dish.dishType}}	
+				</td>
+				<td>
+				<button class = "btn btn-link" id={{dish.id}} ng-click="buttonShowDish($event)"><span class = "glyphicon glyphicon-pencil" style="color:yellow;"></span></button>
+		    		<button class = "btn btn-link" id={{dish.id}} ng-click="buttonDeleteDish($event)"><span class = "glyphicon glyphicon-remove" style="color:#e60000;"></span></button>
+					
+				</td>
+			</tr>
+        </tbody>
+    </table> 
+    
+    </div>
+    </div>
+    
+  <button class = "btn btn-default"  ng-click="buttonAddDish()"><span class = "glyphicon glyphicon-plus" style="color:black"></span>Add dish</button>	   
+    
+      
+<!-- Trigger the modal with a button -->
+<button type="button" id="modalBtnShowDish" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModalShowDish" style="display:none"></button>
+
+<!-- Modal -->
+<div id="myModalShowDish" class="modal fade"  >
+  <div class="modal-dialog ">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title" id="modalTitle">{{dish.name}}</h4>
+      </div>
+      <div class="modal-body">
+     	<label>Price</label>
+		<input type = "text" class = "form-control" ng-model = "$parent.dish.price" >  
+	         			
+      </div>
+      <div class="modal-footer">
+      <button class = "btn btn-default"  ng-click="buttonUpdateDish()"><span class = "glyphicon glyphicon-ok" style="color:black"></span>Update</button>	
+        <button type="button" id ="closeDish"class="btn btn-default" data-dismiss="modal">Cancel</button>
+      </div>
+    </div>
+
+  </div>
+</div>	
+<!-- ------------------------------------------------------------------------------- -->  
+  <!-- Trigger the modal with a button -->
+<button type="button" id="modalBtnAddDish" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModalAddDish" style="display:none"></button>
+
+<!-- Modal -->
+<div id="myModalAddDish" class="modal fade"  >
+  <div class="modal-dialog ">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title" id="modalTitle">Add new dish</h4>
+      </div>
+      <div class="modal-body">
+     	<form action="" method="post">
+    <label>Name</label>
+    <input type="text" ng-model="$parent.newdish.name" class="form-control"  >  
+
+    <label>Text</label>
+    <input type="text" ng-model="$parent.newdish.text" class="form-control" > 
+    
+     <label>Price</label>
+    <input type="text" ng-model="$parent.newdish.price" class="form-control" > 
+    
+    <label>Type</label>
+     <select class="form-control" name='res' ng-model="$parent.newdish.dishType" >
+   		<option value="" disabled="" selected="">Select type</option>
+     	<option  value="appetizer">appetizer</option>
+     	<option  value="breakfast ">breakfast</option>
+     	<option  value="dessert">dessert</option>
+     	<option  value="fish">fish</option>
+     	<option  value="pasta">pasta</option>
+     	<option  value="pizza">pizza</option>
+     	<option  value="roast">roast</option>
+     	<option  value="salad">salad</option>
+     	<option  value="seasonal">seasonal</option>
+     	<option  value="soup">soup</option>
+   	
+	</select> 
+<br>
+
+</form> 
+	         			
+      </div>
+      <div class="modal-footer">
+      <button class="btn btn-default" ng-click="saveDish()"><span class="glyphicon glyphicon-ok" ></span> Create</button>
+		 <button type="button" id ="cancelDish"class="btn btn-default" data-dismiss="modal">Cancel</button>
+      </div>
+    </div>
+
+  </div>
+</div>	

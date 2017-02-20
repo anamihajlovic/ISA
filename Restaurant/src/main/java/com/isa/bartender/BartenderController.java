@@ -17,7 +17,7 @@ public class BartenderController {
 	private final BartenderService bartenderService;
 
 	@Autowired
-	public BartenderController(final HttpSession httpSession, final BartenderService bartenderService) {
+	public BartenderController( HttpSession httpSession, final BartenderService bartenderService) {
 		this.httpSession = httpSession;
 		this.bartenderService = bartenderService;
 	}

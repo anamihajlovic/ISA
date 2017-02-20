@@ -34,7 +34,7 @@ public class Drink extends Victual{
 	private Long price;
 	
 	@Enumerated(EnumType.STRING)
-	@NotBlank
+	@NotNull
 	@Column(name= "drink_type")
 	private DrinkType drinkType;
 
@@ -46,9 +46,8 @@ public class Drink extends Victual{
 		this.drinkType = drinkType;
 	}
 
-	public Drink(String name) {
-		super(name);
-		// TODO Auto-generated constructor stub
+	public Drink() {
+
 	}
 
 	public Integer getId() {
