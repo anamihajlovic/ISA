@@ -19,10 +19,11 @@ employeeServices.service('employeeService',['$http', function($http) {
 			return $http.put("/bartenders/updateInfo", employee);	
 	}
 	
-	this.readWorkSchedule = function(id) {
-		
+	this.readWorkSchedule = function(employee) {
+		alert("SERVIS")
+		alert(employee.id)
 		if(employee.userRole == 'bartender')
-			return $http.get("bartenders/readWorkSchedule/" + id);
+			return $http.get("/bartenders/readWorkSchedule/" + employee.id);
 		
 	}
 	

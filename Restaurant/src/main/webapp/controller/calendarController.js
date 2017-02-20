@@ -1,28 +1,21 @@
 var calendarModule = angular.module('calendar.controller', ['ui.calendar']);
 
-calendarModule.controller("calendarController", ['$scope', '$location',
+calendarModule.controller("calendarController", ['$scope', '$location', 'employeeService',
 	
-	function ($scope, $location, $filter) {
+	function ($scope, $location, employeeService, $filter) {
 	
-	function isLoggedIn() {
+
+	function readSchedule() {
 		employeeService.getEmployee().then(function (response) {				
-			if(response.data !="") 
-				$scope.employee = response.data;
-			else
-				$location.path('login');
-		}
-	);
+			if(response.data !="") 	{
+				var request = employeeService.readWorkSchedule(response.data).then(function(response){
+					alert("AAAAA");
+				});
+			} else
+				$location.path('login');		
+		});
 	}
-	
-	function readWorkSchedule() {
-		employeeService.readWorkSchedule().then(function (response) {				
-			if(response.data !="") 
-				$scope.employee = response.data;
-			else
-				$location.path('login');
-		}
-	);
-	}
+				
 	
 	function fillCalendar() {
 		date = new Date();
@@ -41,6 +34,8 @@ calendarModule.controller("calendarController", ['$scope', '$location',
 		};
 	
 	
+		
+		
 	
 	$scope.uiConfig = {
 			calendar: {
@@ -65,8 +60,11 @@ calendarModule.controller("calendarController", ['$scope', '$location',
 			};
 	
 
-	$scope.eventSources = [];
-	fillCalendar();
+	
+	$scope.eventSources = [];	
+	readSchedule();
+	
+	
 	
 
 }]);

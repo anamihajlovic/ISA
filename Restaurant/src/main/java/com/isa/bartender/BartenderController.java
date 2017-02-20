@@ -73,12 +73,12 @@ public class BartenderController {
 		return bartender;	
 	}
 	
-	@GetMapping("/readWorkSchedule/{id}")
-	public List<WorkShift> readBartenderWorkSchedule(@PathVariable Long bartenderId) {
+	@GetMapping(path = "/readWorkSchedule/{id}")
+	public List<WorkShift> readWorkSchedule(@PathVariable Long bartenderId) {
 		
+		System.out.println("OVDE SAM");
 		Bartender bartender= bartenderService.findOne(bartenderId);
-		//Long restaurantId = bartender.getRestaurant().getId();
-		Long restaurantId = (long) 1;
+		Long restaurantId = bartender.getRestaurantId();		
 		Restaurant restaurant = restaurantService.findOne(restaurantId);
 			
 		List<WorkShift> bartenderShifts = new ArrayList<WorkShift>();
@@ -93,7 +93,5 @@ public class BartenderController {
 		return bartenderShifts;
 	}
 	
-	
-
 	
 }
