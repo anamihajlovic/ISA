@@ -20,20 +20,26 @@ insert into friendships(sender_id, receiver_id, status) values (7, 1, 'sent')
 insert into friendships(sender_id, receiver_id, status) values (6, 2, 'sent')
 
 
+-- RESTAURANTS
+insert into restaurants(name, restaurant_type, street, city, country,ratings) values ('Lanterna', 'italijanski','Bulevar Oslobodjenja 55','Novi Sad','Srbija',0.0 )
+insert into restaurants(name, restaurant_type, street, city, country,ratings) values ('Veliki', 'srpski','Pasiceva 15','Novi Sad','Srbija',0.0 )
+
 
 --EMPLOYED
 insert into bidders(email, password, first_name, last_name,first_login,user_role) values ('bid1@gmail.com', 'bid1', 'bid1', 'bid2',true,'bidder')
-
 insert into bidders(email, password, first_name, last_name,first_login,user_role) values ('bid2@gmail.com', 'bid2', 'bid2', 'bid2',true,'bidder')
 
 
-insert into cooks(email, password, first_name, last_name,birthday,shoes_size,clothes_size,first_login,user_role) values ('cook1@gmail.com','cook1','cook1','cook1','1994-07-27','no39','M',true,'cook')
-insert into waiters(email, password, first_name, last_name,birthday,shoes_size,clothes_size,first_login,user_role) values ('waiter1@gmail.com','waiter1','waiter1','waiter1','1994-07-25','no39','M',true,'waiter')
-insert into bartenders(email, password, first_name, last_name,birthday,shoes_size,clothes_size,first_login,user_role) values ('bar1@gmail.com','bar1','bar1','bar1','1994-07-25','no42','M',true,'bartender')
 
-insert into cooks(email, password, first_name, last_name,birthday,shoes_size,clothes_size,first_login,user_role) values ('cook2@gmail.com','cook2','cook1','cook2','1994-07-27','no39','M',true,'cook')
-insert into waiters(email, password, first_name, last_name,birthday,shoes_size,clothes_size,first_login,user_role) values ('waiter2@gmail.com','waiter2','waiter2','waiter2','1994-07-25','no39','M',true,'waiter')
-insert into bartenders(email, password, first_name, last_name,birthday,shoes_size,clothes_size,first_login,user_role) values ('bar2@gmail.com','bar2','bar1','bar2','1994-07-25','no39','M',false,'bartender')
+insert into cooks(email, password, first_name, last_name,birthday,shoes_size,clothes_size,first_login,user_role, restaurant_id) values ('cook1@gmail.com','cook1','cook1','cook1','1994-07-27','no39','M',true,'cook',1)
+insert into waiters(email, password, first_name, last_name,birthday,shoes_size,clothes_size,first_login,user_role, restaurant_id) values ('waiter1@gmail.com','waiter1','waiter1','waiter1','1994-07-25','no39','M',true,'waiter',1)
+insert into bartenders(email, password, first_name, last_name,birthday,shoes_size,clothes_size,first_login,user_role, restaurant_id) values ('bar1@gmail.com','bar1','bar1','bar1','1994-07-25','no42','M',true,'bartender',1)
+
+insert into cooks(email, password, first_name, last_name,birthday,shoes_size,clothes_size,first_login,user_role, restaurant_id) values ('cook2@gmail.com','cook2','cook1','cook2','1994-07-27','no39','M',true,'cook',1)
+insert into waiters(email, password, first_name, last_name,birthday,shoes_size,clothes_size,first_login,user_role, restaurant_id) values ('waiter2@gmail.com','waiter2','waiter2','waiter2','1994-07-25','no39','M',true,'waiter',1)
+insert into bartenders(email, password, first_name, last_name,birthday,shoes_size,clothes_size,first_login,user_role, restaurant_id) values ('bar2@gmail.com','bar2','bar1','bar2','1994-07-25','no39','M',false,'bartender',1)
+
+
 
 insert into restaurant_managers(email, password, first_name, last_name,first_login,user_role,restaurant_id) values ('resman1@gmail.com','resman1','first 1','last 1',false,'resManager',1)
 insert into restaurant_managers(email, password, first_name, last_name,first_login,user_role,restaurant_id) values ('reeman2@gmail.com','resmadn2','fisrst 2','last 2',false,'resManager',1)
@@ -45,14 +51,9 @@ insert into restaurant_managers(email, password, first_name, last_name,first_log
 insert into restaurant_managers(email, password, first_name, last_name,first_login,user_role,restaurant_id) values ('rewesman2@gmail.com','resmwan2','fiwrst 2','last 2',false,'resManager',1)
 
 
-
-
 insert into system_managers(email, password, first_name, last_name,preset_manager,first_login,user_role)values('sysman1@gmail.com','sysman1','sysman1','sysman1','yes',false,'sysManager')
 
 
--- RESTAURANTS
-insert into restaurants(name, restaurant_type, street, city, country,ratings) values ('Lanterna', 'italijanski','Bulevar Oslobodjenja 55','Novi Sad','Srbija',0.0 )
-insert into restaurants(name, restaurant_type, street, city, country,ratings) values ('Veliki', 'srpski','Pasiceva 15','Novi Sad','Srbija',0.0 )
 
 --RESTAURANT MANAGERS IN RESTAURANTS
 insert into res_managers_in_restuarants(restaurant_id,res_manager_id)values(1,1)
@@ -120,11 +121,20 @@ insert into restaurant_drink_card(restaurant_id,drink_id)values(2,3)
 
 
 --WORK SHIFTS
-insert into work_shifts (start_time,end_time,waiter,cook,bartender)values('08:00:00','14:00:00',1,1,1)
-insert into work_shifts (start_time,end_time,waiter,cook,bartender)values('14:00:01','20:00:00',2,2,2)
+insert into work_shifts (start_time,end_time,shift_type)values('08:00:00','14:00:00','firstShift')
+insert into work_shifts (start_time,end_time,shift_type)values('14:00:01','20:00:00','secondShift')
+
+insert into work_shift_waiters values(1, 1)
+insert into work_shift_waiters values(2, 2)
+
+insert into work_shift_cooks values(1, 1)
+insert into work_shift_cooks values(2, 2)
+
+insert into work_shift_bartenders values(1, 1)
+insert into work_shift_bartenders values(2, 2)
+
 
 --WORK DAYS
-
 insert into work_days (day)values('2016-02-26')
 insert into work_days(day)values('2016-02-27')
 insert into work_days(day)values('2016-03-28')

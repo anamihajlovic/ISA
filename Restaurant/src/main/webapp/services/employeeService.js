@@ -16,7 +16,13 @@ employeeServices.service('employeeService',['$http', function($http) {
 			return $http.put("/cooks/updateInfo", employee);
 		
 		else if(employee.userRole == 'bartender')
-			return $http.put("/bartenders/updateInfo", employee);
+			return $http.put("/bartenders/updateInfo", employee);	
+	}
+	
+	this.readWorkSchedule = function(id) {
+		
+		if(employee.userRole == 'bartender')
+			return $http.get("bartenders/readWorkSchedule/" + id);
 		
 	}
 	
