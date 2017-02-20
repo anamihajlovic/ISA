@@ -102,7 +102,7 @@ public class SystemManagerController {
 	
 	@PutMapping(path = "/{id}")
 	public SystemManager updateSysManager(@PathVariable Long id,@RequestBody SystemManager systemManager) {
-	restaurantManagerService.findOne(id);
+		systemManagerService.findOne(id);
 			
 		systemManager.setId(id);
 		return systemManagerService.save(systemManager);

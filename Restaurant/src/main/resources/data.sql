@@ -79,17 +79,15 @@ insert into restaurant_bidders(restaurant_id,bidder_id)values(1,1)
 insert into restaurant_bidders(restaurant_id,bidder_id)values(1,2)
 
 
-
-
 --DISH
 insert into dishes(name,text, price,dish_type)values('Pica','opis',250,'pizza')
 insert into dishes(name,text, price,dish_type)values('Testo','opis',400,'pasta')
 insert into dishes(name,text, price,dish_type)values('Palacinke','opis',200,'dessert')
 
 --DRINK
-insert into drinks(name,text, price,drink_type)values('Sok','opis',130,'non_carbonated_drink')
-insert into drinks(name,text, price,drink_type)values('Kafa','opis',120,'hot_drink')
-insert into drinks(name,text, price,drink_type)values('Caj','opis',110,'hot_drink')
+insert into drinks(name,text, price,drink_type)values('Sok','opis',130,'soda')
+insert into drinks(name,text, price,drink_type)values('Kafa','opis',120,'coffee')
+insert into drinks(name,text, price,drink_type)values('Caj','opis',110,'coffee')
 
 
 --WARENHOUSE
@@ -101,6 +99,15 @@ insert into foodstuffs(name,quantity)values('Paradajz',20)
 insert into foodstuffs(name,quantity)values('Hleb',10)
 
 
+--WARENHOUSE IN RESTAURANT
+insert into foodstuffs_in_restuarants(restaurant_id,foodstuff_id)values(1,1)
+insert into foodstuffs_in_restuarants(restaurant_id,foodstuff_id)values(1,2)
+insert into foodstuffs_in_restuarants(restaurant_id,foodstuff_id)values(1,3)
+insert into foodstuffs_in_restuarants(restaurant_id,foodstuff_id)values(2,4)
+insert into foodstuffs_in_restuarants(restaurant_id,foodstuff_id)values(2,5)
+insert into foodstuffs_in_restuarants(restaurant_id,foodstuff_id)values(2,6)
+
+
 --MENU
 insert into restuarant_menu(restaurant_id,dish_id)values(1,1)
 insert into restuarant_menu(restaurant_id,dish_id)values(1,2)
@@ -110,4 +117,22 @@ insert into restuarant_menu(restaurant_id,dish_id)values(2,3)
 insert into restaurant_drink_card(restaurant_id,drink_id)values(1,1)
 insert into restaurant_drink_card(restaurant_id,drink_id)values(1,2)
 insert into restaurant_drink_card(restaurant_id,drink_id)values(2,3)
+
+
+--WORK SHIFTS
+insert into work_shifts (start_time,end_time,waiter,cook,bartender)values('08:00:00','14:00:00',1,1,1)
+insert into work_shifts (start_time,end_time,waiter,cook,bartender)values('14:00:01','20:00:00',2,2,2)
+
+--WORK DAYS
+
+insert into work_days (day)values('2016-02-26')
+insert into work_days(day)values('2016-02-27')
+insert into work_days(day)values('2016-03-28')
+
+insert into work_shifts_in_work_days (work_day_id,work_shift_id)values (1,1)
+insert into work_shifts_in_work_days (work_day_id,work_shift_id)values (1,2)
+
+insert into restaurant_work_days(restaurant_id,work_day_id)values(1,1)
+insert into restaurant_work_days(restaurant_id,work_day_id)values(1,2)
+insert into restaurant_work_days(restaurant_id,work_day_id)values(1,3)
 

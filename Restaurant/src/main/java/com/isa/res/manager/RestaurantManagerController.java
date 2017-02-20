@@ -1,16 +1,12 @@
 package com.isa.res.manager;
 
-import java.time.DateTimeException;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 import javax.servlet.http.HttpSession;
-import javax.validation.Valid;
+
 
 import org.springframework.beans.factory.annotation.Autowired;
 
-import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -18,7 +14,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.isa.bartender.Bartender;
@@ -26,14 +21,14 @@ import com.isa.bartender.BartenderService;
 import com.isa.bidder.*;
 import com.isa.cook.Cook;
 import com.isa.cook.CookService;
-import com.isa.dish.Dish;
-import com.isa.drink.Drink;
-import com.isa.employed.Employed;
-import com.isa.res.manager.*;
+import com.isa.dish.*;
+import com.isa.dish.DishService;
+import com.isa.drink.*;
+import com.isa.drink.DrinkService;
+import com.isa.foodstuf.Foodstuff;
+import com.isa.foodstuf.FoodstuffService;
 import com.isa.restaurant.*;
-import com.isa.system.manager.SystemManager;
 import com.isa.user.Role;
-import com.isa.user.User;
 import com.isa.waiter.Waiter;
 import com.isa.waiter.WaiterService;
 
@@ -49,12 +44,16 @@ public class RestaurantManagerController {
 	private final CookService cookService;
 	private final BartenderService bartenderService;
 	private final BidderService bidderService;
+	private final FoodstuffService foodstuffService;
+	private final DrinkService drinkService;
+	private final DishService dishService;
 	private RestaurantManager restaurantManager;
 	
 	@Autowired
-	public RestaurantManagerController(HttpSession httpSession, final RestaurantService restaurantService,
-			final RestaurantManagerService restaurantManagerService,final WaiterService waiterService, final CookService cookService,
-			final BartenderService bartenderService,final BidderService bidderService) {
+	public RestaurantManagerController(HttpSession httpSession, RestaurantService restaurantService,
+			RestaurantManagerService restaurantManagerService, WaiterService waiterService, CookService cookService,
+			BartenderService bartenderService, BidderService bidderService, FoodstuffService foodstuffService,
+			DrinkService drinkService, DishService dishService) {
 		super();
 		this.httpSession = httpSession;
 		this.restaurantService = restaurantService;
@@ -63,6 +62,9 @@ public class RestaurantManagerController {
 		this.cookService = cookService;
 		this.bartenderService = bartenderService;
 		this.bidderService = bidderService;
+		this.foodstuffService = foodstuffService;
+		this.drinkService = drinkService;
+		this.dishService = dishService;
 	}
 		
 
@@ -72,6 +74,7 @@ public class RestaurantManagerController {
 		return restaurantManager;
 			
 	}
+	
 	@PostMapping(path = "/newWaiter")
 	public String saveEmployee(@RequestBody Waiter emp) {
 		//System.out.println("uslo");
@@ -136,26 +139,142 @@ public class RestaurantManagerController {
 		else
 			return null;		
 	}
+
+	@PostMapping(path = "/newFoodstuff")
+	public String saveFoodstuff(@RequestBody Foodstuff food) {
+		//System.out.println("uslo");
+		if (food != null){
+			foodstuffService.save(food);
+			Restaurant r = restaurantService.findOne(restaurantManager.getIdRestaurant());
+			r.getFoodstuffs().add(food);
+			r.setId(restaurantManager.getIdRestaurant());
+			restaurantService.save(r);	
+		return "dodato";
+	}
+		else
+			return "nije";		
+	}
+	@PostMapping(path = "/newDish")
+	public String saveDish(@RequestBody Dish dish) {
+		//System.out.println("uslo");
+		if (dish != null){
+			dishService.save(dish);
+			Restaurant r = restaurantService.findOne(restaurantManager.getIdRestaurant());
+			r.getDishes().add(dish);
+			r.setId(restaurantManager.getIdRestaurant());
+			restaurantService.save(r);	
+		return "dodato";
+	}
+		else
+			return "nije";		
+	}
+	@PostMapping(path = "/newDrink")
+	public String saveDrink(@RequestBody Drink drink) {
+		//System.out.println("uslo");
+		if (drink != null){
+			drinkService.save(drink);
+			Restaurant r = restaurantService.findOne(restaurantManager.getIdRestaurant());
+			r.getDrinks().add(drink);
+			r.setId(restaurantManager.getIdRestaurant());
+			restaurantService.save(r);	
+		return "dodato";
+	}
+		else
+			return "nije";		
+	}
+	@GetMapping(path = "/restaurant")
+	public Restaurant getRestaurant() {
+		try {
+			Restaurant r  =restaurantService.findOne(restaurantManager.getIdRestaurant());
+			  return r;
+		} catch (Exception e) {
+			// TODO: handle exception
+			return null;
+		}
 	
-	@GetMapping(path = "/Waiters")
+  
+	}
+	@GetMapping(path = "/dishes")
+	public List<Dish> findAllDishes() {
+			List<Dish> dishes =restaurantService.findOne(restaurantManager.getIdRestaurant()).getDishes();
+		  return dishes;
+  
+	}
+	@GetMapping(path = "/drinks")
+	public List<Drink> findAllDrinks() {
+	    List<Drink> drinks =restaurantService.findOne(restaurantManager.getIdRestaurant()).getDrinks();
+		return drinks;
+	}
+	@GetMapping(path = "/foodstuffs")
+	public List<Foodstuff> findAllFoodstuffs() {
+	    List<Foodstuff> foodstuffs =restaurantService.findOne(restaurantManager.getIdRestaurant()).getFoodstuffs();
+		return foodstuffs;
+	}
+	
+	
+	@GetMapping(path = "/waiters")
 	public List<Waiter> findAllWaiters() {
 	    List<Waiter> waiters =restaurantService.findOne(restaurantManager.getIdRestaurant()).getWaiters();
 		return waiters;
 	}
-	@GetMapping(path = "/Cooks")
+	@GetMapping(path = "/cooks")
 	public List<Cook> findAllCooks() {
 	    List<Cook> cooks =restaurantService.findOne(restaurantManager.getIdRestaurant()).getCooks();
 		return cooks;
 	}
-	@GetMapping(path = "/Bartenders")
+	@GetMapping(path = "/bartenders")
 	public List<Bartender> findAllBartenders() {
 	    List<Bartender> bartenders =restaurantService.findOne(restaurantManager.getIdRestaurant()).getBartenders();
 		return bartenders;
 	}
-	@GetMapping(path = "/Bidders")
+	@GetMapping(path = "/bidders")
 	public List<Bidder> findAllBidders() {
 	    List<Bidder> bidders =restaurantService.findOne(restaurantManager.getIdRestaurant()).getBidders();
 		return bidders;
+	}
+	
+	@GetMapping(path = "/foodstuff/{id}")
+	public Foodstuff findFoodstuff(@PathVariable Integer id) {
+		Foodstuff foodstuff =foodstuffService.findOne(id);
+		return foodstuff;
+	}
+	@GetMapping(path = "/dish/{id}")
+	public Dish findDish(@PathVariable Integer id) {
+		Dish dish =dishService.findOne(id);
+		return dish;
+	}
+	@GetMapping(path = "/drink/{id}")
+	public Drink findDrink(@PathVariable Integer id) {
+		Drink drink =drinkService.findOne(id);
+		return drink;
+	}
+	
+	@DeleteMapping(path = "/deleteFoodstuff/{id}")
+	public String deleteFoodstuff(@PathVariable Integer id) {
+		if(id!=null){
+			Foodstuff f = foodstuffService.findOne(id);
+			restaurantService.findOne(restaurantManager.getIdRestaurant()).getFoodstuffs().remove(f);
+			foodstuffService.delete(id);
+		return "yes";
+			}else return "no";	
+	}
+	@DeleteMapping(path = "/deleteDish/{id}")
+	public String deleteDish(@PathVariable Integer id) {
+		if(id!=null){
+			Dish d = dishService.findOne(id);
+			restaurantService.findOne(restaurantManager.getIdRestaurant()).getDishes().remove(d);
+			dishService.delete(id);
+		return "yes";
+			}else return "no";	
+	}
+	@DeleteMapping(path = "/deleteDrink/{id}")
+	public String deleteDrink(@PathVariable Integer id) {
+		if(id!=null){
+			Drink d = drinkService.findOne(id);
+			restaurantService.findOne(restaurantManager.getIdRestaurant()).getDrinks().remove(d);
+			drinkService.delete(id);
+		return "yes";
+			}else return "no";	
 	}
 	
 	@DeleteMapping(path = "/deleteWaiter/{id}")
@@ -205,6 +324,34 @@ public class RestaurantManagerController {
 	resManager.setId(id);
 		return restaurantManagerService.save(resManager);
 	}	
+	
+
+	@PutMapping(path = "/update/{id}")
+	public Restaurant updateRestaurant(@PathVariable Long id,@RequestBody Restaurant res) {
+	restaurantService.findOne(id);
+			
+	res.setId(id);
+		return restaurantService.save(res);
+	}
+	
+	@PutMapping(path = "/updateFoodstuff")
+	public Foodstuff updateFoodstuff(@RequestBody Foodstuff food) {
+		foodstuffService.findOne(food.getId());			
+		food.setId(food.getId());
+		return foodstuffService.save(food);
+	}
+	@PutMapping(path = "/updateDish")
+	public Dish updateDish(@RequestBody Dish dish) {
+		dishService.findOne(dish.getId());			
+		dish.setId(dish.getId());
+		return dishService.save(dish);
+	}
+	@PutMapping(path = "/updateDrink")
+	public Drink updateDish(@RequestBody Drink drink) {
+		drinkService.findOne(drink.getId());		
+		drink.setId(drink.getId());
+		return drinkService.save(drink);
+	}
 
 		
 		

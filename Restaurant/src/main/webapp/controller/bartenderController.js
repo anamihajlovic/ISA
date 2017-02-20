@@ -1,4 +1,4 @@
-var bartenderModule = angular.module('bartender.controller', []);
+var bartenderModule = angular.module('bartender.controller', ['ui.calendar']);
 
 
 bartenderModule.controller('bartenderController', ['$scope', 'bartenderService', 'employeeService', '$location',
@@ -15,7 +15,8 @@ bartenderModule.controller('bartenderController', ['$scope', 'bartenderService',
 			);
 		}
 	
-		isLoggedIn();				
+		isLoggedIn();
+		$scope.eventSources = [];
 		
 		$scope.updateInfo = function () {    	
 			var request = employeeService.updateInfo($scope.employee).then(function(response){
