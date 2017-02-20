@@ -10,7 +10,8 @@ angular.module('restaurants', [ 'ui.router',
 								'cook.services', 'cook.controller',
 								'waiter.services', 'waiter.controller',
 								'guest.services', 'guest.controller',
-								'pass.controller'
+								'pass.controller',
+								'calendar.controller'
 							   ])
 							   
 .config(function($stateProvider, $urlRouterProvider) {
@@ -167,6 +168,12 @@ angular.module('restaurants', [ 'ui.router',
         	   url : '/changePassword',
         	   templateUrl : 'changePassword.html',
         	   controller: 'passController'
+           })
+           
+           .state('bartender.workSchedule', {
+        	   url : '/workSchedule',
+        	   templateUrl : 'html/employees/workSchedule.html',
+        	   
            })
            
            .state('waiter' , {
