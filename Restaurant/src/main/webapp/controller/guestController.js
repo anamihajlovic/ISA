@@ -78,7 +78,8 @@ guestModule.controller('guestController', ['$scope', 'guestService','commonServi
 			});
 			
 		}
-		
+		$scope.search = {};
+		$scope.search.searchText = "";
 		
 		$scope.findFriends = function() {
 			var request = guestService.findFriends($scope.guest.id).then(function(response){
@@ -89,6 +90,8 @@ guestModule.controller('guestController', ['$scope', 'guestService','commonServi
 			request.then(function (data) {
 				if($scope.data.length != 0) {
 					$scope.possibleFriends = $scope.data;
+					$scope.filtered = $scope.possibleFriends;
+
 				} else {
 						toastr.info("You're already friend with everyone or someone has to accept friend request! :)");
 						$location.path('guest');
@@ -105,7 +108,7 @@ guestModule.controller('guestController', ['$scope', 'guestService','commonServi
 				
 			request.then(function (data) {
 				if($scope.data == "OK") {
-					$scope.searchText = "";//zasto ovo ne isprazni search polje??
+					$scope.search.searchText = "";
 					toastr.success("Successfully sent friend request!");
 					$scope.findFriends();
 				} else {
@@ -123,6 +126,7 @@ guestModule.controller('guestController', ['$scope', 'guestService','commonServi
 			request.then(function (data) {
 				if($scope.data.length != 0) {
 					$scope.myFriends = $scope.data;
+					$scope.filtered = $scope.myFriends;
 				} else {
 						toastr.info("You friend list is empty. Go, find you friends and send them friend request! :)");
 						$location.path('guest');
@@ -138,7 +142,7 @@ guestModule.controller('guestController', ['$scope', 'guestService','commonServi
 				
 			request.then(function (data) {
 				if($scope.data == "OK") {
-					$scope.searchText = "";
+					$scope.search.searchText = "";
 					toastr.success("Successfully deleted friend!");
 					$scope.getMyFriends();
 				} else {
@@ -146,6 +150,24 @@ guestModule.controller('guestController', ['$scope', 'guestService','commonServi
 				}
 			});
 		}
+		
+		 $scope.myFilter = function(friendsData) { 
+			var friends = friendsData;
+			$scope.filtered = [];
+
+			var search = $scope.search.searchText.toLowerCase().replace(/\s/g, "");
+			
+			for (var i=0; i<friends.length; i++) {
+					var fullName = friends[i].firstName+friends[i].lastName;
+					var fullName2 = friends[i].lastName+friends[i].firstName;
+					if (fullName.toLowerCase().indexOf(search) !== -1 || fullName2.toLowerCase().indexOf(search) !== -1  ) {
+						$scope.filtered.push(friends[i]);
+					}
+					
+
+			}
+		}
+
 		
 		
 		

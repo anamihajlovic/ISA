@@ -58,12 +58,12 @@
   <div class="jumbotron list-content" >
     <ul class="list-group">
     <li> 
-      <input type="text" ng-model="searchText" id="search" placeholder="Search friends...">
+      <input type="text" ng-change="myFilter(myFriends)"  ng-model="search.searchText"  id="search" placeholder="Search friends...">
     </li>
       <li class="list-group-item title">
         My friends
       </li>
-      <li ng-repeat="friend in myFriends | filter:searchText" class="list-group-item text-left">
+      <li ng-repeat="friend in filtered" class="list-group-item text-left">
         <img class="img-thumbnail" src="html/guest/userProfile.png">
         <label class="name">
             {{ friend.firstName + " " + friend.lastName }}<br>

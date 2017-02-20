@@ -17,11 +17,13 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.isa.bartender.Bartender;
 import com.isa.friendship.Friendship;
 import com.isa.friendship.FriendshipService;
 import com.isa.friendship.Status;
@@ -65,9 +67,7 @@ public class GuestController {
 			return response;
 		}
 
-		if (!guestData.getPassword().equals(guestData.getConfirm()))// ?da li ce
-																	// nekad
-																	// puci?
+		if (!guestData.getPassword().equals(guestData.getConfirm()))								
 			return "match";
 
 		Guest guest = new Guest();
@@ -77,39 +77,35 @@ public class GuestController {
 		guest.setPassword(guestData.getPassword());
 		guest.setUserRole(Role.guest);
 		guest.setActive(false);
+		guest.setFirstLogIn(false);
 		String randomString = UUID.randomUUID().toString().replaceAll("-", "");
 		guest.setActivationCode(randomString);
 
 		try {
 			guestService.save(guest);
-			response = "OK";
 		} catch (Exception ex) {
-			response = "FAILURE";
+			System.out.println("Greska prilikom dodavanja registrovanog gosta u bazu.");
+			return "FAILURE";
 		}
 
-		// slanje mejla ako je OK
-		if (response.equals("OK")) {
-			try {
-				SimpleMailMessage email = new SimpleMailMessage();
-				email.setFrom("isa.restaurants123@gmail.com");
-				email.setTo(guest.getEmail());
-				email.setSubject("Activation link for your account");
-				email.setText("Please, click on your activation link and activate you account."
+
+		try {
+			SimpleMailMessage email = new SimpleMailMessage();
+			email.setFrom("isa.restaurants123@gmail.com");
+			email.setTo(guest.getEmail());
+			email.setSubject("Activation link for your account");
+			email.setText("Please, click on your activation link and activate you account."
 						+ "Activation link is: http://localhost:8080/#/activateAccount/" + randomString);
 
-				mailSender.send(email);
-			} catch (Exception ex) {
-				System.out.println("Email nije poslat.");
-				response = "FAILURE";
-				guestService.delete(guest.getId());// ako je bilo problema sa
-													// slanjem mail-a, da obrise
-													// prethodno dodatog gosta
-			}
-
+			mailSender.send(email);
+		} catch (Exception ex) {
+			System.out.println("Email nije poslat.");
+			guestService.delete(guest.getId());// ako je bilo problema sa slanjem mail-a, obrisi dodatog gosta
+			return "FAILURE";
 		}
 
-		System.out.println(response);
-		return response;
+		
+		return "OK";
 	}
 
 	@PostMapping(path = "/activateAccount/{activationCode}")
@@ -137,6 +133,23 @@ public class GuestController {
 		}
 
 		return guest;
+	}
+	
+	@PutMapping(path = "/changePassword")
+	public Guest changePassword(@RequestBody Guest guest) {
+		
+		/*if(guest.getFirstLogIn())
+			guest.setFirstLogIn(false);*/
+		
+		try{
+			guestService.save(guest);
+			httpSession.setAttribute("user", guest);
+		} catch(Exception e) {
+			System.out.println("Greska pri promeni sifre gosta");
+			return null;
+		}
+		
+		return guest;	
 	}
 
 	@GetMapping(path = "/findFriends/{id}")
