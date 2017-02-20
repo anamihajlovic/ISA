@@ -1,5 +1,5 @@
 'use-strict';
-angular.module('restaurants', [ 'ui.router', 
+angular.module('restaurants', [ 'ui.router', 'ui.calendar',
 	  							'common.services','common.controller',
 								'sysManager.services','sysManager.controller',
 								'bartender.services', 'bartender.controller',
@@ -178,7 +178,8 @@ angular.module('restaurants', [ 'ui.router',
            
            .state('bartender.workSchedule', {
         	   url : '/workSchedule',
-        	   templateUrl : 'html/employees/workSchedule.html',
+        	   templateUrl : 'html/employees/calendarView.html',
+        	   controller: 'calendarController'
         	   
            })
            
@@ -200,6 +201,13 @@ angular.module('restaurants', [ 'ui.router',
         	   templateUrl : 'changePassword.html',
         	   controller: 'passController'
            })
+           
+           .state('waiter.workSchedule', {
+        	   url : '/workSchedule',
+        	   templateUrl : 'html/employees/calendarView.html',
+        	   controller: 'calendarController'
+        	   
+           })
                     
            
            .state('cook' , {  
@@ -217,6 +225,13 @@ angular.module('restaurants', [ 'ui.router',
         	   url : '/changePassword',
         	   templateUrl : 'changePassword.html',
         	   controller: 'passController'
+           })
+           
+           .state('cook.workSchedule', {
+        	   url : '/workSchedule',
+        	   templateUrl : 'html/employees/calendarView.html',
+        	   controller: 'calendarController'
+        	   
            })
                      
          

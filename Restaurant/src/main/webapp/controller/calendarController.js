@@ -1,27 +1,53 @@
-var calendarModule = angular.module('calendar.controller', []);
+var calendarModule = angular.module('calendar.controller', ['ui.calendar']);
 
 calendarModule.controller("calendarController", ['$scope', '$location',
 	
 	function ($scope, $location, $filter) {
 	
-	alert("Tu sam")
-    $scope.selectedDate = null;
-    $scope.firstDayOfWeek = 0;
-    $scope.setDirection = function(direction) {
-      $scope.direction = direction;
-    };
-    $scope.dayClick = function(date) {
-      $scope.msg = "You clicked " + $filter("date")(date, "MMM d, y h:mm:ss a Z");
-    };
-    $scope.prevMonth = function(data) {
-      $scope.msg = "You clicked (prev) month " + data.month + ", " + data.year;
-    };
-    $scope.nextMonth = function(data) {
-      $scope.msg = "You clicked (next) month " + data.month + ", " + data.year;
-    };
-    $scope.setDayContent = function(date) {
-      // You would inject any HTML you wanted for
-      // that particular date here.
-        return "<p></p>";
-    };
+	
+	function fillCalendar() {
+		date = new Date();
+		y = date.getYear();
+		m = date.getMonth();
+		d = date.getDay();
+		$scope.events = [
+	           {title: 'All Day Event',start: new Date()},
+	           {title: 'Long Event',start: new Date(y, m, d - 5),end: new Date(y, m, d - 2)},
+	           {id: 999,title: 'Repeating Event',start: new Date(y, m, d - 3, 16, 0),allDay: false},
+	           {id: 999,title: 'Repeating Event',start: new Date(y, m, d + 4, 16, 0),allDay: false},
+	           {title: 'Birthday Party',start: new Date(y, m, d + 1, 19, 0),end: new Date(y, m, d + 1, 22, 30),allDay: false},
+	           {title: 'Click for Google',start: new Date(y, m, 28),end: new Date(y, m, 29),url: 'http://google.com/'}
+	          ]
+		$scope.eventSources = [$scope.events];
+		};
+	
+	
+	
+	$scope.uiConfig = {
+			calendar: {
+			viewRender: function (view) {
+			//some statements here
+			},
+			renderCalender: $scope.renderCalender,
+			height: 520,
+			editable: true,
+			header: {
+			//left: 'month basicWeek basicDay agendaWeek agendaDay',
+			left: 'month basicWeek basicDay',
+			center: 'title',
+			right: 'today prev,next'
+			},
+			eventClick: $scope.alertOnEventClick,
+			dayClick: $scope.alertDayOnClick,
+			eventDrop: $scope.alertOnDrop,
+			eventResize: $scope.alertOnResize,
+			eventRender: $scope.eventRender
+			}
+			};
+	
+
+	$scope.eventSources = [];
+	fillCalendar();
+	
+
 }]);
