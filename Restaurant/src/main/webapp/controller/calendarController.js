@@ -4,6 +4,25 @@ calendarModule.controller("calendarController", ['$scope', '$location',
 	
 	function ($scope, $location, $filter) {
 	
+	function isLoggedIn() {
+		employeeService.getEmployee().then(function (response) {				
+			if(response.data !="") 
+				$scope.employee = response.data;
+			else
+				$location.path('login');
+		}
+	);
+	}
+	
+	function readWorkSchedule() {
+		employeeService.readWorkSchedule().then(function (response) {				
+			if(response.data !="") 
+				$scope.employee = response.data;
+			else
+				$location.path('login');
+		}
+	);
+	}
 	
 	function fillCalendar() {
 		date = new Date();

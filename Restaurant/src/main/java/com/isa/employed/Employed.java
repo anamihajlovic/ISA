@@ -10,8 +10,6 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 
-import org.hibernate.validator.constraints.NotBlank;
-
 import com.isa.user.User;
 
 
@@ -30,7 +28,7 @@ public class Employed extends User{
 	@Column
 	@NotNull
 	@Temporal(TemporalType.DATE)
-	private Date birthday;
+	private Date birthday;	
 	
 	public Employed() {}
 
@@ -38,7 +36,7 @@ public class Employed extends User{
 		super();
 		this.clothesSize = clothesSize;
 		this.shoesSize = shoesSize;
-		this.birthday = birthday;
+		this.birthday = birthday;		
 	}
 
 	public ClothesSize getClothesSize() {
@@ -64,8 +62,6 @@ public class Employed extends User{
 	public void setBirthday(Date birthday) {
 		this.birthday = birthday;
 	}
-
-
 	
-
+	
 }
