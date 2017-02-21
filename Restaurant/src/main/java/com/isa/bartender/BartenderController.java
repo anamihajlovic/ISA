@@ -36,7 +36,7 @@ public class BartenderController {
 	}
 	
 	
-	@GetMapping("/getBartender")
+	@GetMapping(path = "/getBartender")
 	public Bartender getBartender() {		
 		Bartender bartender = (Bartender) httpSession.getAttribute("user");
 		return bartender;
@@ -73,24 +73,24 @@ public class BartenderController {
 		return bartender;	
 	}
 	
-	@GetMapping(path = "/readWorkSchedule/{id}")
-	public List<WorkShift> readWorkSchedule(@PathVariable Long bartenderId) {
-		
-		System.out.println("OVDE SAM");
-		Bartender bartender= bartenderService.findOne(bartenderId);
+
+	@GetMapping(path = "/getSchedule/{id}")
+	public List<WorkDay> getSchedule(@PathVariable Long id) {
+				
+		Bartender bartender= bartenderService.findOne(id);
 		Long restaurantId = bartender.getRestaurantId();		
 		Restaurant restaurant = restaurantService.findOne(restaurantId);
 			
-		List<WorkShift> bartenderShifts = new ArrayList<WorkShift>();
+		List<WorkDay> bartenderDays= new ArrayList<WorkDay>();
 		
 		for(WorkDay day : restaurant.getWorkDays()) {						
 			for(WorkShift shift : day.getWorkShifts()) {
 				if(shift.getBartenders().size() != 0)
-					bartenderShifts.add(shift);
+					bartenderDays.add(day);
 			}			
 		}
 				
-		return bartenderShifts;
+		return bartenderDays;		
 	}
 	
 	

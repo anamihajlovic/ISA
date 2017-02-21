@@ -22,8 +22,8 @@ employeeServices.service('employeeService',['$http', function($http) {
 	this.readWorkSchedule = function(employee) {
 		alert("SERVIS")
 		alert(employee.id)
-		if(employee.userRole == 'bartender')
-			return $http.get("/bartenders/readWorkSchedule/" + employee.id);
+		if(employee.userRole == 'bartender')			
+			return $http.get("/bartenders/getSchedule/" + employee.id);
 		
 	}
 	
