@@ -46,6 +46,11 @@ public class WorkShift {
 	@Column(name = "shift_type")
 	private ShiftType shiftType;
 	
+	@Column
+	@NotNull
+	@Temporal(TemporalType.DATE)
+	private Date day;
+	
 	@ManyToMany(cascade = CascadeType.ALL)
 	@JoinTable(name = "work_shift_waiters", joinColumns = @JoinColumn(name="work_shift_id"), inverseJoinColumns = @JoinColumn(name = "waiter_id"))	
 	private List<Waiter> waiters;
@@ -55,19 +60,19 @@ public class WorkShift {
 	private List<Cook> cooks;
 	
 	@ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-	@JoinTable(name = "work_shift_bartenders", joinColumns = @JoinColumn(name="work_shift_id"), inverseJoinColumns = @JoinColumn(name = "bartender_id"))
-	//dodati nullable = false u @JoinColumn??
+	@JoinTable(name = "work_shift_bartenders", joinColumns = @JoinColumn(name="work_shift_id"), inverseJoinColumns = @JoinColumn(name = "bartender_id"))	
 	private List<Bartender> bartenders;
 	
 	
 	public WorkShift(){}
 
-	public WorkShift(Long id, Date startTime, Date endTime, ShiftType shiftType, List<Waiter> waiters, List<Cook> cooks, List<Bartender> bartenders) {
+	public WorkShift(Long id, Date startTime, Date endTime, ShiftType shiftType, Date day, List<Waiter> waiters, List<Cook> cooks, List<Bartender> bartenders) {
 		super();
 		this.id = id;
 		this.startTime = startTime;
 		this.endTime = endTime;
 		this.shiftType = shiftType;
+		this.day = day;
 		this.waiters = waiters;
 		this.cooks = cooks;
 		this.bartenders = bartenders;
@@ -103,6 +108,14 @@ public class WorkShift {
 
 	public void setShiftType(ShiftType shiftType) {
 		this.shiftType = shiftType;
+	}
+
+	public Date getDay() {
+		return day;
+	}
+
+	public void setDay(Date day) {
+		this.day = day;
 	}
 
 	public List<Waiter> getWaiters() {

@@ -75,23 +75,27 @@ public class BartenderController {
 	
 
 	@GetMapping(path = "/getSchedule/{id}")
-	public List<WorkDay> getSchedule(@PathVariable Long id) {
-				
+	public List<WorkShift> getSchedule(@PathVariable Long id) {
+		
 		Bartender bartender= bartenderService.findOne(id);
 		Long restaurantId = bartender.getRestaurantId();		
 		Restaurant restaurant = restaurantService.findOne(restaurantId);
-			
-		List<WorkDay> bartenderDays= new ArrayList<WorkDay>();
+							
+		List<WorkShift> bartenderShifts= new ArrayList<WorkShift>();
 		
-		for(WorkDay day : restaurant.getWorkDays()) {						
+		for(WorkDay day : restaurant.getWorkDays()) {
+			
 			for(WorkShift shift : day.getWorkShifts()) {
 				if(shift.getBartenders().size() != 0)
-					bartenderDays.add(day);
-			}			
+					bartenderShifts.add(shift);
+			}
+		
 		}
-				
-		return bartenderDays;		
+		
+		return bartenderShifts;		
 	}
+	
+	
 	
 	
 }

@@ -38,6 +38,9 @@ insert into cooks(email, password, first_name, last_name,birthday,shoes_size,clo
 insert into waiters(email, password, first_name, last_name,birthday,shoes_size,clothes_size,first_login,user_role, restaurant_id) values ('waiter2@gmail.com','waiter2','waiter2','waiter2','1994-07-25','no39','M',true,'waiter',1)
 insert into bartenders(email, password, first_name, last_name,birthday,shoes_size,clothes_size,first_login,user_role, restaurant_id) values ('bar2@gmail.com','bar2','bar1','bar2','1994-07-25','no39','M',false,'bartender',1)
 
+insert into cooks(email, password, first_name, last_name,birthday,shoes_size,clothes_size,first_login,user_role, restaurant_id) values ('cook3@gmail.com','cook3','cook3','cook3','1994-07-27','no39','M',false,'cook',1)
+insert into waiters(email, password, first_name, last_name,birthday,shoes_size,clothes_size,first_login,user_role, restaurant_id) values ('waiter3@gmail.com','waiter3','waiter3','waiter2','1994-07-25','no39','M',false,'waiter',1)
+insert into bartenders(email, password, first_name, last_name,birthday,shoes_size,clothes_size,first_login,user_role, restaurant_id) values ('bar3@gmail.com','bar3','bar3','bar3','1994-07-25','no39','M',false,'bartender',1)
 
 
 insert into restaurant_managers(email, password, first_name, last_name,first_login,user_role,restaurant_id) values ('resman1@gmail.com','resman1','first 1','last 1',false,'resManager',1)
@@ -67,12 +70,15 @@ insert into res_managers_in_restuarants(restaurant_id,res_manager_id)values(1,8)
 --EMPLOYEED
 insert into restaurant_waiters(restaurant_id,waiter_id)values(1,1)
 insert into restaurant_waiters(restaurant_id,waiter_id)values(1,2)
+insert into restaurant_waiters(restaurant_id,waiter_id)values(1,3)
 
 insert into restaurant_cooks(restaurant_id,cook_id)values(1,1)
 insert into restaurant_cooks(restaurant_id,cook_id)values(1,2)
+insert into restaurant_cooks(restaurant_id,cook_id)values(1,3)
 
 insert into restaurant_bartenders(restaurant_id,bartender_id)values(1,1)
 insert into restaurant_bartenders(restaurant_id,bartender_id)values(1,2)
+insert into restaurant_bartenders(restaurant_id,bartender_id)values(1,3)
 
 --BIDDERS
 insert into restaurant_bidders(restaurant_id,bidder_id)values(1,1)
@@ -120,28 +126,39 @@ insert into restaurant_drink_card(restaurant_id,drink_id)values(2,3)
 
 
 --WORK SHIFTS
-insert into work_shifts (start_time,end_time,shift_type)values('08:00:00','14:00:00','firstShift')
-insert into work_shifts (start_time,end_time,shift_type)values('14:00:01','20:00:00','secondShift')
+insert into work_shifts (start_time,end_time,shift_type,day)values('08:00:00','14:00:00','firstShift','2017-02-26')
+insert into work_shifts (start_time,end_time,shift_type,day)values('14:00:01','20:00:00','secondShift','2017-02-26')
+insert into work_shifts (start_time,end_time,shift_type,day)values('08:00:00','14:00:00','firstShift','2017-02-27')
+insert into work_shifts (start_time,end_time,shift_type,day)values('14:00:01','20:00:00','secondShift','2017-02-27')
 
 insert into work_shift_waiters values(1, 1)
 insert into work_shift_waiters values(2, 2)
 
 insert into work_shift_cooks values(1, 1)
+insert into work_shift_cooks values(1, 3)
 insert into work_shift_cooks values(2, 2)
 
 insert into work_shift_bartenders values(1, 1)
+insert into work_shift_bartenders values(1, 3)
 insert into work_shift_bartenders values(2, 2)
 
 
 --WORK DAYS
-insert into work_days (day)values('2016-02-26')
+insert into work_days (day)values('2017-02-26')
 insert into work_days(day)values('2016-02-27')
 insert into work_days(day)values('2016-03-28')
 
 insert into work_shifts_in_work_days (work_day_id,work_shift_id)values (1,1)
 insert into work_shifts_in_work_days (work_day_id,work_shift_id)values (1,2)
 
+insert into work_shifts_in_work_days (work_day_id,work_shift_id)values (2,3)
+insert into work_shifts_in_work_days (work_day_id,work_shift_id)values (2,4)
+
+
 insert into restaurant_work_days(restaurant_id,work_day_id)values(1,1)
 insert into restaurant_work_days(restaurant_id,work_day_id)values(1,2)
 insert into restaurant_work_days(restaurant_id,work_day_id)values(1,3)
+
+
+
 
