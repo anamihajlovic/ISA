@@ -30,15 +30,15 @@ insert into bidders(email, password, first_name, last_name,first_login,user_role
 insert into bidders(email, password, first_name, last_name,first_login,user_role) values ('bid2@gmail.com', 'bid2', 'bid2', 'bid2',true,'bidder')
 
 
-insert into cooks(email, password, first_name, last_name,birthday,shoes_size,clothes_size,first_login,user_role, restaurant_id) values ('cook1@gmail.com','cook1','cook1','cook1','1994-07-27','no39','M',true,'cook',1)
+insert into cooks(email, password, first_name, last_name,birthday,shoes_size,clothes_size,first_login,user_role, restaurant_id,cook_type) values ('cook1@gmail.com','cook1','cook1','cook1','1994-07-27','no39','M',true,'cook',1,'undefined')
 insert into waiters(email, password, first_name, last_name,birthday,shoes_size,clothes_size,first_login,user_role, restaurant_id) values ('waiter1@gmail.com','waiter1','waiter1','waiter1','1994-07-25','no39','M',true,'waiter',1)
 insert into bartenders(email, password, first_name, last_name,birthday,shoes_size,clothes_size,first_login,user_role,restaurant_id) values ('bar1@gmail.com','bar1','bar1','bar1','1994-07-25','no42','M',true,'bartender',1)
 
-insert into cooks(email, password, first_name, last_name,birthday,shoes_size,clothes_size,first_login,user_role, restaurant_id) values ('cook2@gmail.com','cook2','cook1','cook2','1994-07-27','no39','M',true,'cook',1)
+insert into cooks(email, password, first_name, last_name,birthday,shoes_size,clothes_size,first_login,user_role, restaurant_id, cook_type) values ('cook2@gmail.com','cook2','cook1','cook2','1994-07-27','no39','M',true,'cook',1,'pastaCook')
 insert into waiters(email, password, first_name, last_name,birthday,shoes_size,clothes_size,first_login,user_role, restaurant_id) values ('waiter2@gmail.com','waiter2','waiter2','waiter2','1994-07-25','no39','M',true,'waiter',1)
 insert into bartenders(email, password, first_name, last_name,birthday,shoes_size,clothes_size,first_login,user_role, restaurant_id) values ('bar2@gmail.com','bar2','bar1','bar2','1994-07-25','no39','M',false,'bartender',1)
 
-insert into cooks(email, password, first_name, last_name,birthday,shoes_size,clothes_size,first_login,user_role, restaurant_id) values ('cook3@gmail.com','cook3','cook3','cook3','1994-07-27','no39','M',false,'cook',1)
+insert into cooks(email, password, first_name, last_name,birthday,shoes_size,clothes_size,first_login,user_role, restaurant_id,cook_type) values ('cook3@gmail.com','cook3','cook3','cook3','1994-07-27','no39','M',false,'cook',1,'fishCook')
 insert into waiters(email, password, first_name, last_name,birthday,shoes_size,clothes_size,first_login,user_role, restaurant_id) values ('waiter3@gmail.com','waiter3','waiter3','waiter2','1994-07-25','no39','M',false,'waiter',1)
 insert into bartenders(email, password, first_name, last_name,birthday,shoes_size,clothes_size,first_login,user_role, restaurant_id) values ('bar3@gmail.com','bar3','bar3','bar3','1994-07-25','no39','M',false,'bartender',1)
 
@@ -86,7 +86,7 @@ insert into restaurant_bidders(restaurant_id,bidder_id)values(1,2)
 
 
 --DISH
-insert into dishes(name,text, price,dish_type)values('Pica','opis',250,'pizza')
+insert into dishes(name,text, price,dish_type)values('Pica','opis',250,'pasta')
 insert into dishes(name,text, price,dish_type)values('Testo','opis',400,'pasta')
 insert into dishes(name,text, price,dish_type)values('Palacinke','opis',200,'dessert')
 
@@ -160,5 +160,21 @@ insert into restaurant_work_days(restaurant_id,work_day_id)values(1,2)
 insert into restaurant_work_days(restaurant_id,work_day_id)values(1,3)
 
 
+--ORDERS
+
+insert into orders(restaurant_id,drinks_status,dish_status) values (1, 'ordered', 'ordered')
+insert into orders(restaurant_id,drinks_status,dish_status) values (1, 'ordered', 'ordered')
+
+insert into ordered_drinks(order_id,drink_id) values (1,1)
+insert into ordered_drinks(order_id,drink_id) values (1,1)
+insert into ordered_drinks(order_id,drink_id) values (1,2)
+
+insert into ordered_drinks(order_id,drink_id) values (2,2)
+insert into ordered_drinks(order_id,drink_id) values (2,3)
+insert into ordered_drinks(order_id,drink_id) values (2,3)
+
+insert into ordered_dish(order_id,dish_id) values (2,1)
+insert into ordered_dish(order_id,dish_id) values (2,1)
+insert into ordered_dish(order_id,dish_id) values (2,2)
 
 

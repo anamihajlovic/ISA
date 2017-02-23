@@ -6,22 +6,21 @@ bartenderModule.controller('bartenderController', ['$scope', 'bartenderService',
 	function ($scope, bartenderService, employeeService, $location) {
 	
 		function isLoggedIn() {
-			employeeService.getEmployee().then(function (response) {				
+			employeeService.getEmployee().then(function (response) {
+				alert(response.data)
 					if(response.data !="") 
-						$scope.employee = response.data;
+						$scope.employee = response.data;					
 					else
 						$location.path('login');
 				}
 			);
 		}
 	
-		isLoggedIn();
-		$scope.eventSources = [];
+		isLoggedIn();		
 		
 		$scope.updateInfo = function () {    	
 			var request = employeeService.updateInfo($scope.employee).then(function(response){
-				$scope.data = response.data;
-				alert(response.data);
+				$scope.data = response.data;				
 				return response;
 			});
 			
@@ -42,10 +41,7 @@ bartenderModule.controller('bartenderController', ['$scope', 'bartenderService',
 			$location.path('bartender');
 			
 		}
-		
-		
-		
-						
-		
 				
+		
+		
 }]);
