@@ -46,4 +46,12 @@ public class FriendshipServiceImp implements FriendshipService {
 		return repository.getBySenderIdAndReceiverId(guestId, friendId);
 	}
 
+
+	@Override
+	public List<Friendship> findByReceiverIdAndStatus(Long guestId, Status status) {
+		return Lists.newArrayList(repository.findByReceiverIdAndStatus(guestId, status));
+	}
+
+
+
 }
