@@ -144,9 +144,7 @@ public class FriendshipController {
 	public int getNumOfFriendRequest(@PathVariable Long id) {
 		
 		List<Friendship> list = friendshipService.findByReceiverIdAndStatus(id, Status.sent);
-		
-		System.out.println("broj zahteva za prijateljstvo korisnika sa id " + id + " je " + list.size());
-		
+				
 		return list.size();
 		
 	}
