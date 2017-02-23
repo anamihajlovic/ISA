@@ -53,6 +53,22 @@
 		<option value="cook">cook</option>
 		<option value="bartender">bartender</option>
 	</select>
+	
+	<label ng-show = "$parent.employee.userRole == 'cook'">Cook type</label>
+	<select class="form-control"  ng-model="$parent.employee.cookType" ng-show = "$parent.employee.userRole == 'cook'">
+   		<option value="" disabled="" selected="">Select cook type</option>
+     	<option value="undefined">Undefined</option>
+		<option value="dessertCook">Dessert chef</option>
+		<option value="pastaCook">Pasta chef</option>
+		<option value="saladCook">Salad chef</option>
+		<option value="appetizerCook">Appetizer chef</option>
+		<option value="fishCook">Fish chef</option>
+		<option value="soupCook">Soup chef</option>
+		<option value="seasonalCook">Seasonal chef</option>
+		<option value="roastCook">Roast chef</option>
+		<option value="breakfastCook">Breakfast chef</option>
+	</select>
+	
 <br>
 <button class="btn btn-default" ng-click="saveEmployee()"><span class="glyphicon glyphicon-ok" ></span> Create</button>
 <button class="btn btn-default" ng-click="cancel()"><span class="glyphicon glyphicon-remove" ></span> Cancel</button>

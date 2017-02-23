@@ -80,8 +80,7 @@ resManagerModule.controller('resManagerController', ['$scope', 'resManagerServic
 				}
 	
 			});
-		}else if ($scope.employee.userRole=="cook"){
-			
+		}else if ($scope.employee.userRole=="cook"){			
 			var request = resManagerService.saveCook($scope.employee).then(function(response) {				
 				$scope.data = response.data;
 				return response;

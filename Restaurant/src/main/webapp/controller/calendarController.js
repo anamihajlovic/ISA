@@ -42,14 +42,13 @@ calendarModule.controller("calendarController", ['$scope', '$location', 'employe
 	 
     $scope.dayClick = function( date, allDay, jsEvent, view ){    	
 		alert("Bbbb");		
-        $scope.$apply(function(){
-          $scope.alertMessage = ('Day Clicked ' + date);
-        });
+       
     };
     
     $scope.eventClick = function(event){    	     
     	 
-        var request =  employeeService.getWorkShift(event.id).then(function(response) {        	
+        var request =  employeeService.getWorkShift(event.id).then(function(response) {     
+        	
         	$scope.selectedShift = response.data;
         	
         	if($scope.selectedShift.shiftType == "firstShift")
