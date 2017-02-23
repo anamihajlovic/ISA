@@ -18,6 +18,8 @@ insert into friendships(sender_id, receiver_id, status) values (3, 5, 'accepted'
 insert into friendships(sender_id, receiver_id, status) values (8, 2, 'accepted')
 insert into friendships(sender_id, receiver_id, status) values (7, 1, 'sent')
 insert into friendships(sender_id, receiver_id, status) values (6, 2, 'sent')
+insert into friendships(sender_id, receiver_id, status) values (5, 2, 'sent')
+
 
 
 -- RESTAURANTS
