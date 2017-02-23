@@ -1,9 +1,47 @@
+<style type = "text/css">
+	th {text-align : left; padding-right:10px }
+	
+	td {text-align: left}
+	
+</style>
+
 <div>
 <div class = "col-lg-2">
 </div>
 <div class = "col-lg-8">
+	<br/>
 	<div ui-calendar="uiConfig.calendar" ng-model="eventSources"></div>
+	
+	<br/>
+	<div class="panel panel-default" ng-show = "eventVisible">
+    <div class="panel-heading">{{selectedShift.day}} : {{selectedShift.name}} </div>
+    <div class="panel-body">
+ 
+    <table>
+    <tr>
+    <th>Start time:</th>
+    <td>{{selectedShift.startTime}}</td>
+    </tr>
+    <tr>
+    <th>End time:</th>
+    <td>{{selectedShift.endTime}}</td>
+    </tr>
+    <tr>
+    <th>{{employeeType}}:</th>
+    <td><div ng-repeat = "employee in assignedEmployees"> {{employee.firstName}} {{employee.lastName}}</div></td>
+    </tr>
+    </table>
+    
+                      
+    </div>     
+    </div>
+    
+    <p ng-show = "!eventVisible"><i>*To see details of a certain shift, click on it on the calendar.</i></p>
+    
 </div>
 </div>
+
+
+
 
 

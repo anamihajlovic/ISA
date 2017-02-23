@@ -1,72 +1,118 @@
 var calendarModule = angular.module('calendar.controller', ['ui.calendar']);
 
-calendarModule.controller("calendarController", ['$scope', '$location',
+calendarModule.controller("calendarController", ['$scope', '$location', 'employeeService',
 	
-	function ($scope, $location, $filter) {
+	function ($scope, $location, employeeService, $filter) {
+		
+		$scope.eventSources = [];
+		$scope.eventVisible = false;
 	
-	function isLoggedIn() {
-		employeeService.getEmployee().then(function (response) {				
-			if(response.data !="") 
+		
+		var request = employeeService.getEmployee().then(function (response) {	
+			
+			if(response.data !="") {
 				$scope.employee = response.data;
+				
+				var newRequest = employeeService.readWorkSchedule($scope.employee).then(function (response){
+					var shifts = response.data;
+					$scope.events = [];
+					for(i=0; i<shifts.length; i++) {												
+									
+						if(shifts[i].shiftType == 'firstShift')								
+							event = {id: shifts[i].id, title: 'First shift', start: shifts[i].day, color : '#c9c9ff', textColor: 'black'}
+						else if(shifts[i].shiftType == 'secondShift')
+							event = {id: shifts[i].id, title: 'Second shift', start: shifts[i].day, color : '#e1f7d5', textColor: 'black'}
+						else if(shifts[i].shiftType == 'thirdShift')
+							event = {id: shifts[i].id, title: 'Third shift', start: shifts[i].day, color : '#f1cbff', textColor: 'black'}
+						else
+							event = {id: shifts[i].id, title: shifts[i].startTime + '-' + shifts[i].endTime, start: shifts[i].day, color : '#ffbdbd', textColor: 'black'}
+								
+						$scope.events.push(event);
+									
+					}
+					 $scope.eventSources.push($scope.events); 																	
+				});
+				
+				return response;
+			} 			
 			else
 				$location.path('login');
-		}
-	);
-	}
+		});							
 	
-	function readWorkSchedule() {
-		employeeService.readWorkSchedule().then(function (response) {				
-			if(response.data !="") 
-				$scope.employee = response.data;
-			else
-				$location.path('login');
-		}
-	);
-	}
-	
-	function fillCalendar() {
-		date = new Date();
-		y = date.getYear();
-		m = date.getMonth();
-		d = date.getDay();
-		$scope.events = [
-	           {title: 'All Day Event',start: new Date()},
-	           {title: 'Long Event',start: new Date(y, m, d - 5),end: new Date(y, m, d - 2)},
-	           {id: 999,title: 'Repeating Event',start: new Date(y, m, d - 3, 16, 0),allDay: false},
-	           {id: 999,title: 'Repeating Event',start: new Date(y, m, d + 4, 16, 0),allDay: false},
-	           {title: 'Birthday Party',start: new Date(y, m, d + 1, 19, 0),end: new Date(y, m, d + 1, 22, 30),allDay: false},
-	           {title: 'Click for Google',start: new Date(y, m, 28),end: new Date(y, m, 29),url: 'http://google.com/'}
-	          ]
-		$scope.eventSources = [$scope.events];
-		};
-	
-	
-	
-	$scope.uiConfig = {
+	 
+    $scope.dayClick = function( date, allDay, jsEvent, view ){    	
+		alert("Bbbb");		
+        $scope.$apply(function(){
+          $scope.alertMessage = ('Day Clicked ' + date);
+        });
+    };
+    
+    $scope.eventClick = function(event){    	     
+    	 
+        var request =  employeeService.getWorkShift(event.id).then(function(response) {        	
+        	$scope.selectedShift = response.data;
+        	
+        	if($scope.selectedShift.shiftType == "firstShift")
+        		$scope.selectedShift.name = "First shift";
+        	
+        	else if($scope.selectedShift.shiftType == "secondShift")        	
+        		$scope.selectedShift.name = "Second shift";
+        	
+        	else if($scope.selectedShift.shiftType == "thirdShift")
+        		$scope.selectedShift.name = "Third shift";
+        	
+        	else
+        		$scope.selectedShift.name = "Shift";
+        	
+        	if($scope.employee.userRole == 'bartender') {
+        		$scope.assignedEmployees = $scope.selectedShift.bartenders;
+        		$scope.employeeType = "Bartenders";
+        	
+        	} else if($scope.employee.userRole == 'cook') {
+        		$scope.assignedEmployees = $scope.selectedShift.cooks;
+        		$scope.employeeType = "Cooks";
+        		
+        	} else if($scope.employee.userRole == 'waiter') {
+        		$scope.assignedEmployees = $scope.selectedShift.waiters;
+        		$scope.employeeType = "Waiters";
+        	}
+        	        		        
+        	return response;
+        });                      
+        
+    	
+    	if($scope.selectedShift == null)
+    		$scope.eventVisible = true;
+    	else if(event.id == $scope.selectedShift.id)
+    		$scope.eventVisible = false;
+    	else if(event.id != $scope.selectedShift.id)
+    		$scope.eventVisible = true;
+    	
+    };
+    
+
+    $scope.uiConfig = {
 			calendar: {
 			viewRender: function (view) {
 			//some statements here
 			},
 			renderCalender: $scope.renderCalender,
 			height: 520,
-			editable: true,
+			editable: false,
 			header: {
 			//left: 'month basicWeek basicDay agendaWeek agendaDay',
 			left: 'month basicWeek basicDay',
 			center: 'title',
 			right: 'today prev,next'
 			},
-			eventClick: $scope.alertOnEventClick,
-			dayClick: $scope.alertDayOnClick,
+			eventClick: $scope.eventClick,
+			dayClick: $scope.dayClick,
 			eventDrop: $scope.alertOnDrop,
 			eventResize: $scope.alertOnResize,
 			eventRender: $scope.eventRender
 			}
 			};
 	
-
-	$scope.eventSources = [];
-	fillCalendar();
-	
+    
 
 }]);
