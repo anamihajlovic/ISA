@@ -42,6 +42,10 @@ guestServices.service('guestService', ['$http', function($http) {
 		return $http.delete("/friendships/deleteRequest/" + senderId + "/" + receiverId);
 	}
 	
+	this.sortFriends = function(friendsForSort, sortBy, reverse) {
+		return $http.post("/friendships/sortFriends/" + sortBy + "/" + reverse, friendsForSort);
+	}
+	
 	
 	
 }]);
