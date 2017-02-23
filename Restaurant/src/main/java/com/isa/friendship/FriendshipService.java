@@ -11,6 +11,8 @@ public interface FriendshipService {
 	void delete(Long guestId, Long friendId);
 	
 	Friendship getBySenderIdAndReceiverId(Long guestId, Long friendId);
+	
+	List<Friendship> findByReceiverIdAndStatus(Long guestId, Status status);
 
 
 

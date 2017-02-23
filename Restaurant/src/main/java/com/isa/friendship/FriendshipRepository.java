@@ -15,6 +15,9 @@ public interface FriendshipRepository extends PagingAndSortingRepository<Friends
 	public void delete(Long id);
 	
 	public Friendship getBySenderIdAndReceiverId(Long guestId, Long friendId);
+	
+	//za zahteve za prijateljstvo
+	public List<Friendship> findByReceiverIdAndStatus(Long guestId, Status status);
 
 
 }
