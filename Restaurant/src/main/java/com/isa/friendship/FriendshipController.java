@@ -68,7 +68,7 @@ public class FriendshipController {
 		}
 
 		System.out.println("velicina liste prijatelja iz findFriends " + guests.size());
-		List<Guest> sorted = getSortedFriends(guests);
+		List<Guest> sorted = sortByLastName(guests, false);
 		return sorted;
 	}
 
@@ -93,19 +93,50 @@ public class FriendshipController {
 			myFriends.add(friend);
 		}
 
-		myFriends = getSortedFriends(myFriends);
+		myFriends = sortByLastName(myFriends, false);
 
 		return myFriends;
 	}
 	
-	private List<Guest> getSortedFriends(List<Guest> friends) {
-		Collections.sort(friends, new Comparator<Guest>() {
+	
+	@PostMapping(path = "/sortFriends/{sortBy}/{reverse}", consumes="application/json")
+	public List<Guest> sortFriends(@RequestBody List<Guest> friends, @PathVariable String sortBy, @PathVariable boolean reverse) {
+		System.out.println("Pogodjena metoda sort friends by " + sortBy + " " + reverse);
+		
+		if (sortBy.equals("firstName"))
+			sortByFirstName(friends, reverse);
+		else
+			sortByLastName(friends, reverse);
+		
+		return friends;
+	}
+	
+	private List<Guest> sortByLastName(List<Guest> friends, boolean reverse) {
+		Collections.sort(friends, new Comparator<Guest>() {//sortira u rastucem redosledu
 
 			@Override
 			public int compare(Guest g1, Guest g2) {
 				return g1.getLastName().compareTo(g2.getLastName());
 			}
 		});
+		
+		if (reverse)
+			Collections.reverse(friends);
+
+		return friends;
+	}
+	
+	private List<Guest> sortByFirstName(List<Guest> friends, boolean reverse) {
+		Collections.sort(friends, new Comparator<Guest>() {//sortira u rastucem redosledu
+
+			@Override
+			public int compare(Guest g1, Guest g2) {
+				return g1.getFirstName().compareTo(g2.getFirstName());
+			}
+		});
+		
+		if (reverse)
+			Collections.reverse(friends);
 
 		return friends;
 	}
@@ -163,7 +194,7 @@ public class FriendshipController {
 		}
 
 
-		friends = getSortedFriends(friends);
+		friends = sortByLastName(friends, false);
 
 		return friends;
 	}

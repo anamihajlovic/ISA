@@ -43,6 +43,13 @@
     width: 100%;
     
 }
+
+.sortorder:after {
+  content: '\25b2';   // BLACK UP-POINTING TRIANGLE
+}
+.sortorder.reverse:after {
+  content: '\25bc';   // BLACK DOWN-POINTING TRIANGLE
+}
 </style>
 
 <div class="container bootstrap snippet" align="center">
@@ -62,6 +69,14 @@
     </li>
       <li class="list-group-item title">
         My friends
+      </li>
+      <li>
+      	
+      	<a class="btn btn-xs" ng-click="sortBy('firstName')" data-ui-sref="."><label> First name </label></a>  
+      	<span class="sortorder" ng-show="propertyName === 'firstName'" ng-class="{reverse: reverse}"></span>    	
+      	&nbsp; &nbsp;&nbsp;
+      	<a class="btn btn-xs" ng-click="sortBy('lastName')" data-ui-sref="." ><label> Last name </label></a> 
+      	<span class="sortorder" ng-show="propertyName === 'lastName'" ng-class="{reverse: reverse}"></span>     	      	
       </li>
       <li ng-repeat="friend in filtered" class="list-group-item text-left">
         <img class="img-thumbnail" src="html/guest/userProfile.png">

@@ -173,6 +173,8 @@ guestModule.controller('guestController', ['$scope', 'guestService','commonServi
 		 $scope.myFilter = function(friendsData) { 
 			var friends = friendsData;
 			$scope.filtered = [];
+		    $scope.reverse = !$scope.reverse;//razmisliti:ili vratiti samo na default vrednosti propertyName i reverse
+
 
 			var search = $scope.search.searchText.toLowerCase().replace(/\s/g, "");
 			
@@ -185,9 +187,34 @@ guestModule.controller('guestController', ['$scope', 'guestService','commonServi
 					
 
 			}
+			$scope.sortBy($scope.propertyName);
 		}
 		 
+		 $scope.propertyName = 'lastName';
+		 $scope.reverse = false;
+
+		  $scope.sortBy = function(propertyName) {
+		    $scope.reverse = ($scope.propertyName === propertyName) ? !$scope.reverse : false;
+		    $scope.propertyName = propertyName;
+		   
+		   
+		    var request = guestService.sortFriends($scope.filtered, $scope.propertyName, $scope.reverse).then(function(response){
+				$scope.data = response.data;
+				return response;
+			});
+				
+			request.then(function (data) {
+				if($scope.data.length != 0) {
+					$scope.filtered = $scope.data;
+				}
+			});
+		    
+		  };
+		 
+		 
+		 
 		$scope.getFriendRequests = function() {
+			$scope.getNumOfFriendRequest();//za slucaj da nije proslo 30sec pa da se update-uje prilikom klika
 			var request = guestService.getFriendRequests($scope.guest.id).then(function(response){
 				$scope.data = response.data;
 				return response;
