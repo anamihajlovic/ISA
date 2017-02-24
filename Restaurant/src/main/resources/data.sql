@@ -193,8 +193,12 @@ insert into ordered_drinks(order_id,drink_id) values (2,2)
 insert into ordered_drinks(order_id,drink_id) values (2,3)
 insert into ordered_drinks(order_id,drink_id) values (2,3)
 
-insert into ordered_dish(order_id,dish_id) values (2,1)
-insert into ordered_dish(order_id,dish_id) values (2,1)
-insert into ordered_dish(order_id,dish_id) values (2,2)
+insert into all_ordered_dishes(order_id, dish_id, dish_status) values(2, 1, 'ordered')
+insert into all_ordered_dishes(order_id, dish_id, dish_status) values(2, 1, 'ordered')
+insert into all_ordered_dishes(order_id, dish_id, dish_status) values(2, 2, 'ordered')
+
+insert into ordered_dish(order_id,dish_order_id) values (2,1)
+insert into ordered_dish(order_id,dish_order_id) values (2,2)
+insert into ordered_dish(order_id,dish_order_id) values (2,3)
 
 
