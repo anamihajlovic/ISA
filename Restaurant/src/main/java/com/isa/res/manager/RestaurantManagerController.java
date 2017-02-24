@@ -116,9 +116,10 @@ public class RestaurantManagerController {
 	public String saveEmployee(@RequestBody Waiter emp) {
 		//System.out.println("uslo");
 		if (emp != null){
-			emp.setFirstLogIn(true);
+			emp.setFirstLogIn(true);			
+			Restaurant r = restaurantService.findOne(restaurantManager.getIdRestaurant());	
+			emp.setRestaurantId(r.getId());
 			waiterService.save(emp);
-			Restaurant r = restaurantService.findOne(restaurantManager.getIdRestaurant());
 			r.getWaiters().add(emp);
 			r.setId(restaurantManager.getIdRestaurant());
 			restaurantService.save(r);	
@@ -131,10 +132,12 @@ public class RestaurantManagerController {
 	@PostMapping(path = "/newCook")
 	public Cook saveEmployee(@RequestBody Cook emp) {
 		//System.out.println("uslo");
+		
 		if (emp != null){
-			emp.setFirstLogIn(true);
-			cookService.save(emp);
+			emp.setFirstLogIn(true);						
 			Restaurant r = restaurantService.findOne(restaurantManager.getIdRestaurant());
+			emp.setRestaurantId(r.getId());
+			cookService.save(emp);
 			r.getCooks().add(emp);
 			r.setId(restaurantManager.getIdRestaurant());
 			restaurantService.save(r);
@@ -148,9 +151,10 @@ public class RestaurantManagerController {
 	public Bartender saveEmployee(@RequestBody Bartender emp) {
 		//System.out.println("uslo");
 		if (emp != null){
-			emp.setFirstLogIn(true);
-			bartenderService.save(emp);
+			emp.setFirstLogIn(true);			
 			Restaurant r = restaurantService.findOne(restaurantManager.getIdRestaurant());
+			emp.setRestaurantId(r.getId());
+			bartenderService.save(emp);
 			r.getBartenders().add(emp);
 			r.setId(restaurantManager.getIdRestaurant());
 			restaurantService.save(r);

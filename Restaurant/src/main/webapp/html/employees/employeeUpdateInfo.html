@@ -61,15 +61,15 @@
     <div ng-class="{ 'has-error': form.shoesSize.$dirty && form.shoesSize.$error.required }">
     <label>Shoe size</label>
     <select class="form-control" ng-model = "$parent.employee.shoesSize" name = "shoesSize" required>
-    <option>no38</option>
-    <option>no39</option>
-    <option>no40</option>
-    <option>no41</option>
-    <option>no42</option>
-    <option>no43</option>
-    <option>no44</option>
-    <option>no45</option>
-    <option>no46</option>    
+    <option value="no38">38</option>
+	<option value="no39">39</option>
+	<option value="no40">40</option>
+	<option value="no41">41</option>
+	<option value="no42">42</option>
+	<option value="no43">43</option>
+	<option value="no44">44</option>
+	<option value="no45">45</option>
+	<option value="no46">46</option>
   	</select>    
   	
     <span class="help-block" ng-show = "form.shoesSize.$dirty && form.shoesSize.$invalid">

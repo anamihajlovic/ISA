@@ -1,13 +1,13 @@
 package com.isa.waiter;
 
-import com.isa.employed.Employed;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+
+import com.isa.employed.Employed;
 
 @Entity
 @Table(name="waiters")
@@ -23,6 +23,7 @@ public class Waiter extends Employed {
 	public Waiter(Long id) {
 		super();
 		this.id = id;
+		
 	}
 
 	public Long getId() {
@@ -33,9 +34,6 @@ public class Waiter extends Employed {
 		this.id = id;
 	}
 	
-	
-
-
 }
 
 

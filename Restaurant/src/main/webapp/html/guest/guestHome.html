@@ -1,4 +1,18 @@
 
+<style type="text/css">
+.break{
+    margin:20px;
+}
+.name {
+    color:#5bc0de;    
+}
+#menuRequests{
+	width: 250px;
+}
+
+</style>
+
+
 <nav class="navbar  navbar-inverse" role="navigation"> 
 
       <div class="navbar-header navbar-left">
@@ -9,11 +23,24 @@
 	
 	<li><button  data-ui-sref=".findFriends" ng-click="findFriends()"class="btn btn-default navbar-btn"><span class="glyphicon glyphicon-user"></span> Add friends </button></li>
 
-	<li><button  data-ui-sref="." class="btn btn-default navbar-btn"><span class="glyphicon glyphicon-plus"></span> New </button> </li>
-
 	<li><button  data-ui-sref=".updateProfile" class="btn btn-default navbar-btn"><span class="glyphicon glyphicon-user"></span> Profile</button></li>
 	</ul>
 	<ul class="nav navbar-nav navbar-right">
+	 <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" ng-click="getFriendRequests()" data-ui-sref="."><span class="glyphicon glyphicon-user"></span><span class="glyphicon glyphicon-user"></span><span class="badge"> {{numOfFriendRequest}} </span></a>
+        <ul class="dropdown-menu" id="menuRequests">
+        <li ng-repeat="friend in friendRequests">
+		<label class="name">
+            {{ friend.firstName + " " + friend.lastName }}
+        </label>
+        <label class="name pull-right">
+			<a  class="btn btn-success btn-xs glyphicon glyphicon-plus" ng-click="confirm(friend.id)" data-ui-sref="." title="Confirm"></a>
+          	<a  class="btn btn-danger btn-xs glyphicon glyphicon-trash" ng-click="deleteRequest(friend.id)" data-ui-sref="." title="Delete request"></a>
+        </label>
+        <div class="break"></div>
+         
+        </li>
+        </ul>
+      </li>
          <li><a data-ui-sref="logout"><span class="glyphicon glyphicon-log-out"></span> Log out </a></li>
     </ul>
 

@@ -19,18 +19,17 @@ public class Bartender extends Employed{
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name = "bartender_id")
 	private Long id;
+	
 	public Bartender() {}
 	
 	
+	
+	
 	public Long getId() {
-		return id;
+		return id;		
 	}
 	public void setId(Long id) {
 		this.id = id;
 	}
-	
-	
-
-
 	
 }

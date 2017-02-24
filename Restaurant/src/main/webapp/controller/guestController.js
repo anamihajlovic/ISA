@@ -2,13 +2,17 @@ var guestModule = angular.module('guest.controller', []);
 
 
 
-guestModule.controller('guestController', ['$scope', 'guestService','commonService', '$location',
-	function($scope, guestService, commonService,  $location) {
+guestModule.controller('guestController', ['$scope', 'guestService','commonService', '$location','$interval',
+	function($scope, guestService, commonService,  $location, $interval) {
 	
+		$scope.numOfFriendRequest= 0;
+		
 		function isLoggedIn() {
 			commonService.getActiveUser().then(function (response) {				
-				if(response.data !="")
-					$scope.guest = response.data;									
+				if(response.data !="") {
+					$scope.guest = response.data;
+					$scope.getNumOfFriendRequest();
+				}
 				//else
 					//$scope.callIsLoggedIn = false;
 					//$location.path('login');
@@ -18,7 +22,22 @@ guestModule.controller('guestController', ['$scope', 'guestService','commonServi
 
 	isLoggedIn();
 	$scope.infoMode = true;
-
+	
+	$scope.getNumOfFriendRequest = function() {
+		if($scope.guest != undefined) {
+			guestService.getNumOfFriendRequest($scope.guest.id).then(function(response) {
+				$scope.numOfFriendRequest = response.data;
+			});
+		}
+	}
+	
+	var myInterval = $interval( function(){ $scope.getNumOfFriendRequest(); }, 30000);
+	
+	//nakon logout da prekine interval
+	$scope.$on('$destroy', function(){
+	    $interval.cancel(myInterval)
+	});
+		
 		$scope.submitRegister = function() {
 			var request = guestService.register($scope.guest).then(function(response) {
 				$scope.data = response.data;
@@ -154,6 +173,8 @@ guestModule.controller('guestController', ['$scope', 'guestService','commonServi
 		 $scope.myFilter = function(friendsData) { 
 			var friends = friendsData;
 			$scope.filtered = [];
+		    $scope.reverse = !$scope.reverse;//razmisliti:ili vratiti samo na default vrednosti propertyName i reverse
+
 
 			var search = $scope.search.searchText.toLowerCase().replace(/\s/g, "");
 			
@@ -166,6 +187,79 @@ guestModule.controller('guestController', ['$scope', 'guestService','commonServi
 					
 
 			}
+			$scope.sortBy($scope.propertyName);
+		}
+		 
+		 $scope.propertyName = 'lastName';
+		 $scope.reverse = false;
+
+		  $scope.sortBy = function(propertyName) {
+		    $scope.reverse = ($scope.propertyName === propertyName) ? !$scope.reverse : false;
+		    $scope.propertyName = propertyName;
+		   
+		   
+		    var request = guestService.sortFriends($scope.filtered, $scope.propertyName, $scope.reverse).then(function(response){
+				$scope.data = response.data;
+				return response;
+			});
+				
+			request.then(function (data) {
+				if($scope.data.length != 0) {
+					$scope.filtered = $scope.data;
+				}
+			});
+		    
+		  };
+		 
+		 
+		 
+		$scope.getFriendRequests = function() {
+			$scope.getNumOfFriendRequest();//za slucaj da nije proslo 30sec pa da se update-uje prilikom klika
+			var request = guestService.getFriendRequests($scope.guest.id).then(function(response){
+				$scope.data = response.data;
+				return response;
+			});
+				
+			request.then(function (data) {
+				if($scope.data.length != 0) {
+					$scope.friendRequests = $scope.data;
+				} else {
+						toastr.info("There's no friend requests.");
+						$location.path('guest');
+				}
+			});
+		}
+		
+		$scope.confirm = function(friendId) {
+			var request = guestService.confirm(friendId, $scope.guest.id).then(function(response){
+				$scope.data = response.data;
+				return response;
+			});
+				
+			request.then(function (data) {
+				if($scope.data == "OK") {
+					toastr.success("Successfully accepted friend request!");
+					$scope.getNumOfFriendRequest();
+				} else {
+						toastr.error("Accepting friend request was unsuccessful. Please, try again");
+				}
+			});
+		}
+		
+		$scope.deleteRequest = function(friendId) {
+			var request = guestService.deleteRequest(friendId, $scope.guest.id).then(function(response){
+				$scope.data = response.data;
+				return response;
+			});
+				
+			request.then(function (data) {
+				if($scope.data == "OK") {
+					toastr.success("Successfully deleted friend request!");
+					$scope.getNumOfFriendRequest();
+				} else {
+						toastr.error("Deleting friend request was unsuccessful. Please, try again");
+				}
+			});
 		}
 
 		
