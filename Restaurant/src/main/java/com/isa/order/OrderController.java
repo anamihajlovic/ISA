@@ -1,6 +1,7 @@
 package com.isa.order;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
@@ -8,11 +9,12 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import com.isa.dish.Dish;
 
 @RestController
 @RequestMapping("/orders")
@@ -87,8 +89,45 @@ public class OrderController {
 			}						
 		}
 		
-		return order;
-		
+		return order;		
+	}
+	
+	@PutMapping(path = "/prepareDish/{orderId}")
+	public Order prepareDish(@PathVariable Long orderId, @RequestBody Dish dish) {
+	
+		if(orderId != null && dish != null) {
+			
+			//try {
+				Order order = orderService.findOne(orderId);
+				
+				List<Dish> orderedDishes = order.getOrderedDish();
+				List<Dish> preparingDishes = order.getPreparingDish();
+				
+				System.out.println(orderedDishes);
+				System.out.println(preparingDishes);
+				boolean removed = false;
+				
+				Iterator<Dish> iterator = orderedDishes.listIterator();
+				while(iterator.hasNext()){
+					System.out.println("fooor");
+					
+				    if(iterator.next().getId().equals(dish.getId()) && removed == false){
+				    	preparingDishes.add(iterator.next());
+				        iterator.remove();				        
+				        removed = true;
+				    }
+				}
+				
+				System.out.println(orderedDishes.size());
+				System.out.println(preparingDishes.size());
+				orderService.save(order);
+				return order;	
+			
+			//} catch(Exception e) {
+			//	return null;
+			//}													
+		}				
+		return null;
 	}
 
 }

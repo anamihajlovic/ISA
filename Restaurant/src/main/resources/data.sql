@@ -34,7 +34,7 @@ insert into bidders(email, password, first_name, last_name,first_login,user_role
 insert into bidders(email, password, first_name, last_name,first_login,user_role) values ('bid2@gmail.com', 'bid2', 'bid2', 'bid2',true,'bidder')
 
 
-insert into cooks(email, password, first_name, last_name,birthday,shoes_size,clothes_size,first_login,user_role, restaurant_id,cook_type) values ('cook1@gmail.com','cook1','cook1','cook1','1994-07-27','no39','M',true,'cook',1,'undefined')
+insert into cooks(email, password, first_name, last_name,birthday,shoes_size,clothes_size,first_login,user_role, restaurant_id,cook_type) values ('cook1@gmail.com','cook1','cook1','cook1','1994-07-27','no39','M',false,'cook',1,'undefined')
 insert into waiters(email, password, first_name, last_name,birthday,shoes_size,clothes_size,first_login,user_role, restaurant_id) values ('waiter1@gmail.com','waiter1','waiter1','waiter1','1994-07-25','no39','M',true,'waiter',1)
 insert into bartenders(email, password, first_name, last_name,birthday,shoes_size,clothes_size,first_login,user_role,restaurant_id) values ('bar1@gmail.com','bar1','bar1','bar1','1994-07-25','no42','M',true,'bartender',1)
 

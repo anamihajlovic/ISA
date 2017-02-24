@@ -49,11 +49,21 @@ public class Order {
 	@JoinTable(name = "ordered_dish", joinColumns = @JoinColumn(name = "order_id"), inverseJoinColumns = @JoinColumn(name = "dish_id"))
 	private List<Dish> orderedDish;
 	
-	public Order() {}
+	@ManyToMany(cascade = {CascadeType.DETACH, CascadeType.PERSIST, CascadeType.REFRESH, CascadeType.REMOVE})
+	@JoinTable(name = "preparing_dish", joinColumns = @JoinColumn(name = "order_id"), inverseJoinColumns = @JoinColumn(name = "dish_id"))
+	private List<Dish> preparingDish;
+	
+	@ManyToMany(cascade = {CascadeType.DETACH, CascadeType.PERSIST, CascadeType.REFRESH, CascadeType.REMOVE})
+	@JoinTable(name = "prepared_dish", joinColumns = @JoinColumn(name = "order_id"), inverseJoinColumns = @JoinColumn(name = "dish_id"))
+	private List<Dish> preparedDish;
 	
 	
-	public Order(Long id, Long restaurantId, OrderItemStatus drinksStatus, List<Drink> orderedDrinks, OrderItemStatus dishStatus,
-			List<Dish> orderedDish) {
+	
+	public Order() {}		
+
+
+	public Order(Long id, Long restaurantId, OrderItemStatus drinksStatus, List<Drink> orderedDrinks,
+			OrderItemStatus dishStatus, List<Dish> orderedDish, List<Dish> preparingDish, List<Dish> preparedDish) {
 		super();
 		this.id = id;
 		this.restaurantId = restaurantId;
@@ -61,6 +71,8 @@ public class Order {
 		this.orderedDrinks = orderedDrinks;
 		this.dishStatus = dishStatus;
 		this.orderedDish = orderedDish;
+		this.preparingDish = preparingDish;
+		this.preparedDish = preparedDish;
 	}
 
 
@@ -114,6 +126,22 @@ public class Order {
 
 	public void setDishStatus(OrderItemStatus dishStatus) {
 		this.dishStatus = dishStatus;
+	}
+
+	public List<Dish> getPreparedDish() {
+		return preparedDish;
+	}
+
+	public void setPreparedDish(List<Dish> preparedDish) {
+		this.preparedDish = preparedDish;
+	}
+
+	public List<Dish> getPreparingDish() {
+		return preparingDish;
+	}
+
+	public void setPreparingDish(List<Dish> preparingDish) {
+		this.preparingDish = preparingDish;
 	}
 
 	

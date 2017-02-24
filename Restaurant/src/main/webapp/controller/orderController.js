@@ -97,4 +97,23 @@ orderModule.controller('orderController', ['$scope', 'orderService', 'employeeSe
 		return false;
 	}
 	
+	$scope.prepareDish = function(order, dish) {
+		alert("Start")
+		$scope.preparingDish = false;
+		var request = orderService.prepareDish(order, dish).then(function(response) {
+			$scope.data = response.data;
+			return response;
+		});
+		
+		request.then(function (data) {
+			alert("AAAA")
+			alert(data)
+			if($scope.data != null) {
+				$scope.preparingDish = true;
+			} else
+				toastr.error("Sorry, you cannot prepare this meal");
+		})
+		
+	}
+	
 }]);	
