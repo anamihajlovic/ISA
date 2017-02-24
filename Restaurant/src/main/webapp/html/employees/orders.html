@@ -20,7 +20,7 @@
         <th>Drink id</th>
         <th>Name</th>
         <th>Type</th>
-        <th ng-if = "employee.userRole == 'cook'"></th>        
+        <th ng-if = "employee.userRole == 'cook' && checkCook(dish.dishType)"></th>        
       </tr>
     </thead>
     <tbody ng-repeat = "order in orders">
@@ -36,14 +36,16 @@
       <td class ="endOrder" colspan = "5" ng-show = "order.drinksStatus == 'prepared' && employee.userRole == 'bartender'"><p><i>Drinks have been prepared</i></p></td>
       </tr>
       
+   
       
-      
-      <tr ng-if = "employee.userRole == 'cook'" ng-repeat = "dish in order.orderedDish">      	
+      <tr ng-if = "employee.userRole == 'cook'" ng-repeat = "dish in order.orderedDish">  
+      fewefw    	
         <td>{{order.id}}</td> 
         <td>{{dish.id}}</td>
         <td>{{dish.name}}</td>
         <td>{{dish.dishType}}</td>
-        <td ng-show = "checkCook(dish.dishType)"><button class = "btn btn-primary" on-click = "prepareDish(dish.id)">Prepare</button></td>
+        <td ng-show = "checkCook(dish.dishType) || !preparingDish"><button class = "btn btn-primary" ng-click = "prepareDish(order.id, dish)">Prepare</button></td>
+       	<td ng-if = "preparingDish"><p><i>Dish is being prepared</i></p></td>
        </tr>
        <tr>
         <td class ="endOrder" colspan = "5" ng-show = "order.dishStatus != 'prepared' && employee.userRole == 'cook'"><button class = "btn btn-primary" ng-disabled = "order.dishesStatus == 'prepared'" ng-click = "prepareDishes(order)">Prepare</button></td>     
