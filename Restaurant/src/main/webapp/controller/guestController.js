@@ -320,6 +320,11 @@ guestModule.controller('guestController', ['$scope', 'guestService','commonServi
 
 				}
 			}
+		  
+		  $scope.chooseRes = function(restaurant) {
+			  $scope.chosenRes = restaurant;
+			  console.log($scope.chosenRes.name);
+		  }
 
 		
 		
