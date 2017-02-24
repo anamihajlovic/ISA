@@ -5,7 +5,6 @@ import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.validation.constraints.Min;
@@ -37,9 +36,10 @@ public class Dish extends Victual{
 	@NotNull
 	@Column (name= "dish_type")
 	private DishType dishType;
-
+	
 
 	public Dish(){}
+
 
 	public Dish(Integer id, String text, Long price, DishType dishType) {
 		super();
@@ -48,6 +48,7 @@ public class Dish extends Victual{
 		this.price = price;
 		this.dishType = dishType;
 	}
+
 
 
 
@@ -82,10 +83,5 @@ public class Dish extends Victual{
 	public void setPrice(Long price) {
 		this.price = price;
 	}
-	
-	
-
-
-	
 
 }

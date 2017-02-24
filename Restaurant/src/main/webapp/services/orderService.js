@@ -18,10 +18,16 @@ guestServices.service('orderService', ['$http', function($http) {
 		return $http.put("/orders/prepareDrinks", order);
 	}
 	
-	this.prepareDish = function(orderId, dish) {
-		alert("Service")
+	this.prepareDish = function(orderId, dish) {		
 		return $http.put("/orders/prepareDish/"+orderId, dish);
 	}
 	
+	this.getRestaurantPreparingDish = function() {
+		return $http.get('/orders/getPreparingDishes');
+	}
 	
+	this.serveDish = function(orderId, dish) {
+		return $http.put("/orders/serveDish/"+orderId, dish);
+	}
+
 }]);

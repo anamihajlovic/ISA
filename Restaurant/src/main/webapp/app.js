@@ -259,6 +259,14 @@ angular.module('restaurants', [ 'ui.router','ui.calendar' ,
         	   templateUrl : 'html/employees/orders.html', 
         	   controller: 'orderController'
            })
+           
+            .state('cook.preparingDish', {
+        	   url : '/preparingDish',
+        	   templateUrl : 'html/employees/preparingDish.html', 
+        	   controller: 'orderController'
+           })
+           
+           
                      
          
 });

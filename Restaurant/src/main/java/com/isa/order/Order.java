@@ -1,5 +1,7 @@
 package com.isa.order;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -14,10 +16,13 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 import javax.validation.constraints.NotNull;
 
 import com.isa.dish.Dish;
 import com.isa.drink.Drink;
+import com.isa.ordered.dish.DishStatus;
+import com.isa.ordered.dish.OrderedDish;
 
 @Entity
 @Table(name = "orders")
@@ -46,24 +51,32 @@ public class Order {
 	private OrderItemStatus dishStatus;
 	
 	@ManyToMany(cascade = {CascadeType.DETACH, CascadeType.PERSIST, CascadeType.REFRESH, CascadeType.REMOVE})
-	@JoinTable(name = "ordered_dish", joinColumns = @JoinColumn(name = "order_id"), inverseJoinColumns = @JoinColumn(name = "dish_id"))
-	private List<Dish> orderedDish;
+	@JoinTable(name = "ordered_dish", joinColumns = @JoinColumn(name = "order_id"), inverseJoinColumns = @JoinColumn(name = "dish_order_id"))
+	private List<OrderedDish> orderedDish;
 	
-	@ManyToMany(cascade = {CascadeType.DETACH, CascadeType.PERSIST, CascadeType.REFRESH, CascadeType.REMOVE})
-	@JoinTable(name = "preparing_dish", joinColumns = @JoinColumn(name = "order_id"), inverseJoinColumns = @JoinColumn(name = "dish_id"))
-	private List<Dish> preparingDish;
+	@Transient
+	private List<Dish> dishes = new ArrayList<Dish>();
 	
-	@ManyToMany(cascade = {CascadeType.DETACH, CascadeType.PERSIST, CascadeType.REFRESH, CascadeType.REMOVE})
-	@JoinTable(name = "prepared_dish", joinColumns = @JoinColumn(name = "order_id"), inverseJoinColumns = @JoinColumn(name = "dish_id"))
-	private List<Dish> preparedDish;
+	@Transient 
+	private List<Drink> drinks = new ArrayList<Drink>();
+	
+	@Transient
+	private HashMap<Integer, Integer> dishQuantity = new HashMap<Integer, Integer>();
+	
+	@Transient
+	private HashMap<Integer, DishStatus> dishStatusMap = new HashMap<Integer, DishStatus>();
+	
+	@Transient
+	private HashMap<Integer, Integer> drinkQuantity = new HashMap<Integer, Integer>();
 	
 	
+			
+	public Order() {}	
 	
-	public Order() {}		
+	
 
-
-	public Order(Long id, Long restaurantId, OrderItemStatus drinksStatus, List<Drink> orderedDrinks,
-			OrderItemStatus dishStatus, List<Dish> orderedDish, List<Dish> preparingDish, List<Dish> preparedDish) {
+	public Order(Long id, Long restaurantId, OrderItemStatus drinksStatus, List<Drink> orderedDrinks, List<OrderedDish> orderedDish,
+			OrderItemStatus dishStatus) {
 		super();
 		this.id = id;
 		this.restaurantId = restaurantId;
@@ -71,9 +84,8 @@ public class Order {
 		this.orderedDrinks = orderedDrinks;
 		this.dishStatus = dishStatus;
 		this.orderedDish = orderedDish;
-		this.preparingDish = preparingDish;
-		this.preparedDish = preparedDish;
 	}
+
 
 
 	public Long getId() {
@@ -91,16 +103,6 @@ public class Order {
 	public void setOrderedDrinks(List<Drink> orderedDrinks) {
 		this.orderedDrinks = orderedDrinks;
 	}		
-
-	public List<Dish> getOrderedDish() {
-		return orderedDish;
-	}
-
-
-	public void setOrderedDish(List<Dish> orderedDish) {
-		this.orderedDish = orderedDish;
-	}
-
 
 	public Long getRestaurantId() {
 		return restaurantId;
@@ -128,21 +130,66 @@ public class Order {
 		this.dishStatus = dishStatus;
 	}
 
-	public List<Dish> getPreparedDish() {
-		return preparedDish;
+	public List<OrderedDish> getOrderedDish() {
+		return orderedDish;
 	}
 
-	public void setPreparedDish(List<Dish> preparedDish) {
-		this.preparedDish = preparedDish;
+	public void setOrderedDish(List<OrderedDish> orderedDish) {
+		this.orderedDish = orderedDish;
 	}
 
-	public List<Dish> getPreparingDish() {
-		return preparingDish;
+
+
+	public List<Dish> getDishes() {
+		return dishes;
 	}
 
-	public void setPreparingDish(List<Dish> preparingDish) {
-		this.preparingDish = preparingDish;
+
+	public void setDishes(List<Dish> dishes) {
+		this.dishes = dishes;
 	}
 
+
+	public HashMap<Integer, Integer> getDishQuantity() {
+		return dishQuantity;
+	}
+
+
+	public void setDishQuantity(HashMap<Integer, Integer> dishQuantity) {
+		this.dishQuantity = dishQuantity;
+	}
+
+
+	public HashMap<Integer, Integer> getDrinkQuantity() {
+		return drinkQuantity;
+	}
+
+
+	public void setDrinkQuantity(HashMap<Integer, Integer> drinkQuantity) {
+		this.drinkQuantity = drinkQuantity;
+	}
+
+	public List<Drink> getDrinks() {
+		return drinks;
+	}
+
+	public void setDrinks(List<Drink> drinks) {
+		this.drinks = drinks;
+	}
+
+
+
+	public HashMap<Integer, DishStatus> getDishStatusMap() {
+		return dishStatusMap;
+	}
+
+
+
+	public void setDishStatusMap(HashMap<Integer, DishStatus> dishStatusMap) {
+		this.dishStatusMap = dishStatusMap;
+	}
+	
+	
+	
 	
 }
