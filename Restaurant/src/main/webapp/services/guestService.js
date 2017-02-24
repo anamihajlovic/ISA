@@ -46,6 +46,15 @@ guestServices.service('guestService', ['$http', function($http) {
 		return $http.post("/friendships/sortFriends/" + sortBy + "/" + reverse, friendsForSort);
 	}
 	
+	this.getRestaurants = function() {
+		return $http.get("/restaurants/getAll");
+	}
+	
+	this.sortRestaurants = function(sortBy, reverse) {
+		return $http.get("/restaurants/sort/" + sortBy + "/" + reverse);
+
+	}
+	
 	
 	
 }]);
