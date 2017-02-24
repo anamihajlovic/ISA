@@ -1,0 +1,175 @@
+<div>
+<div class = "col-sm-2">
+</div>
+<div class = "col-sm-8">
+	<h4>Waiters:</h4>
+	<table  class="table table-bordered tableBG" border="1">
+		<tbody>
+	        <tr>
+				<th>Id</th>
+				<th>End date</th>
+                <th></th>
+            </tr>
+			<tr ng-repeat="resOrder in resOrders">
+				<td> 
+					{{resOrder.id}}
+				</td>
+				<td>
+		    		{{resOrder.endDate}}
+				</td>
+				<td>
+		    		<button class = "btn btn-link" id={{resOrder.id}} ng-click="buttonShowResOrderUnit($event)"><span class = "glyphicon glyphicon-search" style="color:yellow;"></span></button>
+					
+				</td>
+			</tr>
+        </tbody>
+    </table>
+      <div class="modal-footer">
+     <button class = "btn btn-primary" style="background:black" ng-click="buttonNewResOrder()"><span class = "glyphicon glyphicon-plus" style="color:white"></span> Add Order</button>	   
+    </div> 
+    </div>
+    </div>
+    
+  <!-- Trigger the modal with a button -->
+<button type="button" id="modalBtnShowResOrderUnit" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModalShowResOrderUnit" style="display:none"></button>
+
+<!-- Modal -->
+<div id="myModalShowResOrderUnit" class="modal fade"  >
+  <div class="modal-dialog  modal-table modal-showOrderUnit">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title" id="modalTitle">Restaurant order units</h4>
+      </div>
+      <div class="modal-body">
+      	<form action="" >
+      		<div "col-sm-2">
+			<table  class="table table-bordered tableBG" border="1">
+				<tbody>
+			        <tr>				
+						<th>Foodstuff</th>
+		                <th>Quantity</th>
+		            </tr>
+					<tr ng-repeat="unit in resOrderResOrderUnits">
+						<td>
+				    		{{unit.orderFoodstuff}}	
+						</td>
+						<td>
+				    		{{unit.orderQuantity}}	
+						</td>
+					</tr>
+					
+		        </tbody>
+		    </table>
+		    </div>
+		    <div "col-sm-2">
+			<table  class="table table-bordered tableBG" border="1">
+				<tbody>
+			        <tr>				
+						<th>Price</th>
+		                <th></th>
+		            </tr>
+					<tr ng-repeat="unit in OfferUnits">
+						<td>
+				    		{{unit.price}}	
+						</td>
+							<td>
+		    			<button class = "btn btn-link" id={{unit.id}} ng-click="buttonChangeOfferUnit($event)"><span class = "glyphicon pencil" style="color:yellow;"></span></button>
+					
+						</td>
+					</tr>
+					
+		        </tbody>
+		    </table>
+		    </div>
+		    
+		    
+		    
+      </div>
+      <div class="modal-footer">
+      	 <button  type="button" id ="cancelMakeSegment"class="btn btn-default" data-dismiss="modal">Cancel</button>
+      </div>
+    </div>
+
+  </div>
+</div>
+  <!-- ---------------------------------------------------------------------------------------------------- --> 
+  
+    <!-- Trigger the modal with a button -->
+<button type="button" id="modalBtnAddResOrder" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModalAddResOrder" style="display:none"></button>
+
+<!-- Modal -->
+<div id="myModalAddResOrder" class="modal fade"  >
+  <div class="modal-dialog  modal-table ">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title" id="modalTitle">New Order</h4>
+      </div>
+      <div class="modal-body">
+      	<form action="" >
+			<table  class="table table-bordered tableBG" border="1">
+				<tbody>
+			        <tr>
+					
+						<th>Foodstuff</th>
+		                <th>Quantity</th>
+		            </tr>
+					<tr ng-repeat="unit in newResOrderUnits">
+						<td>
+				    		{{unit.orderFoodstuff}}	
+						</td>
+						<td>
+				    		{{unit.orderQuantity}}	
+						</td>
+					</tr>
+					
+		        </tbody>
+		    </table>
+		    		<button class="btn btn-link pull-right" ng-click="addResOrderUnit()"><span class="glyphicon glyphicon-plus" style="color:green;"></span> </button>		
+      <br><br>
+		    <label> End date </label>
+		    <input type="date" ng-model="$parent.resOrder.endDate" class="form-control"> 
+		     <input  type="text"  ng-model="$parent.resOrder.id" value ={{ID}} style="display:none">  
+      </div>
+      <div class="modal-footer">
+       <button  class="btn btn-default" ng-click="endMakeResOrder()"><span class="glyphicon glyphicon-ok"  ></span> Finish</button>
+      	 <button  type="button" ng-click="cancelMakeResOrder()"class="btn btn-default" data-dismiss="modal">Cancel</button>
+      	  <button style="display:none"  type="button" id ="cancelResOrder"class="btn btn-default" data-dismiss="modal">Cancel</button>
+      </div>
+    </div>
+
+  </div>
+</div>
+<!-- ------------------------------------------------------- -->
+  
+    <!-- Trigger the modal with a button -->
+<button type="button" id="modalBtnOrderUnit" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModalAddResOrderUnit" style="display:none"></button>
+
+<!-- Modal -->
+<div id="myModalAddResOrderUnit" class="modal fade"  >
+  <div class="modal-dialog  modal-table modal-showOrderUnit">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title" id="modalTitle">New Order unit</h4>
+      </div>
+      <div class="modal-body">
+      	 <label> Foodstuff </label>
+		    <input type="text" ng-model="$parent.resOrderUnit.orderFoodstuff" value="orderFoodstuff">  
+		    <label> Quantity </label>
+		    <input  type="number" min="1" value="1"ng-model="$parent.resOrderUnit.orderQuantity" value="orderQuantity"> 
+		    <input  type="text"  ng-model="$parent.resOrderUnit.ResOrder"  value ={{ID}}  style="display:none">  
+      </div>
+      <div class="modal-footer">
+       <button  class="btn btn-default" ng-click="makeOrderUnit()" data-dismiss="modal"><span class="glyphicon glyphicon-menu-ok"  ></span> Add</button>
+      	
+      </div>
+    </div>
+
+  </div>
+</div>

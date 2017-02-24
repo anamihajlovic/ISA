@@ -22,7 +22,7 @@ insert into friendships(sender_id, receiver_id, status) values (6, 2, 'sent')
 
 
 --EMPLOYED
-insert into bidders(email, password, first_name, last_name,first_login,user_role) values ('bid1@gmail.com', 'bid1', 'bid1', 'bid2',true,'bidder')
+insert into bidders(email, password, first_name, last_name,first_login,user_role) values ('bid1@gmail.com', 'bid1', 'bid1', 'bid2',false,'bidder')
 
 insert into bidders(email, password, first_name, last_name,first_login,user_role) values ('bid2@gmail.com', 'bid2', 'bid2', 'bid2',true,'bidder')
 
@@ -135,4 +135,24 @@ insert into work_shifts_in_work_days (work_day_id,work_shift_id)values (1,2)
 insert into restaurant_work_days(restaurant_id,work_day_id)values(1,1)
 insert into restaurant_work_days(restaurant_id,work_day_id)values(1,2)
 insert into restaurant_work_days(restaurant_id,work_day_id)values(1,3)
+------------------------------------------------------------------------------------------------------
 
+insert into res_orders(end_date,restaurant_name)values('29/02/2017','Lanterna')
+insert into res_orders(end_date,restaurant_name)values('23/01/2017','Lanterna')
+insert into res_orders(end_date,restaurant_name)values('13/01/2017','Veliki')
+
+insert into restaurant_orders(restaurant_id,order_id)values (1,1)
+insert into restaurant_orders(restaurant_id,order_id)values (1,2)
+insert into restaurant_orders(restaurant_id,order_id)values (2,3)
+
+insert into res_order_units(order_foodstuff,order_quantity,res_order)values ('kafa',50,1)
+insert into res_order_units(order_foodstuff,order_quantity,res_order)values ('mleko',20,1)
+insert into res_order_units(order_foodstuff,order_quantity,res_order)values ('caj',30,1)
+
+insert into order_foodstuffs(order_id,unit_id)values(1,1)
+insert into order_foodstuffs(order_id,unit_id)values(1,2)
+insert into order_foodstuffs(order_id,unit_id)values(2,3)
+
+insert into offer_units(unit_id,price)values(1,10)
+insert into offer_units(unit_id,price)values(2,10)
+insert into offer_units(unit_id,price)values(3,null)

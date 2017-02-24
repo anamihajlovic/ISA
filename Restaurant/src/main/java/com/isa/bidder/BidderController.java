@@ -1,17 +1,34 @@
 package com.isa.bidder;
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.*;
+
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.isa.bartender.Bartender;
+import com.isa.dish.Dish;
+import com.isa.offer.Offer;
+import com.isa.offer.OfferService;
+import com.isa.offer.StateOffer;
+import com.isa.offer.unit.OfferUnit;
+import com.isa.offer.unit.OfferUnitService;
 import com.isa.res.manager.RestaurantManager;
+import com.isa.res.order.ResOrder;
+import com.isa.res.order.ResOrderService;
+import com.isa.res.order.unit.ResOrderUnit;
+import com.isa.res.order.unit.ResOrderUnitService;
+import com.isa.restaurant.Restaurant;
 import com.isa.restaurant.RestaurantService;
 
 
@@ -21,15 +38,27 @@ public class BidderController {
 	
 	private final BidderService bidderService;
 	private final RestaurantService restaurantService;
+	private final ResOrderService resOrderService; 
+	private final ResOrderUnitService resOrderUnitService;
+	private final OfferUnitService offerUnitService;
+	private final OfferService offerService;
 	private HttpSession httpSession;
 	private Bidder bidder ;
+	private List <Long> sifre;
+	private Long idResOrder;
+	private Long price = null;
 
 	@Autowired
 	public BidderController(final HttpSession httpSession, final BidderService bidderService,
-			final RestaurantService restaurantService) {
+			final RestaurantService restaurantService,ResOrderService resOrderService,OfferService offerService,
+			ResOrderUnitService resOrderUnitService,OfferUnitService offerUnitService) {
 		this.bidderService = bidderService;
 		this.restaurantService = restaurantService;
 		this.httpSession = httpSession;
+		this.resOrderService= resOrderService;
+		this.offerService= offerService;
+		this.resOrderUnitService = resOrderUnitService;
+		this.offerUnitService = offerUnitService;
 	}
 
 	@GetMapping("/checkRights")
@@ -63,9 +92,171 @@ public class BidderController {
 		
 		return bidder;	
 	}
-
 	
-	
+	@GetMapping(path = "/bidderOrders")
+	public List<ResOrder> findBidderOrders() {
+		System.out.println("uslo u pronalazenje porudzbina");
+		Date today = new Date();
+		
+		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+		List<ResOrder> result = new ArrayList <ResOrder>();
+			for(ResOrder r :resOrderService.findAll()){	
+				String[] dpTokens = r.getEndDate().split("/");
+				Date dateEnd = null; 
+				try {
+					dateEnd = sdf.parse(dpTokens[0]+"/"+dpTokens[1]+"/"+dpTokens[2]);
+				} catch (ParseException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				if(dateEnd.after(today) || dateEnd.equals(today)){
 
+					result.add(r);
+				}
+			}
+		return result;
+	}
+	
+	@GetMapping(path = "/bidderOfferUnits/{id}")
+	public List<OfferUnit> findBidderOfferUnits(@PathVariable Long id) {
+		ResOrder resOrder = resOrderService.findOne(id);
+		idResOrder = id;
+		List<OfferUnit> units = new ArrayList <OfferUnit>();
+		sifre = new ArrayList<Long>();
+		for(ResOrderUnit rou:resOrder.getResOrderFoodstuffs()){
+			sifre.add(rou.getId());
+		}
+		
+		for(OfferUnit ou:offerUnitService.findAll()){
+			if(sifre.contains(ou.getId())){
+				units.add(ou);
+			}
+		}
+		
+		return units;
+	}
+	
+	@GetMapping(path = "/showOfferUnit/{id}")
+	public OfferUnit showBidderOfferUnit(@PathVariable Long id) {		
+		return offerUnitService.findOne(id);	
+	}
+	@PutMapping(path = "/updateOfferUnit")
+	public OfferUnit updateOfferUnit(@RequestBody OfferUnit unit) {
+		offerUnitService.findOne(unit.getId());
+		unit.setId(unit.getId());
+		if(unit.getPrice()!=null){					
+			for(Offer offer:bidder.getOffers()){
+				for(int i =0;i<offer.getOfferUnits().size();i++){
+					if(offer.getOfferUnits().get(i).getId()==unit.getId()){
+							
+							offer.getOfferUnits().get(i).setPrice(unit.getPrice());
+							offer.setId(offer.getId());
+							offerService.save(offer);
+							
+							Long ukupno =Long.parseLong("0");
+							for(OfferUnit u :offer.getOfferUnits()){
+								ukupno+=u.getPrice();
+							}
+							price = ukupno;
+						offer.setTotalPrice(ukupno);
+					
+						offer.setId(offer.getId());
+						offerService.save(offer);
+						Bidder b = bidderService.findOne(offer.getIdBidder());
+						b.setId(b.getId());
+						bidderService.save(b);
+						break;
+					}
+				}
+				
+			}
+			
+			
+			
+			
+		}
+		return 	offerUnitService.save(unit);
+	}	
+	
+	@PostMapping(path = "/makeOffer")
+	public String makeOffer(@RequestBody Offer offer) {
+		//System.out.println("uslo");
+		if (offer != null){
+			
+			for(Long s :sifre){
+				if(offerUnitService.findOne(s).equals(null)){
+					return "nije";
+				}
+			}
+			Long ukupno =Long.parseLong("0");
+			List<OfferUnit> units = new ArrayList<OfferUnit>();
+			for(Long s :sifre){
+				units.add(offerUnitService.findOne(s));
+				ukupno+=offerUnitService.findOne(s).getPrice();
+			}
+
+			offer.setAccepted(null);
+			offer.setTotalPrice(ukupno);
+			offer.setOfferUnits(units);
+			offer.setIdResOrder(idResOrder);
+			offer.setIdBidder(bidder.getId());
+			offerService.save(offer);
+			bidder.getOffers().add(offer);
+			bidder.setId(bidder.getId());
+			bidderService.save(bidder);
+			System.out.println("u roditelju stoji : "+offer.getOfferUnits().get(0).getPrice());
+		return "dodato";
+	}
+		else
+			return "nije";		
+	}
+	@GetMapping(path = "/allOffers")
+	public List<Offer> findAllOffers() {
+		List<Offer> result = new ArrayList<Offer>();
+		for(Offer o:offerService.findAll()){
+			if(o.getIdBidder()==bidder.getId()){
+				result.add(o);
+			}
+		}
+		return result;
+	}
+	
+	@GetMapping(path = "/bidderOffer/{id}")
+	public Offer showBidderOffer(@PathVariable Long id) {
+		Offer o = new Offer();
+		o.setId(null);
+		ResOrder ro = resOrderService.findOne(id);
+		for(Offer offer: offerService.findAll()){
+			if(offer.getIdResOrder()==ro.getId()){
+				o=offer;
+			}
+		}
+		
+		return o;	
+	}
+	@PutMapping(path = "/updateOffer")
+	public Offer updateOffer(@RequestBody Offer offer) {
+		if(price!=null){
+			offer.setTotalPrice(price);
+		}
+	
+		List<OfferUnit> newUnits = new ArrayList<OfferUnit>();
+		for(OfferUnit ou:offerUnitService.findAll()){
+			if(sifre.contains(ou.getId())){
+				newUnits.add(ou);
+			}
+		}
+		offerService.findOne(offer.getId());
+	
+		offer.setOfferUnits(newUnits);
+		offer.setId(offer.getId());
+		Bidder b = bidderService.findOne(offer.getIdBidder());
+		b.setId(b.getId());
+		bidderService.save(b);
+		return offerService.save(offer);
+		
+
+	}
+	
 
 }

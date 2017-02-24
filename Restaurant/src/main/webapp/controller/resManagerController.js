@@ -1,6 +1,7 @@
 var resManagerModule = angular.module('resManager.controller', []);
- 
-
+var visina ;
+var sirina;
+var ID;
 resManagerModule.controller('resManagerController', ['$scope', 'resManagerService','$location',
   	function ($scope,resManagerService, $location) {
 	
@@ -563,6 +564,277 @@ resManagerModule.controller('resManagerController', ['$scope', 'resManagerServic
 	});
 		
 }
-//////////////////////////////////////	
 	
+//////////////////////////////////////	//////////////////////////////////////////////////////////////////////
+	$scope.newConfiguration = function(){
+		document.getElementById("modalBtnCreateConfiguration").click();	
+	}
+	$scope.makeConfig = function(){
+		var width = $("input[name='width']").val();
+		sirina = width;
+		//alert(width)
+		var height = $("input[name='height']").val();
+		visina = height;
+		//alert(height)
+		resManagerService.makeConfiguration(width, height).then(
+			function(response){	
+				toastr.success("Success!");	
+				
+				var request = resManagerService.findAllSegments().then(
+						function (response) {
+							$scope.segments = response.data;
+							document.getElementById("modalBtnCreateSegments").click();
+							document.getElementById("cancelConfil").click();
+							
+						}
+					); 	
+	
+			});
+	}
+    function AllSegments () {
+    	var request = resManagerService.findAllSegments().then(
+				function (response) {
+					$scope.segments = response.data;
+				
+				}
+			); 
+	}
+
+	$scope.addSegment = function(){
+		document.getElementById("modalBtnAddSegments").click();	
+		$('.modal-table').css('width', '230px');
+	}
+	$scope.makeSegment = function(){	
+		//alert ($scope.segment.segType)
+		 
+		$scope.segment.color = getRandomColor();
+		resManagerService.addSegment($scope.segment).then(
+			function(response){
+				if(response.data == "dodato") {
+				toastr.success("Success!");	
+				AllSegments ();
+				document.getElementById("cancelMakeSegment").click();
+				
+				}else {
+					toastr.error("Something wrong!");	
+				}
+			});
+	}
+	$scope.showTables = function(){
+		resManagerService.getTables().then(
+				function(response){
+					//tables = response.data;
+		
+
+					//	alert(value.xPos+" , "+value.yPos)
+						var stolovi = [];
+						var red = [];
+						var lastXPos = 0;
+						var counter = 0;
+						var maxX = 0;
+						var maxY = 0;
+						angular.forEach(response.data, function(value, key){	// punjenje matrice stolova
+							if(value.xPos == lastXPos){	
+								red.push(value);
+							}
+							counter++;
+				
+							if(counter==response.data.length && value.yPos==0){
+								stolovi.push(red);
+								red =[];
+								red.push(value);
+							}
+						
+							if((value.xPos != lastXPos) || counter==response.data.length ) {
+								stolovi.push(red);
+								red =[];
+								red.push(value);
+							}
+							
+							lastXPos = value.xPos;
+						});
+						$scope.tables = stolovi;
+					
+					
+				});
+	}
+	  function Tables(){
+		  resManagerService.getTables().then(
+					function(response){
+						//tables = response.data;
+			
+
+						//	alert(value.xPos+" , "+value.yPos)
+							var stolovi = [];
+							var red = [];
+							var lastXPos = 0;
+							var counter = 0;
+							var maxX = 0;
+							var maxY = 0;
+							angular.forEach(response.data, function(value, key){	// punjenje matrice stolova
+								if(value.xPos == lastXPos){	
+									red.push(value);
+								}
+								counter++;
+					
+								if(counter==response.data.length && value.yPos==0){
+									stolovi.push(red);
+									red =[];
+									red.push(value);
+								}
+							
+								if((value.xPos != lastXPos) || counter==response.data.length ) {
+									stolovi.push(red);
+									red =[];
+									red.push(value);
+								}
+								
+								lastXPos = value.xPos;
+							});
+							$scope.tables = stolovi;
+						
+						
+					});
+	  }
+  $scope.finishConf = function (){  
+	  document.getElementById("cancelFinishSegment").click();
+	  Tables();
+	
+	 
+  }
+  
+  $scope.loadTables = function(){
+	  Tables();
+		
+	}
+
+  $scope.buttonShowTable = function (event){
+	  
+	  var request = resManagerService.findTable(event).then(function(response) {
+			$scope.table = response.data;
+			//alert($scope.foodstuff.quantity)
+			
+			 $('.modal-admin').css('width', '280px');
+			document.getElementById("modalBtnShowTable").click();	
+			AllSegments();
+			return response;
+		});	
+  }
+   $scope.updateTable = function (){
+	   var request = resManagerService.updateTable($scope.table).then(function(response) { 
+		$scope.data = response.data;
+		return response;
+	});			
+		request.then(function (data) {
+			if($scope.data != null) {
+				toastr.success("Success!");	
+				document.getElementById("cancelUpdateTable").click();	
+				Tables();
+			} else {
+				toastr.error("Something wrong");
+			
+			}
+
+	});
+	
+   }
+   
+   function getRandomColor() {
+	    var letters = '0123456789ABCDEF';
+	    var color = '#';
+	    for (var i = 0; i < 6; i++ ) {
+	        color += letters[Math.floor(Math.random() * 16)];
+	    }
+	    return color;
+	}
+   /////////////////////////////////////////RESTAURANT ORDERS/////////////////////////////////////////
+  $scope.restaurantOrders= function () {
+   	var request = resManagerService.findAllResOrders().then(
+				function (response) {
+					$scope.resOrders = response.data;
+				
+				}
+			); 
+	}
+  $scope.buttonShowResOrderUnit = function(event){
+	  var request = resManagerService.findShowResOrderUnits(event).then(
+				function (response) {
+					$scope.resOrderResOrderUnits = response.data;
+					document.getElementById("modalBtnShowResOrderUnit").click();
+					 $('.modal-showOrderUnit').css('width', '350px');
+				}
+			); 
+	}
+	$scope.buttonNewResOrder = function(){
+		document.getElementById("modalBtnAddResOrder").click();
+			var request = resManagerService.saveFirstTimeResOrder().then(function(response) {	
+			$scope.newID = response.data;
+			//alert($scope.newID );
+			ID =$scope.newID;
+		//alert(ID)
+			return response;
+		});			
+			
+	
+		
+	}	 
+		 
+  $scope.addResOrderUnit = function(){
+	  //alert("uslo")
+	   $('.modal-showOrderUnit').css('width', '350px');
+	  document.getElementById("modalBtnOrderUnit").click();
+  }
+
+  $scope.makeOrderUnit = function(){
+	  alert($scope.resOrderUnit.orderFoodstuff)
+	  alert($scope.resOrderUnit.orderQuantity)
+	  $scope.resOrderUnit.ResOrder = ID;
+	   alert($scope.resOrderUnit.ResOrder)
+	  var request = resManagerService.saveResOrderUnit($scope.resOrderUnit).then(function(response) {	
+			$scope.newResOrderUnits = response.data;
+			
+			
+		});			
+			
+	  
+  }
+   $scope.endMakeResOrder = function(){
+	   $scope.resOrder.id = ID;
+		var request = resManagerService.makeResOrder($scope.resOrder).then(function(response) {
+			$scope.data = response.data;
+			//alert(response.data)
+			return response;
+		});			
+			request.then(function (data) {
+				if($scope.data != null) {
+					toastr.success("Success!");	
+					
+				
+				 var request = resManagerService.findAllResOrders().then(
+							function (response) {
+								$scope.resOrders = response.data;
+							
+							}
+						); 
+				 document.getElementById("cancelResOrder").click();
+						
+				} else {
+					toastr.error("Something wrong");
+				
+				}
+
+		});
+	   
+   }
+   $scope.cancelMakeResOrder =function(){
+	   var request = resManagerService.deleteResOrderUnits().then(function(response) {
+			$scope.data = response.data;
+			//alert(response.data)
+			return response;
+		});
+	   
+   }
+
+   
+   
 }]);

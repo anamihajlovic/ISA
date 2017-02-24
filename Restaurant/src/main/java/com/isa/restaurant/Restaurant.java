@@ -14,6 +14,8 @@ import com.isa.dish.*;
 import com.isa.drink.*;
 import com.isa.foodstuf.Foodstuff;
 import com.isa.res.manager.*;
+import com.isa.res.order.ResOrder;
+import com.isa.res.segment.ResSegment;
 import com.isa.bartender.*;
 import com.isa.bidder.*;
 import com.isa.waiter.*;
@@ -92,14 +94,25 @@ public class Restaurant {
 	@JoinTable(name = "restaurant_work_days", joinColumns = @JoinColumn(name = "restaurant_id"), inverseJoinColumns = @JoinColumn(name = "work_day_id"))
 	private List<WorkDay> workDays;
 	
+	
+	@OneToMany(cascade = CascadeType.ALL)
+	@JoinTable(name = "restaurant_segments", joinColumns = @JoinColumn(name = "restaurant_id"), inverseJoinColumns = @JoinColumn(name = "segment_id"))
+	private List<ResSegment> segments;
+	
+	@OneToMany(cascade = CascadeType.ALL)
+	@JoinTable(name = "restaurant_orders", joinColumns = @JoinColumn(name = "restaurant_id"), inverseJoinColumns = @JoinColumn(name = "order_id"))
+	private List<ResOrder> orders;
+	
+	
 
 	public Restaurant() {}
+
 
 
 	public Restaurant(Long id, String name, String restaurant_type, String country, String city, String street,
 			Double ratings, List<RestaurantManager> restaurantManagers, List<Foodstuff> foodstuffs, List<Dish> dishes,
 			List<Drink> drinks, List<Bidder> bidders, List<Waiter> waiters, List<Cook> cooks,
-			List<Bartender> bartenders, List<WorkDay> workDays) {
+			List<Bartender> bartenders, List<WorkDay> workDays, List<ResSegment> segments, List<ResOrder> orders) {
 		super();
 		this.id = id;
 		this.name = name;
@@ -117,7 +130,10 @@ public class Restaurant {
 		this.cooks = cooks;
 		this.bartenders = bartenders;
 		this.workDays = workDays;
+		this.segments = segments;
+		this.orders = orders;
 	}
+
 
 
 	public Long getId() {
@@ -125,9 +141,11 @@ public class Restaurant {
 	}
 
 
+
 	public void setId(Long id) {
 		this.id = id;
 	}
+
 
 
 	public String getName() {
@@ -135,9 +153,11 @@ public class Restaurant {
 	}
 
 
+
 	public void setName(String name) {
 		this.name = name;
 	}
+
 
 
 	public String getRestaurant_type() {
@@ -145,9 +165,11 @@ public class Restaurant {
 	}
 
 
+
 	public void setRestaurant_type(String restaurant_type) {
 		this.restaurant_type = restaurant_type;
 	}
+
 
 
 	public String getCountry() {
@@ -155,9 +177,11 @@ public class Restaurant {
 	}
 
 
+
 	public void setCountry(String country) {
 		this.country = country;
 	}
+
 
 
 	public String getCity() {
@@ -165,9 +189,11 @@ public class Restaurant {
 	}
 
 
+
 	public void setCity(String city) {
 		this.city = city;
 	}
+
 
 
 	public String getStreet() {
@@ -175,9 +201,11 @@ public class Restaurant {
 	}
 
 
+
 	public void setStreet(String street) {
 		this.street = street;
 	}
+
 
 
 	public Double getRatings() {
@@ -185,9 +213,11 @@ public class Restaurant {
 	}
 
 
+
 	public void setRatings(Double ratings) {
 		this.ratings = ratings;
 	}
+
 
 
 	public List<RestaurantManager> getRestaurantManagers() {
@@ -195,9 +225,11 @@ public class Restaurant {
 	}
 
 
+
 	public void setRestaurantManagers(List<RestaurantManager> restaurantManagers) {
 		this.restaurantManagers = restaurantManagers;
 	}
+
 
 
 	public List<Foodstuff> getFoodstuffs() {
@@ -205,9 +237,11 @@ public class Restaurant {
 	}
 
 
+
 	public void setFoodstuffs(List<Foodstuff> foodstuffs) {
 		this.foodstuffs = foodstuffs;
 	}
+
 
 
 	public List<Dish> getDishes() {
@@ -215,9 +249,11 @@ public class Restaurant {
 	}
 
 
+
 	public void setDishes(List<Dish> dishes) {
 		this.dishes = dishes;
 	}
+
 
 
 	public List<Drink> getDrinks() {
@@ -225,9 +261,11 @@ public class Restaurant {
 	}
 
 
+
 	public void setDrinks(List<Drink> drinks) {
 		this.drinks = drinks;
 	}
+
 
 
 	public List<Bidder> getBidders() {
@@ -235,9 +273,11 @@ public class Restaurant {
 	}
 
 
+
 	public void setBidders(List<Bidder> bidders) {
 		this.bidders = bidders;
 	}
+
 
 
 	public List<Waiter> getWaiters() {
@@ -245,9 +285,11 @@ public class Restaurant {
 	}
 
 
+
 	public void setWaiters(List<Waiter> waiters) {
 		this.waiters = waiters;
 	}
+
 
 
 	public List<Cook> getCooks() {
@@ -255,9 +297,11 @@ public class Restaurant {
 	}
 
 
+
 	public void setCooks(List<Cook> cooks) {
 		this.cooks = cooks;
 	}
+
 
 
 	public List<Bartender> getBartenders() {
@@ -265,14 +309,17 @@ public class Restaurant {
 	}
 
 
+
 	public void setBartenders(List<Bartender> bartenders) {
 		this.bartenders = bartenders;
 	}
 
 
+
 	public List<WorkDay> getWorkDays() {
 		return workDays;
 	}
+
 
 
 	public void setWorkDays(List<WorkDay> workDays) {
@@ -281,7 +328,31 @@ public class Restaurant {
 
 
 
+	public List<ResSegment> getSegments() {
+		return segments;
+	}
 
+
+
+	public void setSegments(List<ResSegment> segments) {
+		this.segments = segments;
+	}
+
+
+
+	public List<ResOrder> getOrders() {
+		return orders;
+	}
+
+
+
+	public void setOrders(List<ResOrder> orders) {
+		this.orders = orders;
+	}
+
+
+
+	
 	
 	
 }

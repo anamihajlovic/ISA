@@ -1,0 +1,156 @@
+<div>
+<div class = "col-sm-2">
+</div>
+<div class = "col-sm-8">
+	<h4>Orders:</h4>
+	<table  class="table table-bordered tableBG" border="1">
+		<tbody>
+	        <tr>
+	       	   <th>Restaurant</th>
+				<th>Id order</th>
+				<th>End date</th>
+                <th></th>
+            </tr>
+			<tr ng-repeat="resOrder in forBidderOrders">
+			
+				<td> 
+					{{resOrder.resName}}
+				</td>
+				<td> 
+					{{resOrder.id}}
+				</td>
+				<td>
+		    		{{resOrder.endDate}}
+				</td>
+				<td>
+		    		<button  class = "btn btn-link" id={{resOrder.id}} ng-click="buttonShowOfferDialog($event)"><span class = "glyphicon glyphicon-pencil" style="color:green;"></span></button>
+					
+				</td>
+			</tr>
+        </tbody>
+    </table> 
+
+    
+    
+    
+    <div class = "col-sm-8">
+	<h4>Offers:</h4>
+	<table  class="table table-bordered tableBG" border="1">
+		<tbody>
+	        <tr>
+	       	   <th>Restaurant order</th>
+				<th>Delivery time</th>
+				<th>Garancy</th>
+				<th>Total price</th>
+				<th>Accepted</th>
+            </tr>
+			<tr ng-repeat="offer in listOffers">
+			
+				<td> 
+					{{offer.idResOrder}}
+				</td>
+				<td> 
+					{{offer.deliveryTime}}
+				</td>
+				<td>
+		    		{{offer.garancy}}
+				</td>
+				<td> 
+					{{offer.totalPrice}}
+				</td>
+				<td>
+		    		{{offer.accepted}}
+				</td>
+			</tr>
+        </tbody>
+    </table> 
+    </div>
+    </div>
+<!-- -------------------------------------------------------------------------------------------------------------- -->    
+<!-- Trigger the modal with a button -->
+<button type="button" id="modalBtnShowOffer" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModalShowOffer" style="display:none"></button>
+
+<!-- Modal -->
+<div id="myModalShowOffer" class="modal fade"  >
+  <div class="modal-dialog  modal-table ">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title" id="modalTitle">Offer </h4>
+      </div>
+      <div class="modal-body">
+      	<form action="" >
+			<table  class="table table-bordered tableBG" border="1">
+				<tbody>
+			        <tr>
+			        
+						<th>Foodstuff</th>
+		                <th>Quantity</th>
+		                 <th>Price</th>
+		                 <th></th>
+		            </tr>
+					<tr ng-repeat="unit in forBidderOfferUnits">
+
+						<td>
+				    		{{unit.orderFoodstuff}}	
+						</td>
+						<td>
+				    		{{unit.orderQuantity}}	
+						</td>
+						<td>
+			 				{{unit.price}}
+						</td>
+						<td>
+				    		 <button  class = "btn btn-link" id ="{{unit.id}}"  ng-click="buttonUpdateOfferUnit($event)">
+				    		 <span  ng-if="$parent.offer.id == null" class = "glyphicon glyphicon-pencil" style="color:green;"></span>
+				    		 
+				    		 <span  ng-if="$parent.offer.id != null" class = "glyphicon glyphicon-pencil" style="color:yellow;"></span>
+				    		 </button>	
+								
+						</td>
+					</tr>
+					
+		        </tbody>
+		    </table>
+		    <input  style="display:none" type="text" ng-model="$parent.offer.id" class="form-control" >  
+		    <label>Delivery time</label>
+			 <input type="date" ng-model="$parent.offer.deliveryTime" class="form-control" >  
+			 <label>Garancy</label>
+			 <input type="text" ng-model="$parent.offer.garancy" class="form-control" > 
+      </div>
+      <div class="modal-footer">
+      	 <button ng-if="$parent.offer.id == null" type="button"   class="btn btn-default"  ng-click="AddOffer()" ><span class="glyphicon glyphicon-ok" ></span> Create</button>
+      	  <button ng-if="$parent.offer.id != null"  type="button"   class="btn btn-default"  ng-click="UpdateOffer()" ><span class="glyphicon glyphicon-ok" ></span> Update</button>
+      	 <button  type="button" id ="cancelOffer"class="btn btn-default" data-dismiss="modal">Cancel</button>
+      </div>
+    </div>
+
+  </div>
+</div>
+<!-- ------------------------------------------------------------------------------------------------------------ -->
+<!-- Trigger the modal with a button -->
+<button type="button" id="modalBtnUpdateOfferUnit" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModalUpdateOfferUnit" style="display:none"></button>
+
+<!-- Modal -->
+<div id="myModalUpdateOfferUnit" class="modal fade"  >
+  <div class="modal-dialog  modal-table modal-showOrderUnit">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-body">
+      	<form action="" >
+			<label>Price</label>
+			 <input type="number" min ="1"ng-model="$parent.offerUnit.price" class="form-control" >  
+
+      </div>
+      <div class="modal-footer">
+      	 <button ng-if="$parent.offer.id == null"type="button"  class="btn btn-default"  ng-click="updateOfferUnitPrice()" ><span class="glyphicon glyphicon-ok" ></span> Set</button>
+      	 <button ng-if="$parent.offer.id != null" type="button"  class="btn btn-default"  ng-click="updateOfferUnitPrice()" ><span class="glyphicon glyphicon-pencil" ></span> Update</button>
+      	 <button style="display:none"  type="button" id ="cancelUnitOffer"class="btn btn-default" data-dismiss="modal">Cancel</button>
+      </div>
+    </div>
+
+  </div>
+</div>

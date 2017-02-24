@@ -124,6 +124,10 @@ angular.module('restaurants', [ 'ui.router','ui.calendar' ,
         templateUrl : 'html/resManager/resManagerHome.html',
           controller : 'resManagerController'
         }) 
+         .state('resManager.tables', {
+       	url : '/tables',
+        templateUrl : 'html/resManager/resManagerSeatingConf.html',
+        })
         .state('resManager.updateResManager', {
        	url : '/updateResManager',
         templateUrl : 'html/resManager/resManagerUpdateProfile.html',
@@ -153,6 +157,10 @@ angular.module('restaurants', [ 'ui.router','ui.calendar' ,
               url : '/menu',
              templateUrl : 'html/resManager/resManagerMenu.html',
           })
+           .state('resManager.purchase', {
+              url : '/purchase',
+             templateUrl : 'html/resManager/resManagerPurchase.html',
+          })
              
          .state('resManager.drinkCard', {
               url : '/drinkCard',
@@ -162,6 +170,11 @@ angular.module('restaurants', [ 'ui.router','ui.calendar' ,
         	   url : '/bidder',
         	   templateUrl : 'html/bidder/bidderHome.html',
         	   controller: 'bidderController'
+        	   
+           })
+              .state('bidder.showOrders', {
+        	   url : '/showOrders',
+        	   templateUrl : 'html/bidder/bidderListResOrders.html',
         	   
            })
              .state('bidder.updateBidder', {
