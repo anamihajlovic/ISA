@@ -1,0 +1,86 @@
+<style type="text/css">
+.sortorder:after {
+  content: '\25b2';   // BLACK UP-POINTING TRIANGLE
+}
+.sortorder.reverse:after {
+  content: '\25bc';   // BLACK DOWN-POINTING TRIANGLE
+}
+
+#search {
+    background-image: url('/css/searchIcon.png'); /* Add a search icon to input */
+    background-position: 0px 5px; /* Position the search icon */
+    background-repeat: no-repeat; /* Do not repeat the icon image */
+    font-size: 16px; /* Increase font-size */
+    padding: 12px 20px 12px 40px; /* Add some padding */
+    border: 1px solid #ddd; /* Add a grey border */
+    margin-bottom: 12px; /* Add some space below the input */
+    width: 100%;
+    
+}
+</style>
+
+<div>
+<div class = "col-sm-2">
+</div>
+<div class = "col-sm-8">
+	<div>
+	<h4>Restaurants:</h4> 
+	<input type="text" ng-change="myFilterRes(restaurants)"  ng-model="search.searchRes" id="search" placeholder="Search restaurants...">	
+	</div>
+    
+    <table  class="table table-bordered tableBG" border="1">
+		<tbody>
+	        <tr>
+				<th>
+				<a class="btn btn-xs" ng-click="sortResBy('name')" data-ui-sref="."><label> Name </label></a>  
+      			<span class="sortorder" ng-show="propertyNameRes === 'name'" ng-class="{reverse: reverseRes}"></span>
+				</th>
+				<th>
+				<a class="btn btn-xs" ng-click="sortResBy('type')" data-ui-sref="."><label> Type </label></a>  
+      			<span class="sortorder" ng-show="propertyNameRes === 'type'" ng-class="{reverse: reverseRes}"></span>
+				</th>
+				<th>
+				<a class="btn btn-xs" ng-click="sortResBy('street')" data-ui-sref="."><label> Street </label></a>  
+      			<span class="sortorder" ng-show="propertyNameRes === 'street'" ng-class="{reverse: reverseRes}"></span>
+				</th>
+				<th>
+				<a class="btn btn-xs" ng-click="sortResBy('city')" data-ui-sref="."><label> City </label></a>  
+      			<span class="sortorder" ng-show="propertyNameRes === 'city'" ng-class="{reverse: reverseRes}"></span>
+				</th>
+				<th>
+				<a class="btn btn-xs" ng-click="sortResBy('country')" data-ui-sref="."><label> Country </label></a>  
+      			<span class="sortorder" ng-show="propertyNameRes === 'country'" ng-class="{reverse: reverseRes}"></span>
+				</th>
+				<th>
+				<a class="btn btn-xs" ng-click="sortResBy('rate')" data-ui-sref="."><label> Rate </label></a>  
+      			<span class="sortorder" ng-show="propertyNameRes === 'rate'" ng-class="{reverse: reverseRes}"></span>
+				</th>
+                <th></th>
+            </tr>
+			<tr ng-repeat="restaurant in filteredRes">
+
+				<td>
+		    		{{restaurant.name}}	
+				</td>
+       			<td> 
+					{{restaurant.restaurant_type}}
+				</td>
+            	<td>
+            	{{restaurant.street}}	
+				</td>
+				<td>
+            	{{restaurant.city}}	
+				</td>
+				<td>
+            	{{restaurant.country}}	
+				</td>
+				<td> 
+					{{restaurant.ratings}}
+				</td>
+				<td>
+				
+				<button class = "btn btn-link" id={{restaurant.id}} data-ui-sref=".startReservation" title="Make reservation"><span class = "glyphicon glyphicon-ok"></span></button>
+				</td>
+            </tr>
+		</tbody>
+    </table>

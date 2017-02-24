@@ -68,7 +68,7 @@ public class FriendshipController {
 		}
 
 		System.out.println("velicina liste prijatelja iz findFriends " + guests.size());
-		List<Guest> sorted = sortByLastName(guests, false);
+		List<Guest> sorted = sortFriends(guests, "lastName", false);
 		return sorted;
 	}
 
@@ -93,7 +93,7 @@ public class FriendshipController {
 			myFriends.add(friend);
 		}
 
-		myFriends = sortByLastName(myFriends, false);
+		myFriends = sortFriends(myFriends,"lastName", false);
 
 		return myFriends;
 	}
@@ -102,21 +102,16 @@ public class FriendshipController {
 	@PostMapping(path = "/sortFriends/{sortBy}/{reverse}", consumes="application/json")
 	public List<Guest> sortFriends(@RequestBody List<Guest> friends, @PathVariable String sortBy, @PathVariable boolean reverse) {
 		System.out.println("Pogodjena metoda sort friends by " + sortBy + " " + reverse);
-		
-		if (sortBy.equals("firstName"))
-			sortByFirstName(friends, reverse);
-		else
-			sortByLastName(friends, reverse);
-		
-		return friends;
-	}
-	
-	private List<Guest> sortByLastName(List<Guest> friends, boolean reverse) {
+
 		Collections.sort(friends, new Comparator<Guest>() {//sortira u rastucem redosledu
 
 			@Override
 			public int compare(Guest g1, Guest g2) {
-				return g1.getLastName().compareTo(g2.getLastName());
+				if(sortBy.equals("firstName"))
+					return g1.getFirstName().compareTo(g2.getFirstName());
+				else
+					return g1.getLastName().compareTo(g2.getLastName());
+
 			}
 		});
 		
@@ -124,23 +119,10 @@ public class FriendshipController {
 			Collections.reverse(friends);
 
 		return friends;
-	}
-	
-	private List<Guest> sortByFirstName(List<Guest> friends, boolean reverse) {
-		Collections.sort(friends, new Comparator<Guest>() {//sortira u rastucem redosledu
-
-			@Override
-			public int compare(Guest g1, Guest g2) {
-				return g1.getFirstName().compareTo(g2.getFirstName());
-			}
-		});
 		
-		if (reverse)
-			Collections.reverse(friends);
-
-		return friends;
 	}
 	
+
 	
 	@PostMapping(path="/addFriend/{friendId}")
 	public String addFriend(@RequestBody Long guestId, @PathVariable Long friendId) {
@@ -194,7 +176,7 @@ public class FriendshipController {
 		}
 
 
-		friends = sortByLastName(friends, false);
+		friends = sortFriends(friends, "lastName", false);
 
 		return friends;
 	}
