@@ -321,9 +321,22 @@ guestModule.controller('guestController', ['$scope', 'guestService','commonServi
 				}
 			}
 		  
+		  $scope.reservation;
+		  
 		  $scope.chooseRes = function(restaurant) {
 			  $scope.chosenRes = restaurant;
 			  console.log($scope.chosenRes.name);
+			 // $location.path('startReservation');
+		  }
+		  
+		  $scope.chooseTable = function() {
+			  console.log("date" + $scope.reservation.date);
+			  console.log("time" + $scope.reservation.time);
+			  console.log("duration" + $scope.reservation.duration);
+			  var t =  $scope.reservation.time + $scope.reservation.duration;
+			  console.log("ostaje do " + t);
+
+
 		  }
 
 		
