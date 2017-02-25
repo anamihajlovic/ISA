@@ -60,17 +60,15 @@ insert into waiters(email, password, first_name, last_name,birthday,shoes_size,c
 insert into bartenders(email, password, first_name, last_name,birthday,shoes_size,clothes_size,first_login,user_role, restaurant_id) values ('bar5@gmail.com','bar5','bar5','bar5','1994-07-25','no39','M',false,'bartender',1)
 
 insert into restaurant_managers(email, password, first_name, last_name,first_login,user_role,restaurant_id) values ('resman1@gmail.com','resman1','first 1','last 1',false,'resManager',1)
-<<<<<<< HEAD
-insert into restaurant_managers(email, password, first_name, last_name,first_login,user_role,restaurant_id) values ('resman2@gmail.com','resman2','first 2','last 2',false,'resManager',2)
-=======
-insert into restaurant_managers(email, password, first_name, last_name,first_login,user_role,restaurant_id) values ('reeman2@gmail.com','resmadn2','fisrst 2','last 2',false,'resManager',2)
+
+
 insert into restaurant_managers(email, password, first_name, last_name,first_login,user_role,restaurant_id) values ('resmwan1@gmail.com','resmawn1','firwst 1','last 1',false,'resManager',3)
 insert into restaurant_managers(email, password, first_name, last_name,first_login,user_role,restaurant_id) values ('resmedan2@gmail.com','resqmean2','fierst 2','last 2',false,'resManager',4)
 insert into restaurant_managers(email, password, first_name, last_name,first_login,user_role,restaurant_id) values ('resmaeen1@gmail.com','resmsan1','firest 1','last 1',false,'resManager',1)
 insert into restaurant_managers(email, password, first_name, last_name,first_login,user_role,restaurant_id) values ('resccman2@gmail.com','resmasn2','firest 2','last 2',false,'resManager',2)
 insert into restaurant_managers(email, password, first_name, last_name,first_login,user_role,restaurant_id) values ('resmqqan1@gmail.com','resmwan1','firset 1','last 1',false,'resManager',3)
 insert into restaurant_managers(email, password, first_name, last_name,first_login,user_role,restaurant_id) values ('rewesman2@gmail.com','resmwan2','fiwrst 2','last 2',false,'resManager',4)
->>>>>>> b23ed0ccd675676a6aceef6f946a8490191f1890
+
 
 
 
@@ -80,15 +78,13 @@ insert into system_managers(email, password, first_name, last_name,preset_manage
 --RESTAURANT MANAGERS IN RESTAURANTS
 insert into res_managers_in_restuarants(restaurant_id,res_manager_id)values(1,1)
 insert into res_managers_in_restuarants(restaurant_id,res_manager_id)values(2,2)
-<<<<<<< HEAD
-=======
+
 insert into res_managers_in_restuarants(restaurant_id,res_manager_id)values(3,3)
 insert into res_managers_in_restuarants(restaurant_id,res_manager_id)values(4,4)
 insert into res_managers_in_restuarants(restaurant_id,res_manager_id)values(1,5)
 insert into res_managers_in_restuarants(restaurant_id,res_manager_id)values(2,6)
 insert into res_managers_in_restuarants(restaurant_id,res_manager_id)values(3,7)
-insert into res_managers_in_restuarants(restaurant_id,res_manager_id)values(4,8)
->>>>>>> b23ed0ccd675676a6aceef6f946a8490191f1890
+
 
 --EMPLOYEED
 insert into restaurant_waiters(restaurant_id,waiter_id)values(1,1)
