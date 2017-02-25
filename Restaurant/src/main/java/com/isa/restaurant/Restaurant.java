@@ -13,6 +13,7 @@ import javax.persistence.Table;
 import com.isa.dish.*;
 import com.isa.drink.*;
 import com.isa.foodstuf.Foodstuff;
+import com.isa.offer.Offer;
 import com.isa.res.manager.*;
 import com.isa.res.order.ResOrder;
 import com.isa.res.segment.ResSegment;
@@ -53,6 +54,10 @@ public class Restaurant {
 	@Column
 	@NotBlank
 	private String street;
+	
+	@Column
+	@NotBlank
+	private String number;
 	
 	@Column
 	private Double ratings;
@@ -103,15 +108,13 @@ public class Restaurant {
 	@JoinTable(name = "restaurant_orders", joinColumns = @JoinColumn(name = "restaurant_id"), inverseJoinColumns = @JoinColumn(name = "order_id"))
 	private List<ResOrder> orders;
 	
-	
 
 	public Restaurant() {}
 
 
-
 	public Restaurant(Long id, String name, String restaurant_type, String country, String city, String street,
-			Double ratings, List<RestaurantManager> restaurantManagers, List<Foodstuff> foodstuffs, List<Dish> dishes,
-			List<Drink> drinks, List<Bidder> bidders, List<Waiter> waiters, List<Cook> cooks,
+			String number, Double ratings, List<RestaurantManager> restaurantManagers, List<Foodstuff> foodstuffs,
+			List<Dish> dishes, List<Drink> drinks, List<Bidder> bidders, List<Waiter> waiters, List<Cook> cooks,
 			List<Bartender> bartenders, List<WorkDay> workDays, List<ResSegment> segments, List<ResOrder> orders) {
 		super();
 		this.id = id;
@@ -120,6 +123,7 @@ public class Restaurant {
 		this.country = country;
 		this.city = city;
 		this.street = street;
+		this.number = number;
 		this.ratings = ratings;
 		this.restaurantManagers = restaurantManagers;
 		this.foodstuffs = foodstuffs;
@@ -135,11 +139,9 @@ public class Restaurant {
 	}
 
 
-
 	public Long getId() {
 		return id;
 	}
-
 
 
 	public void setId(Long id) {
@@ -147,11 +149,9 @@ public class Restaurant {
 	}
 
 
-
 	public String getName() {
 		return name;
 	}
-
 
 
 	public void setName(String name) {
@@ -159,11 +159,9 @@ public class Restaurant {
 	}
 
 
-
 	public String getRestaurant_type() {
 		return restaurant_type;
 	}
-
 
 
 	public void setRestaurant_type(String restaurant_type) {
@@ -171,11 +169,9 @@ public class Restaurant {
 	}
 
 
-
 	public String getCountry() {
 		return country;
 	}
-
 
 
 	public void setCountry(String country) {
@@ -183,11 +179,9 @@ public class Restaurant {
 	}
 
 
-
 	public String getCity() {
 		return city;
 	}
-
 
 
 	public void setCity(String city) {
@@ -195,11 +189,9 @@ public class Restaurant {
 	}
 
 
-
 	public String getStreet() {
 		return street;
 	}
-
 
 
 	public void setStreet(String street) {
@@ -207,11 +199,19 @@ public class Restaurant {
 	}
 
 
+	public String getNumber() {
+		return number;
+	}
+
+
+	public void setNumber(String number) {
+		this.number = number;
+	}
+
 
 	public Double getRatings() {
 		return ratings;
 	}
-
 
 
 	public void setRatings(Double ratings) {
@@ -219,11 +219,9 @@ public class Restaurant {
 	}
 
 
-
 	public List<RestaurantManager> getRestaurantManagers() {
 		return restaurantManagers;
 	}
-
 
 
 	public void setRestaurantManagers(List<RestaurantManager> restaurantManagers) {
@@ -231,11 +229,9 @@ public class Restaurant {
 	}
 
 
-
 	public List<Foodstuff> getFoodstuffs() {
 		return foodstuffs;
 	}
-
 
 
 	public void setFoodstuffs(List<Foodstuff> foodstuffs) {
@@ -243,11 +239,9 @@ public class Restaurant {
 	}
 
 
-
 	public List<Dish> getDishes() {
 		return dishes;
 	}
-
 
 
 	public void setDishes(List<Dish> dishes) {
@@ -255,11 +249,9 @@ public class Restaurant {
 	}
 
 
-
 	public List<Drink> getDrinks() {
 		return drinks;
 	}
-
 
 
 	public void setDrinks(List<Drink> drinks) {
@@ -267,11 +259,9 @@ public class Restaurant {
 	}
 
 
-
 	public List<Bidder> getBidders() {
 		return bidders;
 	}
-
 
 
 	public void setBidders(List<Bidder> bidders) {
@@ -279,11 +269,9 @@ public class Restaurant {
 	}
 
 
-
 	public List<Waiter> getWaiters() {
 		return waiters;
 	}
-
 
 
 	public void setWaiters(List<Waiter> waiters) {
@@ -291,11 +279,9 @@ public class Restaurant {
 	}
 
 
-
 	public List<Cook> getCooks() {
 		return cooks;
 	}
-
 
 
 	public void setCooks(List<Cook> cooks) {
@@ -303,11 +289,9 @@ public class Restaurant {
 	}
 
 
-
 	public List<Bartender> getBartenders() {
 		return bartenders;
 	}
-
 
 
 	public void setBartenders(List<Bartender> bartenders) {
@@ -315,11 +299,9 @@ public class Restaurant {
 	}
 
 
-
 	public List<WorkDay> getWorkDays() {
 		return workDays;
 	}
-
 
 
 	public void setWorkDays(List<WorkDay> workDays) {
@@ -327,11 +309,9 @@ public class Restaurant {
 	}
 
 
-
 	public List<ResSegment> getSegments() {
 		return segments;
 	}
-
 
 
 	public void setSegments(List<ResSegment> segments) {
@@ -339,11 +319,9 @@ public class Restaurant {
 	}
 
 
-
 	public List<ResOrder> getOrders() {
 		return orders;
 	}
-
 
 
 	public void setOrders(List<ResOrder> orders) {
@@ -352,7 +330,5 @@ public class Restaurant {
 
 
 
-	
-	
 	
 }

@@ -9,6 +9,7 @@ resManagerModule.controller('resManagerController', ['$scope', 'resManagerServic
 		resManagerService.checkRights().then(
 			function (response) {
 				$scope.restaurantManager = response.data;
+				
 				if(response.data!="") {	
 				} else {					
 					 $location.path('login');
@@ -21,13 +22,64 @@ resManagerModule.controller('resManagerController', ['$scope', 'resManagerServic
 			function (response) {
 				$scope.restaurant = response.data;
 				if(response.data!="") {	
+					myMap();
 				} else {					
 					 $location.path('login');
 				}
 			}
 		);
 	}
-	//Restaurant();
+	Restaurant();
+	
+	//////////////////////////////////////////////////////////
+	function myMap() {
+		var mapProp= {
+		    zoom:15,
+		    mapTypeId: google.maps.MapTypeId.ROADMAP
+		};
+		pos = [];
+		if (navigator.geolocation) {
+		    navigator.geolocation.getCurrentPosition(function(position) {
+		    	pos = {
+		            lat: position.coords.latitude,
+		            lng: position.coords.longitude
+		        };
+		        var marker = new google.maps.Marker({
+		        	position:pos,
+		        });
+
+		        marker.setMap(map);
+		        map.setCenter(pos);
+		    }, function() {
+		        handleLocationError(true, infoWindow, map.getCenter());
+		    });
+		}
+		
+		map=new google.maps.Map(document.getElementById("googleMap1"),mapProp);
+		geocoder = new google.maps.Geocoder();
+		address = $scope.restaurant.street + " " + "5" + " , " + $scope.restaurant.city + " , " + $scope.restaurant.country; 
+		geocoder.geocode( { 'address': address}, function(results, status) {
+		      if (status == 'OK') {
+		        map.setCenter(results[0].geometry.location);
+		        var marker = new google.maps.Marker({
+		            map: map,
+		            position: results[0].geometry.location
+		        });
+		        
+		        var flightPath = new google.maps.Polyline({
+				    path: [results[0].geometry.location, pos],
+				    strokeColor: "#0000FF",
+				    strokeOpacity: 0.8,
+				    strokeWeight: 2
+				  });
+		        flightPath.setMap(map);
+		      } else {
+		        alert('Geocode was not successful for the following reason: ' + status);
+		      }
+		    });
+	}
+	
+	//////////////////////////////////////////////////////////////
 	checkRights();	
 	$scope.updateResManager = function(){
 		checkRights();		
@@ -765,6 +817,7 @@ resManagerModule.controller('resManagerController', ['$scope', 'resManagerServic
 			); 
 	}
 	$scope.buttonNewResOrder = function(){
+	
 		document.getElementById("modalBtnAddResOrder").click();
 			var request = resManagerService.saveFirstTimeResOrder().then(function(response) {	
 			$scope.newID = response.data;
@@ -787,6 +840,7 @@ resManagerModule.controller('resManagerController', ['$scope', 'resManagerServic
   $scope.makeOrderUnit = function(){
 	  alert($scope.resOrderUnit.orderFoodstuff)
 	  alert($scope.resOrderUnit.orderQuantity)
+	  $('#myModalAddResOrder').modal({backdrop: 'static', keyboard: false}) 
 	  $scope.resOrderUnit.ResOrder = ID;
 	   alert($scope.resOrderUnit.ResOrder)
 	  var request = resManagerService.saveResOrderUnit($scope.resOrderUnit).then(function(response) {	
@@ -833,7 +887,48 @@ resManagerModule.controller('resManagerController', ['$scope', 'resManagerServic
 		});
 	   
    }
+   var potreban_event;
 
-   
+	$scope.buttonShowOffers = function(event){
+		potreban_event = event;
+		//alert(potreban_event.target.id)
+	   resManagerService.showAllActualffers(event).then(
+						function (response) {
+							$scope.actuelOffers = response.data;
+							document.getElementById("modalBtnShowActuallOffers").click();
+						
+						}
+				);   
+ 
+}
+	$scope.acceptOffer = function(event){
+		var request = resManagerService.acceptOffer(event).then(function(response) {
+			$scope.data = response.data;
+			//alert(response.data)
+			return response;
+		});			
+			request.then(function (data) {
+				if($scope.data == "ok") {
+					
+					//alert(potreban_event.target.id)
+					 resManagerService.showAllActualffersAfter(potreban_event).then(
+								function (response) {
+									$scope.actuelOffers = response.data;
+									//document.getElementById("modalBtnShowActuallOffers").click();
+								
+								}
+						);   
+					toastr.success("Success!");	
+						
+				} else {
+					toastr.error("Something wrong");
+				
+				}
+
+		});
+		
+	}
+
+
    
 }]);

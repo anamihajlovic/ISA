@@ -133,10 +133,15 @@ resManagerServices.service('resManagerService',['$http', function($http) {
 	this.deleteResOrderUnits = function(){
 		return $http.delete("/resManager/cancelResOrderUnit");
 	}
-	
-
-
-
+	this.showAllActualffers = function(event){
+		return $http.get("/resManager/allActualOffers/"+event.target.id);
+	}
+	this.acceptOffer = function(event) {		
+		return $http.put("/resManager/acceptOffer/"+event.target.id);
+	}
+	this.showAllActualffersAfter = function(potreban_event) {		
+		return $http.get("/resManager/allActualOffers/"+potreban_event.target.id);
+	}
 	
 	
 }]); 

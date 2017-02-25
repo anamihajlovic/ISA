@@ -50,6 +50,9 @@ public class Offer {
 	@NotNull
 	private String garancy;
 	
+	@Column
+	private String seen;
+	
 	@Column (name="total_price")
 	@Min(0)
 	private Long totalPrice;
@@ -61,7 +64,7 @@ public class Offer {
 	public Offer(){}
 
 	public Offer(Long id, Long idBidder, Long idResOrder, StateOffer accepted, Date deliveryTime, String garancy,
-			Long totalPrice, List<OfferUnit> offerUnits) {
+			String seen, Long totalPrice, List<OfferUnit> offerUnits) {
 		super();
 		this.id = id;
 		this.idBidder = idBidder;
@@ -69,6 +72,7 @@ public class Offer {
 		this.accepted = accepted;
 		this.deliveryTime = deliveryTime;
 		this.garancy = garancy;
+		this.seen = seen;
 		this.totalPrice = totalPrice;
 		this.offerUnits = offerUnits;
 	}
@@ -119,6 +123,14 @@ public class Offer {
 
 	public void setGarancy(String garancy) {
 		this.garancy = garancy;
+	}
+
+	public String getSeen() {
+		return seen;
+	}
+
+	public void setSeen(String seen) {
+		this.seen = seen;
 	}
 
 	public Long getTotalPrice() {

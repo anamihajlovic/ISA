@@ -45,21 +45,24 @@ bidderModule.controller('bidderController', ['$scope', 'bidderService','$locatio
   function AllOrders(){
 		   bidderService.showBidderOrders().then(
 					function (response) {
+					//	if(Object.keys(response.data).length!=0){
 						$scope.forBidderOrders = response.data;
+					//}
 						
 					}
 			);
 		  
 			 
 	   }
-	AllOrders()
+	AllOrders();
 	   AllOffers();
 	   function AllOffers(){
 		  
 				 bidderService.showAllOffers().then(
 							function (response) {
+								if(Object.keys(response.data).length!=0){
 								$scope.listOffers = response.data;
-							
+								}
 							}
 					);   
 		   
@@ -160,7 +163,23 @@ bidderModule.controller('bidderController', ['$scope', 'bidderService','$locatio
 		  
 		  
 	  }
+	  Alert();
+       //obavestenje za ponudu
+		function Alert(){
+			var request = bidderService.getAlert().then(function(response) {
+				$scope.alerts = response.data;
 
+			});			
+				
+			
+		}
+		$scope.seen = function(event){
+			var request = bidderService.setSeen(event).then(function(response) {
+				$scope.data = response.data;
+
+			});
+			
+		}
 	
 	
 }]);

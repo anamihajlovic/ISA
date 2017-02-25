@@ -166,6 +166,11 @@ angular.module('restaurants', [ 'ui.router','ui.calendar' ,
               url : '/drinkCard',
              templateUrl : 'html/resManager/resManagerDrinkCard.html',
           })
+          .state('resManager.ratings', {
+              url : '/ratings',
+             templateUrl : 'html/resManager/resManagerRatings.html',
+          })
+       
         .state('bidder', {
         	   url : '/bidder',
         	   templateUrl : 'html/bidder/bidderHome.html',

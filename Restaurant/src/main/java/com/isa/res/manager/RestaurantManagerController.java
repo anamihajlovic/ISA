@@ -103,7 +103,6 @@ public class RestaurantManagerController {
 		this.resOrderUnitService = resOrderUnitService;
 		this.offerUnitService = offerUnitService;
 	}
-		
 
 	@GetMapping("/checkRights")
 	public RestaurantManager checkRights() {		
@@ -225,15 +224,15 @@ public class RestaurantManagerController {
 	}
 	@GetMapping(path = "/restaurant")
 	public Restaurant getRestaurant() {
+		Restaurant r = new Restaurant();
 		try {
-			Restaurant r  =restaurantService.findOne(restaurantManager.getIdRestaurant());
-			  return r;
+			r  =restaurantService.findOne(restaurantManager.getIdRestaurant());
+			 
 		} catch (Exception e) {
-			// TODO: handle exception
-			return null;
+		
 		}
 	
-  
+  return r;
 	}
 	@GetMapping(path = "/dishes")
 	public List<Dish> findAllDishes() {
@@ -624,7 +623,75 @@ public class RestaurantManagerController {
 			}else return "no";	
 	}
 
+	@GetMapping(path = "/allActualOffers/{id}")
+	public List<Offer> findAllOffers(@PathVariable Long id) {
+		List<Offer> result = new ArrayList<Offer>();		
+		for(Offer o : offerService.findAll()){
+			if(o.getIdResOrder()==id){
+				result.add(o);
+			}
+		}	
+		return result;
+	}
 	
+	
+	@PutMapping(path = "/acceptOffer/{id}")
+	public String acceptOffer(@PathVariable Long id) {
+		Offer offer = offerService.findOne(id);
+		ResOrder ro = resOrderService.findOne(offer.getIdResOrder());
+		Date today = new Date();
+		String todayString = today.toString();
+		System.out.println("danas je "+todayString);
+		ro.setEndDate(todayString);
+		ro.setId(ro.getId());
+		resOrderService.save(ro);
+		Restaurant restaurant = restaurantService.findOne(restaurantManager.getIdRestaurant());	
+		restaurant.setId(restaurant.getId());
+		restaurantService.save(restaurant);
+		if(id!=null){
+			for(Offer o : offerService.findAll()){
+				if(o.getIdResOrder()==ro.getId()){
+					if(o.getId()==id){
+						o.setSeen("nije");
+						o.setAccepted(StateOffer.yes);
+						o.setId(o.getId());
+						offerService.save(o);					
+						Bidder b = bidderService.findOne(o.getIdBidder());
+						for(Offer of:b.getOffers()){
+							if(of.getId()==id){
+								of.setSeen("nije");
+							}
+						}
+						b.setId(b.getId());
+						bidderService.save(b);
+					}else{
+						o.setSeen("nije");
+						o.setAccepted(StateOffer.no);
+						o.setId(o.getId());
+						offerService.save(o);
+						Bidder b = bidderService.findOne(o.getIdBidder());
+						for(Offer of:b.getOffers()){
+							if(of.getId()==o.getId()){
+								of.setSeen("nije");
+							}
+						}
+						b.setId(b.getId());
+						bidderService.save(b);
+					}
+					
+				}
+			
+			}
+			restaurant.setId(restaurant.getId());
+			restaurantService.save(restaurant);
+			return "ok";
+		}else{
+			
+			return "nije_ok";
+		}
+	
+		
+	}
 	
 	
 }

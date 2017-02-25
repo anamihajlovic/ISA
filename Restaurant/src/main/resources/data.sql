@@ -23,8 +23,8 @@ insert into friendships(sender_id, receiver_id, status) values (5, 2, 'sent')
 
 
 -- RESTAURANTS
-insert into restaurants(name, restaurant_type, street, city, country,ratings) values ('Lanterna', 'italijanski','Bulevar Oslobodjenja 55','Novi Sad','Srbija',0.0 )
-insert into restaurants(name, restaurant_type, street, city, country,ratings) values ('Veliki', 'srpski','Pasiceva 15','Novi Sad','Srbija',0.0 )
+insert into restaurants(name, restaurant_type,number, street, city, country,ratings) values ('Lanterna', 'italijanski',55,'Bulevar Oslobodjenja ','Novi Sad','Srbija',0.0 )
+insert into restaurants(name, restaurant_type,number, street, city, country,ratings) values ('Veliki', 'srpski',20,'Nikole Pašića','Novi Sad','Srbija',0.0 )
 
 
 
@@ -48,28 +48,16 @@ insert into bartenders(email, password, first_name, last_name,birthday,shoes_siz
 
 
 insert into restaurant_managers(email, password, first_name, last_name,first_login,user_role,restaurant_id) values ('resman1@gmail.com','resman1','first 1','last 1',false,'resManager',1)
-insert into restaurant_managers(email, password, first_name, last_name,first_login,user_role,restaurant_id) values ('reeman2@gmail.com','resmadn2','fisrst 2','last 2',false,'resManager',1)
-insert into restaurant_managers(email, password, first_name, last_name,first_login,user_role,restaurant_id) values ('resmwan1@gmail.com','resmawn1','firwst 1','last 1',false,'resManager',1)
-insert into restaurant_managers(email, password, first_name, last_name,first_login,user_role,restaurant_id) values ('resmedan2@gmail.com','resqmean2','fierst 2','last 2',false,'resManager',1)
-insert into restaurant_managers(email, password, first_name, last_name,first_login,user_role,restaurant_id) values ('resmaeen1@gmail.com','resmsan1','firest 1','last 1',false,'resManager',1)
-insert into restaurant_managers(email, password, first_name, last_name,first_login,user_role,restaurant_id) values ('resccman2@gmail.com','resmasn2','firest 2','last 2',false,'resManager',1)
-insert into restaurant_managers(email, password, first_name, last_name,first_login,user_role,restaurant_id) values ('resmqqan1@gmail.com','resmwan1','firset 1','last 1',false,'resManager',1)
-insert into restaurant_managers(email, password, first_name, last_name,first_login,user_role,restaurant_id) values ('rewesman2@gmail.com','resmwan2','fiwrst 2','last 2',false,'resManager',1)
+insert into restaurant_managers(email, password, first_name, last_name,first_login,user_role,restaurant_id) values ('resman2@gmail.com','resman2','first 2','last 2',false,'resManager',2)
+
 
 
 insert into system_managers(email, password, first_name, last_name,preset_manager,first_login,user_role)values('sysman1@gmail.com','sysman1','sysman1','sysman1','yes',false,'sysManager')
 
 
-
 --RESTAURANT MANAGERS IN RESTAURANTS
 insert into res_managers_in_restuarants(restaurant_id,res_manager_id)values(1,1)
-insert into res_managers_in_restuarants(restaurant_id,res_manager_id)values(1,2)
-insert into res_managers_in_restuarants(restaurant_id,res_manager_id)values(1,3)
-insert into res_managers_in_restuarants(restaurant_id,res_manager_id)values(1,4)
-insert into res_managers_in_restuarants(restaurant_id,res_manager_id)values(1,5)
-insert into res_managers_in_restuarants(restaurant_id,res_manager_id)values(1,6)
-insert into res_managers_in_restuarants(restaurant_id,res_manager_id)values(1,7)
-insert into res_managers_in_restuarants(restaurant_id,res_manager_id)values(1,8)
+insert into res_managers_in_restuarants(restaurant_id,res_manager_id)values(2,2)
 
 --EMPLOYEED
 insert into restaurant_waiters(restaurant_id,waiter_id)values(1,1)
@@ -185,7 +173,19 @@ insert into offer_units(unit_id,price)values(1,10)
 insert into offer_units(unit_id,price)values(2,10)
 insert into offer_units(unit_id,price)values(3,null)
 
+insert into offers(id_bidder,id_res_order,accepted,delivery_time,garancy,total_price)values(1,1,'waiting','2017-03-03','garancy',20)
+insert into offers(id_bidder,id_res_order,accepted,delivery_time,garancy,total_price)values(2,1,'waiting','2017-04-03','garancy',10)
 
+insert into offers(id_bidder,id_res_order,accepted,delivery_time,garancy,total_price)values(1,2,'waiting','2017-04-03','garancy',30)
+insert into offers(id_bidder,id_res_order,accepted,delivery_time,garancy,total_price)values(2,2,'waiting','2017-04-03','garancy',10)
+
+insert into bidder_offers(bidder_id,offer_id)values(1,1)
+insert into bidder_offers(bidder_id,offer_id)values(1,2)
+insert into bidder_offers(bidder_id,offer_id)values(2,3)
+insert into bidder_offers(bidder_id,offer_id)values(2,4)
+
+insert into units(offer_id,unit_id)values(1,1)
+insert into units(offer_id,unit_id)values(1,2)
 --ORDERS
 
 insert into orders(restaurant_id,drinks_status,dish_status) values (1, 'ordered', 'ordered')

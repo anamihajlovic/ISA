@@ -43,5 +43,13 @@ bidderServices.service('bidderService',['$http', function($http) {
 	this.updateOffer = function(offer){
 		return $http.put("/bidder/updateOffer",offer);
 	}
+	this.getAlert = function(){
+		return $http.get("/bidder/getAlert");
+	}
+	this.setSeen = function(event){
+		return $http.put("/bidder/setSeen/"+event.target.id);
+	}
+	
+	
 	
 }]); 

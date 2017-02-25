@@ -24,6 +24,7 @@ import com.isa.offer.StateOffer;
 import com.isa.offer.unit.OfferUnit;
 import com.isa.offer.unit.OfferUnitService;
 import com.isa.res.manager.RestaurantManager;
+import com.isa.res.manager.RestaurantManagerController;
 import com.isa.res.order.ResOrder;
 import com.isa.res.order.ResOrderService;
 import com.isa.res.order.unit.ResOrderUnit;
@@ -51,7 +52,7 @@ public class BidderController {
 	@Autowired
 	public BidderController(final HttpSession httpSession, final BidderService bidderService,
 			final RestaurantService restaurantService,ResOrderService resOrderService,OfferService offerService,
-			ResOrderUnitService resOrderUnitService,OfferUnitService offerUnitService) {
+			ResOrderUnitService resOrderUnitService,OfferUnitService offerUnitService){
 		this.bidderService = bidderService;
 		this.restaurantService = restaurantService;
 		this.httpSession = httpSession;
@@ -59,6 +60,7 @@ public class BidderController {
 		this.offerService= offerService;
 		this.resOrderUnitService = resOrderUnitService;
 		this.offerUnitService = offerUnitService;
+
 	}
 
 	@GetMapping("/checkRights")
@@ -95,11 +97,12 @@ public class BidderController {
 	
 	@GetMapping(path = "/bidderOrders")
 	public List<ResOrder> findBidderOrders() {
-		System.out.println("uslo u pronalazenje porudzbina");
-		Date today = new Date();
-		
-		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
 		List<ResOrder> result = new ArrayList <ResOrder>();
+		System.out.println("uslo u pronalazenje porudzbina");
+		try {
+		Date today = new Date();		
+		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+		
 			for(ResOrder r :resOrderService.findAll()){	
 				String[] dpTokens = r.getEndDate().split("/");
 				Date dateEnd = null; 
@@ -109,11 +112,15 @@ public class BidderController {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
-				if(dateEnd.after(today) || dateEnd.equals(today)){
+				if(dateEnd.after(today)){
 
 					result.add(r);
 				}
 			}
+		
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
 		return result;
 	}
 	
@@ -195,7 +202,7 @@ public class BidderController {
 				ukupno+=offerUnitService.findOne(s).getPrice();
 			}
 
-			offer.setAccepted(null);
+			offer.setAccepted(StateOffer.waiting);
 			offer.setTotalPrice(ukupno);
 			offer.setOfferUnits(units);
 			offer.setIdResOrder(idResOrder);
@@ -250,7 +257,9 @@ public class BidderController {
 	
 		offer.setOfferUnits(newUnits);
 		offer.setId(offer.getId());
+		
 		Bidder b = bidderService.findOne(offer.getIdBidder());
+		b.getOffers().add(offer);
 		b.setId(b.getId());
 		bidderService.save(b);
 		return offerService.save(offer);
@@ -258,5 +267,48 @@ public class BidderController {
 
 	}
 	
+	@GetMapping(path = "/getAlert")
+	public List<Offer> getAlerts() {
+		List<Offer> result = new ArrayList<Offer> ();
+		
+		for(Offer o: bidder.getOffers()){			
+			
+			if(o.getSeen().equals("nije")){	
+				System.out.println("ponuda "+o.getId()+ " "+o.getSeen());
+				result.add(o);
+			}
+			
+		}
+		return result;	
+	}
+	
+	@PutMapping(path = "setSeen/{id}")
+	public Offer updateResManager(@PathVariable Long id) {
+		Offer o = offerService.findOne(id);
+		o.setSeen("jeste");
+		offerService.save(o);
+		Bidder b = bidderService.findOne(o.getIdBidder());
+		for(int i = 0;i<bidder.getOffers().size();i++)	{		
+			if(bidder.getOffers().get(i).getId()==id){
+				bidder.getOffers().get(i).setSeen("jeste");
+				
+				break;
+			}
+			
+		}
+		
+		b.setId(b.getId());
+		bidderService.save(b);
+		for(int i = 0;i<bidder.getOffers().size();i++)	{		
+			if(bidder.getOffers().get(i).getId()==id){
+				System.out.println("sadda je " + bidder.getOffers().get(i).getSeen());
+				break;
+			}
+			
+		}
+		return o;
+	}	
+	
+
 
 }

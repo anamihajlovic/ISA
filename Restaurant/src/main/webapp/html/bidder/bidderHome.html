@@ -21,7 +21,20 @@
 
  </nav>
  
- 
+<div data-ng-repeat="alert in alerts" >
+<div  ng-if="alert.accepted == 'yes'"  class="alert alert-success  fade in"  >
+    <a href="" class="close" id = {{alert.id}} ng-click = "seen($event)"data-dismiss="alert">&times;</a>
+  <strong>Notification!</strong> Offer {{alert.id}} is accepted.
+</div>
+
+<div ng-if="alert.accepted == 'no'"class="alert alert-danger  fade in"  >
+    <a href="" class="close" id = {{alert.id}} ng-click = "seen($event)" data-dismiss="alert">&times;</a>
+  <strong>Notification!</strong> Offer {{alert.id}} is refused.
+</div>
+
+</div>
+
+
  <div>
  <div data-ui-view></div>
 

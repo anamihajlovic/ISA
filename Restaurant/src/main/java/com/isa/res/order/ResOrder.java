@@ -34,22 +34,17 @@ public class ResOrder {
 	@OneToMany(cascade = CascadeType.ALL)
 	@JoinTable(name = "order_foodstuffs", joinColumns = @JoinColumn(name = "order_id"), inverseJoinColumns = @JoinColumn(name = "unit_id"))
 	private List<ResOrderUnit> resOrderFoodstuffs;
-	
-	
-	@OneToMany(cascade = CascadeType.ALL)
-	@JoinTable(name = "order_offers", joinColumns = @JoinColumn(name = "order_id"), inverseJoinColumns = @JoinColumn(name = "offer_id"))
-	private List<Offer> offers;
-	
+
 	public ResOrder (){}
 
-	public ResOrder(Long id, String resName, String endDate, List<ResOrderUnit> resOrderFoodstuffs,
-			List<Offer> offers) {
+	public ResOrder(Long id, String resName, String endDate, List<ResOrderUnit> resOrderFoodstuffs
+			) {
 		super();
 		this.id = id;
 		this.resName = resName;
 		this.endDate = endDate;
 		this.resOrderFoodstuffs = resOrderFoodstuffs;
-		this.offers = offers;
+		
 	}
 
 	public Long getId() {
@@ -84,13 +79,6 @@ public class ResOrder {
 		this.resOrderFoodstuffs = resOrderFoodstuffs;
 	}
 
-	public List<Offer> getOffers() {
-		return offers;
-	}
-
-	public void setOffers(List<Offer> offers) {
-		this.offers = offers;
-	}
 
 	
 	
