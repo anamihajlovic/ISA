@@ -78,13 +78,18 @@ angular.module('restaurants', [ 'ui.router','ui.calendar' ,
            })
         
         .state('guest.findFriends', {
-        	url: 'findFriends',
+        	url: '/findFriends',
         	templateUrl: 'html/guest/addFriends.html'
         })
         
         .state('guest.myFriends', {
-        	url:'myFriends',
+        	url:'/myFriends',
         	templateUrl: 'html/guest/myFriends.html'
+        })
+        
+        .state('guest.restaurants', {
+        	url:'/restaurants',
+        	templateUrl: 'html/guest/restaurantsList.html'
         })
          
          .state('sysManager', {
@@ -277,6 +282,14 @@ angular.module('restaurants', [ 'ui.router','ui.calendar' ,
         	   templateUrl : 'html/employees/orders.html', 
         	   controller: 'orderController'
            })
+           
+            .state('cook.preparingDish', {
+        	   url : '/preparingDish',
+        	   templateUrl : 'html/employees/preparingDish.html', 
+        	   controller: 'orderController'
+           })
+           
+           
                      
          
 });

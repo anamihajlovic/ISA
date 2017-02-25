@@ -5,9 +5,9 @@
 </style>
 
 <div>
-<div class = "col-sm-2">
+<div class = "col-lg-2">
 </div>
-<div class = "col-sm-8">
+<div class = "col-lg-8">
 
 	<h4 ng-show = "employee.userRole == 'bartender'"><b>Ordered drinks</b></h4>
 	<h4 ng-show = "employee.userRole == 'cook'"><b>Ordered dish</b></h4>
@@ -15,21 +15,21 @@
 	<br/>
 	<table class="table table-hover">
     <thead>
-      <tr>        
-        <th>Order</th>
-        <th>Drink id</th>
+      <tr>
+        <th>Order</th>        
         <th>Name</th>
         <th>Type</th>
-        <th ng-if = "employee.userRole == 'cook' && checkCook(dish.dishType)"></th>        
+        <th>Quantity</th>
+        <th ng-if = "employee.userRole == 'cook'"></th>        
       </tr>
     </thead>
     <tbody ng-repeat = "order in orders">
       
-      <tr ng-show = "employee.userRole == 'bartender'" ng-repeat = "drink in order.orderedDrinks">      	        
-        <td>{{order.id}}</td> 
-        <td>{{drink.id}}</td>
+      <tr ng-show = "employee.userRole == 'bartender'" ng-repeat = "drink in order.drinks">      	        
+        <td>{{order.id}}</td>         
         <td>{{drink.name}}</td>
-        <td>{{drink.drinkType}}</td>         
+        <td>{{drink.drinkType}}</td> 
+        <td>{{order.drinkQuantity[drink.id]}}</td>
       </tr>
       <tr>
       <td class ="endOrder" colspan = "5" ng-show = "order.drinksStatus != 'prepared' && employee.userRole == 'bartender' "><button class = "btn btn-primary" ng-disabled = "order.drinksStatus == 'prepared'" ng-click = "prepareDrinks(order)">Prepare</button></td>     
@@ -38,19 +38,17 @@
       
    
       
-      <tr ng-if = "employee.userRole == 'cook'" ng-repeat = "dish in order.orderedDish">  
-      fewefw    	
-        <td>{{order.id}}</td> 
-        <td>{{dish.id}}</td>
+      <tr ng-if = "employee.userRole == 'cook'" ng-repeat = "dish in order.dishes">  
+      	
+        <td>{{order.id}}</td>         
         <td>{{dish.name}}</td>
         <td>{{dish.dishType}}</td>
-        <td ng-show = "checkCook(dish.dishType) || !preparingDish"><button class = "btn btn-primary" ng-click = "prepareDish(order.id, dish)">Prepare</button></td>
-       	<td ng-if = "preparingDish"><p><i>Dish is being prepared</i></p></td>
+        <td>{{order.dishQuantity[dish.id]}}</td>
+        <td ng-if = "order.dishStatusMap[dish.id] == 'ordered'"><button class = "btn btn-primary" ng-if = "checkCook(dish)" ng-click = "prepareDish(order, dish)">Prepare</button></td>
+        <td ng-if = "order.dishStatusMap[dish.id] == 'preparing'"><i>Dish is being prepared.</i></td>
+       	<td ng-if = "order.dishStatusMap[dish.id] == 'ready'"><i>Dish is ready to be served.</i></td>
        </tr>
-       <tr>
-        <td class ="endOrder" colspan = "5" ng-show = "order.dishStatus != 'prepared' && employee.userRole == 'cook'"><button class = "btn btn-primary" ng-disabled = "order.dishesStatus == 'prepared'" ng-click = "prepareDishes(order)">Prepare</button></td>     
-      	<td class ="endOrder" colspan = "5" ng-show = "order.dishStatus == 'prepared' && employee.userRole == 'cook'"><p><i>Dishes have been prepared</i></p></td>              
-       </tr>
+       
     </tbody>
   </table>
   

@@ -1,0 +1,43 @@
+<style type = "text/css">
+	h4, h3 {text-align : center}
+	
+	.endOrder {text-align: right}
+</style>
+
+<div>
+<div class = "col-lg-2">
+</div>
+<div class = "col-lg-8">
+
+	<h4><b>Preparing dishes</b></h4>
+	<br/>
+	<table class="table table-hover" ng-if = "!noDishes">
+    <thead>
+      <tr>
+        <th>Order</th>        
+        <th>Name</th>
+        <th>Type</th>
+        <th>Quantity</th>
+        <th></th>        
+      </tr>
+    </thead>
+    <tbody ng-repeat = "order in orders">
+     
+      <tr ng-repeat = "dish in order.dishes">  
+      	
+        <td>{{order.id}}</td>         
+        <td>{{dish.name}}</td>
+        <td>{{dish.dishType}}</td>
+        <td>{{order.dishQuantity[dish.id]}}</td>   
+        <td ng-if = "order.dishStatusMap[dish.id] == 'preparing'"><button class = "btn btn-primary" ng-if = "checkCook(dish)" ng-click = "serveDish(order,dish)">Ready</button></td>
+        <td ng-if = "order.dishStatusMap[dish.id] == 'ready'"><i>Dish is ready to be served.</i></td>
+       </tr>
+      
+       
+    </tbody>
+  </table>
+  
+  <h3 ng-if = "noDishes">You have not taken any dishes to prepare.</h3>
+  
+ </div>
+ </div>

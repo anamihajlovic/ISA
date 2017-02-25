@@ -99,8 +99,10 @@ guestModule.controller('guestController', ['$scope', 'guestService','commonServi
 		}
 		$scope.search = {};
 		$scope.search.searchText = "";
+		$scope.search.searchRes = "";
 		
 		$scope.findFriends = function() {
+			$scope.search.searchText = "";
 			var request = guestService.findFriends($scope.guest.id).then(function(response){
 				$scope.data = response.data;
 				return response;
@@ -137,6 +139,7 @@ guestModule.controller('guestController', ['$scope', 'guestService','commonServi
 		}
 		
 		$scope.getMyFriends = function() {
+			$scope.search.searchText = "";
 			var request = guestService.getMyFriends($scope.guest.id).then(function(response){
 				$scope.data = response.data;
 				return response;
@@ -261,6 +264,67 @@ guestModule.controller('guestController', ['$scope', 'guestService','commonServi
 				}
 			});
 		}
+		
+		//RESTORANI
+		
+		$scope.getRestaurants = function () {
+			$scope.search.searchRes = "";
+			guestService.getRestaurants().then(function(response){
+				$scope.restaurants = response.data;
+				$scope.filteredRes = $scope.restaurants;
+				return response;
+			});
+				
+		}
+		
+		$scope.propertyNameRes = 'name';
+		$scope.reverseRes = false;
+		
+		$scope.sortResBy = function(propertyName) {
+		    $scope.reverseRes = ($scope.propertyNameRes === propertyName) ? !$scope.reverseRes : false;
+		    $scope.propertyNameRes = propertyName;
+		   
+		   
+		    var request = guestService.sortRestaurants($scope.propertyNameRes, $scope.reverseRes).then(function(response){
+				$scope.data = response.data;
+				return response;
+			});
+				
+			request.then(function (data) {
+				if($scope.data.length != 0) {
+					$scope.restaurants = $scope.data;
+
+					if ($scope.searchRes == "")
+						$scope.filteredRes = $scope.restaurants;
+					else
+						$scope.myFilterRes($scope.restaurants);
+
+				}
+			});
+		    
+		  };
+		  
+		  $scope.myFilterRes = function(resData) { 
+				var res = resData;
+				$scope.filteredRes = [];
+
+				var search = $scope.search.searchRes.toLowerCase();
+				
+				for (var i=0; i<res.length; i++) {
+						var name = res[i].name;
+						var type = res[i].restaurant_type;
+						if (name.toLowerCase().indexOf(search) !== -1 || type.toLowerCase().indexOf(search) !== -1  ) {
+							$scope.filteredRes.push(res[i]);
+						}
+						
+
+				}
+			}
+		  
+		  $scope.chooseRes = function(restaurant) {
+			  $scope.chosenRes = restaurant;
+			  console.log($scope.chosenRes.name);
+		  }
 
 		
 		

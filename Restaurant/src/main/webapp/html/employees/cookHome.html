@@ -10,7 +10,12 @@
 	
 	<ul class = "nav navbar-nav">		
 		<li><button  data-ui-sref=".workSchedule" class="btn btn-default navbar-btn"><span class="glyphicon glyphicon-calendar"></span> Check schedule </button></li>		
-		<li><button  data-ui-sref=".orderedDish"" class="btn btn-default navbar-btn"><span class="glyphicon glyphicon-list"></span> Ordered dish</button></li>
+		
+		<li><button type="button" class="btn btn-default dropdown-toggle navbar-btn" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true"><span class = "glyphicon glyphicon-list"/>&nbspDishes<span class="caret"></span></button>
+        	<ul class="dropdown-menu">
+          	<li><a data-ui-sref=".orderedDish">Ordered dishes</a></li>
+          	<li><a data-ui-sref=".preparingDish">Preparing dishes</a></li>             	    
+        	</ul></li>
 	
 	</ul>
 	
