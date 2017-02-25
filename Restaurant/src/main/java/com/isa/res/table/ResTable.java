@@ -36,8 +36,7 @@ public class ResTable {
 	
 	@Column (name="segment_color")
 	private String segColor; 
-	
-	
+		
 	@NotNull
 	@Column
 	private int xPos;
@@ -115,7 +114,7 @@ public class ResTable {
 	public void setyPos(int yPos) {
 		this.yPos = yPos;
 	}
-	
+
 	
 	
 	

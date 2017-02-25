@@ -330,6 +330,7 @@ guestModule.controller('guestController', ['$scope', 'guestService','commonServi
 		  }
 		  
 		  $scope.chooseTables = function() {
+			  
 			  $scope.reservation.date = $scope.reservation.date.replace("/", "-");//da bi se u bazi sacuvao
 			  $scope.reservation.resId = $scope.chosenRes.id;
 			  $scope.reservation.resName = $scope.chosenRes.name;
@@ -342,9 +343,60 @@ guestModule.controller('guestController', ['$scope', 'guestService','commonServi
 					$scope.data.date = $filter('date')($scope.data.date, "dd.MM.yyyy");  // for type="date" binding; moze proizvoljan format datuma da se dobije
 					return response;
 				});*/
+			  
+			  showTables();
 
 
 		  }
+		  
+		function showTables () {
+			console.log("showTables");
+				guestService.getTables($scope.chosenRes.id).then(
+						function(response){
+							//tables = response.data;
+				
+							//	alert(value.xPos+" , "+value.yPos)
+								var stolovi = [];
+								var red = [];
+								var lastXPos = 0;
+								var counter = 0;
+								var maxX = 0;
+								var maxY = 0;
+								angular.forEach(response.data, function(value, key){	// punjenje matrice stolova
+									if(value.xPos == lastXPos){	
+										red.push(value);
+									}
+									counter++;
+						
+									if(counter==response.data.length && value.yPos==0){
+										stolovi.push(red);
+										red =[];
+										red.push(value);
+									}
+								
+									if((value.xPos != lastXPos) || counter==response.data.length ) {
+										stolovi.push(red);
+										red =[];
+										red.push(value);
+									}
+									
+									lastXPos = value.xPos;
+								});
+								$scope.tables = stolovi;
+							
+							
+						});
+			}
+		
+		
+		$scope.getTableColor = function(id) {
+			console.log("color " + id);
+			if (id == 1)
+				return 'red';
+			else
+				return 'green';
+			
+		}
 
 		
 		

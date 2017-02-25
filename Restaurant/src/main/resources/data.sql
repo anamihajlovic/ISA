@@ -244,9 +244,9 @@ insert into segments(segment_type,color) values ('Inside','#00bfff')
 insert into segments(segment_type,color) values ('Smoke','#ffff00')
 
 
-insert into tables(table_size, table_state, segment, x_pos, y_pos,segment_color) values ('four', 'exists','Smoke', 0, 0,'#00bfff')
-insert into tables(table_size, table_state, segment, x_pos, y_pos,segment_color) values ('four', 'exists','Smoke', 0, 1,'#00bfff')
-insert into tables(table_size, table_state, segment, x_pos, y_pos,segment_color) values ('four', 'exists','Inside', 0, 2,'#00bfff')
+insert into tables(table_size, table_state, segment, x_pos, y_pos,segment_color) values ('four', 'exists', 'Smoke', 0, 0,'#00bfff')
+insert into tables(table_size, table_state, segment, x_pos, y_pos,segment_color) values ('four', 'exists', 'Smoke', 0, 1,'#00bfff')
+insert into tables(table_size, table_state, segment, x_pos, y_pos,segment_color) values ('four', 'exists', 'Inside', 0, 2,'#00bfff')
 insert into tables(table_size, table_state, segment, x_pos, y_pos,segment_color) values ('four', 'not_exists','Inside', 0, 3,'#00bfff')
 insert into tables(table_size, table_state, segment, x_pos, y_pos,segment_color) values ('four', 'exists','Inside', 0, 4,'#00bfff')
 
