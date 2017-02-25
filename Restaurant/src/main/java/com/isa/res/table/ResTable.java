@@ -34,7 +34,7 @@ public class ResTable {
 	@Column
 	private String segment;
 	
-	@Column 
+	@Column (name="segment_color")
 	private String segColor; 
 	
 	

@@ -74,8 +74,8 @@ public class RestaurantManagerController {
 	private final OfferUnitService offerUnitService;
 	private final OfferService offerService;
 	private RestaurantManager restaurantManager;
-	private Long visina ;
-	private Long sirina ;
+	private int visina = 0;
+	private int sirina = 0 ;
 	private Long sifra;
 	@Autowired
 	public RestaurantManagerController(HttpSession httpSession, RestaurantService restaurantService,
@@ -399,7 +399,7 @@ public class RestaurantManagerController {
 	}
 		
 	@PutMapping(path = "/makeConfig/{widht}/{height}")
-	public void makeConfig(@PathVariable("widht") Long width, @PathVariable("height") Long height){
+	public void makeConfig(@PathVariable("widht") Integer width, @PathVariable("height") Integer height){
 		//System.out.println("uslo je konfig");
 		Restaurant restaurant = restaurantService.findOne(restaurantManager.getIdRestaurant());
 		//System.out.println("restoran je "+restaurant.getId());
@@ -417,14 +417,15 @@ public class RestaurantManagerController {
 			}
 		}
 	
-		
-		ResSegment s = new ResSegment();
-		s.setSegType("inside");
-		s.setColor("#00bfff");
-		restaurant.getSegments().add(s);
-		restaurantService.save(restaurant);	
-		System.out.println("x "+width);
-		System.out.println("y "+height);
+		if(restaurant.getSegments().isEmpty()){
+			ResSegment s = new ResSegment();
+			s.setSegType("inside");
+			s.setColor("#00bfff");
+			restaurant.getSegments().add(s);
+			restaurantService.save(restaurant);	
+		}
+		//System.out.println("x "+width);
+		//System.out.println("y "+height);
 		List <ResTable >rt = new ArrayList <ResTable>();
 		ResSegment rs = new ResSegment();
 		for (ResSegment r : restaurant.getSegments()){
@@ -483,6 +484,21 @@ public class RestaurantManagerController {
 		Restaurant r = restaurantService.findOne(restaurantManager.getIdRestaurant());		
 		for(int i=0; i<r.getSegments().size(); i++){
 			outTables.addAll(r.getSegments().get(i).getTables());
+			
+		}
+		
+		if(visina==0 || sirina==0){
+			for(ResTable tt : outTables){
+				if(tt.getxPos()>visina){
+					visina = tt.getxPos();
+				}
+				if(tt.getyPos()>sirina){
+					sirina = tt.getyPos();
+				}
+				
+			}
+			visina = visina + 1;
+			sirina = sirina + 1;
 			
 		}
 		
