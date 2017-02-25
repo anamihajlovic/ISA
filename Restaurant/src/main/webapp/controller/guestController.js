@@ -2,8 +2,8 @@ var guestModule = angular.module('guest.controller', []);
 
 
 
-guestModule.controller('guestController', ['$scope', 'guestService','commonService', '$location','$interval',
-	function($scope, guestService, commonService,  $location, $interval) {
+guestModule.controller('guestController', ['$scope', 'guestService','commonService', '$location','$interval', '$filter',
+	function($scope, guestService, commonService,  $location, $interval, $filter) {
 	
 		$scope.numOfFriendRequest= 0;
 		
@@ -330,11 +330,18 @@ guestModule.controller('guestController', ['$scope', 'guestService','commonServi
 		  }
 		  
 		  $scope.chooseTables = function() {
-			  console.log("date" + $scope.reservation.date);
-			  console.log("time" + $scope.reservation.time);
-			  console.log("duration" + $scope.reservation.duration);
-			  var t =  $scope.reservation.time + $scope.reservation.duration;
-			  console.log("ostaje do " + t);
+			  $scope.reservation.date = $scope.reservation.date.replace("/", "-");//da bi se u bazi sacuvao
+			  $scope.reservation.resId = $scope.chosenRes.id;
+			  $scope.reservation.resName = $scope.chosenRes.name;
+			  $scope.reservation.guestId = $scope.guest.id;
+			  
+			  //ovo je bilo za potrebe testiranja, cuvanje rezervacije ce biti nakon izabranih stolova
+			 /* var request = guestService.addReservation($scope.reservation).then(function(response){
+					$scope.data = response.data;
+					console.log($scope.data);
+					$scope.data.date = $filter('date')($scope.data.date, "dd.MM.yyyy");  // for type="date" binding; moze proizvoljan format datuma da se dobije
+					return response;
+				});*/
 
 
 		  }
