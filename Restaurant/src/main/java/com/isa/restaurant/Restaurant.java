@@ -57,7 +57,7 @@ public class Restaurant {
 	
 	@Column
 	@NotBlank
-	private String number;
+	private Integer number;
 	
 	@Column
 	private Double ratings;
@@ -113,7 +113,7 @@ public class Restaurant {
 
 
 	public Restaurant(Long id, String name, String restaurant_type, String country, String city, String street,
-			String number, Double ratings, List<RestaurantManager> restaurantManagers, List<Foodstuff> foodstuffs,
+			Integer number, Double ratings, List<RestaurantManager> restaurantManagers, List<Foodstuff> foodstuffs,
 			List<Dish> dishes, List<Drink> drinks, List<Bidder> bidders, List<Waiter> waiters, List<Cook> cooks,
 			List<Bartender> bartenders, List<WorkDay> workDays, List<ResSegment> segments, List<ResOrder> orders) {
 		super();
@@ -199,12 +199,12 @@ public class Restaurant {
 	}
 
 
-	public String getNumber() {
+	public Integer getNumber() {
 		return number;
 	}
 
 
-	public void setNumber(String number) {
+	public void setNumber(Integer number) {
 		this.number = number;
 	}
 
