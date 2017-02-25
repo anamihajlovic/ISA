@@ -329,7 +329,7 @@ guestModule.controller('guestController', ['$scope', 'guestService','commonServi
 			 // $location.path('startReservation');
 		  }
 		  
-		  $scope.chooseTable = function() {
+		  $scope.chooseTables = function() {
 			  console.log("date" + $scope.reservation.date);
 			  console.log("time" + $scope.reservation.time);
 			  console.log("duration" + $scope.reservation.duration);

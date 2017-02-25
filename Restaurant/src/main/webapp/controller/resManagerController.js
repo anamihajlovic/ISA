@@ -22,7 +22,7 @@ resManagerModule.controller('resManagerController', ['$scope', 'resManagerServic
 			function (response) {
 				$scope.restaurant = response.data;
 				if(response.data!="") {	
-					myMap();
+					//myMap();
 				} else {					
 					 $location.path('login');
 				}
