@@ -54,11 +54,11 @@ resManagerModule.controller('resManagerController', ['$scope', 'resManagerServic
 		        handleLocationError(true, infoWindow, map.getCenter());
 		    });
 		}
-		alert($scope.restaurant.number)
+	
 		
 		map=new google.maps.Map(document.getElementById("googleMap1"),mapProp);
 		geocoder = new google.maps.Geocoder();
-		address = $scope.restaurant.street +  parseInt($scope.restaurant.number)  + " , " + $scope.restaurant.city + " , " + $scope.restaurant.country; 
+		address = $scope.restaurant.street +  $scope.restaurant.number + " , " + $scope.restaurant.city + " , " + $scope.restaurant.country; 
 		geocoder.geocode( { 'address': address}, function(results, status) {
 		      if (status == 'OK') {
 		        map.setCenter(results[0].geometry.location);
