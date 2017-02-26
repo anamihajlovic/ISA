@@ -55,6 +55,17 @@ guestServices.service('guestService', ['$http', function($http) {
 
 	}
 	
+	//za rezervacije
+	
+	this.addReservation = function(reservation) {
+		console.log("service addReservation");
+		return $http.post("/reservations/add", reservation);
+	}
+	
+	this.getTables = function(id){
+		return $http.get("/resTables/getTables/" + id);
+	}
+	
 	
 	
 }]);

@@ -96,6 +96,11 @@ angular.module('restaurants', [ 'ui.router','ui.calendar' ,
         	url:'/startReservation',
         	templateUrl: 'html/guest/reservationDateTime.html'
         })
+        
+        .state('guest.chooseTables', {
+        	url: '/chooseTables',
+        	templateUrl: 'html/guest/tablesConf.html'
+        })
          
          .state('sysManager', {
          	url : '/sysManager',

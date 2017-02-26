@@ -1,21 +1,32 @@
-<div class = "col-sm-4"  class="input-group">
+<style type="text/css">
+#divForm {
+ min-height:300px;
+ max-width: 300px;
+}
+</style>
 
-<form name="formReservation">
+<div class = "col-sm-4p" class="input-group"  align="center" >
 
+<form name="formReservation" id="divForm">
+	<h3>
 	<label>Restaurant:</label>
 	<label>{{chosenRes.name}}</label>
+	</h3>
 	<br>
     <label>Date:</label>
 	<input type="date" ng-model = "$parent.reservation.date" class="form-control">
 	
-    <label>Time: </label>
-	<input type="time" ng-model = "$parent.reservation.time" class="form-control">
+    <label>Start time: </label>
+	<input type="time" ng-model = "$parent.reservation.startTime" class="form-control">
+	
+	<label>End time: </label>
+	<input type="time" ng-model = "$parent.reservation.endTime" class="form-control">
 
-    <label> Duration (h): </label>
+    <!--  <label> Duration (h): </label>
 	<input type="number" ng-model = "$parent.reservation.duration" min="0.5" step="0.5" max="10" class="form-control"> 
-
+	-->
 	<br>
-	<label class="pull-right"><button class="btn btn-default navbar-btn" ng-click="chooseTable()">Next<span class = "glyphicon glyphicon-chevron-right"></span><span class = "glyphicon glyphicon-chevron-right"></span></button></label>
+	<label class="pull-right"><button class="btn btn-default navbar-btn" ng-click="chooseTables()" data-ui-sref="guest.chooseTables">Next <span class = "glyphicon glyphicon-arrow-right"></span></button></label>
 
 </form>
 
