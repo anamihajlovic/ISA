@@ -9,5 +9,7 @@ public interface WorkShiftService {
 	WorkShift save(WorkShift workShift);
 
 	WorkShift findOne(Long id);
+	
+	void delete(Long id);
 
 }

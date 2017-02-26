@@ -13,7 +13,10 @@ import javax.persistence.Table;
 import com.isa.dish.*;
 import com.isa.drink.*;
 import com.isa.foodstuf.Foodstuff;
+import com.isa.offer.Offer;
 import com.isa.res.manager.*;
+import com.isa.res.order.ResOrder;
+import com.isa.res.segment.ResSegment;
 import com.isa.bartender.*;
 import com.isa.bidder.*;
 import com.isa.waiter.*;
@@ -51,6 +54,10 @@ public class Restaurant {
 	@Column
 	@NotBlank
 	private String street;
+	
+	@Column
+	@NotBlank
+	private Integer number;
 	
 	@Column
 	private Double ratings;
@@ -92,14 +99,23 @@ public class Restaurant {
 	@JoinTable(name = "restaurant_work_days", joinColumns = @JoinColumn(name = "restaurant_id"), inverseJoinColumns = @JoinColumn(name = "work_day_id"))
 	private List<WorkDay> workDays;
 	
+	
+	@OneToMany(cascade = CascadeType.ALL)
+	@JoinTable(name = "restaurant_segments", joinColumns = @JoinColumn(name = "restaurant_id"), inverseJoinColumns = @JoinColumn(name = "segment_id"))
+	private List<ResSegment> segments;
+	
+	@OneToMany(cascade = CascadeType.ALL)
+	@JoinTable(name = "restaurant_orders", joinColumns = @JoinColumn(name = "restaurant_id"), inverseJoinColumns = @JoinColumn(name = "order_id"))
+	private List<ResOrder> orders;
+	
 
 	public Restaurant() {}
 
 
 	public Restaurant(Long id, String name, String restaurant_type, String country, String city, String street,
-			Double ratings, List<RestaurantManager> restaurantManagers, List<Foodstuff> foodstuffs, List<Dish> dishes,
-			List<Drink> drinks, List<Bidder> bidders, List<Waiter> waiters, List<Cook> cooks,
-			List<Bartender> bartenders, List<WorkDay> workDays) {
+			Integer number, Double ratings, List<RestaurantManager> restaurantManagers, List<Foodstuff> foodstuffs,
+			List<Dish> dishes, List<Drink> drinks, List<Bidder> bidders, List<Waiter> waiters, List<Cook> cooks,
+			List<Bartender> bartenders, List<WorkDay> workDays, List<ResSegment> segments, List<ResOrder> orders) {
 		super();
 		this.id = id;
 		this.name = name;
@@ -107,6 +123,7 @@ public class Restaurant {
 		this.country = country;
 		this.city = city;
 		this.street = street;
+		this.number = number;
 		this.ratings = ratings;
 		this.restaurantManagers = restaurantManagers;
 		this.foodstuffs = foodstuffs;
@@ -117,6 +134,8 @@ public class Restaurant {
 		this.cooks = cooks;
 		this.bartenders = bartenders;
 		this.workDays = workDays;
+		this.segments = segments;
+		this.orders = orders;
 	}
 
 
@@ -177,6 +196,16 @@ public class Restaurant {
 
 	public void setStreet(String street) {
 		this.street = street;
+	}
+
+
+	public Integer getNumber() {
+		return number;
+	}
+
+
+	public void setNumber(Integer number) {
+		this.number = number;
 	}
 
 
@@ -280,8 +309,26 @@ public class Restaurant {
 	}
 
 
+	public List<ResSegment> getSegments() {
+		return segments;
+	}
 
 
-	
+	public void setSegments(List<ResSegment> segments) {
+		this.segments = segments;
+	}
+
+
+	public List<ResOrder> getOrders() {
+		return orders;
+	}
+
+
+	public void setOrders(List<ResOrder> orders) {
+		this.orders = orders;
+	}
+
+
+
 	
 }

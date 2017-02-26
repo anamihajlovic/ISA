@@ -96,5 +96,61 @@ resManagerServices.service('resManagerService',['$http', function($http) {
 	this.buttonUpdateDrink = function(drink){
 		return $http.put("/resManager/updateDrink", drink);
 	}
+	this.makeConfiguration = function(width,height){
+		return $http.put("/resManager/makeConfig/"+width+"/"+height);
+	}
+	this.findAllSegments= function(){
+		return $http.get("/resManager/segments");
+	}
+	this.addSegment = function(segment){
+		return $http.post("/resManager/addSegment",segment);
+	}
+	this.getTables = function(){
+		return $http.get("/resManager/getTables");
+	}
+	this.findTable=function(event){
+		return $http.get("/resManager/table/"+event.target.id);
+	}
+	this.updateTable = function(table) {		
+		return $http.put("/resManager/updateTable", table);
+	}
+	this.findAllResOrders = function(){
+		return $http.get("/resManager/resOrders");
+	}
+	this.findShowResOrderUnits = function(event){
+		return $http.get("/resManager/resOrdersResOrderUnits/"+event.target.id);
+	}
+	this.saveFirstTimeResOrder = function() {
+		return $http.post("/resManager/FirstTimeResOrder");
+	}
+	this.saveResOrderUnit = function(resOrderUnit) {
+		//alert("service "+resOrderUnit.ResOrder);
+		return $http.post("/resManager/saveResOrderUnit",resOrderUnit);
+	}
+	this.makeResOrder = function(resOrder) {		
+		return $http.put("/resManager/finalSaveResOrder", resOrder);
+	}
+	this.deleteResOrderUnits = function(){
+		return $http.delete("/resManager/cancelResOrderUnit");
+	}
+	this.showAllActualffers = function(event){
+		return $http.get("/resManager/allActualOffers/"+event.target.id);
+	}
+	this.acceptOffer = function(event) {		
+		return $http.put("/resManager/acceptOffer/"+event.target.id);
+	}
+	this.showAllActualffersAfter = function(potreban_event) {		
+		return $http.get("/resManager/allActualOffers/"+potreban_event.target.id);
+	}
+	this.readWorkSchedule = function() {					
+		return $http.get("/resManager/getAllShifts");	
+	}
+	this.getWorkShift = function(id) {
+		return $http.get("/workShifts/getWorkShift/"+id);
+	}
+	this.makeShift = function(smena,datum,cookNumbers,waiterNumbers,bartenderNumbers) {
+		return $http.post("/resManager/MakeFirstShift/"+smena+"/"+datum+"/"+cookNumbers+"/"+waiterNumbers+"/"+bartenderNumbers);
+	}
+
 	
 }]); 

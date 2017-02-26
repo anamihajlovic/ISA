@@ -2,8 +2,8 @@ var guestModule = angular.module('guest.controller', []);
 
 
 
-guestModule.controller('guestController', ['$scope', 'guestService','commonService', '$location','$interval',
-	function($scope, guestService, commonService,  $location, $interval) {
+guestModule.controller('guestController', ['$scope', 'guestService','commonService', '$location','$interval', '$filter',
+	function($scope, guestService, commonService,  $location, $interval, $filter) {
 	
 		$scope.numOfFriendRequest= 0;
 		
@@ -320,6 +320,83 @@ guestModule.controller('guestController', ['$scope', 'guestService','commonServi
 
 				}
 			}
+		  
+		  $scope.reservation;
+		  
+		  $scope.chooseRes = function(restaurant) {
+			  $scope.chosenRes = restaurant;
+			  console.log($scope.chosenRes.name);
+			 // $location.path('startReservation');
+		  }
+		  
+		  $scope.chooseTables = function() {
+			  
+			  $scope.reservation.date = $scope.reservation.date.replace("/", "-");//da bi se u bazi sacuvao
+			  $scope.reservation.resId = $scope.chosenRes.id;
+			  $scope.reservation.resName = $scope.chosenRes.name;
+			  $scope.reservation.guestId = $scope.guest.id;
+			  
+			  //ovo je bilo za potrebe testiranja, cuvanje rezervacije ce biti nakon izabranih stolova
+			 /* var request = guestService.addReservation($scope.reservation).then(function(response){
+					$scope.data = response.data;
+					console.log($scope.data);
+					$scope.data.date = $filter('date')($scope.data.date, "dd.MM.yyyy");  // for type="date" binding; moze proizvoljan format datuma da se dobije
+					return response;
+				});*/
+			  
+			  showTables();
+
+
+		  }
+		  
+		function showTables () {
+			console.log("showTables");
+				guestService.getTables($scope.chosenRes.id).then(
+						function(response){
+							//tables = response.data;
+				
+							//	alert(value.xPos+" , "+value.yPos)
+								var stolovi = [];
+								var red = [];
+								var lastXPos = 0;
+								var counter = 0;
+								var maxX = 0;
+								var maxY = 0;
+								angular.forEach(response.data, function(value, key){	// punjenje matrice stolova
+									if(value.xPos == lastXPos){	
+										red.push(value);
+									}
+									counter++;
+						
+									if(counter==response.data.length && value.yPos==0){
+										stolovi.push(red);
+										red =[];
+										red.push(value);
+									}
+								
+									if((value.xPos != lastXPos) || counter==response.data.length ) {
+										stolovi.push(red);
+										red =[];
+										red.push(value);
+									}
+									
+									lastXPos = value.xPos;
+								});
+								$scope.tables = stolovi;
+							
+							
+						});
+			}
+		
+		
+		$scope.getTableColor = function(id) {
+			console.log("color " + id);
+			if (id == 1)
+				return 'red';
+			else
+				return 'green';
+			
+		}
 
 		
 		

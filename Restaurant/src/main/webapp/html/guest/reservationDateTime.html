@@ -1,0 +1,33 @@
+<style type="text/css">
+#divForm {
+ min-height:300px;
+ max-width: 300px;
+}
+</style>
+
+<div class = "col-sm-4p" class="input-group"  align="center" >
+
+<form name="formReservation" id="divForm">
+	<h3>
+	<label>Restaurant:</label>
+	<label>{{chosenRes.name}}</label>
+	</h3>
+	<br>
+    <label>Date:</label>
+	<input type="date" ng-model = "$parent.reservation.date" class="form-control">
+	
+    <label>Start time: </label>
+	<input type="time" ng-model = "$parent.reservation.startTime" class="form-control">
+	
+	<label>End time: </label>
+	<input type="time" ng-model = "$parent.reservation.endTime" class="form-control">
+
+    <!--  <label> Duration (h): </label>
+	<input type="number" ng-model = "$parent.reservation.duration" min="0.5" step="0.5" max="10" class="form-control"> 
+	-->
+	<br>
+	<label class="pull-right"><button class="btn btn-default navbar-btn" ng-click="chooseTables()" data-ui-sref="guest.chooseTables">Next <span class = "glyphicon glyphicon-arrow-right"></span></button></label>
+
+</form>
+
+</div>

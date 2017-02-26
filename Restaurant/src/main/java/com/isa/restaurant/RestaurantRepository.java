@@ -13,4 +13,5 @@ public interface RestaurantRepository extends PagingAndSortingRepository<Restaur
 	//@Query("select res_manager_id from res_managers_in_restuarants")
 	//public List<Long> getEmployedResManagers();
 
+
 }

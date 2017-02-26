@@ -1,0 +1,31 @@
+<style type="text/css">
+
+.exists {
+background: #0AAC04;
+}
+
+.not_exists {
+	display: none;
+	
+}
+
+.reserved {
+	background: #EB0505;
+}
+
+</style>
+
+<h2 align="center">Choose table(s)</h2>
+ <hr/>
+<div align="center" >
+<br><br><br>
+<table class = "tablesTable">
+	<tr ng-repeat="row in tables">
+		<td ng-repeat="table in row">                        
+			<button id={{table.id}}  ng-click="buttonShowTable($event)"  ng-class="{'exists':table.state == 'exists','not_exists':table.state == 'not_exists','reserved':table.state == 'reserved'}" ng-disabled="{{table.state == 'reserved'}}" class = "tableBtns" title="{{'Segment: ' + table.segment + ' for ' + table.size}}"> </button>
+		</td>				
+	</tr>
+</table>
+<br><br><br>
+<label class="pull-center"><button class="btn btn-default navbar-btn"  data-ui-sref="guest.startReservation"><span class = "glyphicon glyphicon-arrow-left"></span> Back</button></label>
+</div>

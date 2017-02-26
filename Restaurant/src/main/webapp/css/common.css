@@ -3,3 +3,24 @@ tr,td,th {text-align:center;}
 .help-block {
     color: red;
 }
+.tablesTable table, th,td,tr{
+	border: 0px;
+	padding: 5px;
+}
+
+.tableBtns {
+	background: white;
+	color: black;
+	width: 50px;
+	height: 30px;
+	
+}
+.yellow {
+   background-color: yellow;
+}
+.white {
+   background-color: white;
+}
+.red {
+   background-color: red;
+}

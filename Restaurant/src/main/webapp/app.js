@@ -91,6 +91,16 @@ angular.module('restaurants', [ 'ui.router','ui.calendar' ,
         	url:'/restaurants',
         	templateUrl: 'html/guest/restaurantsList.html'
         })
+        
+        .state('guest.startReservation', {
+        	url:'/startReservation',
+        	templateUrl: 'html/guest/reservationDateTime.html'
+        })
+        
+        .state('guest.chooseTables', {
+        	url: '/chooseTables',
+        	templateUrl: 'html/guest/tablesConf.html'
+        })
          
          .state('sysManager', {
          	url : '/sysManager',
@@ -129,12 +139,18 @@ angular.module('restaurants', [ 'ui.router','ui.calendar' ,
         templateUrl : 'html/resManager/resManagerHome.html',
           controller : 'resManagerController'
         }) 
+         .state('resManager.tables', {
+       	url : '/tables',
+        templateUrl : 'html/resManager/resManagerSeatingConf.html',
+        })
         .state('resManager.updateResManager', {
        	url : '/updateResManager',
         templateUrl : 'html/resManager/resManagerUpdateProfile.html',
         }) 
-        
-        
+        .state('resManager.calendar', {
+           	url : '/calendar',
+            templateUrl : 'html/resManager/resManagerCalendar.html',
+            }) 
         .state('resManager.updateRestaurant', {
            	url : '/updateRestaurant',
             templateUrl : 'html/resManager/resManagerUpdateRestaurant.html',
@@ -158,15 +174,29 @@ angular.module('restaurants', [ 'ui.router','ui.calendar' ,
               url : '/menu',
              templateUrl : 'html/resManager/resManagerMenu.html',
           })
+           .state('resManager.purchase', {
+              url : '/purchase',
+             templateUrl : 'html/resManager/resManagerPurchase.html',
+          })
              
          .state('resManager.drinkCard', {
               url : '/drinkCard',
              templateUrl : 'html/resManager/resManagerDrinkCard.html',
           })
+          .state('resManager.ratings', {
+              url : '/ratings',
+             templateUrl : 'html/resManager/resManagerRatings.html',
+          })
+       
         .state('bidder', {
         	   url : '/bidder',
         	   templateUrl : 'html/bidder/bidderHome.html',
         	   controller: 'bidderController'
+        	   
+           })
+              .state('bidder.showOrders', {
+        	   url : '/showOrders',
+        	   templateUrl : 'html/bidder/bidderListResOrders.html',
         	   
            })
              .state('bidder.updateBidder', {

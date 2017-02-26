@@ -23,14 +23,13 @@ insert into friendships(sender_id, receiver_id, status) values (5, 2, 'sent')
 
 
 -- RESTAURANTS
-insert into restaurants(name, restaurant_type, street, city, country,ratings) values ('Lanterna', 'italijanski','Bulevar Oslobodjenja 55','Novi Sad','Srbija',0.0)
-insert into restaurants(name, restaurant_type, street, city, country,ratings) values ('Dva stapica', 'kineski','Sremska 3','Novi Sad','Srbija',0.0 )
-insert into restaurants(name, restaurant_type, street, city, country,ratings) values ('Plava frajla', 'srpski','Strazilovska 15','Novi Sad','Srbija',0.0 )
-insert into restaurants(name, restaurant_type, street, city, country,ratings) values ('Veliki', 'srpski','Pasiceva 15','Novi Sad','Srbija',0.0 )
+insert into restaurants(name, restaurant_type,number, street, city, country,ratings) values ('Lanterna', 'italijanski',55,'Bulevar Oslobodjenja','Novi Sad','Srbija',0.0)
+insert into restaurants(name, restaurant_type,number, street, city, country,ratings) values ('Dva stapica', 'kineski',3,'Sremska','Novi Sad','Srbija',0.0 )
+insert into restaurants(name, restaurant_type,number, street, city, country,ratings) values ('Plava frajla', 'srpski',15,'Strazilovska ','Novi Sad','Srbija',0.0 )
+insert into restaurants(name, restaurant_type,number, street, city, country,ratings) values ('Veliki', 'srpski',15,'Pasiceva','Novi Sad','Srbija',0.0 )
 
 
---EMPLOYED
-insert into bidders(email, password, first_name, last_name,first_login,user_role) values ('bid1@gmail.com', 'bid1', 'bid1', 'bid2',true,'bidder')
+insert into bidders(email, password, first_name, last_name,first_login,user_role) values ('bid1@gmail.com', 'bid1', 'bid1', 'bid2',false,'bidder')
 insert into bidders(email, password, first_name, last_name,first_login,user_role) values ('bid2@gmail.com', 'bid2', 'bid2', 'bid2',true,'bidder')
 
 
@@ -55,7 +54,10 @@ insert into waiters(email, password, first_name, last_name,birthday,shoes_size,c
 insert into bartenders(email, password, first_name, last_name,birthday,shoes_size,clothes_size,first_login,user_role, restaurant_id) values ('bar5@gmail.com','bar5','bar5','bar5','1994-07-25','no39','M',false,'bartender',1)
 
 insert into restaurant_managers(email, password, first_name, last_name,first_login,user_role,restaurant_id) values ('resman1@gmail.com','resman1','first 1','last 1',false,'resManager',1)
+insert into restaurant_managers(email, password, first_name, last_name,first_login,user_role,restaurant_id) values ('resman2@gmail.com','resman2','first 2','last 2',false,'resManager',2)
 insert into restaurant_managers(email, password, first_name, last_name,first_login,user_role,restaurant_id) values ('reeman2@gmail.com','resmadn2','fisrst 2','last 2',false,'resManager',2)
+
+
 insert into restaurant_managers(email, password, first_name, last_name,first_login,user_role,restaurant_id) values ('resmwan1@gmail.com','resmawn1','firwst 1','last 1',false,'resManager',3)
 insert into restaurant_managers(email, password, first_name, last_name,first_login,user_role,restaurant_id) values ('resmedan2@gmail.com','resqmean2','fierst 2','last 2',false,'resManager',4)
 insert into restaurant_managers(email, password, first_name, last_name,first_login,user_role,restaurant_id) values ('resmaeen1@gmail.com','resmsan1','firest 1','last 1',false,'resManager',1)
@@ -67,16 +69,17 @@ insert into restaurant_managers(email, password, first_name, last_name,first_log
 insert into system_managers(email, password, first_name, last_name,preset_manager,first_login,user_role)values('sysman1@gmail.com','sysman1','sysman1','sysman1','yes',false,'sysManager')
 
 
-
 --RESTAURANT MANAGERS IN RESTAURANTS
 insert into res_managers_in_restuarants(restaurant_id,res_manager_id)values(1,1)
 insert into res_managers_in_restuarants(restaurant_id,res_manager_id)values(2,2)
+
 insert into res_managers_in_restuarants(restaurant_id,res_manager_id)values(3,3)
 insert into res_managers_in_restuarants(restaurant_id,res_manager_id)values(4,4)
 insert into res_managers_in_restuarants(restaurant_id,res_manager_id)values(1,5)
 insert into res_managers_in_restuarants(restaurant_id,res_manager_id)values(2,6)
 insert into res_managers_in_restuarants(restaurant_id,res_manager_id)values(3,7)
 insert into res_managers_in_restuarants(restaurant_id,res_manager_id)values(4,8)
+
 
 --EMPLOYEED
 insert into restaurant_waiters(restaurant_id,waiter_id)values(1,1)
@@ -148,25 +151,37 @@ insert into restaurant_drink_card(restaurant_id,drink_id)values(2,3)
 --WORK SHIFTS
 insert into work_shifts (start_time,end_time,shift_type,day)values('08:00:00','14:00:00','firstShift','2017-02-26')
 insert into work_shifts (start_time,end_time,shift_type,day)values('14:00:01','20:00:00','secondShift','2017-02-26')
-insert into work_shifts (start_time,end_time,shift_type,day)values('08:00:00','14:00:00','firstShift','2017-02-27')
-insert into work_shifts (start_time,end_time,shift_type,day)values('14:00:01','20:00:00','secondShift','2017-02-27')
+insert into work_shifts (start_time,end_time,shift_type,day)values('08:00:00','14:00:00','firstShift','2017-03-01')
+insert into work_shifts (start_time,end_time,shift_type,day)values('14:00:01','20:00:00','secondShift','2017-03-01')
+insert into work_shifts (start_time,end_time,shift_type,day)values('08:00:00','14:00:00','firstShift','2017-03-02')
+insert into work_shifts (start_time,end_time,shift_type,day)values('14:00:01','20:00:00','secondShift','2017-03-02')
 
 insert into work_shift_waiters values(1, 1)
 insert into work_shift_waiters values(2, 2)
+insert into work_shift_waiters values(3, 1)
+insert into work_shift_waiters values(4, 2)
+insert into work_shift_waiters values(5, 1)
+insert into work_shift_waiters values(6, 2)
 
 insert into work_shift_cooks values(1, 1)
 insert into work_shift_cooks values(1, 3)
 insert into work_shift_cooks values(2, 2)
+insert into work_shift_cooks values(3, 1)
+insert into work_shift_cooks values(4, 3)
+insert into work_shift_cooks values(4, 2)
 
 insert into work_shift_bartenders values(1, 1)
 insert into work_shift_bartenders values(1, 3)
 insert into work_shift_bartenders values(2, 2)
+insert into work_shift_bartenders values(3, 1)
+insert into work_shift_bartenders values(4, 3)
+insert into work_shift_bartenders values(4, 2)
 
 
 --WORK DAYS
 insert into work_days (day)values('2017-02-26')
-insert into work_days(day)values('2016-02-27')
-insert into work_days(day)values('2016-03-28')
+insert into work_days(day)values('2016-03-01')
+insert into work_days(day)values('2016-03-01')
 
 insert into work_shifts_in_work_days (work_day_id,work_shift_id)values (1,1)
 insert into work_shifts_in_work_days (work_day_id,work_shift_id)values (1,2)
@@ -174,12 +189,49 @@ insert into work_shifts_in_work_days (work_day_id,work_shift_id)values (1,2)
 insert into work_shifts_in_work_days (work_day_id,work_shift_id)values (2,3)
 insert into work_shifts_in_work_days (work_day_id,work_shift_id)values (2,4)
 
+insert into work_shifts_in_work_days (work_day_id,work_shift_id)values (3,5)
+insert into work_shifts_in_work_days (work_day_id,work_shift_id)values (3,6)
+
 
 insert into restaurant_work_days(restaurant_id,work_day_id)values(1,1)
 insert into restaurant_work_days(restaurant_id,work_day_id)values(1,2)
 insert into restaurant_work_days(restaurant_id,work_day_id)values(1,3)
+------------------------------------------------------------------------------------------------------
 
 
+insert into res_orders(end_date,restaurant_name)values('29/02/2017','Lanterna')
+insert into res_orders(end_date,restaurant_name)values('23/01/2017','Lanterna')
+insert into res_orders(end_date,restaurant_name)values('13/01/2017','Veliki')
+
+insert into restaurant_orders(restaurant_id,order_id)values (1,1)
+insert into restaurant_orders(restaurant_id,order_id)values (1,2)
+insert into restaurant_orders(restaurant_id,order_id)values (2,3)
+
+insert into res_order_units(order_foodstuff,order_quantity,res_order)values ('kafa',50,1)
+insert into res_order_units(order_foodstuff,order_quantity,res_order)values ('mleko',20,1)
+insert into res_order_units(order_foodstuff,order_quantity,res_order)values ('caj',30,1)
+
+insert into order_foodstuffs(order_id,unit_id)values(1,1)
+insert into order_foodstuffs(order_id,unit_id)values(1,2)
+insert into order_foodstuffs(order_id,unit_id)values(2,3)
+
+insert into offer_units(unit_id,price)values(1,10)
+insert into offer_units(unit_id,price)values(2,10)
+insert into offer_units(unit_id,price)values(3,null)
+
+insert into offers(id_bidder,id_res_order,accepted,delivery_time,garancy,total_price)values(1,1,'waiting','2017-03-03','garancy',20)
+insert into offers(id_bidder,id_res_order,accepted,delivery_time,garancy,total_price)values(2,1,'waiting','2017-04-03','garancy',10)
+
+insert into offers(id_bidder,id_res_order,accepted,delivery_time,garancy,total_price)values(1,2,'waiting','2017-04-03','garancy',30)
+insert into offers(id_bidder,id_res_order,accepted,delivery_time,garancy,total_price)values(2,2,'waiting','2017-04-03','garancy',10)
+
+insert into bidder_offers(bidder_id,offer_id)values(1,1)
+insert into bidder_offers(bidder_id,offer_id)values(1,2)
+insert into bidder_offers(bidder_id,offer_id)values(2,3)
+insert into bidder_offers(bidder_id,offer_id)values(2,4)
+
+insert into units(offer_id,unit_id)values(1,1)
+insert into units(offer_id,unit_id)values(1,2)
 --ORDERS
 
 insert into orders(restaurant_id,drinks_status,dish_status) values (1, 'ordered', 'ordered')
@@ -201,4 +253,34 @@ insert into ordered_dish(order_id,dish_order_id) values (2,1)
 insert into ordered_dish(order_id,dish_order_id) values (2,2)
 insert into ordered_dish(order_id,dish_order_id) values (2,3)
 
+---CONFIGURATION 
 
+insert into segments(segment_type,color) values ('Inside','#00bfff')
+insert into segments(segment_type,color) values ('Smoke','#ffff00')
+
+
+insert into tables(table_size, table_state, segment, x_pos, y_pos,segment_color) values ('four', 'exists', 'Smoke', 0, 0,'#00bfff')
+insert into tables(table_size, table_state, segment, x_pos, y_pos,segment_color) values ('four', 'exists', 'Smoke', 0, 1,'#00bfff')
+insert into tables(table_size, table_state, segment, x_pos, y_pos,segment_color) values ('four', 'exists', 'Inside', 0, 2,'#00bfff')
+insert into tables(table_size, table_state, segment, x_pos, y_pos,segment_color) values ('four', 'not_exists','Inside', 0, 3,'#00bfff')
+insert into tables(table_size, table_state, segment, x_pos, y_pos,segment_color) values ('four', 'exists','Inside', 0, 4,'#00bfff')
+
+insert into tables(table_size, table_state, segment, x_pos, y_pos,segment_color) values ('two', 'exists','Inside', 1, 0,'#ffff00')
+insert into tables(table_size, table_state, segment, x_pos, y_pos,segment_color) values ('two', 'exists','Inside', 1, 1,'#ffff00')
+insert into tables(table_size, table_state, segment, x_pos, y_pos,segment_color) values ('two', 'not_exists','Inside', 1, 2,'#ffff00')
+insert into tables(table_size, table_state, segment, x_pos, y_pos,segment_color) values ('two', 'exists','Inside', 1, 3,'#ffff00')
+insert into tables(table_size, table_state, segment, x_pos, y_pos,segment_color) values ('two', 'exists','Inside', 1, 4,'#ffff00')
+
+insert into segment_tables(segment_id,table_id) values(1,1)
+insert into segment_tables(segment_id,table_id) values(1,2)
+insert into segment_tables(segment_id,table_id) values(1,3)
+insert into segment_tables(segment_id,table_id) values(1,4)
+insert into segment_tables(segment_id,table_id) values(1,5)
+insert into segment_tables(segment_id,table_id) values(2,6)
+insert into segment_tables(segment_id,table_id) values(2,7)
+insert into segment_tables(segment_id,table_id) values(2,8)
+insert into segment_tables(segment_id,table_id) values(2,9)
+insert into segment_tables(segment_id,table_id) values(2,10)
+
+insert into restaurant_segments(restaurant_id, segment_id) values (1,1)
+insert into restaurant_segments(restaurant_id, segment_id) values (1,2)

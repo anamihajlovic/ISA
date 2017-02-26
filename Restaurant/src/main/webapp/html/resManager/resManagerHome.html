@@ -1,3 +1,4 @@
+
 <style type="text/css">
 
 </style>
@@ -5,23 +6,40 @@
 <nav class="navbar  navbar-inverse" role="navigation" > 
 
       <div class="navbar-header navbar-left">
-      	<p class="navbar-brand" >Welcome, {{restaurantManager.firstName+" "+ restaurantManager.lastName}}</p>
+      	<p class="navbar-brand" >{{restaurantManager.firstName+" "+ restaurantManager.lastName}}</p>
    	 </div>
       <ul class="nav navbar-nav navbar-center">
      <li><a><button data-ui-sref=".list"  data-ng-click ="viewAll()"class="btn btn-default navbar-btn" ><span class="glyphicon glyphicon-list"></span> List </button>
-	
-	<button  data-ui-sref=".newEmployee" data-ng-click = "newEmpolyee()"class="btn btn-default navbar-btn"><span class="glyphicon glyphicon-plus"></span> New Employee</button>
-
-	<button  data-ui-sref=".newBidder" data-ng-click = "newBidder()" class="btn btn-default navbar-btn"><span class="glyphicon glyphicon-plus"></span> New Bidder</button> 
-	<button data-ui-sref=".updateRestaurant"  data-ng-click = "updateRestaurant()"class="btn btn-default navbar-btn"><span class="glyphicon glyphicon-grain"></span> Restaurant profile</button>
-	<button data-ui-sref=".updateResManager"  data-ng-click = "updateResManager()"class="btn btn-default navbar-btn"><span class="glyphicon glyphicon-user"></span> Update profile</button>
 	<button data-ui-sref=".menu"  data-ng-click = "menu()"class="btn btn-default navbar-btn"><span class="glyphicon glyphicon-cutlery"></span> Menu</button>
 	<button data-ui-sref=".drinkCard"  data-ng-click = "drinkCard()"class="btn btn-default navbar-btn"><span class="glyphicon glyphicon-glass"></span> Drink card</button>
-	
-	 	
+	<button data-ui-sref=".tables"  ng-click= "loadTables()"class="btn btn-default navbar-btn"><span class="glyphicon glyphicon-th"></span> Tables</button>
+	<button data-ui-sref=".calendar"  data-ng-click = "calendar()"class="btn btn-default navbar-btn"><span class="glyphicon glyphicon-calendar"></span> Work calendar</button>
+	<button data-ui-sref=".purchase"  data-ng-click = "restaurantOrders()"class="btn btn-default navbar-btn"><span class="glyphicon glyphicon-shopping-cart"></span> 	Purchase</button>
+	 <button data-ui-sref=".statistic"  data-ng-click = "statistic()"class="btn btn-default navbar-btn"><span class="glyphicon glyphicon-stats"></span> Business</button>
+	<button data-ui-sref=".ratings"  data-ng-click = "ratings()"class="btn btn-default navbar-btn"><span class="glyphicon glyphicon-star"></span> Ratings</button>
 	</a></li>
 	</ul>
 	<ul class="nav navbar-nav navbar-right">
+
+	
+	<li><button type="button" class="btn btn-default dropdown-toggle navbar-btn glyphicon glyphicon-plus" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true"> <span class="caret"></span></button>      	
+        	<ul class="dropdown-menu">
+        	<li><a data-ui-sref=".newEmployee" data-ng-click = "newEmpolyee()"><span class="glyphicon glyphicon-plus"></span> New Employee</a></li>
+        	<li><a data-ui-sref=".newBidder" data-ng-click = "newBidder()"><span class="glyphicon glyphicon-plus"></span> New Bidder</a></li>
+        	<li><a data-ng-click = "newConfiguration()"><span class="glyphicon glyphicon-plus"></span> New Configuration</a></li>      	
+        	</ul>
+        
+        	</li>
+	  <li><a ></a></li>
+	<li><button type="button" class="btn btn-default dropdown-toggle navbar-btn glyphicon glyphicon-cog" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true"> <span class="caret"></span></button>      	
+        	<ul class="dropdown-menu">
+          	<li><a data-ui-sref=".updateRestaurant" data-ng-click = "updateRestaurant()"><span class="glyphicon glyphicon-grain"></span> Update restaurant </a></li>
+          	<li><a data-ui-sref=".updateResManager" data-ng-click = "updateResManager()" ><span class="glyphicon glyphicon-user"></span> Update profile</a></li>             	    
+        	</ul>
+        
+        	</li>
+	  <li><a ></a></li>
+	
          <li><a  data-ui-sref="logout"><span class="glyphicon glyphicon-log-out"></span> Log out </a></li>
     <li><a ></a></li>
     </ul>
@@ -29,7 +47,108 @@
  </nav>
  
  
+ 
  <div>
  <div data-ui-view></div>
-
 </div>
+<!-- ----------------------------------------------------------------------------------------------------------------- -->
+
+
+  <!-- Trigger the modal with a button -->
+<button type="button" id="modalBtnCreateConfiguration" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModalCreateConfiguration" style="display:none"></button>
+
+<!-- Modal -->
+<div id="myModalCreateConfiguration" class="modal fade"  >
+  <div class="modal-dialog ">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title" id="modalTitle">New Configuration</h4>
+      </div>
+      <div class="modal-body">
+    Number of tables - height: <input name= "height" type="number" min="2" value="2"><br/>
+    <br>
+	Number of tables - width: <input name="width" type="number" min="2"  value="2"><br/>         			
+      </div>
+      <div class="modal-footer">
+      <button  class="btn btn-default" ng-click="makeConfig()" data-dismiss="modal"><span class="glyphicon glyphicon-ok"  ></span> Create</button>
+		 <button style="display:none" type="button" id ="cancelConfil"class="btn btn-default" data-dismiss="modal">Cancel</button>
+      </div>
+    </div>
+
+  </div>
+</div>	
+<!-- --------------------------------------------------------------------------------------------- -->
+  <!-- Trigger the modal with a button -->
+<button type="button" id="modalBtnCreateSegments" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModalCreateSegment" style="display:none"></button>
+
+<!-- Modal -->
+<div id="myModalCreateSegment" class="modal fade"  >
+  <div class="modal-dialog ">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title" id="modalTitle">Segments</h4>
+      </div>
+      <div class="modal-body">
+		<table  class="table table-bordered tableBG" border="1">
+		<tbody>
+	        <tr>
+			
+				<th>Segment Type</th>
+                
+            </tr>
+			<tr ng-repeat="segment in segments">
+				<td>
+		    		{{segment.segType}}	
+				</td>
+			</tr>
+        </tbody>
+    </table>
+    
+      	<button class="btn btn-link pull-right" ng-click="addSegment()"><span class="glyphicon glyphicon-plus" style="color:green;"></span> </button>		
+      <br><br>
+      </div>
+      <div class="modal-footer">
+      <button class="btn btn-default" ng-click="finishConf()"><span class="glyphicon glyphicon-ok"  ></span> Finish</button>
+		 <button style="display:none" type="button" id ="cancelFinishSegment"class="btn btn-default" data-dismiss="modal">Cancel</button>
+      </div>
+    </div>
+
+  </div>
+</div>
+<!-- --------------------------------------------------------------------------------------------- -->
+  <!-- Trigger the modal with a button -->
+<button type="button" id="modalBtnAddSegments" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModalAddSegment" style="display:none"></button>
+
+<!-- Modal -->
+<div id="myModalAddSegment" class="modal fade"  >
+  <div class="modal-dialog  modal-table">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title" id="modalTitle">New Segment</h4>
+      </div>
+      <div class="modal-body">
+      	<form action="" method="post">
+	<label>Type of segment</label>
+    <input type="text" ng-model="$parent.segment.segType" class="form-control" name="segType" >  
+     <input style="display:none" type="text" ng-model="$parent.segment.color" class="form-control" name="color" > 
+   </form>
+      </div>
+      <div class="modal-footer">
+      <button type="button"  class="btn btn-default"  ng-click="makeSegment()" ><span class="glyphicon glyphicon-ok" ></span> Create</button>
+      	 <button style="display:none" type="button" id ="cancelMakeSegment"class="btn btn-default" data-dismiss="modal">Cancel</button>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+	<div id="googleMap1" style="width:100%;height:400px;"></div>
