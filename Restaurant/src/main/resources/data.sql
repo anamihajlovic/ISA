@@ -34,8 +34,8 @@ insert into bidders(email, password, first_name, last_name,first_login,user_role
 
 
 insert into cooks(email, password, first_name, last_name,birthday,shoes_size,clothes_size,first_login,user_role, restaurant_id,cook_type) values ('cook1@gmail.com','cook1','cook1','cook1','1994-07-27','no39','M',false,'cook',1,'undefined')
-insert into waiters(email, password, first_name, last_name,birthday,shoes_size,clothes_size,first_login,user_role, restaurant_id) values ('waiter1@gmail.com','waiter1','waiter1','waiter1','1994-07-25','no39','M',true,'waiter',1)
-insert into bartenders(email, password, first_name, last_name,birthday,shoes_size,clothes_size,first_login,user_role,restaurant_id) values ('bar1@gmail.com','bar1','bar1','bar1','1994-07-25','no42','M',true,'bartender',1)
+insert into waiters(email, password, first_name, last_name,birthday,shoes_size,clothes_size,first_login,user_role, restaurant_id) values ('waiter1@gmail.com','waiter1','waiter1','waiter1','1994-07-25','no39','M',false,'waiter',1)
+insert into bartenders(email, password, first_name, last_name,birthday,shoes_size,clothes_size,first_login,user_role,restaurant_id) values ('bar1@gmail.com','bar1','bar1','bar1','1994-07-25','no42','M',false,'bartender',1)
 
 insert into cooks(email, password, first_name, last_name,birthday,shoes_size,clothes_size,first_login,user_role, restaurant_id, cook_type) values ('cook2@gmail.com','cook2','cook1','cook2','1994-07-27','no39','M',true,'cook',2,'pastaCook')
 insert into waiters(email, password, first_name, last_name,birthday,shoes_size,clothes_size,first_login,user_role, restaurant_id) values ('waiter2@gmail.com','waiter2','waiter2','waiter2','1994-07-25','no39','M',true,'waiter',2)
@@ -180,8 +180,8 @@ insert into work_shift_bartenders values(4, 2)
 
 --WORK DAYS
 insert into work_days (day)values('2017-02-26')
-insert into work_days(day)values('2016-03-01')
-insert into work_days(day)values('2016-03-01')
+insert into work_days(day)values('2017-03-01')
+insert into work_days(day)values('2017-03-02')
 
 insert into work_shifts_in_work_days (work_day_id,work_shift_id)values (1,1)
 insert into work_shifts_in_work_days (work_day_id,work_shift_id)values (1,2)
@@ -232,8 +232,8 @@ insert into bidder_offers(bidder_id,offer_id)values(2,4)
 
 insert into units(offer_id,unit_id)values(1,1)
 insert into units(offer_id,unit_id)values(1,2)
---ORDERS
 
+--ORDERS
 insert into orders(restaurant_id,drinks_status,dish_status) values (1, 'ordered', 'ordered')
 insert into orders(restaurant_id,drinks_status,dish_status) values (1, 'ordered', 'ordered')
 

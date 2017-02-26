@@ -80,17 +80,26 @@ public class BartenderController {
 		Bartender bartender= bartenderService.findOne(id);
 		Long restaurantId = bartender.getRestaurantId();		
 		Restaurant restaurant = restaurantService.findOne(restaurantId);
+		
+		System.out.println(restaurantId);
+		
 							
 		List<WorkShift> bartenderShifts= new ArrayList<WorkShift>();
 		
 		for(WorkDay day : restaurant.getWorkDays()) {
+			System.out.println(day.getDay());
+			System.out.println(day.getWorkShifts());
 			
 			for(WorkShift shift : day.getWorkShifts()) {
-				if(shift.getBartenders().size() != 0)
-					bartenderShifts.add(shift);
+				if(shift.getBartenders().size() != 0) 
+					bartenderShifts.add(shift);											
 			}
 		
 		}
+		
+		
+		System.out.println(restaurant.getWorkDays());
+		System.out.println(bartenderShifts);
 		
 		return bartenderShifts;		
 	}

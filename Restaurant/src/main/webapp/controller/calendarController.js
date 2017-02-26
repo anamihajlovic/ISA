@@ -40,11 +40,7 @@ calendarModule.controller("calendarController", ['$scope', '$location', 'employe
 		});							
 	
 	 
-    $scope.dayClick = function( date, allDay, jsEvent, view ){    	
-		alert("Bbbb");		
-       
-    };
-    
+ 
     $scope.eventClick = function(event){    	     
     	 
         var request =  employeeService.getWorkShift(event.id).then(function(response) {     
@@ -78,12 +74,12 @@ calendarModule.controller("calendarController", ['$scope', '$location', 'employe
         	        		        
         	return response;
         });                      
-        
+              
     	
     	if($scope.selectedShift == null)
     		$scope.eventVisible = true;
     	else if(event.id == $scope.selectedShift.id)
-    		$scope.eventVisible = false;
+    		$scope.eventVisible = !$scope.eventVisible;
     	else if(event.id != $scope.selectedShift.id)
     		$scope.eventVisible = true;
     	

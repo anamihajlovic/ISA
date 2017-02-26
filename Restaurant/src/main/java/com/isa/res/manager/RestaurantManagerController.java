@@ -725,8 +725,7 @@ public class RestaurantManagerController {
 		List<WorkShift> allShifts= new ArrayList<WorkShift>();
 		try {
 	
-		for(WorkDay day : restaurant.getWorkDays()) {
-			
+		for(WorkDay day : restaurant.getWorkDays()) {			
 			for(WorkShift shift : day.getWorkShifts()) {
 					allShifts.add(shift);
 			}

@@ -19,6 +19,7 @@ guestModule.controller('guestController', ['$scope', 'guestService','commonServi
 			}
 		);
 	}
+		
 
 	isLoggedIn();
 	$scope.infoMode = true;
@@ -397,6 +398,8 @@ guestModule.controller('guestController', ['$scope', 'guestService','commonServi
 				return 'green';
 			
 		}
+		
+		
 
 		
 		
