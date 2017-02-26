@@ -284,3 +284,11 @@ insert into segment_tables(segment_id,table_id) values(2,10)
 
 insert into restaurant_segments(restaurant_id, segment_id) values (1,1)
 insert into restaurant_segments(restaurant_id, segment_id) values (1,2)
+
+
+
+--RESERVATIONS
+insert into reservations(res_id, res_name, guest_id, date, start_time, end_time) values (1, 'Lanterna', 1, '2017-02-26', '17:30', '19:45')
+insert into reservations(res_id, res_name, guest_id, date, start_time, end_time) values (1, 'Lanterna', 1, '2017-02-26', '18:30', '20:00')
+insert into reservations(res_id, res_name, guest_id, date, start_time, end_time) values (1, 'Lanterna', 1, '2017-02-27', '17:30', '19:45')
+insert into reservations(res_id, res_name, guest_id, date, start_time, end_time) values (1, 'Lanterna', 1, '2017-02-28', '17:30', '19:45')
