@@ -34,12 +34,10 @@ public class WorkShift {
 	private Long id;
 	
 	@Column  (name = "start_time")
-	@Temporal(TemporalType.TIME)
-	private Date startTime;
+	private String startTime;
 	
 	@Column	 (name = "end_time")
-	@Temporal(TemporalType.TIME)
-	private Date endTime;
+	private String endTime;
 	
 	@Enumerated(EnumType.STRING)
 	@NotNull
@@ -66,7 +64,7 @@ public class WorkShift {
 	
 	public WorkShift(){}
 
-	public WorkShift(Long id, Date startTime, Date endTime, ShiftType shiftType, Date day, List<Waiter> waiters, List<Cook> cooks, List<Bartender> bartenders) {
+	public WorkShift(Long id, String startTime, String endTime, ShiftType shiftType, Date day, List<Waiter> waiters, List<Cook> cooks, List<Bartender> bartenders) {
 		super();
 		this.id = id;
 		this.startTime = startTime;
@@ -86,19 +84,19 @@ public class WorkShift {
 		this.id = id;
 	}
 
-	public Date getStartTime() {
+	public String getStartTime() {
 		return startTime;
 	}
 
-	public void setStartTime(Date startTime) {
+	public void setStartTime(String startTime) {
 		this.startTime = startTime;
 	}
 
-	public Date getEndTime() {
+	public String getEndTime() {
 		return endTime;
 	}
 
-	public void setEndTime(Date endTime) {
+	public void setEndTime(String endTime) {
 		this.endTime = endTime;
 	}
 

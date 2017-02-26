@@ -1,0 +1,139 @@
+<style type = "text/css">
+	th {text-align : left; padding-right:10px }
+	
+	td {text-align: left}
+	
+</style>
+
+<div>
+<div class = "col-lg-2">
+</div>
+<div class = "col-lg-8">
+	<br/>
+	<div ui-calendar="uiConfig.calendar" ng-model="eventSources"></div>
+	
+	<br/>
+	<div class="panel panel-default" ng-show = "eventVisible">
+    <div class="panel-heading">{{selectedShift.day}} : {{selectedShift.name}} </div>
+    <div class="panel-body">
+ 
+    <table>
+    <tr>
+    <th>Start time:</th>
+    <td>{{selectedShift.startTime}}</td>
+    </tr>
+    <tr>
+    <th>End time:</th>
+    <td>{{selectedShift.endTime}}</td>
+    </tr>
+    <tr>
+    <th>{{employeeType1}}:</th>
+    <td><div ng-repeat = "employee1 in assignedEmployees1"> {{employee1.firstName}} {{employee1.lastName}}</div></td>
+    </tr>
+    
+    <tr>
+    <th>{{employeeType2}}:</th>
+    <td><div ng-repeat = "employee2 in assignedEmployees2"> {{employee2.firstName}} {{employee2.lastName}}</div></td>
+    </tr>
+    <tr>
+     
+    <th>{{employeeType3}}:</th>
+    <td><div ng-repeat = "employee3 in assignedEmployees3"> {{employee3.firstName}} {{employee3.lastName}}</div></td>
+    
+    </tr>
+    </table>
+   
+          
+    </div>     
+    </div>
+    
+    <p ng-show = "!eventVisible"><i>*To see details of a certain shift, click on it on the calendar.</i></p>
+    
+</div>
+</div>
+
+<!-- ------------------------------------------MAKE SHIFT----------------------------------------------------------- -->
+ <!-- Trigger the modal with a button -->
+<button type="button" id="modalBtnAddFirsrShift"  data-backdrop="static" data-keyboard="false"  class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModalAddFirstShif" style="display:none"></button>
+
+<!-- Modal -->
+<div id="myModalAddFirstShif" class="modal fade"  >
+  <div class="modal-dialog ">
+
+    <!-- Modal content-->
+    <div class="modal-content velicina">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title" id="modalTitle">Define Shift ! </h4>
+      </div>
+      <div class="modal-body">  
+       <table>
+	       <tbody>
+		       <tr>
+					<th>Cooks</th>
+					<th></th>
+				</tr>
+				<tr ng-repeat="cook in cooks">
+						<td >
+				    		{{cook.firstName}}   {{cook.lastName}}
+						</td>
+						<td>
+				    		<input type="checkbox"  value=""  ng-model="cook.selected">
+						</td>
+				</tr>
+	       </tbody>
+       </table>
+      
+       <hr>
+         <table>
+	       <tbody>
+		       <tr>
+					<th>Bartenders</th>
+					<th></th>
+				</tr>
+				<tr ng-repeat="bartender in bartenders">
+						<td>
+				    		{{bartender.firstName}}   {{bartender.lastName}}
+						</td>
+						<td>
+				    		<input type="checkbox"  value="" ng-model="bartender.selected">
+						</td>
+				</tr>
+	       </tbody>
+       </table>
+        <hr>
+         <table>
+	       <tbody>
+		       <tr>
+					<th>Waiters</th>
+					<th></th>
+			
+				</tr>
+				<tr ng-repeat="waiter in waiters">
+						<td>
+				    		{{waiter.firstName}}   {{waiter.lastName}}
+						</td>
+						<td>
+				    		<input type="checkbox"  value="" ng-model="waiter.selected">
+						</td>
+					
+						
+				</tr>
+	       </tbody>
+       </table>
+       	<select class="form-control"  ng-model="$parent.typeOfShift">
+   		<option value="" disabled="" selected="">Select shift</option>
+     	<option value="1">first</option>
+		<option value="2">second</option>
+		<option value="3">third</option>
+	</select>	
+	         			
+      </div>
+      <div class="modal-footer">
+       <button  class="btn btn-default" ng-click="MakeShift()"><span class="glyphicon glyphicon-ok"  ></span> Finish</button>
+		 <button type="button" id ="cancelShift"class="btn btn-default" data-dismiss="modal">Cancel</button>
+      </div>
+    </div>
+
+  </div>
+</div>	

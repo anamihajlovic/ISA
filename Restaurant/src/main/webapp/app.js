@@ -142,8 +142,10 @@ angular.module('restaurants', [ 'ui.router','ui.calendar' ,
        	url : '/updateResManager',
         templateUrl : 'html/resManager/resManagerUpdateProfile.html',
         }) 
-        
-        
+        .state('resManager.calendar', {
+           	url : '/calendar',
+            templateUrl : 'html/resManager/resManagerCalendar.html',
+            }) 
         .state('resManager.updateRestaurant', {
            	url : '/updateRestaurant',
             templateUrl : 'html/resManager/resManagerUpdateRestaurant.html',

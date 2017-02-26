@@ -32,6 +32,7 @@ import com.isa.dish.*;
 import com.isa.dish.DishService;
 import com.isa.drink.*;
 import com.isa.drink.DrinkService;
+import com.isa.employed.Employed;
 import com.isa.foodstuf.Foodstuff;
 import com.isa.foodstuf.FoodstuffService;
 import com.isa.offer.Offer;
@@ -51,6 +52,12 @@ import com.isa.offer.*;
 import com.isa.user.Role;
 import com.isa.waiter.Waiter;
 import com.isa.waiter.WaiterService;
+import com.isa.work.day.WorkDay;
+import com.isa.work.day.WorkDayService;
+import com.isa.work.shift.ShiftType;
+import com.isa.work.shift.WorkShift;
+import com.isa.work.shift.WorkShiftService;
+
 
 
 @RestController
@@ -73,6 +80,8 @@ public class RestaurantManagerController {
 	private final ResOrderUnitService resOrderUnitService;
 	private final OfferUnitService offerUnitService;
 	private final OfferService offerService;
+	private final WorkShiftService workShiftService;
+	private final WorkDayService workDayService;
 	private RestaurantManager restaurantManager;
 	private int visina = 0;
 	private int sirina = 0 ;
@@ -83,7 +92,8 @@ public class RestaurantManagerController {
 			BartenderService bartenderService, BidderService bidderService, FoodstuffService foodstuffService,
 			DrinkService drinkService, DishService dishService,ResTableService resTableService,
 			ResSegmentService resSegmentService,ResOrderService resOrderService,OfferService offerService,
-			ResOrderUnitService resOrderUnitService,OfferUnitService offerUnitService
+			ResOrderUnitService resOrderUnitService,OfferUnitService offerUnitService,WorkShiftService workShiftService,
+			WorkDayService workDayService
 			) {
 		super();
 		this.httpSession = httpSession;
@@ -102,6 +112,8 @@ public class RestaurantManagerController {
 		this.offerService= offerService;
 		this.resOrderUnitService = resOrderUnitService;
 		this.offerUnitService = offerUnitService;
+		this.workShiftService = workShiftService;
+		this.workDayService = workDayService;
 	}
 
 	@GetMapping("/checkRights")
@@ -705,9 +717,156 @@ public class RestaurantManagerController {
 			
 			return "nije_ok";
 		}
-	
 		
 	}
+	@GetMapping(path = "/getAllShifts")
+	public List<WorkShift> getSchedule() {
+		Restaurant restaurant = restaurantService.findOne(restaurantManager.getIdRestaurant());					
+		List<WorkShift> allShifts= new ArrayList<WorkShift>();
+		try {
 	
+		for(WorkDay day : restaurant.getWorkDays()) {
+			
+			for(WorkShift shift : day.getWorkShifts()) {
+					allShifts.add(shift);
+			}
+		
+		}
+		
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+		return allShifts;	
+	}
+	
+
+	@PostMapping(path = "/MakeFirstShift/{smena}/{datum}/{cooks}/{waiters}/{bartenders}")
+	public String MakeFirstShift(@PathVariable("smena") Integer smena,@PathVariable("datum") String datum,@PathVariable("cooks") String cooks,@PathVariable("waiters") String waiters,@PathVariable("bartenders") String bartenders) {
+		if(cooks!=null){
+				List<Cook> kuvari = new ArrayList<Cook>();
+				List<Waiter> konobari = new ArrayList<Waiter>();
+				List<Bartender> barmeni = new ArrayList<Bartender>();
+				
+				String bezPoslednjegKuvar = cooks.replace(cooks.substring(cooks.length()-1), "");
+				String bezPoslednjegKonobar = waiters.replace(waiters.substring(waiters.length()-1), "");
+				String bezPoslednjegBarmen = bartenders.replace(bartenders.substring(bartenders.length()-1), "");
+				
+
+				String [] parsiranoKuvar = bezPoslednjegKuvar.split(",");
+				String [] parsiranoKonobar = bezPoslednjegKonobar.split(",");
+				String [] parsiranoBarmen = bezPoslednjegBarmen.split(",");
+				
+				List<Long> sifreKuvara= new ArrayList<Long>();
+				List<Long> sifreKonobara= new ArrayList<Long>();
+				List<Long> sifreBarmena= new ArrayList<Long>();
+				
+				for(String s:parsiranoKuvar){
+					sifreKuvara.add(Long.parseLong(s));
+				}
+				for(String s:parsiranoKonobar){
+					sifreKonobara.add(Long.parseLong(s));
+				}
+				
+				for(String s:parsiranoBarmen){
+					sifreBarmena.add(Long.parseLong(s));
+				}
+				
+				for(Long sifra:sifreKuvara){
+					kuvari.add(cookService.findOne(sifra));
+				}
+				for(Long sifra:sifreKonobara){
+					konobari.add(waiterService.findOne(sifra));
+				}
+				
+				for(Long sifra:sifreBarmena){
+					barmeni.add(bartenderService.findOne(sifra));
+				}
+		
+					
+				Restaurant restaurant = restaurantService.findOne(restaurantManager.getIdRestaurant());	
+				SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+				String[] dpTokens = datum.split("-");
+				Date workDay = null; 
+				try {
+					workDay = sdf.parse(dpTokens[0]+"-"+dpTokens[1]+"-"+dpTokens[2]);
+				} catch (ParseException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				ShiftType tip;
+				WorkShift ws = new WorkShift();
+				ws.setDay(workDay);
+				if(smena==1){
+					ws.setShiftType(ShiftType.firstShift);
+					ws.setStartTime("08:00:00");
+					ws.setEndTime("13:00:00");
+					tip = ShiftType.firstShift;
+				}else if(smena==2){
+					ws.setShiftType(ShiftType.secondShift);
+					ws.setStartTime("13:00:01");
+					ws.setEndTime("18:00:00");
+					tip=ShiftType.secondShift;
+					
+				}else{
+					ws.setShiftType(ShiftType.thirdShift);
+					ws.setStartTime("18:00:01");
+					ws.setEndTime("23:00:00");
+					tip = ShiftType.thirdShift;
+				}
+				
+				ws.setCooks(kuvari);
+				ws.setWaiters(konobari);
+				ws.setBartenders(barmeni);
+				
+				int uslo = 0;
+				int brojac = 0;
+				int usloo = 0;
+			///////////////////////////////
+				
+				////////////////////////////////
+				for(WorkDay w:restaurant.getWorkDays()){
+					if(w.getDay().equals(workDay)){
+						uslo++;
+						List<WorkShift> smene = new ArrayList<WorkShift>();
+						for(WorkShift workShift:w.getWorkShifts()){
+							if(workShift.getDay().equals(workDay) && workShift.getShiftType()==tip){
+								System.out.println("usloo");
+								workShiftService.delete(workShift.getId());
+							}else{
+								smene.add(workShift);
+							}
+							
+						}
+						w.setWorkShifts(smene);
+						workShiftService.save(ws);
+						w.getWorkShifts().add(ws);
+						w.setId(w.getId());
+						workDayService.save(w);
+						
+						restaurant.getWorkDays().get(brojac).setId(w.getId());
+						restaurantService.save(restaurant);
+						
+					}
+					brojac++;
+				}
+				if(uslo==0){
+					workShiftService.save(ws);
+					List<WorkShift>smene = new ArrayList<WorkShift>();
+					smene.add(ws);
+					WorkDay newDay = new WorkDay();
+					newDay.setDay(workDay);
+					newDay.setWorkShifts(smene);
+					workDayService.save(newDay);
+					restaurant.getWorkDays().add(newDay);
+					restaurantService.save(restaurant);
+			
+			}
+			
+			return "dodato";
+		}
+			else
+				return "nije";
+					
+		}
 	
 }

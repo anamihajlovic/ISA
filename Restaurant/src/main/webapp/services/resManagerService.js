@@ -142,6 +142,15 @@ resManagerServices.service('resManagerService',['$http', function($http) {
 	this.showAllActualffersAfter = function(potreban_event) {		
 		return $http.get("/resManager/allActualOffers/"+potreban_event.target.id);
 	}
-	
+	this.readWorkSchedule = function() {					
+		return $http.get("/resManager/getAllShifts");	
+	}
+	this.getWorkShift = function(id) {
+		return $http.get("/workShifts/getWorkShift/"+id);
+	}
+	this.makeShift = function(smena,datum,cookNumbers,waiterNumbers,bartenderNumbers) {
+		return $http.post("/resManager/MakeFirstShift/"+smena+"/"+datum+"/"+cookNumbers+"/"+waiterNumbers+"/"+bartenderNumbers);
+	}
+
 	
 }]); 

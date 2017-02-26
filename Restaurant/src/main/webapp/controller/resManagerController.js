@@ -1,9 +1,9 @@
-var resManagerModule = angular.module('resManager.controller', []);
+var resManagerModule = angular.module('resManager.controller', ['ui.calendar']);
 var visina ;
 var sirina;
 var ID;
 resManagerModule.controller('resManagerController', ['$scope', 'resManagerService','$location',
-  	function ($scope,resManagerService, $location) {
+  	function ($scope,resManagerService, $location, $filter) {
 	
 	function checkRights() {
 		resManagerService.checkRights().then(
@@ -31,7 +31,7 @@ resManagerModule.controller('resManagerController', ['$scope', 'resManagerServic
 	}
 	Restaurant();
 	
-	//////////////////////////////////////////////////////////
+	//////////////////////////////////////GOOGLE MAPS//////////////////////////////////////////////////////////////
 	function myMap() {
 		var mapProp= {
 		    zoom:15,
@@ -930,6 +930,172 @@ resManagerModule.controller('resManagerController', ['$scope', 'resManagerServic
 		});
 		
 	}
+	
+/////////////////////////////////////////////////////KALENDARSKI PRIKAZ///////////////////////////////////////////////////
+	$scope.eventSources = [];
+	$scope.eventVisible = false;
+
+	
+			
+			var newRequest = resManagerService.readWorkSchedule().then(function (response){
+				var shifts = response.data;
+				$scope.events = [];
+				for(i=0; i<shifts.length; i++) {												
+								
+					if(shifts[i].shiftType == 'firstShift')								
+						event = {id: shifts[i].id, title: 'First shift', start: shifts[i].day, color : '#c9c9ff', textColor: 'black'}
+					else if(shifts[i].shiftType == 'secondShift')
+						event = {id: shifts[i].id, title: 'Second shift', start: shifts[i].day, color : '#e1f7d5', textColor: 'black'}
+					else if(shifts[i].shiftType == 'thirdShift')
+						event = {id: shifts[i].id, title: 'Third shift', start: shifts[i].day, color : '#f1cbff', textColor: 'black'}
+					else
+						event = {id: shifts[i].id, title: shifts[i].startTime + '-' + shifts[i].endTime, start: shifts[i].day, color : '#ffbdbd', textColor: 'black'}
+							
+					$scope.events.push(event);
+								
+				}
+				 $scope.eventSources.push($scope.events); 																	
+			});
+
+		
+	
+var datum ; 
+$scope.dayClick = function( date, allDay, jsEvent, view ){ 
+	datum = date.format();
+	AllWaiters();
+	AllCooks();
+	AllBartenders();
+	AllSegments();
+	document.getElementById("modalBtnAddFirsrShift").click();
+
+			
+	
+   
+};
+
+
+$scope.eventClick = function(event){    	     
+	 
+    var request =  resManagerService.getWorkShift(event.id).then(function(response) {     
+    	
+    	$scope.selectedShift = response.data;
+    	
+    	if($scope.selectedShift.shiftType == "firstShift")
+    		$scope.selectedShift.name = "First shift";
+    	
+    	else if($scope.selectedShift.shiftType == "secondShift")        	
+    		$scope.selectedShift.name = "Second shift";
+    	
+    	else if($scope.selectedShift.shiftType == "thirdShift")
+    		$scope.selectedShift.name = "Third shift";
+    	
+    	else
+    		$scope.selectedShift.name = "Shift";
+    	
+    	
+    		$scope.assignedEmployees1 = $scope.selectedShift.bartenders;
+    		$scope.employeeType1 = "Bartenders";
+    	
+  
+    		$scope.assignedEmployees2 = $scope.selectedShift.cooks;
+    		$scope.employeeType2 = "Cooks";
+    		
+
+    		$scope.assignedEmployees3 = $scope.selectedShift.waiters;
+    		$scope.employeeType3 = "Waiters";
+    	
+    	        		        
+    	return response;
+    });                      
+    
+	
+	if($scope.selectedShift == null)
+		$scope.eventVisible = true;
+	else if(event.id == $scope.selectedShift.id)
+		$scope.eventVisible = false;
+	else if(event.id != $scope.selectedShift.id)
+		$scope.eventVisible = true;
+	
+};
+
+
+$scope.uiConfig = {
+		calendar: {
+		viewRender: function (view) {
+		//some statements here
+		},
+		renderCalender: $scope.renderCalender,
+		height: 520,
+		editable: false,
+		header: {
+		//left: 'month basicWeek basicDay agendaWeek agendaDay',
+		left: 'month basicWeek basicDay',
+		center: 'title',
+		right: 'today prev,next'
+		},
+		eventClick: $scope.eventClick,
+		dayClick: $scope.dayClick,
+		eventDrop: $scope.alertOnDrop,
+		eventResize: $scope.alertOnResize,
+		eventRender: $scope.eventRender
+		}
+		};
+
+
+$scope.MakeShift = function(){
+	//$scope.shift.day = datum;
+	//alert($scope.shift.day )
+	//alert(smena)
+	var segmenti = $scope.segmenti;
+	alert(segmenti)
+	var smena = $scope.typeOfShift;
+	//alert(smena)
+	var cookNumbers = '';
+	angular.forEach($scope.cooks, function(cook) {
+	    if (cook.selected) {
+	    	cookNumbers += cook.id + ',';
+	    }
+	});
+	var waiterNumbers = '';
+	angular.forEach($scope.waiters, function(waiter) {
+	    if (waiter.selected) {
+	    	waiterNumbers += waiter.id + ',';
+	    }
+	});
+	var bartenderNumbers = '';
+	angular.forEach($scope.bartenders, function(bartender) {
+	    if (bartender.selected) {
+	    	bartenderNumbers += bartender.id + ',';
+	    }
+	});
+	/*
+	angular.forEach($scope.waiters, function(bartender) {
+	    if (w.selected) {
+	    	bartenderNumbers += waiter.id + ',';
+	    }
+	});
+	*/
+	var request = resManagerService.makeShift(smena,datum,cookNumbers,waiterNumbers,bartenderNumbers).then(function(response) {
+		$scope.data = response.data;
+	//	alert(response.data)
+		return response;
+	});			
+		request.then(function (data) {
+			if($scope.data != "nije") {
+				toastr.success("Success!");	
+				document.getElementById("modalBtnResponsability").click();
+				//window.location.reload();
+				
+			} else {
+				toastr.error("Something wrong");
+			
+			}
+
+	});
+		
+		
+}	
+
 
 
    
