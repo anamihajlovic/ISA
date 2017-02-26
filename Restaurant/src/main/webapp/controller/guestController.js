@@ -338,14 +338,14 @@ guestModule.controller('guestController', ['$scope', 'guestService','commonServi
 			  $scope.reservation.guestId = $scope.guest.id;
 			  
 			  //ovo je bilo za potrebe testiranja, cuvanje rezervacije ce biti nakon izabranih stolova
-			 /* var request = guestService.addReservation($scope.reservation).then(function(response){
+			  var request = guestService.addReservation($scope.reservation).then(function(response){
 					$scope.data = response.data;
 					console.log($scope.data);
 					$scope.data.date = $filter('date')($scope.data.date, "dd.MM.yyyy");  // for type="date" binding; moze proizvoljan format datuma da se dobije
 					return response;
-				});*/
+				});
 			  
-			  showTables();
+			  //showTables();
 
 
 		  }
@@ -390,12 +390,19 @@ guestModule.controller('guestController', ['$scope', 'guestService','commonServi
 			}
 		
 		
-		$scope.getTableColor = function(id) {
-			console.log("color " + id);
-			if (id == 1)
-				return 'red';
-			else
-				return 'green';
+		//$scope.clicked = false;
+		$scope.clickedTableId = "";
+		$scope.setTableColor = function(id) {
+			console.log("setColor"  + id);
+		   // $scope.clicked = !$scope.clicked;
+		   // $scope.clickedTableId = id;
+		    
+		    if($scope.clickedTableId == id)
+		    	$scope.clickedTableId = "";
+		    else
+		    	$scope.clickedTableId = id;
+		    console.log("clicked id" + $scope.clickedTableId);
+
 			
 		}
 		

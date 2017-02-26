@@ -13,6 +13,12 @@ background: #0AAC04;
 	background: #EB0505;
 }
 
+.clicked {
+	background: yellow;
+}
+
+
+
 </style>
 
 <h2 align="center">Choose table(s)</h2>
@@ -22,7 +28,8 @@ background: #0AAC04;
 <table class = "tablesTable">
 	<tr ng-repeat="row in tables">
 		<td ng-repeat="table in row">                        
-			<button id={{table.id}}  ng-click="buttonShowTable($event)"  ng-class="{'exists':table.state == 'exists','not_exists':table.state == 'not_exists','reserved':table.state == 'reserved'}" ng-disabled="{{table.state == 'reserved'}}" class = "tableBtns" title="{{'Segment: ' + table.segment + ' for ' + table.size}}"> </button>
+			<button  ng-click="setTableColor(table.id)" ng-class="{'exists':table.state == 'exists','not_exists':table.state == 'not_exists','reserved':table.state == 'reserved', 'clicked': clickedTableId==table.id}" ng-disabled="{{table.state == 'reserved'}}" class = "tableBtns" title="{{'Segment: ' + table.segment + ' for ' + table.size}}"></button>
+			<span ng-show="clicked && clickedTableId==table.id" >*</span>
 		</td>				
 	</tr>
 </table>
