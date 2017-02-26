@@ -137,7 +137,7 @@ public class OrderController {
 				
 				restaurantDrinkOrders.add(order);				
 			}						
-		System.out.println(restaurantDrinkOrders.size());
+		
 		return restaurantDrinkOrders;	
 	}
 	
