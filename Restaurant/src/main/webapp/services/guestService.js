@@ -62,8 +62,8 @@ guestServices.service('guestService', ['$http', function($http) {
 		return $http.post("/reservations/add", reservation);
 	}
 	
-	this.getTables = function(id){
-		return $http.get("/resTables/getTables/" + id);
+	this.getTables = function(id, date, startTime, endTime){
+		return $http.get("/resTables/getTables/" + id +"/" + date + "/" + startTime + "/" + endTime);
 	}
 	
 	

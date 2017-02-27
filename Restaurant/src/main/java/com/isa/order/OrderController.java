@@ -1,6 +1,8 @@
 package com.isa.order;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
@@ -20,6 +22,12 @@ import com.isa.drink.Drink;
 import com.isa.ordered.dish.DishStatus;
 import com.isa.ordered.dish.OrderedDish;
 import com.isa.ordered.dish.OrderedDishService;
+import com.isa.restaurant.Restaurant;
+import com.isa.restaurant.RestaurantService;
+import com.isa.waiter.Waiter;
+import com.isa.waiter.WaiterService;
+import com.isa.work.day.WorkDay;
+import com.isa.work.shift.WorkShift;
 
 @RestController
 @RequestMapping("/orders")
@@ -29,19 +37,128 @@ public class OrderController {
 	private final OrderService orderService;
 	private final OrderedDishService orderedDishService;
 	private final DishService dishService;
+	private final RestaurantService restaurantService;
+	private final WaiterService waiterService;
 	
-	@Autowired
-	public OrderController(HttpSession httpSession,final  OrderService orderService, final OrderedDishService orderedDishService, final DishService dishService) {		
+	@Autowired		
+	public OrderController(HttpSession httpSession, OrderService orderService, OrderedDishService orderedDishService,
+			DishService dishService, RestaurantService restaurantService, WaiterService waiterService) {
+		super();
 		this.httpSession = httpSession;
 		this.orderService = orderService;
 		this.orderedDishService = orderedDishService;
 		this.dishService = dishService;
+		this.restaurantService = restaurantService;
+		this.waiterService = waiterService;
 	}
-	
+
 	@GetMapping(path = "/getOrder/{id}")
 	public Order getOrder(@PathVariable Long id) {		
 		Order order = (Order) orderService.findOne(id);
 		return order;
+	}
+	
+
+	@PutMapping(path = "/acceptOrder/{id}")
+	public Order acceptOrder(@PathVariable Long id) {
+		
+		try{
+			Waiter activeWaiter = (Waiter) httpSession.getAttribute("user");
+			Order order = (Order) orderService.findOne(id);
+			order.setOrderStatus(OrderStatus.accepted);
+						
+			Date now = new Date();
+			SimpleDateFormat timeFormatter = new SimpleDateFormat("hh:mm:ss");
+			String currentTime = timeFormatter.format(now);						
+			order.setAcceptanceTime(currentTime);						
+			
+			
+			order.setWaiterId(activeWaiter.getId());
+			orderService.save(order);
+			return order;
+		}catch(Exception e) {
+			return null;
+		}			
+	}
+	
+	@PutMapping(path = "/finishOrder/{id}")
+	public String finishOrder(@PathVariable Long id) {
+	
+		try{				
+			Order order = (Order) orderService.findOne(id);
+			order.setOrderStatus(OrderStatus.paid);										
+			orderService.save(order);
+			return "success";
+		}catch(Exception e) {
+			return "failure";
+		}	
+	}
+	
+	
+	@GetMapping(path = "/compareWaiters/{orderId}")
+	public Waiter compareWaiters(@PathVariable Long orderId) {
+						
+		try{
+			Date today = new Date();
+			String dbFormat = "yyyy-MM-dd";
+			
+			SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+			String format = formatter.format(today);						
+			
+			Order order = orderService.findOne(orderId);
+			Waiter firstWaiter = waiterService.findOne(order.getWaiterId());
+			Waiter currentWaiter = (Waiter) httpSession.getAttribute("user");
+			WorkShift waiterShift = null;
+			
+			//pronadji smenu konobara
+			Restaurant restaurant = restaurantService.findOne(firstWaiter.getRestaurantId());
+			for(WorkDay day : restaurant.getWorkDays()) {								
+				String workDate = formatter.format(day.getDay());
+				if(workDate.equals(format)) {
+								
+					for(WorkShift shift : day.getWorkShifts())
+						if(shift.getWaiters().indexOf(firstWaiter) == -1) {
+							waiterShift = shift;
+							break;
+						}
+				}
+																		
+			}
+			
+			if(waiterShift != null) {
+				String shiftEndString = waiterShift.getEndTime();
+				String acceptanceTime = order.getAcceptanceTime();
+				String timeFormat = "yyyy-MM-dd";
+				
+				SimpleDateFormat timeFormatter = new SimpleDateFormat("hh:mm:ss");
+				String currentTime = timeFormatter.format(today);			
+				
+				Date acceptance = timeFormatter.parse(acceptanceTime);
+				Date shiftEnd = timeFormatter.parse(shiftEndString);
+				Date current = timeFormatter.parse(currentTime);
+				
+
+		        long firstWaiterDuration = shiftEnd.getTime() - acceptance.getTime();
+				long secondWaiterDuration = current.getTime() - shiftEnd.getTime();
+				
+				if(firstWaiterDuration >= secondWaiterDuration) {
+					order.setWaiterId(firstWaiter.getId());
+					orderService.save(order);
+					return firstWaiter;
+				}
+					
+				else {
+					order.setWaiterId(currentWaiter.getId());
+					orderService.save(order);
+					return currentWaiter;
+				}
+			}
+			return null;					
+		}catch(Exception e){
+			System.out.println(e);
+			return null;
+		}
+		
 	}
 		
 	@GetMapping(path = "/getRestaurantDishOrders/{restaurantId}")
@@ -51,7 +168,7 @@ public class OrderController {
 		List<Order> restaurantDishOrders = new ArrayList<Order>();
 		
 		for(Order order : allOrders) 
-			if(order.getRestaurantId().equals(restaurantId) && order.getOrderedDish().size() > 0) {
+			if(order.getRestaurantId().equals(restaurantId) && order.getOrderStatus().equals(OrderStatus.accepted) && order.getOrderedDish().size() > 0) {
 				
 				for(OrderedDish orderedDish : order.getOrderedDish()) {
 					Dish dish = dishService.findOne(orderedDish.getDishId());
@@ -121,7 +238,7 @@ public class OrderController {
 		
 		List<Order> restaurantDrinkOrders = new ArrayList<Order>();
 		for(Order order : allOrders)
-			if(order.getRestaurantId().equals(restaurantId) && order.getOrderedDrinks().size() > 0) {
+			if(order.getRestaurantId().equals(restaurantId) && (order.getOrderStatus().equals(OrderStatus.accepted) || order.getOrderStatus().equals(OrderStatus.ready))  && order.getOrderedDrinks().size() > 0) {
 				
 				for(Drink drink : order.getOrderedDrinks()) {
 					if(!order.getDrinks().contains(drink)) {
@@ -137,33 +254,85 @@ public class OrderController {
 				
 				restaurantDrinkOrders.add(order);				
 			}						
-		System.out.println(restaurantDrinkOrders.size());
+		
 		return restaurantDrinkOrders;	
 	}
 	
 	
 	@GetMapping(path = "/getAllRestaurantOrders/{restaurantId}")
 	public List<Order> getAllOrders(@PathVariable Long restaurantId) {
-		List<Order> allOrders = orderService.findAll();
-		
 		List<Order> restaurantOrders = new ArrayList<Order>();
-		for(Order order : allOrders)
-			if(order.getRestaurantId() == restaurantId)
-				restaurantOrders.add(order);
 		
-		return restaurantOrders;
-		
+		try{
+			List<Order> allOrders = orderService.findAll();			
+			
+			for(Order order : allOrders)
+				if(order.getRestaurantId().equals(restaurantId)) 														
+					restaurantOrders.add(order);
+				
+		} catch(Exception e) {
+			System.out.println(e);
+			return null;
+		}
+							
+		return restaurantOrders;		
 	}
+	
+	@GetMapping(path = "/getServedRestaurantOrders/{restaurantId}")
+	public List<Order> getServedOrders(@PathVariable Long restaurantId) {
+		List<Order> restaurantOrders = new ArrayList<Order>();
+		
+		try{
+			List<Order> allOrders = orderService.findAll();			
+			
+			for(Order order : allOrders)
+				if(order.getRestaurantId().equals(restaurantId) && order.getOrderStatus().equals(OrderStatus.served)) {
+					
+					for(Drink drink : order.getOrderedDrinks()) 
+						if(!order.getDrinks().contains(drink)) {
+							order.getDrinks().add(drink);
+							order.getDrinkQuantity().put(drink.getId(), new Integer(1));						
+						
+						} else {
+							int value = order.getDrinkQuantity().get(drink.getId());
+							value++;
+							order.getDrinkQuantity().put(drink.getId(), new Integer(value));						
+						}	
+					
+					for(OrderedDish orderedDish : order.getOrderedDish()) {
+						Dish dish = dishService.findOne(orderedDish.getDishId());
+						if(!order.getDishes().contains(dish)) {
+							order.getDishes().add(dish);
+							order.getDishQuantity().put(dish.getId(), new Integer(1));							
+							
+						} else {
+							int value = order.getDishQuantity().get(dish.getId());						
+							value++;
+							order.getDishQuantity().put(dish.getId(), new Integer(value));												
+						}	
+					}
+					restaurantOrders.add(order);								
+				}
+					
+		
+		} catch(Exception e) {
+			System.out.println(e);
+			return null;
+		}							
+		return restaurantOrders;		
+	}
+	
+	
 	
 	@PutMapping(path = "/prepareDrinks")
 	public Order prepareDrinks(@RequestBody Order order) {			
 		
-		if(order != null) {
-			order.setId(order.getId());
+		if(order != null) {			
 			order.setDrinksStatus(OrderItemStatus.prepared);			
 			
 			try{
-				orderService.save(order);			
+				orderService.save(order);	
+				orderReady(order);
 			} catch(Exception e) {
 				System.out.println(e);
 				System.out.println("Greska pri update-u porudzbine");
@@ -173,6 +342,25 @@ public class OrderController {
 		
 		return order;		
 	}
+	
+	@PutMapping(path = "/serveOrder")
+	public String serveOrder(@RequestBody Order order) {
+		
+		if(order != null) {
+			order.setOrderStatus(OrderStatus.served);
+		
+			try{
+				orderService.save(order);
+			}catch(Exception e) {
+				System.out.println(e);
+				return "failure";
+			}
+		}
+		
+		return "success";
+	}
+		
+	
 	
 	@PutMapping(path = "/prepareDish/{orderId}")
 	public String prepareDish(@PathVariable Long orderId, @RequestBody Dish dish) {
@@ -207,6 +395,7 @@ public class OrderController {
 				
 				Order order = orderService.findOne(orderId);
 				dishOrderReady(order);
+				orderReady(order);
 				
 			} catch(Exception e) {
 				System.out.println(e);
@@ -216,8 +405,7 @@ public class OrderController {
 		return "success";
 	}
 	
-	public void dishOrderReady(Order order) {
-		
+	public void dishOrderReady(Order order) {		
 		boolean flag = true;
 		for(OrderedDish dish : order.getOrderedDish())
 			if(!dish.getStatus().equals(DishStatus.ready))
@@ -225,11 +413,30 @@ public class OrderController {
 		
 		if(flag) {
 			try{
+				order.setDishStatus(OrderItemStatus.prepared);
 				orderService.save(order);
 			}catch(Exception e) {
 				System.out.println(e);				
 			}			
 		}
+	}
+	
+	
+	public void orderReady(Order order) {
+		
+		if((order.getOrderedDish().size() == 0 && order.getDrinksStatus().equals(OrderItemStatus.prepared)) ||
+		   (order.getOrderedDrinks().size() == 0 && order.getDishStatus().equals(OrderItemStatus.prepared))	||
+		   (order.getOrderedDish().size() > 0 && order.getOrderedDrinks().size() > 0 && order.getDrinksStatus().equals(OrderItemStatus.prepared) && order.getDishStatus().equals(OrderItemStatus.prepared)))    {
+					   
+			order.setOrderStatus(OrderStatus.ready);
+			
+			try{
+				orderService.save(order);
+			} catch(Exception e) {
+				System.out.println(e);
+			}
+		
+		}																	
 	}
 	
 	

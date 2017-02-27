@@ -1,22 +1,15 @@
 package com.isa.reservation;
 
 import java.util.Date;
-import java.util.List;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
-
-import com.isa.res.table.ResTable;
 
 @Entity
 @Table(name="reservations")
@@ -39,28 +32,33 @@ public class Reservation {
 	
 	@NotNull
 	@Temporal(TemporalType.DATE)
-	@Column (name= "date")
+	@Column (name= "date", nullable=false)
 	private Date date;
 		
 	
 	@NotNull
-	@Column (name= "start_time")
+	@Column (name= "start_time", nullable=false)
 	private String startTime;
 	
 	@NotNull
-	@Column (name= "end_time")
+	@Column (name= "end_time", nullable=false)
 	private String endTime;
+	
+	@NotNull
+	@Column (name= "tables_id", nullable=false)
+	private String tables; //oblika idstola1;idstola2;
 
 	
 	public Reservation() {}
 	
-	public Reservation(Long resId, String resName, Long guestId, Date date,  String startTime, String endTime) {
+	public Reservation(Long resId, String resName, Long guestId, Date date,  String startTime, String endTime, String tables) {
 		this.resId = resId;
 		this.resName = resName;
 		this.guestId = guestId;
 		this.date = date;
 		this.startTime = startTime;
 		this.endTime = endTime;
+		this.tables = tables;
 	}
 
 	public Long getId() {
@@ -117,6 +115,14 @@ public class Reservation {
 
 	public void setEndTime(String endTime) {
 		this.endTime = endTime;
+	}
+
+	public String getTables() {
+		return tables;
+	}
+
+	public void setTables(String tables) {
+		this.tables = tables;
 	}
 	
 	

@@ -2,19 +2,16 @@ package com.isa.res.manager;
 
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.forwardedUrl;
 
-import java.sql.Time;
+
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.Random;
 
 import javax.servlet.http.HttpSession;
 
-
 import org.springframework.beans.factory.annotation.Autowired;
-
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -27,19 +24,24 @@ import org.springframework.web.bind.annotation.RestController;
 import com.isa.Transfer;
 import com.isa.bartender.Bartender;
 import com.isa.bartender.BartenderService;
-import com.isa.bidder.*;
+import com.isa.bidder.Bidder;
+import com.isa.bidder.BidderService;
 import com.isa.cook.Cook;
 import com.isa.cook.CookService;
-import com.isa.dish.*;
+import com.isa.dish.Dish;
 import com.isa.dish.DishService;
-import com.isa.drink.*;
+import com.isa.drink.Drink;
 import com.isa.drink.DrinkService;
-import com.isa.employed.Employed;
 import com.isa.foodstuf.Foodstuff;
 import com.isa.foodstuf.FoodstuffService;
 import com.isa.offer.Offer;
-import com.isa.offer.unit.OfferUnit;
+import com.isa.offer.OfferService;
+import com.isa.offer.StateOffer;
 import com.isa.offer.unit.OfferUnitService;
+import com.isa.res.order.ResOrder;
+import com.isa.res.order.ResOrderService;
+import com.isa.res.order.unit.ResOrderUnit;
+import com.isa.res.order.unit.ResOrderUnitService;
 import com.isa.res.segment.ResSegment;
 import com.isa.res.segment.ResSegmentService;
 import com.isa.res.table.ReonTable;
@@ -47,6 +49,7 @@ import com.isa.res.table.ResTable;
 import com.isa.res.table.ResTableService;
 import com.isa.res.table.SizeTable;
 import com.isa.res.table.StateTable;
+
 import com.isa.responsability.Responsability;
 import com.isa.responsability.ResponsabilityService;
 import com.isa.restaurant.*;
@@ -54,6 +57,10 @@ import com.isa.res.order.*;
 import com.isa.res.order.unit.ResOrderUnit;
 import com.isa.res.order.unit.ResOrderUnitService;
 import com.isa.offer.*;
+
+import com.isa.restaurant.Restaurant;
+import com.isa.restaurant.RestaurantService;
+
 import com.isa.user.Role;
 import com.isa.waiter.Waiter;
 import com.isa.waiter.WaiterService;
@@ -742,8 +749,7 @@ public class RestaurantManagerController {
 		List<WorkShift> allShifts= new ArrayList<WorkShift>();
 		try {
 	
-		for(WorkDay day : restaurant.getWorkDays()) {
-			
+		for(WorkDay day : restaurant.getWorkDays()) {			
 			for(WorkShift shift : day.getWorkShifts()) {
 					allShifts.add(shift);
 			}

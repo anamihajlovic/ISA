@@ -13,19 +13,69 @@ background: #0AAC04;
 	background: #EB0505;
 }
 
+.clicked {
+	background: yellow;
+}
+
+
 </style>
 
 <h2 align="center">Choose table(s)</h2>
  <hr/>
-<div align="center" >
+<div align="center">
+<label>Restaurant: {{$parent.reservation.resName}}</label><br>
+<label>Date: {{$parent.reservation.date}}</label><br>
+<label>Start time: {{$parent.reservation.startTime}}</label><br>
+<label>End time: {{$parent.reservation.endTime}}</label><br>
+
 <br><br><br>
 <table class = "tablesTable">
 	<tr ng-repeat="row in tables">
 		<td ng-repeat="table in row">                        
-			<button id={{table.id}}  ng-click="buttonShowTable($event)"  ng-class="{'exists':table.state == 'exists','not_exists':table.state == 'not_exists','reserved':table.state == 'reserved'}" ng-disabled="{{table.state == 'reserved'}}" class = "tableBtns" title="{{'Segment: ' + table.segment + ' for ' + table.size}}"> </button>
+			<button  ng-click="setTableColor(table.id)" ng-class="{'exists':table.state == 'exists','not_exists':table.state == 'not_exists','reserved':table.state == 'reserved', 'clicked': tableToYellow(table.id)}" ng-disabled="{{table.state == 'reserved'}}" class = "tableBtns" title="{{'Segment: ' + table.segment + ' for ' + table.size}}"></button>
+			
 		</td>				
 	</tr>
 </table>
 <br><br><br>
 <label class="pull-center"><button class="btn btn-default navbar-btn"  data-ui-sref="guest.startReservation"><span class = "glyphicon glyphicon-arrow-left"></span> Back</button></label>
+<!--  <label class="pull-center"><button class="btn btn-default navbar-btn" ng-click="reservate()" data-ui-sref=".">Next <span class = "glyphicon glyphicon-arrow-right"></span></button></label>-->
+  <!-- Trigger the modal with a button -->
+<label class="pull-center"><button type="button" id="modalBtnConfirmReservation" class="btn btn-default navbar-btn" data-toggle="modal" data-target="#myModalConfirmation">Next <span class = "glyphicon glyphicon-arrow-right"></span></button>
+</label>
+
 </div>
+
+
+
+<!-- Modal -->
+<div id="myModalConfirmation" class="modal fade "  >
+  <div class="modal-dialog modal-admin ">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title" id="modalTitle">Confirm reservation</h4>
+      </div>
+      <div class="modal-body">
+		<label ng-show="chosenTables.length !== 0">Are you sure you want to make reservation?<br>
+			After confirmation, your reservation will be saved.
+		</label>
+		
+		<label ng-hide="chosenTables.length !== 0">You must choose tabel(s) for reservation!<br>
+		</label>
+	
+	
+      </div>
+      <div class="modal-footer">
+      <button type="button"  ng-show="chosenTables.length !== 0" class="btn btn-default"  ng-click="reservate()" data-dismiss="modal" data-ui-sref="."><span class="glyphicon glyphicon-ok" ></span> Yes</button>
+      	 <button  type="button" id ="cancel" data-ui-sref="guest.chooseTables" class="btn btn-default" data-dismiss="modal"><span class="glyphicon glyphicon-remove" ></span> Cancel</button>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+
+

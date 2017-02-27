@@ -1,6 +1,7 @@
 package com.isa.order;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
@@ -16,6 +17,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import javax.persistence.Transient;
 import javax.validation.constraints.NotNull;
 
@@ -36,9 +39,22 @@ public class Order {
 	@Column(name="restaurant_id")
 	private Long restaurantId;
 	
+	@Column (name = "acceptance_time", nullable = true)
+	private String acceptanceTime;
+	
+	@Column(name="accepted_waiter", nullable = true)
+	private Long waiterId;
+		
+	@Column (name= "order_date")
+	@Temporal(TemporalType.DATE)
+	private Date orderDate;
+	
 	@Enumerated(EnumType.STRING)
-	@NotNull		
-	@Column(name = "drinks_status")
+	@Column(name = "order_status", nullable = false)
+	private OrderStatus orderStatus;	
+	
+	@Enumerated(EnumType.STRING)		
+	@Column(name = "drinks_status", nullable = false)
 	private OrderItemStatus drinksStatus;
 	
 	@ManyToMany(cascade = {CascadeType.DETACH, CascadeType.PERSIST, CascadeType.REFRESH, CascadeType.REMOVE})
@@ -75,16 +91,21 @@ public class Order {
 	
 	
 
-	public Order(Long id, Long restaurantId, OrderItemStatus drinksStatus, List<Drink> orderedDrinks, List<OrderedDish> orderedDish,
-			OrderItemStatus dishStatus) {
+	public Order(Long id, Long restaurantId, Long waiterId, String acceptanceTime, Date orderDate, OrderStatus orderStatus, OrderItemStatus drinksStatus,
+			List<Drink> orderedDrinks, OrderItemStatus dishStatus, List<OrderedDish> orderedDish) {
 		super();
 		this.id = id;
 		this.restaurantId = restaurantId;
+		this.waiterId = waiterId;
+		this.acceptanceTime = acceptanceTime;
+		this.orderDate = orderDate;
+		this.orderStatus = orderStatus;
 		this.drinksStatus = drinksStatus;
 		this.orderedDrinks = orderedDrinks;
 		this.dishStatus = dishStatus;
-		this.orderedDish = orderedDish;
+		this.orderedDish = orderedDish;		
 	}
+
 
 
 
@@ -110,7 +131,29 @@ public class Order {
 
 	public void setRestaurantId(Long restaurantId) {
 		this.restaurantId = restaurantId;
+	}	
+
+	public Long getWaiterId() {
+		return waiterId;
 	}
+	
+
+	public String getAcceptanceTime() {
+		return acceptanceTime;
+	}
+
+
+
+	public void setAcceptanceTime(String acceptanceTime) {
+		this.acceptanceTime = acceptanceTime;
+	}
+
+
+
+	public void setWaiterId(Long waiterId) {
+		this.waiterId = waiterId;
+	}
+
 
 
 	public OrderItemStatus getDrinksStatus() {
@@ -136,6 +179,18 @@ public class Order {
 
 	public void setOrderedDish(List<OrderedDish> orderedDish) {
 		this.orderedDish = orderedDish;
+	}
+
+	
+
+	public Date getOrderDate() {
+		return orderDate;
+	}
+
+
+
+	public void setOrderDate(Date orderDate) {
+		this.orderDate = orderDate;
 	}
 
 
@@ -187,6 +242,18 @@ public class Order {
 
 	public void setDishStatusMap(HashMap<Integer, DishStatus> dishStatusMap) {
 		this.dishStatusMap = dishStatusMap;
+	}
+
+
+
+	public OrderStatus getOrderStatus() {
+		return orderStatus;
+	}
+
+
+
+	public void setOrderStatus(OrderStatus orderStatus) {
+		this.orderStatus = orderStatus;
 	}
 	
 	

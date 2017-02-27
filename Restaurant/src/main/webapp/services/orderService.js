@@ -2,8 +2,13 @@ var orderServices = angular.module('order.services', ['ngResource']);
 
 guestServices.service('orderService', ['$http', function($http) {
 	
+	
 	this.getAllRestaurantOrders = function(restaurantId) {
 		return $http.get('/orders/getAllRestaurantOrders/'+restaurantId);
+	}
+	
+	this.getServedRestaurantOrders = function(restaurantId) {
+		return $http.get('/orders/getServedRestaurantOrders/'+restaurantId);
 	}
 	
 	this.getRestaurantDrinkOrders = function(restaurantId) {
@@ -28,6 +33,26 @@ guestServices.service('orderService', ['$http', function($http) {
 	
 	this.serveDish = function(orderId, dish) {
 		return $http.put("/orders/serveDish/"+orderId, dish);
+	}
+	
+	this.acceptOrder = function(orderId) {
+		return $http.put("/orders/acceptOrder/"+orderId);
+	}
+	
+	this.serveOrder = function(order) {
+		return $http.put("/orders/serveOrder", order);
+	}
+	
+	this.compareWaiters = function(orderId) {
+		return $http.get('/orders/compareWaiters/'+orderId);
+	}
+	
+	this.finishOrder = function(orderId) {
+		return $http.put("/orders/finishOrder/"+ orderId);
+	}
+	
+	this.createBill = function(bill) {
+		return $http.post('/bills/createBill', bill);
 	}
 
 }]);

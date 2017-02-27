@@ -1,5 +1,6 @@
 package com.isa.work.shift;
 
+import java.util.Date;
 import java.util.List;
 
 import jersey.repackaged.com.google.common.collect.Lists;
@@ -37,5 +38,10 @@ public class WorkShiftServiceImp implements WorkShiftService {
 		
 	}
 
+	@Override
+	public List<WorkShift> findByDay(Date day) {		
+		return repository.findByDay(day);
+	}
 
+	
 }

@@ -101,6 +101,11 @@ angular.module('restaurants', [ 'ui.router','ui.calendar' ,'chart.js',
         	url: '/chooseTables',
         	templateUrl: 'html/guest/tablesConf.html'
         })
+        
+        .state('guest.inviteFriends', {
+        	url: '/inviteFriends',
+        	templateUrl: 'html/guest/inviteFriends.html'
+        })
          
          .state('sysManager', {
          	url : '/sysManager',
@@ -269,7 +274,19 @@ angular.module('restaurants', [ 'ui.router','ui.calendar' ,'chart.js',
         	   url : '/workSchedule',
         	   templateUrl : 'html/employees/calendarView.html',
         	   controller: 'calendarController'        	  
-           })                             
+           })  
+           
+           .state('waiter.receviedOrders', {
+        	   url : '/receviedOrders',
+        	   templateUrl : 'html/employees/waiterOrders.html',
+        	   controller: 'orderController'    
+           })
+           
+           .state('waiter.servedOrders', {
+        	   url : '/servedOrders',
+        	   templateUrl : 'html/employees/waiterOrders.html',
+        	   controller: 'orderController'    
+           })
            
            .state('cook' , {  
         	  url: '/cook', 
