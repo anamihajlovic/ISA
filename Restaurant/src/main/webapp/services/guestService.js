@@ -58,7 +58,6 @@ guestServices.service('guestService', ['$http', function($http) {
 	//za rezervacije
 	
 	this.addReservation = function(reservation) {
-		console.log("service addReservation");
 		return $http.post("/reservations/add", reservation);
 	}
 	
@@ -66,6 +65,17 @@ guestServices.service('guestService', ['$http', function($http) {
 		return $http.get("/resTables/getTables/" + id +"/" + date + "/" + startTime + "/" + endTime);
 	}
 	
+	this.sendInvitation = function(friendId, reservationId) {
+		return $http.post("/invitations/sendInvitation/" + friendId, reservationId);
+	}
 	
+	this.getReservation = function(reservationId) {
+		return $http.get("/reservations/getReservation/" + reservationId);
+	}
+	
+	this.confirmInvitation = function(invitationId, operation) {
+		return $http.post("/invitations/confirmInvitation/" + invitationId + "/" + operation);
+
+	}
 	
 }]);

@@ -139,7 +139,7 @@ guestModule.controller('guestController', ['$scope', 'guestService','commonServi
 			});
 		}
 		
-		$scope.getMyFriends = function() {
+		$scope.getMyFriends = function(operation) {
 			$scope.search.searchText = "";
 			var request = guestService.getMyFriends($scope.guest.id).then(function(response){
 				$scope.data = response.data;
@@ -150,9 +150,13 @@ guestModule.controller('guestController', ['$scope', 'guestService','commonServi
 				if($scope.data.length != 0) {
 					$scope.myFriends = $scope.data;
 					$scope.filtered = $scope.myFriends;
-				} else {
-						toastr.info("You friend list is empty. Go, find you friends and send them friend request! :)");
-						$location.path('guest');
+				} else { 
+					if(operation == 'list') {
+					toastr.info("You friend list is empty. Go, find you friends and send them friend request! :)");
+					$location.path('guest');
+					} else {
+						toastr.info("You friend list is empty.");
+					}
 				}
 			});
 		}
@@ -167,7 +171,7 @@ guestModule.controller('guestController', ['$scope', 'guestService','commonServi
 				if($scope.data == "OK") {
 					$scope.search.searchText = "";
 					toastr.success("Successfully deleted friend!");
-					$scope.getMyFriends();
+					$scope.getMyFriends('list');
 				} else {
 						toastr.error("Deleting friend was unsuccessful. Please, try again");
 				}
@@ -424,7 +428,9 @@ guestModule.controller('guestController', ['$scope', 'guestService','commonServi
 					if($scope.data != "") {
 						toastr.success("Successful reservation!")
 						$scope.createdReservation = $scope.data;
+						$scope.createdReservation.date = $filter('date')($scope.createdReservation.date, "yyyy-MM-dd");
 						$scope.reservation = new Object();
+						$scope.getMyFriends('invite');
 						$state.go('guest.inviteFriends');
 
 
@@ -449,10 +455,39 @@ guestModule.controller('guestController', ['$scope', 'guestService','commonServi
 			
 			var size = stringTables.length;
 			stringTables = stringTables.substring(0, size-1); //da odsecem poslednji ;
-			console.log("string tables " + stringTables);
 			return stringTables;
 		}
 		
+		$scope.invitedFriends = [];
+		$scope.inviteFriend = function(friendId) {
+			var request = guestService.sendInvitation(friendId, $scope.createdReservation.id).then(function(response){
+				$scope.data = response.data;
+				return response;
+			});
+				
+			request.then(function (data) {
+				if($scope.data == "OK") {
+					$scope.invitedFriends.push(friendId);
+					//console.log("invited friends " + $scope.invitedFriends)
+					$scope.search.searchText = "";
+					toastr.success("Successfully invited friend!");
+					$scope.getMyFriends('invite');
+				} else {
+					toastr.error("Something wrong. Sending invitation failed. Please, try again.")
+				}
+			});
+			
+		}
+		
+		$scope.hideInvitationButton = function(id) {
+			if($scope.invitedFriends.indexOf(id) !== -1) {
+				  return true;
+			}
+			return false;
+		}
+		
+
+	
 		
 
 

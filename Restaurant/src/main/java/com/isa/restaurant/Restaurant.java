@@ -25,7 +25,6 @@ import com.isa.bidder.Bidder;
 import com.isa.cook.Cook;
 import com.isa.dish.Dish;
 import com.isa.drink.Drink;
->>>>>>> 155fc67f1268ef3bc76c5ee97c274aecaa931b51
 import com.isa.foodstuf.Foodstuff;
 import com.isa.res.manager.RestaurantManager;
 import com.isa.res.order.ResOrder;
