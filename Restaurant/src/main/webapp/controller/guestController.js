@@ -139,7 +139,7 @@ guestModule.controller('guestController', ['$scope', 'guestService','commonServi
 			});
 		}
 		
-		$scope.getMyFriends = function() {
+		$scope.getMyFriends = function(operation) {
 			$scope.search.searchText = "";
 			var request = guestService.getMyFriends($scope.guest.id).then(function(response){
 				$scope.data = response.data;
@@ -150,9 +150,13 @@ guestModule.controller('guestController', ['$scope', 'guestService','commonServi
 				if($scope.data.length != 0) {
 					$scope.myFriends = $scope.data;
 					$scope.filtered = $scope.myFriends;
-				} else {
-						toastr.info("You friend list is empty. Go, find you friends and send them friend request! :)");
-						$location.path('guest');
+				} else { 
+					if(operation == 'list') {
+					toastr.info("You friend list is empty. Go, find you friends and send them friend request! :)");
+					$location.path('guest');
+					} else {
+						toastr.info("You friend list is empty.");
+					}
 				}
 			});
 		}
@@ -167,7 +171,7 @@ guestModule.controller('guestController', ['$scope', 'guestService','commonServi
 				if($scope.data == "OK") {
 					$scope.search.searchText = "";
 					toastr.success("Successfully deleted friend!");
-					$scope.getMyFriends();
+					$scope.getMyFriends('list');
 				} else {
 						toastr.error("Deleting friend was unsuccessful. Please, try again");
 				}
@@ -270,6 +274,7 @@ guestModule.controller('guestController', ['$scope', 'guestService','commonServi
 		
 		$scope.getRestaurants = function () {
 			$scope.search.searchRes = "";
+			$scope.showOrderButton = true;
 			guestService.getRestaurants().then(function(response){
 				$scope.restaurants = response.data;
 				$scope.filteredRes = $scope.restaurants;
@@ -409,7 +414,7 @@ guestModule.controller('guestController', ['$scope', 'guestService','commonServi
 			console.log("reservate fja");
 			console.log($scope.reservation);
 			console.log($scope.chosenTables);
-			$scope.reservation.tables = makeTablesString($scope.chosenTables);
+			$scope.reservation.tables = makeArrayString($scope.chosenTables);
 			
 			 var request = guestService.addReservation($scope.reservation).then(function(response){
 					$scope.data = response.data;
@@ -424,7 +429,9 @@ guestModule.controller('guestController', ['$scope', 'guestService','commonServi
 					if($scope.data != "") {
 						toastr.success("Successful reservation!")
 						$scope.createdReservation = $scope.data;
+						$scope.createdReservation.date = $filter('date')($scope.createdReservation.date, "yyyy-MM-dd");
 						$scope.reservation = new Object();
+						$scope.getMyFriends('invite');
 						$state.go('guest.inviteFriends');
 
 
@@ -442,17 +449,124 @@ guestModule.controller('guestController', ['$scope', 'guestService','commonServi
 
 		}
 		
-		function makeTablesString(tablesArray) {
-			var stringTables= "";
-			for (x in tablesArray)
-				stringTables += tablesArray[x] + ";";
+		function makeArrayString(array) {//preimenovati u makeArrayString da bih za sve mogla da koristim
+			var string= "";
+			for (x in array)
+				string += array[x] + ";";
 			
-			var size = stringTables.length;
-			stringTables = stringTables.substring(0, size-1); //da odsecem poslednji ;
-			console.log("string tables " + stringTables);
-			return stringTables;
+			var size = string.length;
+			string = string.substring(0, size-1); //da odsecem poslednji ;
+			return string;
 		}
 		
+		$scope.invitedFriends = [];
+		$scope.inviteFriend = function(friendId) {
+			var request = guestService.sendInvitation(friendId, $scope.createdReservation.id).then(function(response){
+				$scope.data = response.data;
+				return response;
+			});
+				
+			request.then(function (data) {
+				if($scope.data == "OK") {
+					$scope.invitedFriends.push(friendId);
+					//console.log("invited friends " + $scope.invitedFriends)
+					$scope.search.searchText = "";
+					toastr.success("Successfully invited friend!");
+					$scope.getMyFriends('invite');
+				} else {
+					toastr.error("Something wrong. Sending invitation failed. Please, try again.")
+				}
+			});
+			
+		}
+		
+		$scope.hideInvitationButton = function(id) {
+			if($scope.invitedFriends.indexOf(id) !== -1) {
+				  return true;
+			}
+			return false;
+		}
+		
+		//ZA NARUCIVANJE
+		
+		$scope.getDrinks = function() {
+			$scope.showDishes = false;
+			$scope.showDrinks = true;
+
+			console.log("getDrinks " + $scope.createdReservation.resId);
+			
+			var request = guestService.getDrinks($scope.createdReservation.resId).then(function(response){
+				$scope.data = response.data;
+				return response;
+			});
+				
+			request.then(function (data) {
+				if($scope.data.length != 0) {
+					$scope.drinks = $scope.data;
+				} else {
+						toastr.info("There's no drink for order.");
+				}
+			});
+			
+		}
+		
+		$scope.getDishes = function() {
+			$scope.showDrinks = false;
+			$scope.showDishes = true;
+			console.log("getDishes " + $scope.createdReservation.resId);
+			
+			var request = guestService.getDishes($scope.createdReservation.resId).then(function(response){
+				$scope.data = response.data;
+				return response;
+			});
+				
+			request.then(function (data) {
+				if($scope.data.length != 0) {
+					$scope.dishes = $scope.data;
+				} else {
+						toastr.info("There's no dish for order.");
+				}
+			});
+			
+		}
+		
+		$scope.chosenDrinks = [];
+		$scope.addDrink = function(id) {
+			console.log("add drink " + id);
+			$scope.chosenDrinks.push(id);
+			console.log("chosenDrinks " + $scope.chosenDrinks);
+
+		}
+		
+		$scope.chosenDishes = [];
+		$scope.addDish = function(id) {
+			console.log("add dish " + id);
+			$scope.chosenDishes.push(id);
+			console.log("chosenDishes " + $scope.chosenDishes);
+		}
+		
+		$scope.order = function() {
+			console.log("order");
+			var dishesString = makeArrayString($scope.chosenDishes);
+			console.log("dishesString " + dishesString);
+			var drinksString = makeArrayString($scope.chosenDrinks);
+			console.log("drinksString " + drinksString);
+			var dishesAndDrinks = dishesString + "-" + drinksString;
+
+			var request = guestService.order($scope.createdReservation.id, dishesAndDrinks).then(function(response){
+				$scope.data = response.data;
+				return response;
+			});
+				
+			request.then(function (data) {
+				if($scope.data != "") {
+					$scope.showOrderButton = false;
+					toastr.success("Successful order!")
+				} else {
+						toastr.error("Unsuccessful order. Please, try again.");
+				}
+			});
+		}
 		
 
 

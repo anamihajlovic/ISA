@@ -12,8 +12,10 @@ angular.module('restaurants', [ 'ui.router','ui.calendar' ,'chart.js',
 								'guest.services', 'guest.controller',
 								'pass.controller',
 								'calendar.controller',
-								'order.services', 'order.controller',
+								'order.services', 'order.controller',								
+								'invitation.services', 'invitation.controller',
 								'grade.controller'
+
 							   ])
 							   
 .config(function($stateProvider, $urlRouterProvider) {
@@ -106,6 +108,12 @@ angular.module('restaurants', [ 'ui.router','ui.calendar' ,'chart.js',
         .state('guest.inviteFriends', {
         	url: '/inviteFriends',
         	templateUrl: 'html/guest/inviteFriends.html'
+        })
+        
+        .state('confirmInvitation', {
+        	url: '/confirmInvitation/:invitationId/:reservationId',
+        	templateUrl: 'html/guest/confirmInvitation.html',
+        	controller: 'invitationController'
         })
          
          .state('sysManager', {

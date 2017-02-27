@@ -1,7 +1,7 @@
 -- USERS
-insert into guests(email, password, first_name, last_name,user_role, first_login, active, guest_a_code) values ('jelena@gmail.com', 'jelena', 'Jelena', 'Kalabic','guest', false, true, 'fsg656daf')
-insert into guests(email, password, first_name, last_name,user_role, first_login, active, guest_a_code) values ('tamara@gmail.com', 'tamara', 'Tamara', 'Mrksic','guest', false, true, 'hdg645gst')
 insert into guests(email, password, first_name, last_name,user_role, first_login, active, guest_a_code) values ('ana@gmail.com', 'ana', 'Ana', 'Mihajlovic','guest', false, true, 'las849pqe')
+insert into guests(email, password, first_name, last_name,user_role, first_login, active, guest_a_code) values ('jelenakalabic@gmail.com', 'jelena', 'Jelena', 'Kalabic','guest', false, true, 'fsg656daf')
+insert into guests(email, password, first_name, last_name,user_role, first_login, active, guest_a_code) values ('tamara@gmail.com', 'tamara', 'Tamara', 'Mrksic','guest', false, true, 'hdg645gst')
 insert into guests(email, password, first_name, last_name,user_role, first_login, active, guest_a_code) values ('marina@gmail.com', 'marina', 'Marina', 'Zaric','guest', false, true, 'loi645gst')
 insert into guests(email, password, first_name, last_name,user_role, first_login, active, guest_a_code) values ('carna@gmail.com', 'carna', 'Carna', 'Stevic','guest', false, true, 'pdg545gst')
 insert into guests(email, password, first_name, last_name,user_role, first_login, active, guest_a_code) values ('tijana@gmail.com', 'tijana', 'Tijana', 'Djukic','guest', false, true, 'uyr645g8t')
@@ -12,13 +12,14 @@ insert into guests(email, password, first_name, last_name,user_role, first_login
 
 
 --FRIENDSHIPS
+insert into friendships(sender_id, receiver_id, status) values (1, 2, 'accepted')
 insert into friendships(sender_id, receiver_id, status) values (1, 3, 'accepted')
-insert into friendships(sender_id, receiver_id, status) values (1, 6, 'accepted')
+insert into friendships(sender_id, receiver_id, status) values (2, 6, 'accepted')
 insert into friendships(sender_id, receiver_id, status) values (3, 5, 'accepted')
 insert into friendships(sender_id, receiver_id, status) values (8, 2, 'accepted')
 insert into friendships(sender_id, receiver_id, status) values (7, 1, 'sent')
 insert into friendships(sender_id, receiver_id, status) values (6, 2, 'sent')
-insert into friendships(sender_id, receiver_id, status) values (5, 2, 'sent')
+insert into friendships(sender_id, receiver_id, status) values (8, 3, 'sent')
 
 
 

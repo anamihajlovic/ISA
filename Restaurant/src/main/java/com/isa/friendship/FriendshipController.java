@@ -5,8 +5,6 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
-import javax.servlet.http.HttpSession;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -24,13 +22,11 @@ import com.isa.guest.GuestService;
 @RequestMapping("/friendships")
 public class FriendshipController {
 	
-	private HttpSession httpSession;
 	private final FriendshipService friendshipService;
 	private final GuestService guestService;
 	
 	@Autowired
-	public FriendshipController(final HttpSession httpSession, final FriendshipService friendshipService, final GuestService guestService) {
-		this.httpSession = httpSession;
+	public FriendshipController(final FriendshipService friendshipService, final GuestService guestService) {
 		this.friendshipService = friendshipService;
 		this.guestService = guestService;
 	}

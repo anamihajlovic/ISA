@@ -13,6 +13,8 @@ public interface ReservationRepository extends PagingAndSortingRepository<Reserv
 	public void delete(Long id);
 	
 	public List<Reservation> findByResIdAndDate(Long resId, Date date);
+	
+	public Reservation findById(Long id);
 
 
 
