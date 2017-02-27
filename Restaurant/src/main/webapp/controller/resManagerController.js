@@ -1036,7 +1036,7 @@ $scope.eventClick = function(event){
 	if($scope.selectedShift == null)
 		$scope.eventVisible = true;
 	else if(event.id == $scope.selectedShift.id)
-		$scope.eventVisible = false;
+		$scope.eventVisible = !$scope.eventVisible;
 	else if(event.id != $scope.selectedShift.id)
 		$scope.eventVisible = true;
 	

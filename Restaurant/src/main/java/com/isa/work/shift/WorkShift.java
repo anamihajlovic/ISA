@@ -21,6 +21,7 @@ import javax.validation.constraints.NotNull;
 
 import com.isa.bartender.Bartender;
 import com.isa.cook.Cook;
+import com.isa.employed.Employed;
 import com.isa.responsability.Responsability;
 import com.isa.waiter.Waiter;
 
@@ -174,7 +175,13 @@ public class WorkShift {
 		this.responsabilites = responsabilites;
 	}
 
-	
-
-	
+	public Bartender findBartender(Employed employee) {
+		if(this.getBartenders().size() > 0) {
+			for(Bartender bartender : this.getBartenders())
+				if(bartender.getEmail().equals(employee.getEmail()))
+					return bartender;
+		}
+		return null;
+		
+	}
 }

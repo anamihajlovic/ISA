@@ -71,7 +71,7 @@ public class ResTable {
 		this.size = size;
 		this.state = state;
 		this.segment = segment;
-		this.reon = reon;
+		//this.reon = reon;
 		this.segColor = segColor;
 
 		this.xPos = xPos;

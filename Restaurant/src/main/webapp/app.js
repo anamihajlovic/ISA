@@ -12,7 +12,10 @@ angular.module('restaurants', [ 'ui.router','ui.calendar' ,'chart.js',
 								'guest.services', 'guest.controller',
 								'pass.controller',
 								'calendar.controller',
-								'order.services', 'order.controller'
+								'order.services', 'order.controller',								
+								'invitation.services', 'invitation.controller',
+								'grade.controller'
+
 							   ])
 							   
 .config(function($stateProvider, $urlRouterProvider) {
@@ -105,6 +108,12 @@ angular.module('restaurants', [ 'ui.router','ui.calendar' ,'chart.js',
         .state('guest.inviteFriends', {
         	url: '/inviteFriends',
         	templateUrl: 'html/guest/inviteFriends.html'
+        })
+        
+        .state('confirmInvitation', {
+        	url: '/confirmInvitation/:invitationId/:reservationId',
+        	templateUrl: 'html/guest/confirmInvitation.html',
+        	controller: 'invitationController'
         })
          
          .state('sysManager', {
@@ -249,6 +258,12 @@ angular.module('restaurants', [ 'ui.router','ui.calendar' ,'chart.js',
         	   templateUrl : 'html/employees/orders.html', 
         	   controller: 'orderController'
            })
+           
+           .state('bartender.rateVisit', {
+        	   url : '/rateVisit',
+        	   templateUrl : 'html/guest/ratePage.html', 
+        	   controller: 'gradeController'
+           })
           
            
            .state('waiter' , {
@@ -276,6 +291,12 @@ angular.module('restaurants', [ 'ui.router','ui.calendar' ,'chart.js',
         	   controller: 'calendarController'        	  
            })  
            
+           .state('waiter.regionArrangement', {
+        	   url : '/regionArrangement',
+        	   templateUrl : 'html/employees/waiterTableChart.html',        	  
+           })
+           
+           
            .state('waiter.receviedOrders', {
         	   url : '/receviedOrders',
         	   templateUrl : 'html/employees/waiterOrders.html',
@@ -284,6 +305,12 @@ angular.module('restaurants', [ 'ui.router','ui.calendar' ,'chart.js',
            
            .state('waiter.servedOrders', {
         	   url : '/servedOrders',
+        	   templateUrl : 'html/employees/waiterOrders.html',
+        	   controller: 'orderController'    
+           })
+           
+           .state('waiter.paidOrders', {
+        	   url : '/paidOrders',
         	   templateUrl : 'html/employees/waiterOrders.html',
         	   controller: 'orderController'    
            })

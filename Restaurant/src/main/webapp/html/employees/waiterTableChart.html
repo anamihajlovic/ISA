@@ -1,0 +1,60 @@
+
+  <h2 align="center">Tables configuration</h2>
+  <hr/>
+<div align="center" >
+<br><br><br>
+<table class = "tablesTable">
+	<tr ng-repeat="row in tables">
+		<td ng-repeat="table in row">                        
+			<button id={{table.id}} ng-click="buttonShowTable($event)" ng-show = "table.showTable" class = "tableBtns" style="background:{{table.reonColor}}"></button>
+		</td>				
+	</tr>
+</table>
+<br><br><br>
+  <p><i>*Tables assigned to you are colored.</i></p>
+</div>
+
+
+
+
+ <!-- Trigger the modal with a button -->
+<button type="button" id="modalBtnShowTable" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModalShowTable" style="display:none"></button>
+
+<!-- Modal -->
+<div id="myModalShowTable" class="modal fade "  >
+  <div class="modal-dialog modal-admin ">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title" id="modalTitle">Table info</h4>
+      </div>
+      <div class="modal-body">
+       <table>
+       <tr>
+      <th>Id:</th>
+      <td>{{table.id}}</td>
+      </tr>
+      <tr>
+      <th class = "bill">Segment:</th>
+      <td class = "bill">{{table.segment}}</td>
+      </tr>      
+      <tr>
+      <th class = "bill">State:</th>
+      <td class = "bill">{{table.state}}</td>
+      </tr>
+      <tr>
+      <th class = "bill">Size:</th>
+      <td class = "bill">{{table.size}}</td>      
+      </tr>     
+      </table>
+
+      </div>
+      <div class="modal-footer">
+      <button type="button"  class="btn btn-default" data-dismiss="modal" ><span class="glyphicon glyphicon-ok"></span>Ok</button>      	
+      </div>
+    </div>
+
+  </div>
+</div>

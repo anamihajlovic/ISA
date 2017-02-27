@@ -34,4 +34,9 @@ public class ReservationServiceImp implements ReservationService {
 		return Lists.newArrayList(repository.findByResIdAndDate(resId, date));
 	}
 
+	@Override
+	public Reservation findById(Long id) {
+		return repository.findById(id);
+	}
+
 }

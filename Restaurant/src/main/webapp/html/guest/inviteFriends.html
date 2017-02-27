@@ -1,1 +1,213 @@
-<p> Ovde ce ici informacije o rezervaciji i moci ce prijatelji da se zovu. <p>
+<link rel="stylesheet" type="text/css" href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css">
+
+<style type="text/css">
+.list-content{
+ min-height:300px;
+ max-width: 400px;
+}
+.list-content .list-group .title{
+  background:#5bc0de;
+  border:2px solid #DDDDDD;
+  font-weight:bold;
+  color:#FFFFFF;
+
+}
+.list-group-item img {
+    height:60px; 
+    width:60px;
+}
+
+.jumbotron .btn {
+    padding: 5px 5px !important;
+    font-size: 12px !important;
+}
+.prj-name {
+    color:#5bc0de;    
+}
+.break{
+    /*width:100%;*/
+    margin:20px;
+}
+.name {
+    color:#5bc0de;    
+}
+
+#search {
+    background-image: url('/css/searchIcon.png'); /* Add a search icon to input */
+    background-position: 0px 5px; /* Position the search icon */
+    background-repeat: no-repeat; /* Do not repeat the icon image */
+    font-size: 16px; /* Increase font-size */
+    padding: 12px 20px 12px 40px; /* Add some padding */
+    border: 1px solid #ddd; /* Add a grey border */
+    margin-bottom: 12px; /* Add some space below the input */
+    width: 100%;
+    
+}
+
+.sortorder:after {
+  content: '\25b2';   // BLACK UP-POINTING TRIANGLE
+}
+.sortorder.reverse:after {
+  content: '\25bc';   // BLACK DOWN-POINTING TRIANGLE
+}
+</style>
+
+
+
+<div align="center">
+<h4>Restaurant: {{$parent.createdReservation.resName}}</h4>
+<h4>Date: {{$parent.createdReservation.date}}</h4>
+<h4>Start time: {{$parent.createdReservation.startTime}}</h4>
+<h4>End time: {{$parent.createdReservation.endTime}}</h4>
+
+
+<!--  <label class="pull-center"><button ng-show="showOrderButton" class="btn btn-default navbar-btn" ng-click="order()" data-ui-sref="."><span class="glyphicon glyphicon-cutlery"></span><span class="glyphicon glyphicon-glass"></span> Order </button></label>-->
+
+ <!-- Trigger the modal with a button -->
+<label class="pull-center"><button type="button" ng-show="showOrderButton" id="modalBtnOrder" class="btn btn-default navbar-btn" data-toggle="modal" data-target="#myModalOrder"><span class="glyphicon glyphicon-cutlery"></span><span class="glyphicon glyphicon-glass"></span> Order </button>
+</label>
+
+</div>
+
+<div class="container bootstrap snippet" align="center">
+
+  <div class="header">
+    <h3 class="text-muted prj-name">
+        <span class="fa fa-users fa-2x principal-title"></span>
+        Find friends and sent invitation
+    </h3>
+  </div>
+
+
+  <div class="jumbotron list-content" >
+    <ul class="list-group">
+    <li> 
+      <input type="text" ng-change="myFilter(myFriends)"  ng-model="search.searchText"  id="search" placeholder="Search friends...">
+    </li>
+      <li class="list-group-item title">
+        My friends
+      </li>
+      <li>
+      	
+      	<a class="btn btn-xs" ng-click="sortBy('firstName')" data-ui-sref="."><label> First name </label></a>  
+      	<span class="sortorder" ng-show="propertyName === 'firstName'" ng-class="{reverse: reverse}"></span>    	
+      	&nbsp; &nbsp;&nbsp;
+      	<a class="btn btn-xs" ng-click="sortBy('lastName')" data-ui-sref="." ><label> Last name </label></a> 
+      	<span class="sortorder" ng-show="propertyName === 'lastName'" ng-class="{reverse: reverse}"></span>     	      	
+      </li>
+      <li ng-repeat="friend in filtered" class="list-group-item text-left">
+        <img class="img-thumbnail" src="html/guest/userProfile.png">
+        <label class="name">
+            {{ friend.firstName + " " + friend.lastName }}<br>
+        </label>
+        <label class="pull-right">
+           <a  class="btn btn-success  btn-xs glyphicon glyphicon-plus" ng-hide="hideInvitationButton(friend.id)" ng-click="inviteFriend(friend.id)" data-ui-sref="." title="Invite friend"></a>
+        </label>
+        <div class="break"></div>
+      </li>
+    </ul>
+  </div>
+  </div>
+  
+  
+  <!-- Modal -->
+<div id="myModalOrder" class="modal fade "  >
+  <div class="modal-dialog modal-admin ">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title" id="modalTitle">Order dishes and drinks</h4>
+     <button data-ui-sref="." ng-click="getDishes()" class="btn btn-default navbar-btn" ><span class="glyphicon glyphicon-cutlery"></span> Dishes</button> &nbsp; &nbsp;
+     <button data-ui-sref="." ng-click="getDrinks()" class="btn btn-default navbar-btn" ><span class="glyphicon glyphicon-glass"></span> Drinks </button>
+	
+	<br>
+	<p> Note: After you make order, you won't be able to make changes.
+      </div>
+      <div class="modal-body">
+		<div ng-show="showDishes">
+	<h4>Menu:</h4>
+	<table  class="table table-bordered tableBG" border="1">
+		<tbody>
+	        <tr>
+				<th>Id</th>
+				<th>Name</th>
+                <th>Text</th>
+                <th>Price</th>
+                <th>Type</th>
+                <th></th>
+            </tr>
+			<tr ng-repeat="dish in dishes">
+				<td> 
+					{{dish.id}}
+				</td>
+				<td>
+		    		{{dish.name}}	
+				</td>
+            	<td>
+		    		{{dish.text}}	
+				</td>
+				<td>
+		    		{{dish.price}}	
+				</td>
+            	<td>
+		    		{{dish.dishType}}	
+				</td>
+				<td>
+				<button class = "btn btn-link"  ng-click="addDish(dish.id)"><span class = "glyphicon glyphicon-ok" style="color:green;"></span></button>
+				</td>
+			</tr>
+        </tbody>
+    </table> 
+    </div>
+    
+    <!-- PICA -->
+    <div ng-show="showDrinks">
+	<h4>Drink card:</h4>
+	<table  class="table table-bordered tableBG" border="1">
+		<tbody>
+	        <tr>
+				<th>Id</th>
+				<th>Name</th>
+                <th>Text</th>
+                <th>Price</th>
+                <th>Type</th>
+                <th></th>
+            </tr>
+			<tr ng-repeat="drink in drinks">
+				<td> 
+					{{drink.id}}
+				</td>
+				<td>
+		    		{{drink.name}}	
+				</td>
+            	<td>
+		    		{{drink.text}}	
+				</td>
+				<td>
+		    		{{drink.price}}	
+				</td>
+            	<td>
+		    		{{drink.drinkType}}	
+				</td>
+				<td>
+				<button class = "btn btn-link"  ng-click="addDrink(drink.id)"><span class = "glyphicon glyphicon-ok" style="color:green;"></span></button>
+					
+				</td>
+			</tr>
+        </tbody>
+    </table> 
+	
+      </div>
+      <div class="modal-footer">
+      <button type="button"  ng-show="chosenDrinks.length !== 0 || chosenDishes.length !== 0" class="btn btn-default"  ng-click="order()" data-dismiss="modal" data-ui-sref="."><span class="glyphicon glyphicon-ok" ></span> Order</button>
+      	 <button  type="button" id ="cancel" data-ui-sref="." class="btn btn-default" data-dismiss="modal"><span class="glyphicon glyphicon-remove" ></span> Cancel</button>
+      </div>
+    </div>
+
+  </div>
+</div>
+</div>
+
+  

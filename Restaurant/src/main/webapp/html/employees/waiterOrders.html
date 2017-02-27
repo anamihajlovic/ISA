@@ -3,7 +3,7 @@
 	
 	.bill {text-align : left}
 	
-	.endOrder {text-align: right}
+	.endOrder {text-align: right}	
 </style>
 
 <div>
@@ -13,6 +13,7 @@
 
 	<h4 ng-if = "mode == 'receviedOrders'"><b>Received orders</b></h4>
 	<h4 ng-if = "mode == 'servedOrders'"><b>Served orders</b></h4>
+	<h4 ng-if = "mode == 'paidOrders'"><b>Paid orders</b></h4>
 	
 	<br/>
 	<table class="table table-hover">
@@ -24,23 +25,61 @@
       </tr>
     </thead>
     <tbody>
-      
+    
  
       <tr ng-repeat = "order in orders">       
         <td>{{order.id}}</td>         
-        <td ng-if = "order.orderStatus == 'ordered'"><button class = "btn btn-primary" ng-click = "acceptOrder(order)">Accept</button></td>
+        <td><button class = "btn btn-primary" ng-click = "inspectOrder(order, false)"><span class = "glyphicon glyphicon-search"></span></button></td>
+        <td ng-if = "order.orderStatus == 'ordered'"><button class = "btn btn-primary" ng-disabled = "!allowAction" ng-click = "acceptOrder(order)">Accept</button></td>
         <td ng-if = "order.orderStatus == 'accepted'"><i>Order is being prepared.</i></td>
-       	<td ng-if = "order.orderStatus == 'ready'"><button class = "btn btn-primary" ng-if = "checkWaiter(order)" ng-click = "serveOrder(order)">Serve</button></td>
+       	<td ng-if = "order.orderStatus == 'ready'"><button class = "btn btn-primary" ng-if = "checkWaiter(order)" ng-disabled = "!allowAction" ng-click = "serveOrder(order)">Serve</button></td>
        	<td ng-if = "order.orderStatus == 'served' && mode != 'servedOrders'"><i>Order is being served.</i></td>
-       	<td ng-if = "order.orderStatus != 'served'"><button class = "btn btn-primary" ng-if = "checkWaiter(order)">Change</td></button>         	
-       	<td ng-if = "order.orderStatus == 'served' && mode == 'servedOrders'"><button class = "btn btn-primary" ng-click = "buttonShowBill(order)">Create bill</button></td>              	
-    
-        
-       </tr>
-       
+       	<td ng-if = "order.orderStatus == 'paid'"><i>Order has been paid.</i></td>
+       	<td ng-if = "order.orderStatus != 'served' && order.orderStatus != 'paid'"><button class = "btn btn-primary" ng-click = "inspectOrder(order, true)" ng-disabled = "!allowAction" ng-if = "checkWaiter(order)">Change</button></td>         	
+       	<td ng-if = "order.orderStatus == 'served' && mode == 'servedOrders'"><button class = "btn btn-primary" ng-disabled = "!allowAction" ng-click = "buttonShowBill(order)">Create bill</button></td>       	                          
+       </tr>      
     </tbody>
   </table>
   
+  <br><br><br>
+  <table class="table table-hover" ng-show = "seeOrder">
+    <thead>
+      <tr>
+        <th>Order</th>                
+        <th>Table</th>  
+        <th>Drink name</th>
+        <th>Drink type</th>
+        <th>Quantity</th>
+        <th ng-if = "changeOrder"></th>
+        <th>Dish name</th>
+        <th>Dish type</th>     
+        <th>Quantity</th>
+        <th ng-if = "changeOrder"></th> 
+      </tr>
+    </thead>
+    <tbody>
+    
+    <tr>       
+        <td>{{order.id}}</td> 
+        <td>aaaa</td>
+        <td><p ng-repeat = "drink in order.drinks">{{drink.name}}</p></td>
+        <td><p ng-repeat = "drink in order.drinks">{{drink.drinkType}}</p></td>
+        <td><p ng-repeat = "drink in order.drinks">{{order.drinkQuantity[drink.id]}}</p></td>         
+        <td ng-if = "changeOrder"><p ng-repeat = "drink in order.drinks"><button class = "btn btn-link btn-xs" id={{drink.id}} ng-click = "removeDrink(drink, order)"><span class = "glyphicon glyphicon-remove" style="color:#e60000;"></span></button></p></td> 
+        <td><p ng-repeat = "dish in order.dishes">{{dish.name}}</p></td>
+        <td><p ng-repeat = "dish in order.dishes">{{dish.dishType}}</p></td>  
+        <td><p ng-repeat = "dish in order.dishes">{{order.dishQuantity[dish.id]}}</p></td>
+        <td ng-if = "changeOrder"><p ng-repeat = "dish in order.dishes"><button class = "btn btn-link btn-xs" id={{dish.id}} ng-click = "removeDish(dish, order)"><span class = "glyphicon glyphicon-remove" style="color:#e60000;"></span></button></p></td>
+              
+    </tr>
+    <tr>
+    <td colspan = "8" class = "endOrder" ng-if = "changeOrder"><button ng-click = "addDrink()" class = "btn btn-primary"><span class = "glyphicon glyphicon-plus"></span>Add Drink</button>
+    <td colspan = "1" class = "endOrder" ng-if = "changeOrder"><button ng-click = "addDrink()" class = "btn btn-primary"><span class = "glyphicon glyphicon-plus"></span>Add Dish</button>
+    <td ng-if = "changeOrder" colspan = "1" class = "endOrder"><button ng-click = "hideOrder()" class = "btn btn-primary">Hide</button>
+    <td ng-if = "!changeOrder" colspan = "10" class = "endOrder"><button ng-click = "hideOrder()" class = "btn btn-primary">Hide</button>
+    </tr>
+    </tbody>
+  </table>
 
  </div>
  </div>

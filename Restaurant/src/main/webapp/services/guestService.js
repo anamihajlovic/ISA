@@ -58,12 +58,31 @@ guestServices.service('guestService', ['$http', function($http) {
 	//za rezervacije
 	
 	this.addReservation = function(reservation) {
-		console.log("service addReservation");
 		return $http.post("/reservations/add", reservation);
 	}
 	
 	this.getTables = function(id, date, startTime, endTime){
 		return $http.get("/resTables/getTables/" + id +"/" + date + "/" + startTime + "/" + endTime);
+	}
+	
+	this.sendInvitation = function(friendId, reservationId) {
+		return $http.post("/invitations/sendInvitation/" + friendId, reservationId);
+	}
+	
+	this.getReservation = function(reservationId) {
+		return $http.get("/reservations/getReservation/" + reservationId);
+	}
+	
+	this.getDrinks= function(id){
+		return $http.get("/restaurants/drinks/" + id);
+	}
+	
+	this.getDishes= function(id){
+		return $http.get("/restaurants/dishes/" + id);
+	}
+		
+	this.order = function(reservationId, dishesAndDrinks) {
+		return $http.post("/orders/addOrder/" + reservationId, dishesAndDrinks);
 	}
 	
 	

@@ -10,6 +10,9 @@ public interface ReservationService {
 	void delete(Long id);
 	
 	List<Reservation> findByResIdAndDate(Long resId, Date date);
+	
+	Reservation findById(Long id);
+
 
 
 

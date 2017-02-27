@@ -1,6 +1,8 @@
 package com.isa.cook;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
@@ -83,6 +85,35 @@ public class CookController {
 		}
 		
 		return cookShifts;		
+	}
+	
+	@GetMapping(path = "/getWorkShift")
+	public WorkShift getWorkShift() {
+		
+		try{
+			Cook cook = (Cook) httpSession.getAttribute("user");
+			Restaurant restaurant = restaurantService.findOne(cook.getRestaurantId());
+			
+			Date today = new Date();			
+			SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+			String todayStr = formatter.format(today);	
+						
+			
+			System.out.println(today);
+			
+			for(WorkDay day : restaurant.getWorkDays()) {					
+				String workDayStr = formatter.format(day.getDay());	
+				System.out.println(todayStr.equals(workDayStr));
+				if(todayStr.equals(workDayStr)) 
+					return (day.getCurrentWorkShift(cook));
+					
+			}
+						
+			return null;
+		}catch(Exception e){
+			System.out.println(e);
+			return null;
+		}						
 	}
 
 }

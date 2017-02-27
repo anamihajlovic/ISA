@@ -1,0 +1,67 @@
+<style type = "text/css">
+h1 {text-align : left}
+
+th,td {text-align : left}
+
+.lastRow {text-align: right}	
+
+</style>
+
+
+<div>
+<div class = "col-md-4">
+</div>
+<div class = "col-md-6">
+
+<h1>Restaurant name</h1>
+<br><br><br>
+<table>
+<tbody>
+<tr>
+<th>Date:</th>
+<td>26.02.2017</td>
+</tr>
+
+<tr>
+<th>Waiter grade:</th>
+<td><button class = "btn btn-link btn-lg" ng-click = "waiterOneClick()"><span class = "{{waiterOne ? 'glyphicon glyphicon glyphicon-star' : 'glyphicon glyphicon-star-empty'}}" style="color:#FFDF00;"></span></button></td>
+<td><button class = "btn btn-link btn-lg" ng-click = "waiterTwoClick()"><span class = "{{waiterTwo ? 'glyphicon glyphicon glyphicon-star' : 'glyphicon glyphicon-star-empty'}}" style="color:#FFDF00;"></span></button></td>
+<td><button class = "btn btn-link btn-lg" ng-click = "waiterThreeClick()"><span class = "{{waiterThree ? 'glyphicon glyphicon glyphicon-star' : 'glyphicon glyphicon-star-empty'}}" style="color:#FFDF00;"></span></button></td>
+<td><button class = "btn btn-link btn-lg" ng-click = "waiterFourClick()"><span class = "{{waiterFour ? 'glyphicon glyphicon glyphicon-star' : 'glyphicon glyphicon-star-empty'}}" style="color:#FFDF00;"></span></button></td>
+<td><button class = "btn btn-link btn-lg" ng-click = "waiterFiveClick()"><span class = "{{waiterFive ? 'glyphicon glyphicon glyphicon-star' : 'glyphicon glyphicon-star-empty'}}" style="color:#FFDF00;"></span></button></td>
+<td><button class = "btn btn-primary" ng-click = "resetWaiter()" style="background:black"><span class = "glyphicon glyphicon glyphicon-refresh"></span></button></td>
+</tr>
+
+<tr>
+<th>Meal grade:</th>
+<td><button class = "btn btn-link btn-lg" ng-click = "mealOneClick()"><span class = "{{mealOne ? 'glyphicon glyphicon glyphicon-star' : 'glyphicon glyphicon-star-empty'}}" style="color:#FFDF00;"></span></button></td>
+<td><button class = "btn btn-link btn-lg" ng-click = "mealTwoClick()"><span class = "{{mealTwo ? 'glyphicon glyphicon glyphicon-star' : 'glyphicon glyphicon-star-empty'}}" style="color:#FFDF00;"></span></button></td>
+<td><button class = "btn btn-link btn-lg" ng-click = "mealThreeClick()"><span class = "{{mealThree ? 'glyphicon glyphicon glyphicon-star' : 'glyphicon glyphicon-star-empty'}}" style="color:#FFDF00;"></span></button></td>
+<td><button class = "btn btn-link btn-lg" ng-click = "mealFourClick()"><span class = "{{mealFour ? 'glyphicon glyphicon glyphicon-star' : 'glyphicon glyphicon-star-empty'}}" style="color:#FFDF00;"></span></button></td>
+<td><button class = "btn btn-link btn-lg" ng-click = "mealFiveClick()"><span class = "{{mealFive ? 'glyphicon glyphicon glyphicon-star' : 'glyphicon glyphicon-star-empty'}}" style="color:#FFDF00;"></span></button></td>
+<td><button class = "btn btn-primary" ng-click = "resetMeal()" style="background:black"><span class = "glyphicon glyphicon glyphicon-refresh"></span></button></td>
+</tr>
+
+<tr>
+<th>Restaurant grade:</th>
+<td><button class = "btn btn-link btn-lg" ng-click = "restaurantOneClick()"><span class = "{{restaurantOne ? 'glyphicon glyphicon glyphicon-star' : 'glyphicon glyphicon-star-empty'}}" style="color:#FFDF00;"></span></button></td>
+<td><button class = "btn btn-link btn-lg" ng-click = "restaurantTwoClick()"><span class = "{{restaurantTwo ? 'glyphicon glyphicon glyphicon-star' : 'glyphicon glyphicon-star-empty'}}" style="color:#FFDF00;"></span></button></td>
+<td><button class = "btn btn-link btn-lg" ng-click = "restaurantThreeClick()"><span class = "{{restaurantThree ? 'glyphicon glyphicon glyphicon-star' : 'glyphicon glyphicon-star-empty'}}" style="color:#FFDF00;"></span></button></td>
+<td><button class = "btn btn-link btn-lg" ng-click = "restaurantFourClick()"><span class = "{{restaurantFour ? 'glyphicon glyphicon glyphicon-star' : 'glyphicon glyphicon-star-empty'}}" style="color:#FFDF00;"></span></button></td>
+<td><button class = "btn btn-link btn-lg" ng-click = "restaurantFiveClick()"><span class = "{{restaurantFive ? 'glyphicon glyphicon glyphicon-star' : 'glyphicon glyphicon-star-empty'}}" style="color:#FFDF00;"></span></button></td>
+<td><button class = "btn btn-primary" ng-click = "resetRestaurant()" style="background:black"><span class = "glyphicon glyphicon glyphicon-refresh"></span></button></td>
+</tr>
+</tbody>
+
+<br><br>
+<tfoot>
+<tr>
+<td colspan = "5" class ="lastRow"><button class = "btn btn-primary" style="background:black" ng-click="buttonAddDrink()">Ok</button></td>
+<td colspan = "2" class ="lastRow"><button class = "btn btn-primary" style="background:black" ng-click="buttonAddDrink()">Cancel</button></td>
+</tr>
+</tfoot>
+
+</table>
+
+</div>
+</div>
