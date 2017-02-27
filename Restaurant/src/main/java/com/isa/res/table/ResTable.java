@@ -1,16 +1,21 @@
 package com.isa.res.table;
 
+import java.util.List;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
-import com.isa.system.manager.Preset;
+import com.isa.reservation.Reservation;
 
 @Entity
 @Table(name="tables")
@@ -45,9 +50,13 @@ public class ResTable {
 	@Column 
 	private int yPos;
 	
+	@ManyToMany(cascade = CascadeType.ALL)
+	@JoinTable(name = "reservation_tables", joinColumns = @JoinColumn(name = "table_id"), inverseJoinColumns = @JoinColumn(name = "reservation_id"))
+	private List<Reservation> reservations;
+	
 	public ResTable(){}
 
-	public ResTable(Long id, SizeTable size, StateTable state, int xPos, int yPos, String segment, String segColor) {
+	public ResTable(Long id, SizeTable size, StateTable state, int xPos, int yPos, String segment, String segColor,  List<Reservation> reservations) {
 		super();
 		this.id = id;
 		this.size = size;
@@ -56,6 +65,7 @@ public class ResTable {
 		this.yPos = yPos;
 		this.segment = segment;
 		this.segColor = segColor;
+		this.reservations = reservations;
 	}
 
 	
@@ -113,6 +123,14 @@ public class ResTable {
 
 	public void setyPos(int yPos) {
 		this.yPos = yPos;
+	}
+
+	public List<Reservation> getReservations() {
+		return reservations;
+	}
+
+	public void setReservations(List<Reservation> reservations) {
+		this.reservations = reservations;
 	}
 
 	

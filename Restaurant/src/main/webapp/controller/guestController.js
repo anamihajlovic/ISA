@@ -2,8 +2,8 @@ var guestModule = angular.module('guest.controller', []);
 
 
 
-guestModule.controller('guestController', ['$scope', 'guestService','commonService', '$location','$interval', '$filter',
-	function($scope, guestService, commonService,  $location, $interval, $filter) {
+guestModule.controller('guestController', ['$scope', 'guestService','commonService', '$location','$interval', '$filter', '$state',
+	function($scope, guestService, commonService,  $location, $interval, $filter, $state) {
 	
 		$scope.numOfFriendRequest= 0;
 		
@@ -327,32 +327,23 @@ guestModule.controller('guestController', ['$scope', 'guestService','commonServi
 		  $scope.chooseRes = function(restaurant) {
 			  $scope.chosenRes = restaurant;
 			  console.log($scope.chosenRes.name);
-			 // $location.path('startReservation');
 		  }
-		  
-		  $scope.chooseTables = function() {
-			  
-			  $scope.reservation.date = $scope.reservation.date.replace("/", "-");//da bi se u bazi sacuvao
-			  $scope.reservation.resId = $scope.chosenRes.id;
-			  $scope.reservation.resName = $scope.chosenRes.name;
-			  $scope.reservation.guestId = $scope.guest.id;
-			  
-			  //ovo je bilo za potrebe testiranja, cuvanje rezervacije ce biti nakon izabranih stolova
-			  var request = guestService.addReservation($scope.reservation).then(function(response){
-					$scope.data = response.data;
-					console.log($scope.data);
-					$scope.data.date = $filter('date')($scope.data.date, "dd.MM.yyyy");  // for type="date" binding; moze proizvoljan format datuma da se dobije
-					return response;
-				});
-			  
-			  //showTables();
 
+		  $scope.chooseTables = function() {
+			 $scope.chosenTables = [];
+
+			 $scope.reservation.date = $scope.reservation.date.replace("/", "-");//da bi se u bazi sacuvao
+			 $scope.reservation.resId = $scope.chosenRes.id;
+			 $scope.reservation.resName = $scope.chosenRes.name;
+			 $scope.reservation.guestId = $scope.guest.id;
+			 
+			 showTables();
 
 		  }
 		  
 		function showTables () {
 			console.log("showTables");
-				guestService.getTables($scope.chosenRes.id).then(
+				guestService.getTables($scope.chosenRes.id,$scope.reservation.date, $scope.reservation.startTime, $scope.reservation.endTime).then(
 						function(response){
 							//tables = response.data;
 				
@@ -390,23 +381,80 @@ guestModule.controller('guestController', ['$scope', 'guestService','commonServi
 			}
 		
 		
-		//$scope.clicked = false;
-		$scope.clickedTableId = "";
 		$scope.setTableColor = function(id) {
-			console.log("setColor"  + id);
-		   // $scope.clicked = !$scope.clicked;
-		   // $scope.clickedTableId = id;
-		    
-		    if($scope.clickedTableId == id)
-		    	$scope.clickedTableId = "";
-		    else
-		    	$scope.clickedTableId = id;
-		    console.log("clicked id" + $scope.clickedTableId);
-
 			
+			if($scope.chosenTables.indexOf(id) !== -1){
+				var index = $scope.chosenTables.indexOf(id);
+				  $scope.chosenTables.splice(index, 1); 
+				 // $scope.tableToYellow(id);
+			} else {
+				$scope.chosenTables.push(id);
+				 // $scope.tableToYellow(id);
+
+			}
+				
+		}
+		
+		$scope.tableToYellow = function(id) {
+			if($scope.chosenTables.indexOf(id) !== -1) {
+				  return true;
+			}
+			return false;
+		}
+		
+		$scope.reservate = function() {
+			$('#myModalConfirmation').modal('hide');
+			$('.modal-backdrop').remove();
+			
+			console.log("reservate fja");
+			console.log($scope.reservation);
+			console.log($scope.chosenTables);
+			$scope.reservation.tables = makeTablesString($scope.chosenTables);
+			
+			 var request = guestService.addReservation($scope.reservation).then(function(response){
+					$scope.data = response.data;
+					//console.log($scope.data);
+					//$scope.data.date = $filter('date')($scope.data.date, "dd.MM.yyyy");  // for type="date" binding; moze proizvoljan format datuma da se dobije
+					return response;
+				});
+			 
+			 
+			 request.then(function (data) {
+				 console.log("data " + $scope.data);
+					if($scope.data != "") {
+						toastr.success("Successful reservation!")
+						$scope.createdReservation = $scope.data;
+						$scope.reservation = new Object();
+						$state.go('guest.inviteFriends');
+
+
+					} else {
+						toastr.error("Unsuccessful reservation. Please, try again.");
+						//$state.go('guest.chooseTables');
+						$scope.chosenTables = [];//mislim da ce mi ove dve linije biti potrebne
+						//da ispravno prikazem koji u stolovi u medjuvremenu postali rezervisani
+						//jer je pretpostavka da ce i to biti jedan od razloga sto nece proci
+						//dodavanje rezervacije
+						showTables();
+
+					}
+				});
+
+		}
+		
+		function makeTablesString(tablesArray) {
+			var stringTables= "";
+			for (x in tablesArray)
+				stringTables += tablesArray[x] + ";";
+			
+			var size = stringTables.length;
+			stringTables = stringTables.substring(0, size-1); //da odsecem poslednji ;
+			console.log("string tables " + stringTables);
+			return stringTables;
 		}
 		
 		
+
 
 		
 		

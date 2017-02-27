@@ -101,6 +101,11 @@ angular.module('restaurants', [ 'ui.router','ui.calendar' ,
         	url: '/chooseTables',
         	templateUrl: 'html/guest/tablesConf.html'
         })
+        
+        .state('guest.inviteFriends', {
+        	url: '/inviteFriends',
+        	templateUrl: 'html/guest/inviteFriends.html'
+        })
          
          .state('sysManager', {
          	url : '/sysManager',
