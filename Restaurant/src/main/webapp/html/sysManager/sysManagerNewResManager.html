@@ -8,12 +8,14 @@
     <label>Firstname</label>
       
 	<div  ng-class="{ 'has-error': formNRM.firstName.$dirty && formNRM.firstName.$error.required }">
-	<input type = "text" class = "form-control" ng-model = "$parent.resManager.firstName" name="firstNameNRM" ng-readonly="$parent.infoMode" required> 
+	<input type = "text" class = "form-control" ng-model = "$parent.resManager.firstName" name="firstName" ng-readonly="$parent.infoMode" required> 
 	</div>
 	<span class="help-block" ng-show = "formNRM.firstName.$dirty && formNRM.firstName.$invalid">
 	<span ng-show = "formNRM.firstName.$error.required">First name is required.</span>
 	</span>
+	
     <label>Lastname</label>
+    
    <div  ng-class="{ 'has-error': formNRM.lastName.$dirty && formNRM.lastName.$error.required }">
 	<input type = "text" class = "form-control" ng-model = "$parent.resManager.lastName" name="lastName" ng-readonly="$parent.infoMode" required> 
 	</div>

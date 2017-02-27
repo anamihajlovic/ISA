@@ -10,6 +10,7 @@
   "main": "",
   "license": "FTN",
   "dependencies": {
-    "angular-ui-calendar": "^1.0.2"
+    "angular-ui-calendar": "^1.0.2",
+    "chart.js": "^2.5.0"
   }
 }

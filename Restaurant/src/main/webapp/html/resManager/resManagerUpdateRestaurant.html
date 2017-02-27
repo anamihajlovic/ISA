@@ -2,14 +2,25 @@
 <div class = "col-sm-4">
 </div>
 <div class = "col-sm-4">
-<form action="">
- <label>Name</label>
-    <input type="text" class="form-control" ng-model = "$parent.restaurant.name" >   
+<form action=""name ="form">
 
+ <label>Name</label>
+ <div  ng-class="{ 'has-error': form.name.$dirty && form.name.$error.required }">
+    <input type="text" class="form-control" ng-model = "$parent.restaurant.name" name="name" ng-readonly="$parent.infoMode" required>  
+</div>
+<span class="help-block" ng-show = "form.name.$dirty && form.name.$invalid" >
+	<span ng-show = "form.name.$error.required">Name is required.</span>
+
+	</span>
     <label>Type</label>
-    <input type="text" class="form-control" ng-model = "$parent.restaurant.restaurant_type">  
+    <div  ng-class="{ 'has-error': form.type.$dirty && form.type.$error.required }">
+    <input type="text" class="form-control" ng-model = "$parent.restaurant.restaurant_type"name="type" ng-readonly="$parent.infoMode" required>   
+    </div>
+    <span class="help-block" ng-show = "form.type.$dirty && form.type.$invalid" >
+	<span ng-show = "form.type.$error.required">Type is required.</span>
+	</span>
     <br>
-<button class = "btn btn-default" ng-click = "updateRes()"><span class = "glyphicon glyphicon-ok"></span>Update</button>
+<button class = "btn btn-default"  ng-disabled="form.$invalid" ng-click = "updateRes()"><span class = "glyphicon glyphicon-ok"></span>Update</button>
 <button class = "btn btn-default" ng-click = "cancel()"><span class = "glyphicon glyphicon-remove"></span>Cancel</button>
 </form>
 </div>

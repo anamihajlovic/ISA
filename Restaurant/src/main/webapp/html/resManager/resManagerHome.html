@@ -68,12 +68,26 @@
         <h4 class="modal-title" id="modalTitle">New Configuration</h4>
       </div>
       <div class="modal-body">
-    Number of tables - height: <input name= "height" type="number" min="2" value="2"><br/>
+      <form name="form">
+    <div  ng-class="{ 'has-error': form.height.$dirty && form.height.$error.required }">
+    Number of tables - height: <input name= "height" type="number" min="2" value="2" ng-readonly="$parent.infoMode" required >  <br/>
+   </div>
+	<span class="help-block" ng-show = "form.height.$dirty && form.height.$invalid">
+	<span ng-show = "form.height.$error.required">Height is required.</span>
+	</span>
+   
     <br>
-	Number of tables - width: <input name="width" type="number" min="2"  value="2"><br/>         			
+     <div  ng-class="{ 'has-error': form.width.$dirty && form.width.$error.required }">
+	Number of tables - width: <input name="width" type="number" min="2"  value="2" ng-readonly="$parent.infoMode" required >  <br/>
+	 </div>
+	<span class="help-block" ng-show = "form.width.$dirty && form.width.$invalid">
+	<span ng-show = "form.width.$error.required">Width is required.</span>
+	</span>
+	   </form>       			
       </div>
+   
       <div class="modal-footer">
-      <button  class="btn btn-default" ng-click="makeConfig()" data-dismiss="modal"><span class="glyphicon glyphicon-ok"  ></span> Create</button>
+      <button  class="btn btn-default" ng-disabled="form.$invalid"   ng-click="makeConfig()" ><span class="glyphicon glyphicon-ok"  ></span> Create</button>
 		 <button style="display:none" type="button" id ="cancelConfil"class="btn btn-default" data-dismiss="modal">Cancel</button>
       </div>
     </div>
@@ -136,14 +150,19 @@
         <h4 class="modal-title" id="modalTitle">New Segment</h4>
       </div>
       <div class="modal-body">
-      	<form action="" method="post">
+      	<form name ="newSeg" >
 	<label>Type of segment</label>
+	<div  ng-class="{ 'has-error': newSeg.see.$dirty && newSeg.see.$error.required }">
     <input type="text" ng-model="$parent.segment.segType" class="form-control" name="segType" >  
-     <input style="display:none" type="text" ng-model="$parent.segment.color" class="form-control" name="color" > 
+     <input style="display:none" type="text" ng-model="$parent.segment.color" class="form-control"  name="see" ng-readonly="$parent.infoMode" required >
+   </div>
+	<span class="help-block" ng-show = "newSeg.see.$dirty && newSeg.see.$invalid">
+	<span ng-show = "newSeg.see.$error.required">Type od segment is required.</span>
+	</span>
    </form>
       </div>
       <div class="modal-footer">
-      <button type="button"  class="btn btn-default"  ng-click="makeSegment()" ><span class="glyphicon glyphicon-ok" ></span> Create</button>
+      <button type="button"  class="btn btn-default"  <!--  ng-disabled="newSeg.$invalid" --> ng-click="makeSegment()" ><span class="glyphicon glyphicon-ok" ></span> Create</button>
       	 <button style="display:none" type="button" id ="cancelMakeSegment"class="btn btn-default" data-dismiss="modal">Cancel</button>
       </div>
     </div>

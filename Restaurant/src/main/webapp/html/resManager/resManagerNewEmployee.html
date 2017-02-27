@@ -2,27 +2,51 @@
 <div class = "col-sm-4">
 </div>
 <div class = "col-sm-4"  class="input-group">
-<form action="" method="post">
+<form action="" method="post" name = "forma">
+
     <label>Firstname</label>
-    <input type="text" ng-model="$parent.employee.firstName" class="form-control" >  
-
+      <div  ng-class="{ 'has-error': forma.firstName.$dirty && forma.firstName.$error.required }">
+    <input type="text" ng-model="$parent.employee.firstName" class="form-control"name="firstName" ng-readonly="$parent.infoMode" required >  
+	</div>
+	<span class="help-block" ng-show = "forma.firstName.$dirty && forma.firstName.$invalid">
+	<span ng-show = "forma.firstName.$error.required">First name is required.</span>
+	</span>
+	
     <label>Lastname</label>
-    <input type="text" ng-model="$parent.employee.lastName" class="form-control" name="lastName" >  
-
+    <div  ng-class="{ 'has-error': forma.lastName.$dirty && forma.lastName.$error.required }">
+    <input type="text" ng-model="$parent.employee.lastName" class="form-control" name="lastName" ng-readonly="$parent.infoMode" required >  
+	</div>
+	<span class="help-block" ng-show = "forma.lastName.$dirty && forma.lastName.$invalid">
+	<span ng-show = "forma.lastName.$error.required">Last name is required.</span>
+	</span> 
+	
     <label>Email</label>
-    <input type="text" ng-model="$parent.employee.email" class="form-control" name="email" >  
-
+    <div  ng-class="{ 'has-error': forma.email.$dirty && forma.email.$error.required }">
+    <input type="text" ng-model="$parent.employee.email" class="form-control" name="email" ng-readonly="$parent.infoMode" required >   
+	</div>
+	<span class="help-block" ng-show = "forma.email.$dirty && forma.email.$invalid">
+	<span ng-show = "forma.email.$error.required">Email is required.</span>
+	</span>  
+	
     <label>Password</label>
-    <input type="password" ng-model="$parent.employee.password" class="form-control" name="password" >  
-    
+     <div  ng-class="{ 'has-error': forma.password.$dirty && forma.password.$error.required }">
+    <input type="password" ng-model="$parent.employee.password" class="form-control" name="password" ng-readonly="$parent.infoMode" required >  
+   </div>
+    <span class="help-block" ng-show = "forma.password.$dirty && forma.password.$invalid">
+	<span ng-show = "forma.password.$error.required">Password is required.</span>
+	</span>   
      <label>Birthday</label>
-
- 	<input type="date" ng-model="$parent.employee.birthday" class="form-control" name="birthday" >  
-
+  <div  ng-class="{ 'has-error': forma.birthday.$dirty && forma.birthday.$error.required }">
+ 	<input type="date" ng-model="$parent.employee.birthday" class="form-control" name="birthday"ng-readonly="$parent.infoMode" required >   
+      </div>
+    <span class="help-block" ng-show = "forma.birthday.$dirty && forma.birthday.$invalid">
+	<span ng-show = "forma.birthday.$error.required">Birthday is required.</span>
+	</span>  
 
   
 	<label>Clothes size</label> 
-    <select class="form-control"  ng-model="$parent.employee.clothesSize">
+	 <div  ng-class="{ 'has-error': forma.size.$dirty && forma.size.$error.required }">
+    <select class="form-control"  ng-model="$parent.employee.clothesSize"name="size"ng-readonly="$parent.infoMode" required >  
    		<option value="" disabled="" selected="">Select clothes size</option>
      	<option value="S">S</option>
 		<option value="M">M</option>
@@ -30,10 +54,14 @@
 		<option value="XL">XL</option>
 		<option value="XXL">XXL</option>
 	</select>
-    
+       </div>
+     <span class="help-block" ng-show = "forma.size.$dirty && forma.size.$invalid">
+	<span ng-show = "forma.size.$error.required">Clothes size is required.</span>
+	</span>
     
     <label>Shoes size</label>
-     <select class="form-control"  ng-model="$parent.employee.shoesSize">
+     <div  ng-class="{ 'has-error': forma.shoes.$dirty && forma.shoes.$error.required }">
+     <select class="form-control"  ng-model="$parent.employee.shoesSize"name="shoes"ng-readonly="$parent.infoMode" required >  
    		<option value="" disabled="" selected="">Select shoes size</option>
      	<option value="no38">38</option>
 		<option value="no39">39</option>
@@ -45,17 +73,27 @@
 		<option value="no45">45</option>
 		<option value="no46">46</option>
 	</select>
+	    </div>
+	  <span class="help-block" ng-show = "forma.shoes.$dirty && forma.shoes.$invalid">
+	<span ng-show = "forma.shoes.$error.required">Shoes size is required.</span>
+	</span>
  
     <label>Role</label>
-   <select class="form-control"  ng-model="$parent.employee.userRole">
+       <div  ng-class="{ 'has-error': forma.role.$dirty && forma.role.$error.required }">
+   <select class="form-control"  ng-model="$parent.employee.userRole"name="role"ng-readonly="$parent.infoMode" required > 
    		<option value="" disabled="" selected="">Select role</option>
      	<option value="waiter">waiter</option>
 		<option value="cook">cook</option>
 		<option value="bartender">bartender</option>
 	</select>
+	     </div>
+	  <span class="help-block" ng-show = "forma.role.$dirty && forma.role.$invalid">
+	<span ng-show = "forma.role.$error.required">Role is required.</span>
+	</span>
 	
 	<label ng-show = "$parent.employee.userRole == 'cook'">Cook type</label>
-	<select class="form-control"  ng-model="$parent.employee.cookType" ng-show = "$parent.employee.userRole == 'cook'">
+	<div  ng-class="{ 'has-error': forma.cook.$dirty && forma.cook.$error.required }">
+	<select class="form-control"  ng-model="$parent.employee.cookType" ng-show = "$parent.employee.userRole == 'cook'"name="cook" ng-readonly="$parent.infoMode" required >  
    		<option value="" disabled="" selected="">Select cook type</option>
      	<option value="undefined">Undefined</option>
 		<option value="dessertCook">Dessert chef</option>
@@ -68,9 +106,13 @@
 		<option value="roastCook">Roast chef</option>
 		<option value="breakfastCook">Breakfast chef</option>
 	</select>
+	     </div>
+	  <span class="help-block" ng-show = "forma.cook.$dirty && forma.cook.$invalid">
+	<span ng-show = "forma.cook.$error.required">Cook type is required.</span>
+	</span>
 	
 <br>
-<button class="btn btn-default" ng-click="saveEmployee()"><span class="glyphicon glyphicon-ok" ></span> Create</button>
+<button class="btn btn-default" ng-disabled="forma.$invalid"   ng-click="saveEmployee()"><span class="glyphicon glyphicon-ok" ></span> Create</button>
 <button class="btn btn-default" ng-click="cancel()"><span class="glyphicon glyphicon-remove" ></span> Cancel</button>
 </form>
 

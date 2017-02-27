@@ -39,8 +39,22 @@
      
     <th>{{employeeType3}}:</th>
     <td><div ng-repeat = "employee3 in assignedEmployees3"> {{employee3.firstName}} {{employee3.lastName}}</div></td>
-    
+  
     </tr>
+    
+    <tr>
+  
+    <th>Responsabilites for waiters:</th>
+      </tr>
+      <tr>
+    <td><div ng-repeat = "res in assignedResponsabilites"> <u>{{res.reon}}  reon</u> 
+    <div ng-repeat = "r in res.waiters"> {{r.firstName}}  {{r.lastName}}</div>
+    
+    </div>
+    
+    </td>
+    </tr>
+    
     </table>
    
           
@@ -66,7 +80,8 @@
         <button type="button" class="close" data-dismiss="modal">&times;</button>
         <h4 class="modal-title" id="modalTitle">Define Shift ! </h4>
       </div>
-      <div class="modal-body">  
+      <div class="modal-body">
+      <form>  
        <table>
 	       <tbody>
 		       <tr>
@@ -102,35 +117,56 @@
 	       </tbody>
        </table>
         <hr>
-         <table>
+       
+       <table>
 	       <tbody>
 		       <tr>
-					<th>Waiters</th>
+					<th>First reon</th>
 					<th></th>
-			
 				</tr>
-				<tr ng-repeat="waiter in waiters">
-						<td>
-				    		{{waiter.firstName}}   {{waiter.lastName}}
+				<tr ng-repeat="first in waiters1">
+						<td >
+				    		{{first.firstName}}   {{first.lastName}}
 						</td>
 						<td>
-				    		<input type="checkbox"  value="" ng-model="waiter.selected">
+				    		<input type="checkbox"  value=""  ng-model="first.selected">
 						</td>
-					
-						
 				</tr>
 	       </tbody>
        </table>
-       	<select class="form-control"  ng-model="$parent.typeOfShift">
+	      <hr> 
+	      
+	       <table>
+	       <tbody>
+		       <tr>
+					<th>Second reon</th>
+					<th></th>
+				</tr>
+				<tr ng-repeat="second in waiters2">
+						<td >
+				    		{{second.firstName}}   {{second.lastName}}
+						</td>
+						<td>
+				    		<input type="checkbox"  value=""  ng-model="second.selected">
+						</td>
+				</tr>
+	       </tbody>
+       </table>  		
+  <div  ng-class="{ 'has-error': form.type.$dirty && form.type.$error.required }">
+       	<select class="form-control"  ng-model="$parent.typeOfShift"name = "type" ng-readonly="$parent.infoMode" required>   
    		<option value="" disabled="" selected="">Select shift</option>
      	<option value="1">first</option>
 		<option value="2">second</option>
 		<option value="3">third</option>
 	</select>	
-	         			
+	         <span class="help-block" ng-show = "form.type.$dirty && form.type.$invalid">
+	<span ng-show = "form.type.$error.required">Price is required.</span>
+	</span>	
+	</div>
+	</form>		
       </div>
       <div class="modal-footer">
-       <button  class="btn btn-default" ng-click="MakeShift()"><span class="glyphicon glyphicon-ok"  ></span> Finish</button>
+       <button  class="btn btn-default"  ng-disabled="form.$invalid" ng-click="MakeShift()"><span class="glyphicon glyphicon-ok"  ></span> Finish</button>
 		 <button type="button" id ="cancelShift"class="btn btn-default" data-dismiss="modal">Cancel</button>
       </div>
     </div>

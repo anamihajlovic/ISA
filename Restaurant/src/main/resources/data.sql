@@ -259,17 +259,17 @@ insert into segments(segment_type,color) values ('Inside','#00bfff')
 insert into segments(segment_type,color) values ('Smoke','#ffff00')
 
 
-insert into tables(table_size, table_state, segment, x_pos, y_pos,segment_color) values ('four', 'exists', 'Smoke', 0, 0,'#00bfff')
-insert into tables(table_size, table_state, segment, x_pos, y_pos,segment_color) values ('four', 'exists', 'Smoke', 0, 1,'#00bfff')
-insert into tables(table_size, table_state, segment, x_pos, y_pos,segment_color) values ('four', 'exists', 'Inside', 0, 2,'#00bfff')
-insert into tables(table_size, table_state, segment, x_pos, y_pos,segment_color) values ('four', 'not_exists','Inside', 0, 3,'#00bfff')
-insert into tables(table_size, table_state, segment, x_pos, y_pos,segment_color) values ('four', 'exists','Inside', 0, 4,'#00bfff')
+insert into tables(table_size, table_state, segment, x_pos, y_pos,segment_color,reon) values ('four', 'exists', 'Smoke', 0, 0,'#00bfff','first')
+insert into tables(table_size, table_state, segment, x_pos, y_pos,segment_color,reon) values ('four', 'exists', 'Smoke', 0, 1,'#00bfff','first')
+insert into tables(table_size, table_state, segment, x_pos, y_pos,segment_color,reon) values ('four', 'exists', 'Inside', 0, 2,'#00bfff','first')
+insert into tables(table_size, table_state, segment, x_pos, y_pos,segment_color,reon) values ('four', 'not_exists','Inside', 0, 3,'#00bfff','first')
+insert into tables(table_size, table_state, segment, x_pos, y_pos,segment_color,reon) values ('four', 'exists','Inside', 0, 4,'#00bfff','first')
 
-insert into tables(table_size, table_state, segment, x_pos, y_pos,segment_color) values ('two', 'exists','Inside', 1, 0,'#ffff00')
-insert into tables(table_size, table_state, segment, x_pos, y_pos,segment_color) values ('two', 'exists','Inside', 1, 1,'#ffff00')
-insert into tables(table_size, table_state, segment, x_pos, y_pos,segment_color) values ('two', 'not_exists','Inside', 1, 2,'#ffff00')
-insert into tables(table_size, table_state, segment, x_pos, y_pos,segment_color) values ('two', 'exists','Inside', 1, 3,'#ffff00')
-insert into tables(table_size, table_state, segment, x_pos, y_pos,segment_color) values ('two', 'exists','Inside', 1, 4,'#ffff00')
+insert into tables(table_size, table_state, segment, x_pos, y_pos,segment_color,reon) values ('two', 'exists','Inside', 1, 0,'#ffff00','second')
+insert into tables(table_size, table_state, segment, x_pos, y_pos,segment_color,reon) values ('two', 'exists','Inside', 1, 1,'#ffff00','second')
+insert into tables(table_size, table_state, segment, x_pos, y_pos,segment_color,reon) values ('two', 'not_exists','Inside', 1, 2,'#ffff00','second')
+insert into tables(table_size, table_state, segment, x_pos, y_pos,segment_color,reon) values ('two', 'exists','Inside', 1, 3,'#ffff00','second')
+insert into tables(table_size, table_state, segment, x_pos, y_pos,segment_color,reon) values ('two', 'exists','Inside', 1, 4,'#ffff00','second')
 
 insert into segment_tables(segment_id,table_id) values(1,1)
 insert into segment_tables(segment_id,table_id) values(1,2)
@@ -284,3 +284,22 @@ insert into segment_tables(segment_id,table_id) values(2,10)
 
 insert into restaurant_segments(restaurant_id, segment_id) values (1,1)
 insert into restaurant_segments(restaurant_id, segment_id) values (1,2)
+
+---RESPONSABILITIES
+
+insert into responsabilities(reon)values('first')
+insert into responsabilities(reon)values('second')
+insert into responsabilities(reon)values('first')
+insert into responsabilities(reon)values('second')
+
+insert into waiter_responsabilities values(1,1)
+insert into waiter_responsabilities values(1,2)
+insert into waiter_responsabilities values(2,1)
+
+
+insert into work_shift_responsabilites values(1,1)
+insert into work_shift_responsabilites values(1,2)
+insert into work_shift_responsabilites values(2,3)
+insert into work_shift_responsabilites values(2,4)
+
+

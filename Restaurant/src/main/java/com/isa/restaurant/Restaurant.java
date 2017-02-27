@@ -10,6 +10,8 @@ import javax.persistence.ManyToMany;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
+
 import com.isa.dish.*;
 import com.isa.drink.*;
 import com.isa.foodstuf.Foodstuff;
@@ -56,7 +58,7 @@ public class Restaurant {
 	private String street;
 	
 	@Column
-	@NotBlank
+	@NotNull
 	private Integer number;
 	
 	@Column

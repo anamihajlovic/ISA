@@ -1,4 +1,4 @@
-var resManagerModule = angular.module('resManager.controller', ['ui.calendar']);
+var resManagerModule = angular.module('resManager.controller', ['ui.calendar','chart.js']);
 var visina ;
 var sirina;
 var ID;
@@ -273,6 +273,24 @@ resManagerModule.controller('resManagerController', ['$scope', 'resManagerServic
 			}
 		); 	
 	};
+	
+	function AllWaiters1() {  
+		//alert("uslo u controller")		
+		 resManagerService.findAllWaiters1().then(
+			function (response) {
+				$scope.waiters1 = response.data;
+			}
+		); 	
+	};
+	function AllWaiters2() {  
+		//alert("uslo u controller")		
+		 resManagerService.findAllWaiters2().then(
+			function (response) {
+				$scope.waiters2 = response.data;
+			}
+		); 	
+	};
+	
 	
 	function AllCooks() {  
 		//alert("uslo u controller")		
@@ -962,7 +980,8 @@ resManagerModule.controller('resManagerController', ['$scope', 'resManagerServic
 var datum ; 
 $scope.dayClick = function( date, allDay, jsEvent, view ){ 
 	datum = date.format();
-	AllWaiters();
+	AllWaiters1();
+	AllWaiters2();
 	AllCooks();
 	AllBartenders();
 	AllSegments();
@@ -1003,6 +1022,9 @@ $scope.eventClick = function(event){
 
     		$scope.assignedEmployees3 = $scope.selectedShift.waiters;
     		$scope.employeeType3 = "Waiters";
+    		
+    		$scope.assignedResponsabilites = $scope.selectedShift.responsabilites;
+    		
     	
     	        		        
     	return response;
@@ -1046,8 +1068,6 @@ $scope.MakeShift = function(){
 	//$scope.shift.day = datum;
 	//alert($scope.shift.day )
 	//alert(smena)
-	var segmenti = $scope.segmenti;
-	alert(segmenti)
 	var smena = $scope.typeOfShift;
 	//alert(smena)
 	var cookNumbers = '';
@@ -1056,26 +1076,35 @@ $scope.MakeShift = function(){
 	    	cookNumbers += cook.id + ',';
 	    }
 	});
-	var waiterNumbers = '';
-	angular.forEach($scope.waiters, function(waiter) {
-	    if (waiter.selected) {
-	    	waiterNumbers += waiter.id + ',';
-	    }
-	});
 	var bartenderNumbers = '';
 	angular.forEach($scope.bartenders, function(bartender) {
 	    if (bartender.selected) {
 	    	bartenderNumbers += bartender.id + ',';
 	    }
 	});
-	/*
-	angular.forEach($scope.waiters, function(bartender) {
-	    if (w.selected) {
-	    	bartenderNumbers += waiter.id + ',';
+	/////////////////////////////////
+	var firstReon = '';
+	angular.forEach($scope.waiters1, function(first) {
+	    if (first.selected) {
+	    	firstReon += first.id + ',';
 	    }
 	});
-	*/
-	var request = resManagerService.makeShift(smena,datum,cookNumbers,waiterNumbers,bartenderNumbers).then(function(response) {
+	var secondReon = '';
+	angular.forEach($scope.waiters2, function(second) {
+	    if (second.selected) {
+	    	secondReon += second.id + ',';
+	    }
+	});
+	var sve = '';
+	sve = {shift: smena,
+			date: datum,
+			cooks:cookNumbers,
+			bartenders:bartenderNumbers,
+			firstReon : firstReon,
+			secondReon: secondReon
+	}
+	/////////////////////////////////////////
+	var request = resManagerService.makeShift(sve).then(function(response) {
 		$scope.data = response.data;
 	//	alert(response.data)
 		return response;
@@ -1083,8 +1112,9 @@ $scope.MakeShift = function(){
 		request.then(function (data) {
 			if($scope.data != "nije") {
 				toastr.success("Success!");	
-				document.getElementById("modalBtnResponsability").click();
-				//window.location.reload();
+				document.getElementById("cancelShift").click();
+				
+				window.location.reload();
 				
 			} else {
 				toastr.error("Something wrong");
@@ -1092,11 +1122,18 @@ $scope.MakeShift = function(){
 			}
 
 	});
-		
-		
 }	
 
 
+$scope.labels = ['2006', '2007', '2008', '2009', '2010', '2011', '2012'];
+$scope.series = ['Series A', 'Series B'];
+
+$scope.data = [
+  [65, 59, 80, 81, 56, 55, 40],
+  [28, 48, 40, 19, 86, 27, 90]
+];
+
+$scope.colors = ["rgb(159,204,0)"];
 
    
 }]);

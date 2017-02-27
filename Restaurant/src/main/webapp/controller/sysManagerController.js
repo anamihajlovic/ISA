@@ -50,26 +50,29 @@ sysManagerModule.controller('sysManagerController', ['$scope', 'sysManagerServic
 		
 	}
 	$scope.list= function(){
-		checkRights();		
+		checkRights();	
 	}
 	
 	$scope.saveManager= function () {
 
 				var request = sysManagerService.saveResManager($scope.resManager).then(function(response) {
 				$scope.data = response.data;
-
+				
 				return response;
 			});			
 				request.then(function (data) {
+					
 					if($scope.data != null) {
 						toastr.success("Success!");	
-							
+						
+					
 					} else {
 						toastr.error("Something wrong");
 					
 					}
-
+					window.location.reload();
 			});
+				
 		}
 		
 	var sifra;
@@ -84,7 +87,8 @@ sysManagerModule.controller('sysManagerController', ['$scope', 'sysManagerServic
 	};
 
 	function AllRestaurants(){  
-		//alert("uslo u controller")		
+		//alert("uslo u controller")
+		
 		var request = sysManagerService.findAllRestaurants().then(
 			function (response) {
 				$scope.restaurantss= response.data;
@@ -105,6 +109,7 @@ sysManagerModule.controller('sysManagerController', ['$scope', 'sysManagerServic
 	});			
 		request.then(function (data) {
 			if($scope.data != null) {
+				AllRestaurants();
 				toastr.success("Success!");	
 					
 			} else {

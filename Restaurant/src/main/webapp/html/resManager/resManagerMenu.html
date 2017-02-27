@@ -43,7 +43,80 @@
     </div>
     
     </div>
-    
+  <!-- ------------------------------------------------------------------------------- -->  
+  <!-- Trigger the modal with a button -->
+<button type="button" id="modalBtnAddDish" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModalAddDish" style="display:none"></button>
+
+<!-- Modal -->
+<div id="myModalAddDish" class="modal fade"  >
+  <div class="modal-dialog ">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title" id="modalTitle">Add new dish</h4>
+      </div>
+      <div class="modal-body">
+     	<form  action="" name = "forma">
+     	
+    <label>Name</label>
+   <div  ng-class="{ 'has-error': forma.name.$dirty && forma.name.$error.required}">
+    <input type="text" ng-model="$parent.newdish.name" class="form-control" name = "name" ng-readonly="$parent.infoMode" required >   
+	</div>
+	<span class="help-block" ng-show = "forma.name.$dirty && forma.name.$invalid">
+	<span ng-show = "forma.name.$error.required">Name is required.</span>
+	</span>	
+	 
+    <label>Text</label>
+      <div  ng-class="{ 'has-error': forma.text.$dirty && forma.text.$error.required}">
+    <input type="text" ng-model="$parent.newdish.text" class="form-control"  name = "text" ng-readonly="$parent.infoMode" required >  
+     </div>
+	<span class="help-block" ng-show = "forma.text.$dirty && forma.text.$invalid">
+	<span ng-show = "forma.text.$error.required">Text is required.</span>
+	</span>	
+     <label>Price</label>
+      <div  ng-class="{ 'has-error': forma.price.$dirty && forma.price.$error.required}">
+    <input type="text" ng-model="$parent.newdish.price" class="form-control" name = "price" ng-readonly="$parent.infoMode" required > 
+     </div>
+	<span class="help-block" ng-show = "forma.price.$dirty && forma.price.$invalid">
+	<span ng-show = "forma.price.$error.required">Price is required.</span>
+	</span>	
+	
+    <label>Type</label>
+     <div  ng-class="{ 'has-error': forma.type.$dirty && forma.type.$error.required}">
+     <select class="form-control" name='res' ng-model="$parent.newdish.dishType" name = "type" ng-readonly="$parent.infoMode" required > 
+   		<option value="" disabled="" selected="">Select type</option>
+     	<option  value="appetizer">appetizer</option>
+     	<option  value="breakfast ">breakfast</option>
+     	<option  value="dessert">dessert</option>
+     	<option  value="fish">fish</option>
+     	<option  value="pasta">pasta</option>
+     	<option  value="pizza">pizza</option>
+     	<option  value="roast">roast</option>
+     	<option  value="salad">salad</option>
+     	<option  value="seasonal">seasonal</option>
+     	<option  value="soup">soup</option>
+   	
+	</select>
+	 </div>
+	<span class="help-block" ng-show = "forma.type.$dirty && forma.type.$invalid">
+	<span ng-show = "forma.type.$error.required">Type is required.</span>
+	</span>	 
+<br>
+
+</form> 
+	         			
+      </div>
+      <div class="modal-footer">
+      <button class="btn btn-default"  ng-disabled="forma.$invalid" ng-click="saveDish()"><span class="glyphicon glyphicon-ok" ></span> Create</button>
+		 <button type="button" id ="cancelDish"class="btn btn-default" data-dismiss="modal">Cancel</button>
+      </div>
+    </div>
+
+  </div>
+</div>	
+<!-- ----------------------------------------------------------------- -->  
  
       
 <!-- Trigger the modal with a button -->
@@ -60,66 +133,18 @@
         <h4 class="modal-title" id="modalTitle">{{dish.name}}</h4>
       </div>
       <div class="modal-body">
+      <form action="" name = "form">
      	<label>Price</label>
-		<input type = "text" class = "form-control" ng-model = "$parent.dish.price" >  
-	         			
+     	<div  ng-class="{ 'has-error': form.price.$dirty && form.price.$error.required }">
+		<input type = "text" class = "form-control" ng-model = "$parent.dish.price" name = "price" ng-readonly="$parent.infoMode" required>   
+	      </div>
+	<span class="help-block" ng-show = "form.price.$dirty && form.price.$invalid">
+	<span ng-show = "form.price.$error.required">Price is required.</span>
+	</span>   			
       </div>
       <div class="modal-footer">
-      <button class = "btn btn-default"  ng-click="buttonUpdateDish()"><span class = "glyphicon glyphicon-ok" style="color:black"></span>Update</button>	
+      <button class = "btn btn-default"  ng-disabled="form.$invalid"  ng-click="buttonUpdateDish()"><span class = "glyphicon glyphicon-ok" style="color:black"></span>Update</button>	
         <button type="button" id ="closeDish"class="btn btn-default" data-dismiss="modal">Cancel</button>
-      </div>
-    </div>
-
-  </div>
-</div>	
-<!-- ------------------------------------------------------------------------------- -->  
-  <!-- Trigger the modal with a button -->
-<button type="button" id="modalBtnAddDish" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModalAddDish" style="display:none"></button>
-
-<!-- Modal -->
-<div id="myModalAddDish" class="modal fade"  >
-  <div class="modal-dialog ">
-
-    <!-- Modal content-->
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal">&times;</button>
-        <h4 class="modal-title" id="modalTitle">Add new dish</h4>
-      </div>
-      <div class="modal-body">
-     	<form action="" method="post">
-    <label>Name</label>
-    <input type="text" ng-model="$parent.newdish.name" class="form-control"  >  
-
-    <label>Text</label>
-    <input type="text" ng-model="$parent.newdish.text" class="form-control" > 
-    
-     <label>Price</label>
-    <input type="text" ng-model="$parent.newdish.price" class="form-control" > 
-    
-    <label>Type</label>
-     <select class="form-control" name='res' ng-model="$parent.newdish.dishType" >
-   		<option value="" disabled="" selected="">Select type</option>
-     	<option  value="appetizer">appetizer</option>
-     	<option  value="breakfast ">breakfast</option>
-     	<option  value="dessert">dessert</option>
-     	<option  value="fish">fish</option>
-     	<option  value="pasta">pasta</option>
-     	<option  value="pizza">pizza</option>
-     	<option  value="roast">roast</option>
-     	<option  value="salad">salad</option>
-     	<option  value="seasonal">seasonal</option>
-     	<option  value="soup">soup</option>
-   	
-	</select> 
-<br>
-
-</form> 
-	         			
-      </div>
-      <div class="modal-footer">
-      <button class="btn btn-default" ng-click="saveDish()"><span class="glyphicon glyphicon-ok" ></span> Create</button>
-		 <button type="button" id ="cancelDish"class="btn btn-default" data-dismiss="modal">Cancel</button>
       </div>
     </div>
 

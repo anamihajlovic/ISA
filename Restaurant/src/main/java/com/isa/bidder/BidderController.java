@@ -72,11 +72,16 @@ public class BidderController {
 	
 
 	@PutMapping(path = "/{id}")
-	public Bidder updateResManager(@PathVariable Long id,@RequestBody Bidder bidd) {
-		bidder =  (Bidder) httpSession.getAttribute("user");
-		bidderService.findOne(id);		
-		bidd.setId(id);
-		return bidderService.save(bidd);
+	public Bidder updateBidder(@PathVariable Long id,@RequestBody Bidder bidd) {
+		try{
+			bidderService.save(bidd);
+			httpSession.setAttribute("user", bidd);
+		} catch(Exception e) {
+			return null;
+		}
+		
+		
+			return bidd;
 	}	
 	
 	@PutMapping(path = "/changePassword")

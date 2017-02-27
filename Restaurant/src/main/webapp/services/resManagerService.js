@@ -41,6 +41,12 @@ resManagerServices.service('resManagerService',['$http', function($http) {
 	this.findAllWaiters= function(){
 		return $http.get("/resManager/waiters");
 	}
+	this.findAllWaiters1= function(){
+		return $http.get("/resManager/waiters");
+	}
+	this.findAllWaiters2= function(){
+		return $http.get("/resManager/waiters");
+	}
 	this.findAllCooks = function(){
 		return $http.get("/resManager/cooks");
 	}
@@ -148,8 +154,8 @@ resManagerServices.service('resManagerService',['$http', function($http) {
 	this.getWorkShift = function(id) {
 		return $http.get("/workShifts/getWorkShift/"+id);
 	}
-	this.makeShift = function(smena,datum,cookNumbers,waiterNumbers,bartenderNumbers) {
-		return $http.post("/resManager/MakeFirstShift/"+smena+"/"+datum+"/"+cookNumbers+"/"+waiterNumbers+"/"+bartenderNumbers);
+	this.makeShift = function(sve) {
+		return $http.post("/resManager/MakeFirstShift",sve);
 	}
 
 	

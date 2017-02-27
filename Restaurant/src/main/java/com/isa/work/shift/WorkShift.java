@@ -21,6 +21,7 @@ import javax.validation.constraints.NotNull;
 
 import com.isa.bartender.Bartender;
 import com.isa.cook.Cook;
+import com.isa.responsability.Responsability;
 import com.isa.waiter.Waiter;
 
 @Entity
@@ -61,10 +62,16 @@ public class WorkShift {
 	@JoinTable(name = "work_shift_bartenders", joinColumns = @JoinColumn(name="work_shift_id"), inverseJoinColumns = @JoinColumn(name = "bartender_id"))	
 	private List<Bartender> bartenders;
 	
+	@ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	@JoinTable(name = "work_shift_responsabilites", joinColumns = @JoinColumn(name="work_shift_id"), inverseJoinColumns = @JoinColumn(name = "responsability_id"))	
+	private List<Responsability> responsabilites;
+	
 	
 	public WorkShift(){}
 
-	public WorkShift(Long id, String startTime, String endTime, ShiftType shiftType, Date day, List<Waiter> waiters, List<Cook> cooks, List<Bartender> bartenders) {
+
+	public WorkShift(Long id, String startTime, String endTime, ShiftType shiftType, Date day, List<Waiter> waiters,
+			List<Cook> cooks, List<Bartender> bartenders, List<Responsability> responsabilites) {
 		super();
 		this.id = id;
 		this.startTime = startTime;
@@ -74,74 +81,99 @@ public class WorkShift {
 		this.waiters = waiters;
 		this.cooks = cooks;
 		this.bartenders = bartenders;
+		this.responsabilites = responsabilites;
 	}
+
 
 	public Long getId() {
 		return id;
 	}
 
+
 	public void setId(Long id) {
 		this.id = id;
 	}
+
 
 	public String getStartTime() {
 		return startTime;
 	}
 
+
 	public void setStartTime(String startTime) {
 		this.startTime = startTime;
 	}
+
 
 	public String getEndTime() {
 		return endTime;
 	}
 
+
 	public void setEndTime(String endTime) {
 		this.endTime = endTime;
 	}
+
 
 	public ShiftType getShiftType() {
 		return shiftType;
 	}
 
+
 	public void setShiftType(ShiftType shiftType) {
 		this.shiftType = shiftType;
 	}
+
 
 	public Date getDay() {
 		return day;
 	}
 
+
 	public void setDay(Date day) {
 		this.day = day;
 	}
+
 
 	public List<Waiter> getWaiters() {
 		return waiters;
 	}
 
+
 	public void setWaiters(List<Waiter> waiters) {
 		this.waiters = waiters;
 	}
+
 
 	public List<Cook> getCooks() {
 		return cooks;
 	}
 
+
 	public void setCooks(List<Cook> cooks) {
 		this.cooks = cooks;
 	}
+
 
 	public List<Bartender> getBartenders() {
 		return bartenders;
 	}
 
+
 	public void setBartenders(List<Bartender> bartenders) {
 		this.bartenders = bartenders;
 	}
-	
-	
-	
+
+
+	public List<Responsability> getResponsabilites() {
+		return responsabilites;
+	}
+
+
+	public void setResponsabilites(List<Responsability> responsabilites) {
+		this.responsabilites = responsabilites;
+	}
+
 	
 
 	

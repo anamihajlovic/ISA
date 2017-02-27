@@ -209,20 +209,29 @@
         <h4 class="modal-title" id="modalTitle">Add new foodstuff</h4>
       </div>
       <div class="modal-body">
-     	<form action="" method="post">
+     	<form action="" name= "form" method="post">
     <label>Name</label>
-    <input type="text" ng-model="$parent.food.name" class="form-control"  >  
+    <div  ng-class="{ 'has-error': form.fname.$dirty && form.fname.$error.required }">
+    <input type="text" ng-model="$parent.food.name" class="form-control"  name ="fname" ng-readonly="$parent.infoMode" required>  
+	</div>
+	<span class="help-block" ng-show = "form.fname.$dirty && form.fname.$invalid">
+	<span ng-show = "form.fname.$error.required">Name is required.</span>
+	</span>
 
     <label>Quantity</label>
-    <input type="text" ng-model="$parent.food.quantity" class="form-control" >  
+    <div  ng-class="{ 'has-error': form.quantity.$dirty && form.quantity.$error.required }">
+    <input type = "number" min="0" ng-model="$parent.food.quantity" class="form-control" name ="quantity" ng-readonly="$parent.infoMode" required>  
+	</div>
+	<span class="help-block" ng-show = "form.quantity.$dirty && form.quantity.$invalid">
+	<span ng-show = "form.quantity.$error.required">Quantity is required.</span>
+	</span>
 
-<br>
 
 </form> 
-	         			
+	    <br>     			
       </div>
       <div class="modal-footer">
-      <button class="btn btn-default" ng-click="saveFoodstuff()"><span class="glyphicon glyphicon-ok" ></span> Create</button>
+      <button class="btn btn-default"  ng-disabled="form.$invalid"  ng-click="saveFoodstuff()"><span class="glyphicon glyphicon-ok" ></span> Create</button>
 		 <button type="button" id ="cancelFoodstuff"class="btn btn-default" data-dismiss="modal">Cancel</button>
       </div>
     </div>
@@ -249,12 +258,18 @@
         <h4 class="modal-title" id="modalTitle">{{foodstuff.name}}</h4>
       </div>
       <div class="modal-body">
+      <form name="formm">
      	<label>Quantity</label>
-		<input type = "text" class = "form-control" ng-model = "$parent.foodstuff.quantity" >  
-	         			
+     	 <div  ng-class="{ 'has-error': formm.quantity.$dirty && formm.quantity.$error.required }">
+		<input type = "number" min="0" class = "form-control" ng-model = "$parent.foodstuff.quantity"  name = "quantity" ng-readonly="$parent.infoMode" required>   
+		</div>
+	<span class="help-block" ng-show = "formm.quantity.$dirty && formm.quantity.$invalid">
+	<span ng-show = "formm.quantity.$error.required">Quantity is required.</span>
+	</span> 
+	       </form>  			
       </div>
       <div class="modal-footer">
-      <button class = "btn btn-default"  ng-click="buttonUpdateFoodstuff()"><span class = "glyphicon glyphicon-ok" style="color:black"></span>Update</button>	
+      <button class = "btn btn-default"   ng-disabled="formm.$invalid" ng-click="buttonUpdateFoodstuff()"><span class = "glyphicon glyphicon-ok" style="color:black"></span>Update</button>	
         <button type="button" id ="closeFoodstuff"class="btn btn-default" data-dismiss="modal">Cancel</button>
       </div>
     </div>

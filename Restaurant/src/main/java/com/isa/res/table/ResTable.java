@@ -34,6 +34,11 @@ public class ResTable {
 	@Column
 	private String segment;
 	
+	@Enumerated(EnumType.STRING)
+	@NotNull
+	@Column
+	private ReonTable reon;
+	
 	@Column (name="segment_color")
 	private String segColor; 
 		
@@ -47,32 +52,17 @@ public class ResTable {
 	
 	public ResTable(){}
 
-	public ResTable(Long id, SizeTable size, StateTable state, int xPos, int yPos, String segment, String segColor) {
+	public ResTable(Long id, SizeTable size, StateTable state, String segment, ReonTable reon, String segColor,
+			int xPos, int yPos) {
 		super();
 		this.id = id;
 		this.size = size;
 		this.state = state;
+		this.segment = segment;
+		this.reon = reon;
+		this.segColor = segColor;
 		this.xPos = xPos;
 		this.yPos = yPos;
-		this.segment = segment;
-		this.segColor = segColor;
-	}
-
-	
-	public String getSegColor() {
-		return segColor;
-	}
-
-	public void setSegColor(String segColor) {
-		this.segColor = segColor;
-	}
-
-	public String getSegment() {
-		return segment;
-	}
-
-	public void setSegment(String segment) {
-		this.segment = segment;
 	}
 
 	public Long getId() {
@@ -99,6 +89,30 @@ public class ResTable {
 		this.state = state;
 	}
 
+	public String getSegment() {
+		return segment;
+	}
+
+	public void setSegment(String segment) {
+		this.segment = segment;
+	}
+
+	public ReonTable getReon() {
+		return reon;
+	}
+
+	public void setReon(ReonTable reon) {
+		this.reon = reon;
+	}
+
+	public String getSegColor() {
+		return segColor;
+	}
+
+	public void setSegColor(String segColor) {
+		this.segColor = segColor;
+	}
+
 	public int getxPos() {
 		return xPos;
 	}
@@ -115,7 +129,6 @@ public class ResTable {
 		this.yPos = yPos;
 	}
 
-	
 	
 	
 	

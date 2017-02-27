@@ -115,14 +115,26 @@
 		        </tbody>
 		    </table>
 		    <input  style="display:none" type="text" ng-model="$parent.offer.id" class="form-control" >  
+		    <form name="form">
 		    <label>Delivery time</label>
-			 <input type="date" ng-model="$parent.offer.deliveryTime" class="form-control" >  
+		     <div  ng-class="{ 'has-error': form.del.$dirty && form.del.$error.required }">
+			 <input type="date" ng-model="$parent.offer.deliveryTime" class="form-control" name = "del" ng-readonly="$parent.infoMode" required >    
+			 </div>
+			<span class="help-block" ng-show = "form.del.$dirty && form.del.$invalid">
+			<span ng-show = "form.del.$error.required">Delivery time is required.</span>
+			</span>
 			 <label>Garancy</label>
-			 <input type="text" ng-model="$parent.offer.garancy" class="form-control" > 
+			     <div  ng-class="{ 'has-error': form.gar.$dirty && form.gar.$error.required }">
+			 <input type="text" ng-model="$parent.offer.garancy" class="form-control"name = "gar" ng-readonly="$parent.infoMode" required >     
+			  </div>
+			<span class="help-block" ng-show = "form.gar.$dirty && form.gar.$invalid">
+			<span ng-show = "form.gar.$error.required">Garancy is required.</span>
+			</span>
+			 </form>
       </div>
       <div class="modal-footer">
-      	 <button ng-if="$parent.offer.id == null" type="button"   class="btn btn-default"  ng-click="AddOffer()" ><span class="glyphicon glyphicon-ok" ></span> Create</button>
-      	  <button ng-if="$parent.offer.id != null"  type="button"   class="btn btn-default"  ng-click="UpdateOffer()" ><span class="glyphicon glyphicon-ok" ></span> Update</button>
+      	 <button ng-if="$parent.offer.id == null" type="button" ng-disabled="form.$invalid"   class="btn btn-default"  ng-click="AddOffer()" ><span class="glyphicon glyphicon-ok" ></span> Create</button>
+      	  <button ng-if="$parent.offer.id != null"  type="button" ng-disabled="form.$invalid"    class="btn btn-default"  ng-click="UpdateOffer()" ><span class="glyphicon glyphicon-ok" ></span> Update</button>
       	 <button  type="button" id ="cancelOffer"class="btn btn-default" data-dismiss="modal">Cancel</button>
       </div>
     </div>
@@ -140,14 +152,19 @@
     <!-- Modal content-->
     <div class="modal-content">
       <div class="modal-body">
-      	<form action="" >
+      	<form action="" name="formm">
 			<label>Price</label>
-			 <input type="number" min ="1"ng-model="$parent.offerUnit.price" class="form-control" >  
-
+		   <div  ng-class="{ 'has-error': formm.price.$dirty && formm.price.$error.required }">
+			 <input type="number" min ="1"ng-model="$parent.offerUnit.price" class="form-control" name = "price" ng-readonly="$parent.infoMode" required >       
+  			</div>
+			<span class="help-block" ng-show = "formm.price.$dirty && formm.price.$invalid">
+			<span ng-show = "formm.price.$error.required">Price is required.</span>
+			</span>
+</form>
       </div>
       <div class="modal-footer">
-      	 <button ng-if="$parent.offer.id == null"type="button"  class="btn btn-default"  ng-click="updateOfferUnitPrice()" ><span class="glyphicon glyphicon-ok" ></span> Set</button>
-      	 <button ng-if="$parent.offer.id != null" type="button"  class="btn btn-default"  ng-click="updateOfferUnitPrice()" ><span class="glyphicon glyphicon-pencil" ></span> Update</button>
+      	 <button ng-if="$parent.offer.id == null"type="button" ng-disabled="form.$invalid"  class="btn btn-default"  ng-click="updateOfferUnitPrice()" ><span class="glyphicon glyphicon-ok" ></span> Set</button>
+      	 <button ng-if="$parent.offer.id != null" type="button"  ng-disabled="form.$invalid" class="btn btn-default"  ng-click="updateOfferUnitPrice()" ><span class="glyphicon glyphicon-pencil" ></span> Update</button>
       	 <button style="display:none"  type="button" id ="cancelUnitOffer"class="btn btn-default" data-dismiss="modal">Cancel</button>
       </div>
     </div>

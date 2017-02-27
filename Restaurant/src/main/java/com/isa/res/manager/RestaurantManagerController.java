@@ -2,6 +2,7 @@ package com.isa.res.manager;
 
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.forwardedUrl;
 
+import java.sql.Time;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -23,6 +24,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.isa.Transfer;
 import com.isa.bartender.Bartender;
 import com.isa.bartender.BartenderService;
 import com.isa.bidder.*;
@@ -40,10 +42,13 @@ import com.isa.offer.unit.OfferUnit;
 import com.isa.offer.unit.OfferUnitService;
 import com.isa.res.segment.ResSegment;
 import com.isa.res.segment.ResSegmentService;
+import com.isa.res.table.ReonTable;
 import com.isa.res.table.ResTable;
 import com.isa.res.table.ResTableService;
 import com.isa.res.table.SizeTable;
 import com.isa.res.table.StateTable;
+import com.isa.responsability.Responsability;
+import com.isa.responsability.ResponsabilityService;
 import com.isa.restaurant.*;
 import com.isa.res.order.*;
 import com.isa.res.order.unit.ResOrderUnit;
@@ -82,6 +87,7 @@ public class RestaurantManagerController {
 	private final OfferService offerService;
 	private final WorkShiftService workShiftService;
 	private final WorkDayService workDayService;
+	private final ResponsabilityService responsabilityService;
 	private RestaurantManager restaurantManager;
 	private int visina = 0;
 	private int sirina = 0 ;
@@ -93,7 +99,7 @@ public class RestaurantManagerController {
 			DrinkService drinkService, DishService dishService,ResTableService resTableService,
 			ResSegmentService resSegmentService,ResOrderService resOrderService,OfferService offerService,
 			ResOrderUnitService resOrderUnitService,OfferUnitService offerUnitService,WorkShiftService workShiftService,
-			WorkDayService workDayService
+			WorkDayService workDayService,ResponsabilityService responsabilityService
 			) {
 		super();
 		this.httpSession = httpSession;
@@ -114,6 +120,7 @@ public class RestaurantManagerController {
 		this.offerUnitService = offerUnitService;
 		this.workShiftService = workShiftService;
 		this.workDayService = workDayService;
+		this.responsabilityService =responsabilityService;
 	}
 
 	@GetMapping("/checkRights")
@@ -376,10 +383,15 @@ public class RestaurantManagerController {
 
 	@PutMapping(path = "/{id}")
 	public RestaurantManager updateResManager(@PathVariable Long id,@RequestBody RestaurantManager resManager) {
-	restaurantManagerService.findOne(id);
-			
-	resManager.setId(id);
-		return restaurantManagerService.save(resManager);
+	try{
+		restaurantManagerService.save(resManager);
+		httpSession.setAttribute("user", resManager);
+	} catch(Exception e) {
+		return null;
+	}
+	
+	
+		return resManager;
 	}	
 	
 
@@ -453,6 +465,11 @@ public class RestaurantManagerController {
 				t.setState(StateTable.exists);
 				t.setxPos(x);
 				t.setyPos(y);
+				if(y %2==0){
+					t.setReon(ReonTable.first);
+				}else{
+					t.setReon(ReonTable.second);
+				}
 				t.setSegment("inside");
 				t.setSegColor("#00bfff");
 				resTableService.save(t);
@@ -740,48 +757,87 @@ public class RestaurantManagerController {
 	}
 	
 
-	@PostMapping(path = "/MakeFirstShift/{smena}/{datum}/{cooks}/{waiters}/{bartenders}")
-	public String MakeFirstShift(@PathVariable("smena") Integer smena,@PathVariable("datum") String datum,@PathVariable("cooks") String cooks,@PathVariable("waiters") String waiters,@PathVariable("bartenders") String bartenders) {
-		if(cooks!=null){
+	@PostMapping(path = "/MakeFirstShift")
+	public String MakeFirstShift(@RequestBody Transfer sve) {
+		if(sve!=null){
+				String cooks = sve.getCooks();
+				String bartenders = sve.getBartenders();
+				Integer smena = sve.getShift();
+				String datum = sve.getDate();
+				String firstReon = sve.getFirstReon();
+				String secondReon = sve.getSecondReon();
+				
 				List<Cook> kuvari = new ArrayList<Cook>();
 				List<Waiter> konobari = new ArrayList<Waiter>();
+				List<Waiter> konobariFirst = new ArrayList<Waiter>();
+				List<Waiter> konobariSecond = new ArrayList<Waiter>();
 				List<Bartender> barmeni = new ArrayList<Bartender>();
 				
 				String bezPoslednjegKuvar = cooks.replace(cooks.substring(cooks.length()-1), "");
-				String bezPoslednjegKonobar = waiters.replace(waiters.substring(waiters.length()-1), "");
 				String bezPoslednjegBarmen = bartenders.replace(bartenders.substring(bartenders.length()-1), "");
-				
+				String bezPoslednjegFirstReon = firstReon.replace(firstReon.substring(firstReon.length()-1), "");
+				String bezPoslednjegSecondReon = secondReon.replace(secondReon.substring(secondReon.length()-1), "");
 
 				String [] parsiranoKuvar = bezPoslednjegKuvar.split(",");
-				String [] parsiranoKonobar = bezPoslednjegKonobar.split(",");
 				String [] parsiranoBarmen = bezPoslednjegBarmen.split(",");
+				String [] parsiranoFirstReon = bezPoslednjegFirstReon.split(",");
+				String [] parsiranoSecondReon = bezPoslednjegSecondReon.split(",");
 				
 				List<Long> sifreKuvara= new ArrayList<Long>();
 				List<Long> sifreKonobara= new ArrayList<Long>();
 				List<Long> sifreBarmena= new ArrayList<Long>();
-				
+				List<Long> sifreKonobaraFirst= new ArrayList<Long>();
+				List<Long> sifreKonobaraSecond= new ArrayList<Long>();
+				/////////////////////////////////////////////////////////////////
 				for(String s:parsiranoKuvar){
 					sifreKuvara.add(Long.parseLong(s));
 				}
-				for(String s:parsiranoKonobar){
-					sifreKonobara.add(Long.parseLong(s));
+				for(String s:parsiranoFirstReon){
+					sifreKonobaraFirst.add(Long.parseLong(s));
+					if(!sifreKonobara.contains(s)){
+						sifreKonobara.add(Long.parseLong(s));
+					}
+				}
+				for(String s:parsiranoSecondReon){
+					sifreKonobaraSecond.add(Long.parseLong(s));	
+					if(!sifreKonobara.contains(s)){
+						sifreKonobara.add(Long.parseLong(s));
+					}
 				}
 				
 				for(String s:parsiranoBarmen){
 					sifreBarmena.add(Long.parseLong(s));
 				}
-				
+				////////////////////////////////////////////////////////////////
 				for(Long sifra:sifreKuvara){
 					kuvari.add(cookService.findOne(sifra));
 				}
-				for(Long sifra:sifreKonobara){
-					konobari.add(waiterService.findOne(sifra));
-				}
-				
+
 				for(Long sifra:sifreBarmena){
 					barmeni.add(bartenderService.findOne(sifra));
 				}
-		
+				for(Long sifra:sifreKonobaraFirst){
+					konobariFirst.add(waiterService.findOne(sifra));
+					
+				}
+				for(Long sifra:sifreKonobaraSecond){
+					konobariSecond.add(waiterService.findOne(sifra));				
+				}
+				for(Long sifra:sifreKonobara){
+					konobari.add(waiterService.findOne(sifra));				
+				}
+				
+				///////////////////////////////////////////////////////////////
+				Responsability first = new Responsability();
+				first.setReon(ReonTable.first);
+				first.setWaiters(konobariFirst);
+				responsabilityService.save(first);
+				
+				Responsability second = new Responsability();
+				second.setReon(ReonTable.second);
+				second.setWaiters(konobariSecond);
+				responsabilityService.save(second);
+				
 					
 				Restaurant restaurant = restaurantService.findOne(restaurantManager.getIdRestaurant());	
 				SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
@@ -796,6 +852,15 @@ public class RestaurantManagerController {
 				ShiftType tip;
 				WorkShift ws = new WorkShift();
 				ws.setDay(workDay);
+				if(ws.getResponsabilites()!=null){
+					ws.getResponsabilites().add(first);
+					ws.getResponsabilites().add(second);
+				}else{
+					List<Responsability> lista = new ArrayList<Responsability>();
+					lista.add(first);
+					lista.add(second);
+					ws.setResponsabilites(lista);
+				}
 				if(smena==1){
 					ws.setShiftType(ShiftType.firstShift);
 					ws.setStartTime("08:00:00");

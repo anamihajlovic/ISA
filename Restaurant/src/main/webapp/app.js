@@ -1,5 +1,5 @@
 'use-strict';
-angular.module('restaurants', [ 'ui.router','ui.calendar' ,
+angular.module('restaurants', [ 'ui.router','ui.calendar' ,'chart.js',
 	  							'common.services','common.controller',
 								'sysManager.services','sysManager.controller',
 								'bartender.services', 'bartender.controller',
@@ -169,6 +169,11 @@ angular.module('restaurants', [ 'ui.router','ui.calendar' ,
               url : '/list',
              templateUrl : 'html/resManager/resManagerList.html',
           })
+          .state('resManager.statistic', {
+              url : '/statistic',
+             templateUrl : 'html/resManager/resManagerBusiness.html',
+          })
+          
           
          .state('resManager.menu', {
               url : '/menu',

@@ -27,35 +27,57 @@
         <h4 class="modal-title" id="modalTitle">Table</h4>
       </div>
       <div class="modal-body">
-      	<form action="">
+      	<form action="" name ="formaS">
       <label>Segment</label>
-      <select class="form-control"  ng-model="$parent.table.segment">
+       <div  ng-class="{ 'has-error': formS.seg.$dirty && formS.seg.$error.required }">
+      <select class="form-control"  ng-model="$parent.table.segment"name="seg" ng-readonly="$parent.infoMode" required >  
    		<option value="" disabled="" selected="">Select segment</option>
       	<option ng-repeat="s in segments" >{{s.segType}}</option> 
      	  <!-- <option value="inside">inside</option>
 		<option value="outsideee">outside</option> -->	
 	</select>	
+	<span class="help-block" ng-show = "formS.seg.$dirty && formS.seg.$invalid">
+	<span ng-show = "formS.seg.$error.required">Segment is required.</span>
+	</span>
+	
+	
       <label>State</label>	
-	<select class="form-control"  ng-model="$parent.table.state">
+       <div  ng-class="{ 'has-error': formS.state.$dirty && formS.state.$error.required }">
+	<select class="form-control"  ng-model="$parent.table.state" name="state" ng-readonly="$parent.infoMode" required >
    		<option value="" disabled="" selected="">Select state</option>
      	<option value="exists">exists</option>
 		<option value="not_exists">not exists</option>
 		<option value="reserved">reserved</option>
 	</select>
+	<span class="help-block" ng-show = "formS.state.$dirty && formS.state.$invalid">
+	<span ng-show = "formS.state.$error.required">State is required.</span>
+	</span>
 	<label>Size</label>
-	<select class="form-control"  ng-model="$parent.table.size">
+	<div  ng-class="{ 'has-error': formS.size.$dirty && formS.size.$error.required }">
+	<select class="form-control"  ng-model="$parent.table.size" name="size" ng-readonly="$parent.infoMode" required>
    		<option value="" disabled="" selected="">Select size</option>
      	<option value="two">two</option>
 		<option value="four">four</option>
 		<option value="six">six</option>
 		<option value="eight">eight</option>
 	</select>
-	
-	
+	<span class="help-block" ng-show = "formS.size.$dirty && formS.size.$invalid">
+	<span ng-show = "formS.size.$error.required">Size is required.</span>
+	</span>
+	<label>Reon</label>
+	<div  ng-class="{ 'has-error': formS.reon.$dirty && formS.reon.$error.required }">
+	<select class="form-control"  ng-model="$parent.table.reon"name="size" ng-readonly="$parent.infoMode" required>
+   		<option value="" disabled="" selected="">Select reon</option>
+     	<option value="first">first</option>
+		<option value="second">second</option>
+	</select>
+	<span class="help-block" ng-show = "formS.reon.$dirty && formS.reon.$invalid">
+	<span ng-show = "formS.reon.$error.required">Reon is required.</span>
+	</span>
    </form>
       </div>
       <div class="modal-footer">
-      <button type="button"  class="btn btn-default"  ng-click="updateTable()" ><span class="glyphicon glyphicon-ok" ></span> Update</button>
+      <button type="button"  class="btn btn-default" ng-disabled="formS.$invalid"  ng-click="updateTable()" ><span class="glyphicon glyphicon-ok" ></span> Update</button>
       	 <button style="display:none" type="button" id ="cancelUpdateTable"class="btn btn-default" data-dismiss="modal">Cancel</button>
       </div>
     </div>

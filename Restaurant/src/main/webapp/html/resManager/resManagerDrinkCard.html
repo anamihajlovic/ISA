@@ -57,12 +57,21 @@
         <h4 class="modal-title" id="modalTitle">{{drink.name}}</h4>
       </div>
       <div class="modal-body">
+      <form action="" name = "form">
      	<label>Price</label>
-		<input type = "text" class = "form-control" ng-model = "$parent.drink.price" >  
-	         			
+     	<div  ng-class="{ 'has-error': form.price.$dirty && form.price.$error.required }">
+		<input type = "number" min="1" class = "form-control" ng-model = "$parent.drink.price" name = "price" ng-readonly="$parent.infoMode" required>  
+	    </div>
+	<span class="help-block" ng-show = "form.price.$dirty && form.price.$invalid">
+	<span ng-show = "form.price.$error.required">Price is required.</span>
+	</span>
+	
+	    
+	    </form>      			
       </div>
+     
       <div class="modal-footer">
-      <button class = "btn btn-default"  ng-click="buttonUpdateDrink()"><span class = "glyphicon glyphicon-ok" style="color:black"></span>Update</button>	
+      <button class = "btn btn-default" ng-disabled="form.$invalid"  ng-click="buttonUpdateDrink()"><span class = "glyphicon glyphicon-ok" style="color:black"></span>Update</button>	
         <button type="button" id ="closeDrink"class="btn btn-default" data-dismiss="modal">Cancel</button>
       </div>
     </div>
@@ -84,18 +93,36 @@
         <h4 class="modal-title" id="modalTitle">Add new drink</h4>
       </div>
       <div class="modal-body">
-     	<form action="" method="post">
+     	<form action=""  name = "form"> 
     <label>Name</label>
-    <input type="text" ng-model="$parent.newdrink.name" class="form-control"  >  
+    <div  ng-class="{ 'has-error': form.name.$dirty && form.name.$error.required}">
+    <input type="text" ng-model="$parent.newdrink.name" class="form-control" name = "name" ng-readonly="$parent.infoMode" required >  
+	</div>
+	<span class="help-block" ng-show = "form.name.$dirty && form.name.$invalid">
+	<span ng-show = "form.name.$error.required">Name is required.</span>
+	</span>	
+
 
     <label>Text</label>
-    <input type="text" ng-model="$parent.newdrink.text" class="form-control" > 
+    <div  ng-class="{ 'has-error': form.text.$dirty && form.text.$error.required}">
+    <input type="text" ng-model="$parent.newdrink.text" class="form-control" name = "text" ng-readonly="$parent.infoMode" required > 
+    </div>
+	<span class="help-block" ng-show = "form.text.$dirty && form.text.$invalid">
+	<span ng-show = "form.text.$error.required">Text is required.</span>
+	</span>	
+    
     
      <label>Price</label>
-    <input type="text" ng-model="$parent.newdrink.price" class="form-control" > 
+      <div  ng-class="{ 'has-error': form.price.$dirty && form.price.$error.required}">
+    <input type="text" ng-model="$parent.newdrink.price" class="form-control"  name = "price" ng-readonly="$parent.infoMode" required > 
+    </div>
+	<span class="help-block" ng-show = "form.price.$dirty && form.price.$invalid">
+	<span ng-show = "form.price.$error.required">Price is required.</span>
+	</span>	
     
     <label>Type</label>
-     <select class="form-control" name='res' ng-model="$parent.newdrink.drinkType" required >
+     <div  ng-class="{ 'has-error': form.type.$dirty && form.type.$error.required}">
+     <select class="form-control" name='res' ng-model="$parent.newdrink.drinkType"  name = "type" ng-readonly="$parent.infoMode" required > 
    		<option value="" disabled="" selected="">Select type</option>
      	<option  value="beer">beer</option>
      	<option  value="brandy">brandy</option>
@@ -105,13 +132,17 @@
      	<option  value="wine">wine</option>
   
 	</select> 
+	 </div>
+	<span class="help-block" ng-show = "form.type.$dirty && form.type.$invalid">
+	<span ng-show = "form.type.$error.required">Type is required.</span>
+	</span>	
 <br>
 
 </form> 
 	         			
       </div>
       <div class="modal-footer">
-      <button class="btn btn-default" ng-click="buttonsaveDrink()"><span class="glyphicon glyphicon-ok" ></span> Create</button>
+      <button class="btn btn-default"  ng-disabled="form.$invalid" ng-click="buttonsaveDrink()"><span class="glyphicon glyphicon-ok" ></span> Create</button>
 		 <button type="button" id ="cancelDrink"class="btn btn-default" data-dismiss="modal">Cancel</button>
       </div>
     </div>

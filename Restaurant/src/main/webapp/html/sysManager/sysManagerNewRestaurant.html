@@ -4,26 +4,60 @@
 <div class = "col-sm-4">
 </div>
 <div class = "col-sm-4">
-<form action="" method="post">
-    <label>Name</label>
-    <input type="text" class="form-control" ng-model = "$parent.restaurant.name" >  
+<form action="" name = "form"method="post">
 
-    <label>Country</label>
-    <input type="text" class="form-control" ng-model = "$parent.restaurant.country" >  
+    <label>Name</label>
+    <div  ng-class="{ 'has-error': form.name.$dirty && form.name.$error.required }">
+    <input type="text" class="form-control" ng-model = "$parent.restaurant.name" name = "name" ng-readonly="$parent.infoMode" required >  
+	</div>
+	<span class="help-block" ng-show = "form.name.$dirty && form.name.$invalid">
+	<span ng-show = "form.name.$error.required">Name is required.</span>
+	</span>
+	
+	 <label>Country</label>
+	 <div  ng-class="{ 'has-error': form.country.$dirty && form.country.$error.required }">
+    <input type="text" class="form-control" ng-model = "$parent.restaurant.country" name = "country" ng-readonly="$parent.infoMode" required>  
+	</div>
+	<span class="help-block" ng-show = "form.country.$dirty && form.country.$invalid">
+	<span ng-show = "form.country.$error.required">Country is required.</span>
+	</span>	
+
 
     <label>City</label>
-    <input type="text" class="form-control" ng-model = "$parent.restaurant.city">  
-
+    <div  ng-class="{ 'has-error': form.city.$dirty && form.city.$error.required }">
+    <input type="text" class="form-control" ng-model = "$parent.restaurant.city" name = "city" ng-readonly="$parent.infoMode" required>  
+	</div>
+	<span class="help-block" ng-show = "form.city.$dirty && form.city.$invalid">
+	<span ng-show = "form.city.$error.required">City is required.</span>
+	</span>	
+	
+	
     <label>Street</label>
-    <input type="text" class="form-control" ng-model = "$parent.restaurant.street" > 
-    
+     <div  ng-class="{ 'has-error': form.street.$dirty && form.street.$error.required }">
+    <input type="text" class="form-control" ng-model = "$parent.restaurant.street" name = "street" ng-readonly="$parent.infoMode" required> 
+    </div>
+	<span class="help-block" ng-show = "form.street.$dirty && form.street.$invalid">
+	<span ng-show = "form.street.$error.required">Street is required.</span>
+	</span>	
+	
+	
     <label>Number</label>
-    <input type="text" class="form-control" ng-model = "$parent.restaurant.number" > 
+    <div  ng-class="{ 'has-error': form.number.$dirty && form.number.$error.required  && form.number.$invalid}">
+    <input type="number" min = "1"class="form-control" ng-model = "$parent.restaurant.number" name = "number" ng-readonly="$parent.infoMode" required> 
+ 	</div>
+	<span class="help-block" ng-show = "form.number.$dirty && form.number.$invalid">
+	<span ng-show = "form.number.$error.required">Number is required.</span>
+	</span>	
 
     <label>Type</label>
-    <input type="text" class="form-control" ng-model = "$parent.restaurant.restaurant_type">  
+     <div  ng-class="{ 'has-error': form.type.$dirty && form.type.$error.required }">
+    <input type="text" class="form-control" ng-model = "$parent.restaurant.restaurant_type" name = "type "ng-readonly="$parent.infoMode" required>  
+	</div>
+	<span class="help-block" ng-show = "form.type.$dirty && form.type.$invalid">
+	<span ng-show = "form.type.$error.required">Restaurant type is required.</span>
+	</span>	
 <br>
-<button class="btn btn-default" ng-click="saveRestaurant()"><span class="glyphicon glyphicon-ok" ></span> Create</button>
+<button class="btn btn-default" ng-disabled="form.$invalid" ng-click="saveRestaurant()"><span class="glyphicon glyphicon-ok" ></span> Create</button>
 <button class="btn btn-default" ng-click="cancel()"><span class="glyphicon glyphicon-remove" ></span> Cancel</button>
 </form>
 </div>

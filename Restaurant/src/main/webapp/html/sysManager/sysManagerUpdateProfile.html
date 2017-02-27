@@ -2,18 +2,28 @@
 <div class = "col-sm-4">
 </div>
 <div class = "col-sm-4">
-<form action="">
+<form action="" name = "form">
 <!-- 
 	<label>Email</label>
 	<input type = "text" class = "form-control" ng-model = "$parent.systemManager.email" style="background-color : grey" disabled>
  -->
 	<label>Firstname</label>
-	<input type = "text" class = "form-control" ng-model = "$parent.systemManager.firstName"> 
-
+	<div  ng-class="{ 'has-error': form.firstName.$dirty && form.firstName.$error.required }">
+	<input type = "text" class = "form-control" ng-model = "$parent.systemManager.firstName" name="firstName" ng-readonly="$parent.infoMode" required> 
+	</div>
+	<span class="help-block" ng-show = "form.firstName.$dirty && form.firstName.$invalid" >
+	<span ng-show = "form.firstName.$error.required">First name is required.</span>
+	</span>
+	
 	<label>Lastname</label>
-	<input type = "text" class = "form-control" ng-model = "$parent.systemManager.lastName" >  
+	<div  ng-class="{ 'has-error': form.lastName.$dirty && form.lastName.$error.required }">
+	<input type = "text" class = "form-control" ng-model = "$parent.systemManager.lastName" name="lastName" ng-readonly="$parent.infoMode" required>  
+    </div>
+	<span class="help-block"  ng-show = "form.lastName.$dirty && form.lastName.$invalid">
+	<span ng-show = "form.lastName.$error.required">Last name is required.</span>
+	</span> 
     <br>
-<button class = "btn btn-default" ng-click = "update()"><span class = "glyphicon glyphicon-ok"></span>Update</button>
+<button class = "btn btn-default" ng-disabled="form.$invalid" ng-click = "update()"><span class = "glyphicon glyphicon-ok"></span>Update</button>
 <button class = "btn btn-default" ng-click = "cancel()"><span class = "glyphicon glyphicon-remove"></span>Cancel</button>
 </form>
 </div>
