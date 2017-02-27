@@ -12,7 +12,8 @@ angular.module('restaurants', [ 'ui.router','ui.calendar' ,'chart.js',
 								'guest.services', 'guest.controller',
 								'pass.controller',
 								'calendar.controller',
-								'order.services', 'order.controller'
+								'order.services', 'order.controller',
+								'grade.controller'
 							   ])
 							   
 .config(function($stateProvider, $urlRouterProvider) {
@@ -248,6 +249,12 @@ angular.module('restaurants', [ 'ui.router','ui.calendar' ,'chart.js',
         	   url : '/orderedDrinks',
         	   templateUrl : 'html/employees/orders.html', 
         	   controller: 'orderController'
+           })
+           
+           .state('bartender.rateVisit', {
+        	   url : '/rateVisit',
+        	   templateUrl : 'html/guest/ratePage.html', 
+        	   controller: 'gradeController'
            })
           
            

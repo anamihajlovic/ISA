@@ -29,7 +29,7 @@
         <td>{{dish.name}}</td>
         <td>{{dish.dishType}}</td>
         <td>{{order.dishQuantity[dish.id]}}</td>   
-        <td ng-if = "order.dishStatusMap[dish.id] == 'preparing'"><button class = "btn btn-primary" ng-if = "checkCook(dish)" ng-click = "serveDish(order,dish)">Ready</button></td>
+        <td ng-if = "order.dishStatusMap[dish.id] == 'preparing'"><button class = "btn btn-primary" ng-if = "checkCook(dish)" ng-disabled = "!allowAction" ng-click = "serveDish(order,dish)">Ready</button></td>
         <td ng-if = "order.dishStatusMap[dish.id] == 'ready'"><i>Dish is ready to be served.</i></td>
        </tr>
       

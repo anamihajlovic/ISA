@@ -22,18 +22,19 @@ waiterModule.controller('waiterController', ['$scope', 'waiterService', 'employe
 		function checkWorkShift(employee) {		
 			var request = employeeService.checkWorkShift(employee).then(function (response) {				
 				if(response.data != "") {
+					$scope.allowAction = true;
 					$scope.currentShift = response.data;
 					showTables($scope.currentShift);
 					return response;
-				}					
+				} else
+					$scope.allowAction = false;
 				
 			});					
 		}
 		
 		
 		function showTables(currentShift) {	
-			
-			alert($scope.employee.id)
+			alert($scope.allowAction)
 			$scope.assignedResponsabilites = $scope.currentShift.responsabilites;
 			var waiterReons = [];
 			for(i = 0; i<$scope.assignedResponsabilites.length; i++) {

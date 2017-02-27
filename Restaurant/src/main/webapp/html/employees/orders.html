@@ -32,7 +32,7 @@
         <td>{{order.drinkQuantity[drink.id]}}</td>
       </tr>
       <tr>
-      <td class ="endOrder" colspan = "5" ng-show = "order.drinksStatus != 'prepared' && employee.userRole == 'bartender' "><button class = "btn btn-primary" ng-disabled = "order.drinksStatus == 'prepared'" ng-click = "prepareDrinks(order)">Prepare</button></td>     
+      <td class ="endOrder" colspan = "5" ng-show = "order.drinksStatus != 'prepared' && employee.userRole == 'bartender' "><button class = "btn btn-primary" ng-disabled = "order.drinksStatus == 'prepared' || !allowAction" ng-click = "prepareDrinks(order)">Prepare</button></td>     
       <td class ="endOrder" colspan = "5" ng-show = "order.drinksStatus == 'prepared' && employee.userRole == 'bartender'"><p><i>Drinks have been prepared</i></p></td>
       </tr>
       
@@ -44,7 +44,7 @@
         <td>{{dish.name}}</td>
         <td>{{dish.dishType}}</td>
         <td>{{order.dishQuantity[dish.id]}}</td>
-        <td ng-if = "order.dishStatusMap[dish.id] == 'ordered'"><button class = "btn btn-primary" ng-if = "checkCook(dish)" ng-click = "prepareDish(order, dish)">Prepare</button></td>
+        <td ng-if = "order.dishStatusMap[dish.id] == 'ordered'"><button class = "btn btn-primary" ng-if = "checkCook(dish)" ng-disabled = "!allowAction" ng-click = "prepareDish(order, dish)">Prepare</button></td>
         <td ng-if = "order.dishStatusMap[dish.id] == 'preparing'"><i>Dish is being prepared.</i></td>
        	<td ng-if = "order.dishStatusMap[dish.id] == 'ready'"><i>Dish is ready to be served.</i></td>
        </tr>

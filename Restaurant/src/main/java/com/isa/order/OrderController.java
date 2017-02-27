@@ -10,6 +10,7 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -99,8 +100,7 @@ public class OrderController {
 	public Waiter compareWaiters(@PathVariable Long orderId) {
 						
 		try{
-			Date today = new Date();
-			String dbFormat = "yyyy-MM-dd";
+			Date today = new Date();			
 			
 			SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
 			String format = formatter.format(today);						
@@ -266,8 +266,33 @@ public class OrderController {
 			List<Order> allOrders = orderService.findAll();			
 			
 			for(Order order : allOrders)
-				if(order.getRestaurantId().equals(restaurantId) && !order.getOrderStatus().equals(OrderStatus.paid)) 														
+				if(order.getRestaurantId().equals(restaurantId) && !order.getOrderStatus().equals(OrderStatus.paid)) {
+					for(Drink drink : order.getOrderedDrinks()) {
+						if(!order.getDrinks().contains(drink)) {
+							order.getDrinks().add(drink);
+							order.getDrinkQuantity().put(drink.getId(), new Integer(1));						
+						
+						} else {
+							int value = order.getDrinkQuantity().get(drink.getId());
+							value++;
+							order.getDrinkQuantity().put(drink.getId(), new Integer(value));						
+						}						
+					}
+					for(OrderedDish orderedDish : order.getOrderedDish()) {
+						Dish dish = dishService.findOne(orderedDish.getDishId());
+						if(!order.getDishes().contains(dish)) {
+							order.getDishes().add(dish);
+							order.getDishQuantity().put(dish.getId(), new Integer(1));							
+							
+						} else {
+							int value = order.getDishQuantity().get(dish.getId());						
+							value++;
+							order.getDishQuantity().put(dish.getId(), new Integer(value));												
+						}	
+					}
 					restaurantOrders.add(order);
+				}
+					
 				
 		} catch(Exception e) {
 			System.out.println(e);
@@ -421,6 +446,12 @@ public class OrderController {
 				return "failure";
 			}
 		}					
+		return "success";
+	}
+	
+	@PostMapping(path = "/removeDrink/{drinkId}")
+	public String removeDrink(@PathVariable Integer drinkId, @RequestBody Order order) {
+		
 		return "success";
 	}
 	
