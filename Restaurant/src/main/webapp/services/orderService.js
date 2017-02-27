@@ -11,6 +11,10 @@ guestServices.service('orderService', ['$http', function($http) {
 		return $http.get('/orders/getServedRestaurantOrders/'+restaurantId);
 	}
 	
+	this.getPaidRestaurantOrders = function(restaurantId) {
+		return $http.get('/orders/getPaidRestaurantOrders/'+restaurantId);
+	}
+	
 	this.getRestaurantDrinkOrders = function(restaurantId) {
 		return $http.get('/orders/getRestaurantDrinkOrders/'+restaurantId);
 	}

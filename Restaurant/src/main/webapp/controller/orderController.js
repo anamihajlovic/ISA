@@ -41,6 +41,21 @@ orderModule.controller('orderController', ['$scope', 'orderService', 'employeeSe
 				}
 			});
 			
+		} else if($scope.mode == 'paidOrders') {
+			var request = orderService.getPaidRestaurantOrders($scope.employee.restaurantId).then(function(response){					
+				$scope.data = response.data;				
+				return response;						
+			}); 
+			
+			request.then(function(data) {
+				if($scope.data != null) 
+					$scope.orders = $scope.data;
+				else {
+					toastr.info("There are no paid orders for today.");
+					$location.path('waiter');
+				}
+			});
+			
 		} else {
 			var request = orderService.getAllRestaurantOrders($scope.employee.restaurantId).then(function(response){					
 				$scope.data = response.data;	
@@ -105,15 +120,13 @@ orderModule.controller('orderController', ['$scope', 'orderService', 'employeeSe
 		}
 		
 		
-	}
-	
-	
+	}		
 
-	function isLoggedIn() {			
-		
+	function isLoggedIn() {					
 		var request = employeeService.getEmployee().then(function (response) {				
 				if(response.data !="") {
 					$scope.employee = response.data;
+					checkWorkShift();					
 					return response;
 				}					
 				else
@@ -132,6 +145,21 @@ orderModule.controller('orderController', ['$scope', 'orderService', 'employeeSe
 				getOrders();
 											
 		});
+	}
+	
+	function checkWorkShift() {		
+		var request = employeeService.checkWorkShift($scope.employee).then(function (response) {				
+			if(response.data != "") {
+				$scope.currentShift = response.data;				
+				$scope.allowAction = true;
+				return response;
+			}					
+			else {
+				$scope.allowAction = false;
+				//$location.path('bartender');
+			}
+				
+		});					
 	}
 	
 	

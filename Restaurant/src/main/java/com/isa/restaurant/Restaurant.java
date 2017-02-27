@@ -11,12 +11,7 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
-
 import javax.validation.constraints.NotNull;
-
-import com.isa.dish.*;
-import com.isa.drink.*;
-
 
 import org.hibernate.validator.constraints.NotBlank;
 
@@ -25,7 +20,6 @@ import com.isa.bidder.Bidder;
 import com.isa.cook.Cook;
 import com.isa.dish.Dish;
 import com.isa.drink.Drink;
->>>>>>> 155fc67f1268ef3bc76c5ee97c274aecaa931b51
 import com.isa.foodstuf.Foodstuff;
 import com.isa.res.manager.RestaurantManager;
 import com.isa.res.order.ResOrder;
@@ -334,9 +328,5 @@ public class Restaurant {
 
 	public void setOrders(List<ResOrder> orders) {
 		this.orders = orders;
-	}
-
-
-
-	
+	}	
 }

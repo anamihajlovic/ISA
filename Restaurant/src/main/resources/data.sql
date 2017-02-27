@@ -149,15 +149,15 @@ insert into restaurant_drink_card(restaurant_id,drink_id)values(2,3)
 
 
 --WORK SHIFTS
-insert into work_shifts (start_time,end_time,shift_type,day)values('08:00:00','14:00:00','firstShift','2017-02-26')
-insert into work_shifts (start_time,end_time,shift_type,day)values('14:00:01','20:00:00','secondShift','2017-02-26')
+insert into work_shifts (start_time,end_time,shift_type,day)values('08:00:00','14:00:00','firstShift','2017-02-27')
+insert into work_shifts (start_time,end_time,shift_type,day)values('14:00:01','20:00:00','secondShift','2017-02-27')
 insert into work_shifts (start_time,end_time,shift_type,day)values('08:00:00','14:00:00','firstShift','2017-03-01')
 insert into work_shifts (start_time,end_time,shift_type,day)values('14:00:01','20:00:00','secondShift','2017-03-01')
 insert into work_shifts (start_time,end_time,shift_type,day)values('08:00:00','14:00:00','firstShift','2017-03-02')
 insert into work_shifts (start_time,end_time,shift_type,day)values('14:00:01','20:00:00','secondShift','2017-03-02')
 
-insert into work_shift_waiters values(2, 1)
-insert into work_shift_waiters values(2, 2)
+insert into work_shift_waiters values(1, 1)
+insert into work_shift_waiters values(2, 5)
 insert into work_shift_waiters values(3, 1)
 insert into work_shift_waiters values(4, 2)
 insert into work_shift_waiters values(5, 1)
@@ -171,7 +171,7 @@ insert into work_shift_cooks values(4, 3)
 insert into work_shift_cooks values(4, 2)
 
 insert into work_shift_bartenders values(1, 1)
-insert into work_shift_bartenders values(1, 3)
+insert into work_shift_bartenders values(2, 5)
 insert into work_shift_bartenders values(2, 2)
 insert into work_shift_bartenders values(3, 1)
 insert into work_shift_bartenders values(4, 3)
@@ -295,7 +295,8 @@ insert into responsabilities(reon)values('second')
 
 insert into waiter_responsabilities values(1,1)
 insert into waiter_responsabilities values(1,2)
-insert into waiter_responsabilities values(2,1)
+insert into waiter_responsabilities values(3,5)
+insert into waiter_responsabilities values(4,1)
 
 
 insert into work_shift_responsabilites values(1,1)

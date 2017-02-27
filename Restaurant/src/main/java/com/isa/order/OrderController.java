@@ -127,10 +127,9 @@ public class OrderController {
 			
 			if(waiterShift != null) {
 				String shiftEndString = waiterShift.getEndTime();
-				String acceptanceTime = order.getAcceptanceTime();
-				String timeFormat = "yyyy-MM-dd";
+				String acceptanceTime = order.getAcceptanceTime();				
 				
-				SimpleDateFormat timeFormatter = new SimpleDateFormat("hh:mm:ss");
+				SimpleDateFormat timeFormatter = new SimpleDateFormat("kk:mm:ss");
 				String currentTime = timeFormatter.format(today);			
 				
 				Date acceptance = timeFormatter.parse(acceptanceTime);
@@ -267,7 +266,7 @@ public class OrderController {
 			List<Order> allOrders = orderService.findAll();			
 			
 			for(Order order : allOrders)
-				if(order.getRestaurantId().equals(restaurantId)) 														
+				if(order.getRestaurantId().equals(restaurantId) && !order.getOrderStatus().equals(OrderStatus.paid)) 														
 					restaurantOrders.add(order);
 				
 		} catch(Exception e) {
@@ -320,6 +319,26 @@ public class OrderController {
 			return null;
 		}							
 		return restaurantOrders;		
+	}
+	
+	@GetMapping(path = "/getPaidRestaurantOrders/{restaurantId}")
+	public List<Order> getPaidOrders(@PathVariable Long restaurantId) {
+		List<Order> restaurantOrders = new ArrayList<Order>();
+		
+		try{
+			List<Order> allOrders = orderService.findAll();			
+			
+			for(Order order : allOrders)
+				if(order.getRestaurantId().equals(restaurantId) && order.getOrderStatus().equals(OrderStatus.paid)) {										
+					restaurantOrders.add(order);								
+				}	
+			
+			return restaurantOrders;
+		} catch(Exception e) {
+			System.out.println(e);
+			return null;
+		}							
+				
 	}
 	
 	
