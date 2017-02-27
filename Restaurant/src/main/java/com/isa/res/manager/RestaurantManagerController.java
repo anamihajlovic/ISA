@@ -1,8 +1,10 @@
 package com.isa.res.manager;
 
+import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -18,11 +20,13 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.isa.Report;
 import com.isa.Transfer;
 import com.isa.bartender.Bartender;
 import com.isa.bartender.BartenderService;
 import com.isa.bidder.Bidder;
 import com.isa.bidder.BidderService;
+import com.isa.bill.Bill;
 import com.isa.cook.Cook;
 import com.isa.cook.CookService;
 import com.isa.dish.Dish;
@@ -58,6 +62,7 @@ import com.isa.work.day.WorkDayService;
 import com.isa.work.shift.ShiftType;
 import com.isa.work.shift.WorkShift;
 import com.isa.work.shift.WorkShiftService;
+
 
 
 
@@ -928,5 +933,147 @@ public class RestaurantManagerController {
 				return "nije";
 					
 		}
+	
+	private List<String> getYesterdayDateString() {
+		List<String> datumi = new ArrayList<String>();
+        DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        for(int i = 7;i>0;i--){
+        	Calendar cal = Calendar.getInstance();
+        	cal.add(Calendar.DATE, -i);
+        	datumi.add(dateFormat.format(cal.getTime()));
+        }
+		
+		 return datumi;
+     
+	}
+	@GetMapping(path = "/getDayBusiness/{datum}")
+	public List<Bill> getDayBusiness(@PathVariable String datum) {
+		Restaurant restaurant = restaurantService.findOne(restaurantManager.getIdRestaurant());	
+		List<Bill> allDayBills= new ArrayList<Bill>();
+		Bill b1 = new Bill();
+		Bill b2 = new Bill();
+		Bill b3 = new Bill();
+		Bill b4 = new Bill();
+		Long suma1 =Long.parseLong("0");
+		Long suma2 =Long.parseLong("0");
+		Long suma3 =Long.parseLong("0");
+		Long suma4=Long.parseLong("0");
+		String vreme1 ="12:00:00";
+		String vreme2="16:00:00"; ;
+		String vreme3 ="20:00:00";;
+		String vreme4 ="23:00:00";;
+		for(Bill bill:restaurant.getBills()){
+			
+			if(bill.getBillDate().equals(datum)){
+				String [] tokens = bill.getTime().split(":");
+				if(Integer.parseInt(tokens[0])<12){
+					suma1=suma1+bill.getTotalPrice();
+				}else if(Integer.parseInt(tokens[0])>=12 &&Integer.parseInt(tokens[0])<16){
+					suma2=suma2+bill.getTotalPrice();
+				}else if(Integer.parseInt(tokens[0])>=16 &&Integer.parseInt(tokens[0])<20){
+					suma3=suma3+bill.getTotalPrice();
+				}else{
+					suma4=suma4+bill.getTotalPrice();
+				}
+				
+			}
+		}
+		b1.setBillDate(datum);
+		b1.setTime(vreme1);
+		b1.setTotalPrice(suma1);
+		
+		b2.setBillDate(datum);
+		b2.setTime(vreme2);
+		b2.setTotalPrice(suma2);
+		
+		b3.setBillDate(datum);
+		b3.setTime(vreme3);
+		b3.setTotalPrice(suma3);
+		
+		b4.setBillDate(datum);
+		b4.setTime(vreme4);
+		b4.setTotalPrice(suma4);
+		
+		allDayBills.add(b1);
+		allDayBills.add(b2);
+		allDayBills.add(b3);
+		allDayBills.add(b4);
+		
+		return allDayBills;	
+	}
+	
+	@GetMapping(path = "/getWeekBusiness")
+	public List<Bill> getWeekBusiness() {
+		Restaurant restaurant = restaurantService.findOne(restaurantManager.getIdRestaurant());	
+		List<Bill> allDayBills= new ArrayList<Bill>();
+		List<String> datumi =getYesterdayDateString();
+		
+		for(String datum:datumi){
+			Bill b = new Bill();
+			Long suma =Long.parseLong("0");
+			for(Bill bill:restaurant.getBills()){
+				if(bill.getBillDate().equals(datum)){
+					suma=suma+bill.getTotalPrice();
+				}
+				
+			}
+			b.setTotalPrice(suma);
+			b.setBillDate(datum);
+			allDayBills.add(b);
+		}
+		return allDayBills;	
+	}
+	
+	
+	@GetMapping(path = "/getWeekBusinessForWaiters")
+	public List<Report> getWeekBusinessForWaiters() {
+		Restaurant restaurant = restaurantService.findOne(restaurantManager.getIdRestaurant());	
+		List<Report> allReports= new ArrayList<Report>();
+		List<Report> result= new ArrayList<Report>();
+		List<String> datumi =getYesterdayDateString();
+		List<Long>sifreKonobar = new ArrayList<Long>();
+		for(String datum:datumi){
+			for(Bill bill:restaurant.getBills()){
+				if(bill.getBillDate().equals(datum)){
+					if(!sifreKonobar.contains(bill.getWaiterId())){
+						sifreKonobar.add(bill.getWaiterId());
+					}
+				}
+				
+			}
+		}
+		for(Long sifra:sifreKonobar){
+			Report r = new Report();
+			Long suma = Long.parseLong("0");
+			for(String datum:datumi){
+				
+				
+				for(Bill bill:restaurant.getBills()){
+					if(bill.getBillDate().equals(datum)){
+						if(sifra.equals(bill.getWaiterId())){
+							suma = suma+ bill.getTotalPrice();
+							
+						}
+						
+					}
+					
+				}				
+			}
+		
+			
+			r.setWaiter(sifra);
+			r.setIncome(suma);
+			allReports.add(r);
+		}
+		
+		for(Report r:allReports){
+			r.setWaiterName(waiterService.findOne(r.getWaiter()).getFirstName()+" "+waiterService.findOne(r.getWaiter()).getLastName());
+		}
+		
+		return allReports;	
+	}
+	
+	
+	
 	
 }

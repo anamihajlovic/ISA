@@ -17,6 +17,7 @@ import org.hibernate.validator.constraints.NotBlank;
 
 import com.isa.bartender.Bartender;
 import com.isa.bidder.Bidder;
+import com.isa.bill.Bill;
 import com.isa.cook.Cook;
 import com.isa.dish.Dish;
 import com.isa.drink.Drink;
@@ -110,6 +111,10 @@ public class Restaurant {
 	@JoinTable(name = "restaurant_orders", joinColumns = @JoinColumn(name = "restaurant_id"), inverseJoinColumns = @JoinColumn(name = "order_id"))
 	private List<ResOrder> orders;
 	
+	@OneToMany(cascade = CascadeType.ALL)
+	@JoinTable(name = "restaurant_bills", joinColumns = @JoinColumn(name = "restaurant_id"), inverseJoinColumns = @JoinColumn(name = "bill_id"))
+	private List<Bill> bills;
+	
 
 	public Restaurant() {}
 
@@ -117,7 +122,8 @@ public class Restaurant {
 	public Restaurant(Long id, String name, String restaurant_type, String country, String city, String street,
 			Integer number, Double ratings, List<RestaurantManager> restaurantManagers, List<Foodstuff> foodstuffs,
 			List<Dish> dishes, List<Drink> drinks, List<Bidder> bidders, List<Waiter> waiters, List<Cook> cooks,
-			List<Bartender> bartenders, List<WorkDay> workDays, List<ResSegment> segments, List<ResOrder> orders) {
+			List<Bartender> bartenders, List<WorkDay> workDays, List<ResSegment> segments, List<ResOrder> orders,
+			List<Bill> bills) {
 		super();
 		this.id = id;
 		this.name = name;
@@ -138,6 +144,7 @@ public class Restaurant {
 		this.workDays = workDays;
 		this.segments = segments;
 		this.orders = orders;
+		this.bills = bills;
 	}
 
 
@@ -328,5 +335,23 @@ public class Restaurant {
 
 	public void setOrders(List<ResOrder> orders) {
 		this.orders = orders;
-	}	
+
+	}
+
+
+	public List<Bill> getBills() {
+		return bills;
+	}
+
+
+	public void setBills(List<Bill> bills) {
+		this.bills = bills;
+	}
+
+
+
+	
+
+		
+
 }
