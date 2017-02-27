@@ -1,0 +1,102 @@
+<style type = "text/css">
+	h4 {text-align : center}
+	
+	.bill {text-align : left}
+	
+	.endOrder {text-align: right}
+</style>
+
+<div>
+<div class = "col-lg-2">
+</div>
+<div class = "col-lg-8">
+
+	<h4 ng-if = "mode == 'receviedOrders'"><b>Received orders</b></h4>
+	<h4 ng-if = "mode == 'servedOrders'"><b>Served orders</b></h4>
+	
+	<br/>
+	<table class="table table-hover">
+    <thead>
+      <tr>
+        <th>Order</th>                
+        <th></th>  
+        <th></th>      
+      </tr>
+    </thead>
+    <tbody>
+      
+ 
+      <tr ng-repeat = "order in orders">       
+        <td>{{order.id}}</td>         
+        <td ng-if = "order.orderStatus == 'ordered'"><button class = "btn btn-primary" ng-click = "acceptOrder(order)">Accept</button></td>
+        <td ng-if = "order.orderStatus == 'accepted'"><i>Order is being prepared.</i></td>
+       	<td ng-if = "order.orderStatus == 'ready'"><button class = "btn btn-primary" ng-if = "checkWaiter(order)" ng-click = "serveOrder(order)">Serve</button></td>
+       	<td ng-if = "order.orderStatus == 'served' && mode != 'servedOrders'"><i>Order is being served.</i></td>
+       	<td ng-if = "order.orderStatus != 'served'"><button class = "btn btn-primary" ng-if = "checkWaiter(order)">Change</td></button>         	
+       	<td ng-if = "order.orderStatus == 'served' && mode == 'servedOrders'"><button class = "btn btn-primary" ng-click = "buttonShowBill(order)">Create bill</button></td>              	
+    
+        
+       </tr>
+       
+    </tbody>
+  </table>
+  
+
+ </div>
+ </div>
+ 
+ <!-- ---------------------------------------------------------------------------- -->
+<button type="button" id = "modalCreateBill" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal" style="display:none"></button>
+
+<!-- Modal -->
+<div id="myModal" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+    
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">Bill - Order num{{order.id}}</h4>
+      </div>
+      
+      <div class="modal-body">
+      <table>
+      <tr>
+      <th class = "bill">Table:</th>
+      <td class = "bill">aaa</td>
+      </tr>
+      <tr>
+      <th class = "bill">Date:</th>
+      <td class = "bill">{{bill.billDate}}</td>
+      </tr>
+      <tr>
+      <th class = "bill">Time:</th>
+      <td class = "bill">{{bill.time}}</td>
+      </tr>
+      <tr>
+      <th class = "bill">Waiter:</th>
+      <td class = "bill">{{bill.waiterId}}&nbsp{{waiter.firstName}}&nbsp{{waiter.lastName}}</td>      
+      </tr>
+      <tr>
+      <th class = "bill">Drinks:</th>  
+      <td ng-if = "order.drinks.length == 0">-</td>
+      <td ng-if = "order.drinks.length != 0" class = "bill" ng-repeat = "drink in order.drinks">{{order.drinkQuantity[drink.id]}}x{{drink.name}}&nbsp{{drink.price}}</td>   
+      </tr>
+      <th class = "bill">Dishes:</th>  
+      <td ng-if = "order.dishes.length == 0">-</td>
+      <td ng-if = "order.dishes.length != 0" class = "bill" ng-repeat = "dish in order.dishes">{{order.dishQuantity[dish.id]}}x&nbsp{{dish.name}}&nbsp{{dish.price}}</td>   
+      </tr>
+      </table>
+      </div>
+      
+      <div class="modal-footer">
+      	<label>Total price: {{bill.totalPrice}}</label><br/>
+      	<button type="button" class="btn btn-default" data-dismiss="modal" ng-click = "createBill(order, bill)">Create</button>
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+
+  </div>
+</div>
+ 

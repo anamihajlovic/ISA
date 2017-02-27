@@ -33,7 +33,7 @@ public class WorkShift {
 	@Column(name = "work_shift_id")
 	private Long id;
 	
-	@Column  (name = "start_time")
+	@Column (name = "start_time")
 	private String startTime;
 	
 	@Column	 (name = "end_time")

@@ -156,7 +156,7 @@ insert into work_shifts (start_time,end_time,shift_type,day)values('14:00:01','2
 insert into work_shifts (start_time,end_time,shift_type,day)values('08:00:00','14:00:00','firstShift','2017-03-02')
 insert into work_shifts (start_time,end_time,shift_type,day)values('14:00:01','20:00:00','secondShift','2017-03-02')
 
-insert into work_shift_waiters values(1, 1)
+insert into work_shift_waiters values(2, 1)
 insert into work_shift_waiters values(2, 2)
 insert into work_shift_waiters values(3, 1)
 insert into work_shift_waiters values(4, 2)
@@ -179,7 +179,7 @@ insert into work_shift_bartenders values(4, 2)
 
 
 --WORK DAYS
-insert into work_days (day)values('2017-02-26')
+insert into work_days (day)values('2017-02-27')
 insert into work_days(day)values('2017-03-01')
 insert into work_days(day)values('2017-03-02')
 
@@ -234,8 +234,8 @@ insert into units(offer_id,unit_id)values(1,1)
 insert into units(offer_id,unit_id)values(1,2)
 
 --ORDERS
-insert into orders(restaurant_id,drinks_status,dish_status) values (1, 'ordered', 'ordered')
-insert into orders(restaurant_id,drinks_status,dish_status) values (1, 'ordered', 'ordered')
+insert into orders(restaurant_id,acceptance_time,order_date,order_status,drinks_status,dish_status) values (1,'19:00:00','2017-02-27','ordered', 'ordered', 'ordered')
+insert into orders(restaurant_id,acceptance_time,order_date,order_status,drinks_status,dish_status) values (1,'19:30:00','2017-02-27', 'ordered', 'ordered', 'ordered')
 
 insert into ordered_drinks(order_id,drink_id) values (1,1)
 insert into ordered_drinks(order_id,drink_id) values (1,1)

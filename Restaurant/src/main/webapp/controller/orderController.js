@@ -12,6 +12,7 @@ orderModule.controller('orderController', ['$scope', 'orderService', 'employeeSe
 		}); 
 		
 		request.then(function(data) {
+			alert($scope.data)
 			if($scope.data != null) 
 				$scope.orders = $scope.data;
 			else {
@@ -22,10 +23,46 @@ orderModule.controller('orderController', ['$scope', 'orderService', 'employeeSe
 		
 	}
 	
-	function getDishes() {				
-		var mode = $location.url().split('/')[2];	
+	function getOrders() {
+		$scope.mode = $location.url().split('/')[2];	
 		
-		if(mode == 'orderedDish') {
+		if($scope.mode == 'servedOrders') {			
+			var request = orderService.getServedRestaurantOrders($scope.employee.restaurantId).then(function(response){					
+				$scope.data = response.data;				
+				return response;						
+			}); 
+			
+			request.then(function(data) {
+				if($scope.data != null) 
+					$scope.orders = $scope.data;
+				else {
+					toastr.info("There are no served orders.");
+					$location.path('waiter');
+				}
+			});
+			
+		} else {
+			var request = orderService.getAllRestaurantOrders($scope.employee.restaurantId).then(function(response){					
+				$scope.data = response.data;	
+				return response;						
+			}); 
+			
+			request.then(function(data) {
+				if($scope.data != null) 
+					$scope.orders = $scope.data;
+				else {
+					toastr.info("There are no orders.");
+					$location.path('waiter');
+				}
+			});						
+		}
+	}
+	
+	
+	function getDishes() {				
+		$scope.mode = $location.url().split('/')[2];	
+		
+		if($scope.mode == 'orderedDish') {
 			var request = orderService.getRestaurantDishOrders($scope.employee.restaurantId).then(function(response){
 				$scope.data = response.data;	
 				return response;						
@@ -42,7 +79,7 @@ orderModule.controller('orderController', ['$scope', 'orderService', 'employeeSe
 				}
 			});
 			
-		} else if(mode == 'preparingDish') {
+		} else if($scope.mode == 'preparingDish') {
 			
 			var request = orderService.getRestaurantPreparingDish($scope.employee).then(function(response){
 				$scope.data = response.data;				
@@ -69,6 +106,8 @@ orderModule.controller('orderController', ['$scope', 'orderService', 'employeeSe
 		
 		
 	}
+	
+	
 
 	function isLoggedIn() {			
 		
@@ -88,6 +127,9 @@ orderModule.controller('orderController', ['$scope', 'orderService', 'employeeSe
 				
 			else if($scope.employee.userRole == 'cook') 			
 				getDishes();
+			
+			else if($scope.employee.userRole == 'waiter')
+				getOrders();
 											
 		});
 	}
@@ -122,8 +164,11 @@ orderModule.controller('orderController', ['$scope', 'orderService', 'employeeSe
 		request.then(function (data) {
 			if($scope.data != null) {
 				
-				if($scope.employee.userRole == 'bartender') 
-					getDrinks();
+				if($scope.employee.userRole == 'bartender') {
+					getDrinks();					
+					//getOrders();
+				}
+					
 			}
 		});
 	}
@@ -137,7 +182,7 @@ orderModule.controller('orderController', ['$scope', 'orderService', 'employeeSe
 		
 		request.then(function (data) {
 			if($scope.data != 'failure') {
-				getDishes();			
+				getDishes();				
 			} 
 				
 		});
@@ -152,9 +197,122 @@ orderModule.controller('orderController', ['$scope', 'orderService', 'employeeSe
 		
 		request.then(function (data) {
 			if($scope.data != 'failure') {
-				getDishes();			
+				getDishes();
+				getOrders();	
+			} 			
+		});
+	}
+	
+	
+	$scope.acceptOrder = function(order) {
+		var request = orderService.acceptOrder(order.id).then(function(response){
+			$scope.data = response.data;
+			alert(order)
+			return response;
+		});
+		
+		request.then(function (data) {
+			if($scope.data != 'failure') {
+				getOrders();					
+			} 			
+		});
+	}
+	
+	
+	$scope.serveOrder = function(order) {
+		var request = orderService.serveOrder(order).then(function(response){
+			$scope.data = response.data;			
+			return response;
+		});
+		
+		request.then(function (data) {
+			if($scope.data != 'failure') {
+				getOrders();					
 			} 
 				
+		});
+	}
+	
+	$scope.checkWaiter = function(order) {		
+		if($scope.employee.id == order.waiterId)
+			return true;
+		return false;
+	}
+	
+	
+	$scope.buttonShowBill = function(order){		
+		document.getElementById("modalCreateBill").click();													
+		$scope.bill = new Object();
+		$scope.order = order;				
+		getOrders();						
+		
+		var currentDate = new Date()
+		var day = currentDate.getDate()
+		var month = currentDate.getMonth() + 1
+		var year = currentDate.getFullYear()
+		
+		var hours = currentDate.getHours()
+		var minutes = currentDate.getMinutes();
+	
+		$scope.bill.billDate = month + "/" + day + "/" + year;
+		$scope.bill.time = hours + ":" + minutes;	
+		
+		var sum = 0;
+		for(i=0; i<order.drinks.length;i++) {
+			var drink = order.drinks[i];
+			var drinkPrice = order.drinkQuantity[drink.id] * drink.price;
+			sum += drinkPrice;
+		}
+		for(j=0; j<order.dishes.length; j++) {
+			var dish = order.dishes[j]
+			var dishPrice = order.dishQuantity[dish.id] * dish.price;
+			sum += dishPrice;
+		}
+		
+		$scope.bill.totalPrice = sum;
+		
+		if($scope.employee.id != order.waiterId) {
+			
+			var request = orderService.compareWaiters(order.id).then(function(response){
+				$scope.data = response.data;			
+				return response;
+			});
+			
+			request.then(function (data) {
+				if($scope.data != null) {
+					$scope.waiter = response.data;
+					$scope.bill.waiterId = $scope.waiter.id;				
+				}								
+			});
+			
+		} else {
+			$scope.bill.waiterId = $scope.order.waiterId;
+		}
+				
+		
+	}
+	
+	$scope.createBill = function (order, bill) {
+		alert(order.id);
+		
+		var request = orderService.finishOrder(order.id).then(function(response){
+			$scope.data = response.data;			
+			return response;
+		});
+		
+		request.then(function (data) {
+			if($scope.data != 'failure') {
+				
+				var request = orderService.createBill(bill).then(function (response){					
+					$scope.data = response.data;			
+					return response;			
+				});
+				
+				if($scope.data != 'failure') {
+					toastr.success("The order has been paid.");
+				}
+					
+			}								
 		});
 	}
 	

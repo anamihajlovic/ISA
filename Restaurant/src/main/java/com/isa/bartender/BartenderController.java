@@ -1,6 +1,7 @@
 package com.isa.bartender;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
@@ -80,31 +81,47 @@ public class BartenderController {
 		Bartender bartender= bartenderService.findOne(id);
 		Long restaurantId = bartender.getRestaurantId();		
 		Restaurant restaurant = restaurantService.findOne(restaurantId);
-		
-		System.out.println(restaurantId);
-		
 							
 		List<WorkShift> bartenderShifts= new ArrayList<WorkShift>();
 		
-		for(WorkDay day : restaurant.getWorkDays()) {
-			System.out.println(day.getDay());
-			System.out.println(day.getWorkShifts());
-			
+		for(WorkDay day : restaurant.getWorkDays()) {			
 			for(WorkShift shift : day.getWorkShifts()) {
 				if(shift.getBartenders().size() != 0) 
 					bartenderShifts.add(shift);											
-			}
-		
+			}		
 		}
-		
-		
-		System.out.println(restaurant.getWorkDays());
-		System.out.println(bartenderShifts);
-		
+	
 		return bartenderShifts;		
 	}
 	
+	@GetMapping(path = "/getWorkShift")
+	public List<WorkShift> getWorkShift() {
+		
+		try{
+			Bartender bartender = (Bartender) httpSession.getAttribute("user");
+			Restaurant restaurant = restaurantService.findOne(bartender.getRestaurantId());
+			Date today = new Date();
+			
+			List<WorkShift> shifts = new ArrayList<WorkShift>();
+			
+			for(WorkDay day : restaurant.getWorkDays()) {
+				if(today.equals(day.getDay()))
+					for(WorkShift shift : day.getWorkShifts())
+						if(shift.getBartenders().contains(bartender))
+							shifts.add(shift);
+			}
+			
+			System.out.println(shifts);
+			return shifts;
+		}catch(Exception e){
+			System.out.println(e);
+			return null;
+		}
+		
+		
+		
+	}
 	
-	
-	
+
+
 }
