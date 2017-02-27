@@ -1,5 +1,6 @@
 package com.isa.bartender;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -95,24 +96,27 @@ public class BartenderController {
 	}
 	
 	@GetMapping(path = "/getWorkShift")
-	public List<WorkShift> getWorkShift() {
+	public WorkShift getWorkShift() {
 		
 		try{
 			Bartender bartender = (Bartender) httpSession.getAttribute("user");
 			Restaurant restaurant = restaurantService.findOne(bartender.getRestaurantId());
-			Date today = new Date();
 			
-			List<WorkShift> shifts = new ArrayList<WorkShift>();
+			Date today = new Date();						
+			SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+			String todayStr = formatter.format(today);	
+		
+			System.out.println(today);
 			
-			for(WorkDay day : restaurant.getWorkDays()) {
-				if(today.equals(day.getDay()))
-					for(WorkShift shift : day.getWorkShifts())
-						if(shift.getBartenders().contains(bartender))
-							shifts.add(shift);
+			for(WorkDay day : restaurant.getWorkDays()) {					
+				String workDayStr = formatter.format(day.getDay());	
+				System.out.println(todayStr.equals(workDayStr));
+				if(todayStr.equals(workDayStr)) 
+					return (day.getCurrentWorkShift(bartender));
+					
 			}
-			
-			System.out.println(shifts);
-			return shifts;
+						
+			return null;
 		}catch(Exception e){
 			System.out.println(e);
 			return null;

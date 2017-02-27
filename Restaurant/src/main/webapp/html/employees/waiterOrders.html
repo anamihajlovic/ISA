@@ -13,6 +13,7 @@
 
 	<h4 ng-if = "mode == 'receviedOrders'"><b>Received orders</b></h4>
 	<h4 ng-if = "mode == 'servedOrders'"><b>Served orders</b></h4>
+	<h4 ng-if = "mode == 'paidOrders'"><b>Paid orders</b></h4>
 	
 	<br/>
 	<table class="table table-hover">
@@ -32,7 +33,8 @@
         <td ng-if = "order.orderStatus == 'accepted'"><i>Order is being prepared.</i></td>
        	<td ng-if = "order.orderStatus == 'ready'"><button class = "btn btn-primary" ng-if = "checkWaiter(order)" ng-click = "serveOrder(order)">Serve</button></td>
        	<td ng-if = "order.orderStatus == 'served' && mode != 'servedOrders'"><i>Order is being served.</i></td>
-       	<td ng-if = "order.orderStatus != 'served'"><button class = "btn btn-primary" ng-if = "checkWaiter(order)">Change</td></button>         	
+       	<td ng-if = "order.orderStatus == 'paid'"><i>Order has been paid.</i></td>
+       	<td ng-if = "order.orderStatus != 'served' && order.orderStatus != 'paid'"><button class = "btn btn-primary" ng-if = "checkWaiter(order)">Change</td></button>         	
        	<td ng-if = "order.orderStatus == 'served' && mode == 'servedOrders'"><button class = "btn btn-primary" ng-click = "buttonShowBill(order)">Create bill</button></td>              	
     
         

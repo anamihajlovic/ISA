@@ -34,6 +34,18 @@ employeeServices.service('employeeService',['$http', function($http) {
 		
 	}
 	
+	this.checkWorkShift = function(employee) {
+		alert(employee.userRole)
+		if(employee.userRole == 'bartender')			
+			return $http.get("/bartenders/getWorkShift");	
+		
+		else if(employee.userRole == 'cook')			
+			return $http.get("/cooks/getWorkShift");	
+		
+		else if(employee.userRole == 'waiter')			
+			return $http.get("/waiters/getWorkShift");
+	}
+	
 	
 	this.getWorkShift = function(id) {
 		return $http.get("/workShifts/getWorkShift/"+id);
