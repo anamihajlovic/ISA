@@ -39,10 +39,10 @@ public class Order {
 	@Column(name="restaurant_id")
 	private Long restaurantId;
 	
-	@Column (name = "acceptance_time", nullable = true)
+	@Column (name = "acceptance_time")
 	private String acceptanceTime;
 	
-	@Column(name="accepted_waiter", nullable = true)
+	@Column(name="accepted_waiter")
 	private Long waiterId;
 		
 	@Column (name= "order_date")
@@ -50,7 +50,7 @@ public class Order {
 	private Date orderDate;
 	
 	@Enumerated(EnumType.STRING)
-	@Column(name = "order_status", nullable = false)
+	@Column(name = "order_status", nullable=false)
 	private OrderStatus orderStatus;	
 	
 	@Enumerated(EnumType.STRING)		
@@ -62,7 +62,6 @@ public class Order {
 	private List<Drink> orderedDrinks;
 	
 	@Enumerated(EnumType.STRING)
-	@NotNull		
 	@Column(name = "dish_status")
 	private OrderItemStatus dishStatus;
 	

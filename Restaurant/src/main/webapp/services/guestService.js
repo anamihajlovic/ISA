@@ -73,9 +73,18 @@ guestServices.service('guestService', ['$http', function($http) {
 		return $http.get("/reservations/getReservation/" + reservationId);
 	}
 	
-	this.confirmInvitation = function(invitationId, operation) {
-		return $http.post("/invitations/confirmInvitation/" + invitationId + "/" + operation);
-
+	this.getDrinks= function(id){
+		return $http.get("/restaurants/drinks/" + id);
 	}
+	
+	this.getDishes= function(id){
+		return $http.get("/restaurants/dishes/" + id);
+	}
+		
+	this.order = function(reservationId, dishesAndDrinks) {
+		return $http.post("/orders/addOrder/" + reservationId, dishesAndDrinks);
+	}
+	
+	
 	
 }]);

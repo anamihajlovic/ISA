@@ -10,4 +10,7 @@ public interface OrderService {
 	
 	Order findOne(Long id);
 	
+	void delete(Long id);
+
+	
 }

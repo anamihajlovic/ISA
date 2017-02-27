@@ -7,10 +7,11 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import com.isa.dish.Dish;
+import com.isa.drink.Drink;
 
 @RestController
 @RequestMapping("/restaurants")
@@ -59,6 +60,24 @@ public class RestaurantController {
 			Collections.reverse(restaurants);
 
 		return restaurants;
+	}
+	
+	@GetMapping(path = "/dishes/{id}")
+	public List<Dish> getDishes(@PathVariable Long id) {
+		System.out.println("Pogodjena metoda getDishes " + id);
+		List<Dish> dishes =restaurantService.findOne(id).getDishes();
+	
+		return dishes;
+		
+	}
+	
+	@GetMapping(path = "/drinks/{id}")
+	public List<Drink> getDrinks(@PathVariable Long id) {
+		System.out.println("Pogodjena metoda getDishes " + id);
+		List<Drink> dishes =restaurantService.findOne(id).getDrinks();
+	
+		return dishes;
+		
 	}
 
 
