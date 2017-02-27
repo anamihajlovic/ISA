@@ -10,7 +10,9 @@ resManagerModule.controller('resManagerController', ['$scope', 'resManagerServic
 			function (response) {
 				$scope.restaurantManager = response.data;
 				
-				if(response.data!="") {	
+				if(response.data!="") {
+					var dugme = document.getElementById("bar");
+					dugme.style.display = "none";
 				} else {					
 					 $location.path('login');
 				}
@@ -1124,16 +1126,76 @@ $scope.MakeShift = function(){
 	});
 }	
 
+$scope.dayBusiness = function(){
+	
 
-$scope.labels = ['2006', '2007', '2008', '2009', '2010', '2011', '2012'];
-$scope.series = ['Series A', 'Series B'];
+	 var request =  resManagerService.getDayBills($scope.day).then(function(response) {  
+	
+		 var bills = response.data;
+	
+		 $scope.labels=[];		 
+		 $scope.series=['Income'];
+		 $scope.data=[];
+		 $scope.dateIncome = bills[0].billDate;
+		 for(i=0; i<bills.length; i++) {	
+			 $scope.labels.push(bills[i].time)
+			 $scope.data.push(bills[i].totalPrice);	
+			 
+		 }	
+		 var logout = document.getElementById("bar");
+			logout.style.display = "";
+	return response;
+	
+	document.getElementById("bar").show();
+	}); 
+ 
+}
 
-$scope.data = [
-  [65, 59, 80, 81, 56, 55, 40],
-  [28, 48, 40, 19, 86, 27, 90]
-];
+var request =  resManagerService.getWeekBills().then(function(response) {  
+	
+	 var bills = response.data;
 
-$scope.colors = ["rgb(159,204,0)"];
+	 $scope.labels1=[];		 
+	 $scope.series1=['Income'];
+	 $scope.data1=[];
+	 for(i=0; i<bills.length; i++) {	
+		 $scope.labels1.push(bills[i].billDate);
+		 $scope.data1.push(bills[i].totalPrice);	
+		 
+	 }	
+return response;
+}); 
 
-   
+var request =  resManagerService.getWeekBills().then(function(response) {  
+	
+	 var bills = response.data;
+
+	 $scope.labels1=[];		 
+	 $scope.series1=['Income'];
+	 $scope.data1=[];
+	 for(i=0; i<bills.length; i++) {	
+		 $scope.labels1.push(bills[i].billDate);
+		 $scope.data1.push(bills[i].totalPrice);	
+		 
+	 }	
+return response;
+}); 
+
+
+var request =  resManagerService.getWeekBusinessForWaiters().then(function(response) {  
+	
+	 var reports = response.data;
+
+	 $scope.labels2=[];		 
+	 $scope.series2=['Income'];
+	 $scope.data2=[];
+	 for(i=0; i<reports.length; i++) {	
+		 $scope.labels2.push(reports[i].waiterName);
+		 $scope.data2.push(reports[i].income);	
+		
+		 
+	 }	
+return response;
+}); 
+ 
 }]);

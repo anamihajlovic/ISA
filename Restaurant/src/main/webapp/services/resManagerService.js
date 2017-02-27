@@ -157,6 +157,15 @@ resManagerServices.service('resManagerService',['$http', function($http) {
 	this.makeShift = function(sve) {
 		return $http.post("/resManager/MakeFirstShift",sve);
 	}
-
+	this.getDayBills = function(day) {
+		return $http.get("/resManager/getDayBusiness/"+day);
+	}
+	this.getWeekBills = function() {
+		return $http.get("/resManager/getWeekBusiness");
+	}
+	
+	this.getWeekBusinessForWaiters = function() {
+		return $http.get("/resManager/getWeekBusinessForWaiters");
+	}
 	
 }]); 
