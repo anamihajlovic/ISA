@@ -11,4 +11,7 @@ public interface OrderedDishRepository extends PagingAndSortingRepository<Ordere
 	public List<OrderedDish> findByOrderId(Long orderId);
 	
 	public List<OrderedDish> findByOrderIdAndDishId(Long orderId, Integer dishId);
+	
+	@SuppressWarnings("unchecked")
+	public OrderedDish save(OrderedDish orderedDish);
 }

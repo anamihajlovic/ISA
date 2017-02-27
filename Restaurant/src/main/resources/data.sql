@@ -151,7 +151,7 @@ insert into restaurant_drink_card(restaurant_id,drink_id)values(2,3)
 
 --WORK SHIFTS
 insert into work_shifts (start_time,end_time,shift_type,day)values('08:00:00','14:00:00','firstShift','2017-02-27')
-insert into work_shifts (start_time,end_time,shift_type,day)values('14:00:01','20:00:00','secondShift','2017-02-27')
+insert into work_shifts (start_time,end_time,shift_type,day)values('14:00:01','23:55:00','secondShift','2017-02-27')
 insert into work_shifts (start_time,end_time,shift_type,day)values('08:00:00','14:00:00','firstShift','2017-03-01')
 insert into work_shifts (start_time,end_time,shift_type,day)values('14:00:01','20:00:00','secondShift','2017-03-01')
 insert into work_shifts (start_time,end_time,shift_type,day)values('08:00:00','14:00:00','firstShift','2017-03-02')

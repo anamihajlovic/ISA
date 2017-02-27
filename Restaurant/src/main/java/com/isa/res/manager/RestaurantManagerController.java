@@ -1,8 +1,5 @@
 package com.isa.res.manager;
 
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.forwardedUrl;
-
-
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -49,18 +46,10 @@ import com.isa.res.table.ResTable;
 import com.isa.res.table.ResTableService;
 import com.isa.res.table.SizeTable;
 import com.isa.res.table.StateTable;
-
 import com.isa.responsability.Responsability;
 import com.isa.responsability.ResponsabilityService;
-import com.isa.restaurant.*;
-import com.isa.res.order.*;
-import com.isa.res.order.unit.ResOrderUnit;
-import com.isa.res.order.unit.ResOrderUnitService;
-import com.isa.offer.*;
-
 import com.isa.restaurant.Restaurant;
 import com.isa.restaurant.RestaurantService;
-
 import com.isa.user.Role;
 import com.isa.waiter.Waiter;
 import com.isa.waiter.WaiterService;

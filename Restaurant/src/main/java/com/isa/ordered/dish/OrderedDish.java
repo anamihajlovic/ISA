@@ -31,7 +31,7 @@ public class OrderedDish {
 	@Column (name= "dish_status")
 	private DishStatus status;
 	
-	@Column (name = "cook_id")
+	@Column (name = "cook_id", nullable = true)
 	private Long cookId;
 
 	
