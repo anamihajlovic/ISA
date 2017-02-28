@@ -84,9 +84,11 @@ public class OrderController {
 		order.setOrderStatus(OrderStatus.ordered);
 		order.setDrinksStatus(OrderItemStatus.ordered);
 		order.setDishStatus(OrderItemStatus.ordered);
+		order.setOrderedDish(new ArrayList<OrderedDish>());
+		order.setOrderedDrinks(new ArrayList<Drink>());
 		
 		try {
-			orderService.save(order);
+			order = orderService.save(order);
 		} catch (Exception e) {
 			System.out.println("Neuspesno cuvanje porudzbine-prvo cuvanje");
 			return null;
@@ -100,7 +102,8 @@ public class OrderController {
 				od.setOrderId(order.getId());
 				od.setDishId(id);
 				od.setStatus(DishStatus.ordered);
-				try{
+				//ordered.add(od);
+				try {
 					orderedDishService.save(od);
 				} catch(Exception e) {
 					System.out.println("Neuspesno cuvanje porucenog jela");
@@ -109,8 +112,8 @@ public class OrderController {
 				order.getOrderedDish().add(od);
 			}			
 		}
-		
-		
+
+				
 		if (!drinks.equals("")) {
 			Integer[] drinksId = makeIntegerArray(drinks);
 			ArrayList<Drink> ordered = new ArrayList<Drink>();
@@ -123,7 +126,7 @@ public class OrderController {
 		}
 		
 		try {
-			orderService.save(order);
+			order = orderService.save(order);
 		} catch (Exception e) {
 			System.out.println("Neuspesno cuvanje porudzbine-drugo cuvanje");
 			orderService.delete(order.getId());

@@ -105,6 +105,88 @@ invitationModule.controller('invitationController', ['$scope', 'invitationServic
 		});
 	}
 	
+	
+	//ZA NARUCIVANJE	
+	
+	function makeArrayString(array) {
+		var string= "";
+		for (x in array)
+			string += array[x] + ";";
+		
+		var size = string.length;
+		string = string.substring(0, size-1); //da odsecem poslednji ;
+		return string;
+	}
+	
+	$scope.getDrinks = function() {
+		$scope.showDishes = false;
+		$scope.showDrinks = true;
+		
+		var request = invitationService.getDrinks($scope.invitationRes.resId).then(function(response){
+			$scope.data = response.data;
+			return response;
+		});
+			
+		request.then(function (data) {
+			if($scope.data.length != 0) {
+				$scope.drinks = $scope.data;
+			} else {
+					toastr.info("There's no drink for order.");
+			}
+		});
+		
+	}
+	
+	$scope.getDishes = function() {
+		$scope.showDrinks = false;
+		$scope.showDishes = true;
+		
+		var request = invitationService.getDishes($scope.invitationRes.resId).then(function(response){
+			$scope.data = response.data;
+			return response;
+		});
+			
+		request.then(function (data) {
+			if($scope.data.length != 0) {
+				$scope.dishes = $scope.data;
+			} else {
+					toastr.info("There's no dish for order.");
+			}
+		});
+		
+	}
+	
+	$scope.chosenDrinks = [];
+	$scope.addDrink = function(id) {
+		$scope.chosenDrinks.push(id);
+
+	}
+	
+	$scope.chosenDishes = [];
+	$scope.addDish = function(id) {
+		$scope.chosenDishes.push(id);
+	}
+	
+	$scope.order = function() {
+		var dishesString = makeArrayString($scope.chosenDishes);
+		var drinksString = makeArrayString($scope.chosenDrinks);
+		var dishesAndDrinks = dishesString + "-" + drinksString;
+
+		var request = invitationService.order($scope.invitationRes.id, dishesAndDrinks).then(function(response){
+			$scope.data = response.data;
+			return response;
+		});
+			
+		request.then(function (data) {
+			if($scope.data != "") {
+				$scope.showOrderButton = false;
+				toastr.success("Successful order!")
+			} else {
+					toastr.error("Unsuccessful order. Please, try again.");
+			}
+		});
+	}
+	
 		
 		
 		

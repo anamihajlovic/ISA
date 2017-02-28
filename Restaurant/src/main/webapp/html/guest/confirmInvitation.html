@@ -23,5 +23,110 @@
 <br><br>
 <label class="pull-center"><button ng-show="showConfirmButtons" class="btn btn-default navbar-btn"  data-ui-sref="." ng-click="acceptInvitation()"><span class = "glyphicon glyphicon-ok"></span> Accept</button></label>
 <label class="pull-center"><button ng-show="showConfirmButtons" class="btn btn-default navbar-btn" ng-click="rejectInvitation()" data-ui-sref=".">Reject <span class = "glyphicon glyphicon-remove"></span></button></label>
-<label class="pull-center"><button ng-show="showOrderButton" class="btn btn-default navbar-btn" ng-click="order()" data-ui-sref="."><span class="glyphicon glyphicon-cutlery"></span><span class="glyphicon glyphicon-glass"></span> Order </button></label>
+ <!-- Trigger the modal with a button -->
+<label class="pull-center"><button type="button" ng-show="showOrderButton" id="modalBtnOrder" class="btn btn-default navbar-btn" data-toggle="modal" data-target="#myModalOrder"><span class="glyphicon glyphicon-cutlery"></span><span class="glyphicon glyphicon-glass"></span> Order </button>
+</label></div>
+
+
+
+
+
+  <!-- Modal -->
+<div id="myModalOrder" class="modal fade "  >
+  <div class="modal-dialog modal-admin ">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title" id="modalTitle">Order dishes and drinks</h4>
+     <button data-ui-sref="." ng-click="getDishes()" class="btn btn-default navbar-btn" ><span class="glyphicon glyphicon-cutlery"></span> Dishes</button> &nbsp; &nbsp;
+     <button data-ui-sref="." ng-click="getDrinks()" class="btn btn-default navbar-btn" ><span class="glyphicon glyphicon-glass"></span> Drinks </button>
+	
+	<br>
+	<p> Note: After you make order, you won't be able to make changes.
+      </div>
+      <div class="modal-body">
+		<div ng-show="showDishes">
+	<h4>Menu:</h4>
+	<table  class="table table-bordered tableBG" border="1">
+		<tbody>
+	        <tr>
+				<th>Id</th>
+				<th>Name</th>
+                <th>Text</th>
+                <th>Price</th>
+                <th>Type</th>
+                <th></th>
+            </tr>
+			<tr ng-repeat="dish in dishes">
+				<td> 
+					{{dish.id}}
+				</td>
+				<td>
+		    		{{dish.name}}	
+				</td>
+            	<td>
+		    		{{dish.text}}	
+				</td>
+				<td>
+		    		{{dish.price}}	
+				</td>
+            	<td>
+		    		{{dish.dishType}}	
+				</td>
+				<td>
+				<button class = "btn btn-link"  ng-click="addDish(dish.id)" title="Add"><span class = "glyphicon glyphicon-plus" style="color:green;"></span></button>
+				</td>
+			</tr>
+        </tbody>
+    </table> 
+    </div>
+    
+    <!-- PICA -->
+    <div ng-show="showDrinks">
+	<h4>Drink card:</h4>
+	<table  class="table table-bordered tableBG" border="1">
+		<tbody>
+	        <tr>
+				<th>Id</th>
+				<th>Name</th>
+                <th>Text</th>
+                <th>Price</th>
+                <th>Type</th>
+                <th></th>
+            </tr>
+			<tr ng-repeat="drink in drinks">
+				<td> 
+					{{drink.id}}
+				</td>
+				<td>
+		    		{{drink.name}}	
+				</td>
+            	<td>
+		    		{{drink.text}}	
+				</td>
+				<td>
+		    		{{drink.price}}	
+				</td>
+            	<td>
+		    		{{drink.drinkType}}	
+				</td>
+				<td>
+				<button class = "btn btn-link"  ng-click="addDrink(drink.id)" title="Add"><span class = "glyphicon glyphicon-plus" style="color:green;"></span></button>
+					
+				</td>
+			</tr>
+        </tbody>
+    </table> 
+	
+      </div>
+      <div class="modal-footer">
+      <button type="button"  ng-show="chosenDrinks.length !== 0 || chosenDishes.length !== 0" class="btn btn-default"  ng-click="order()" data-dismiss="modal" data-ui-sref="."><span class="glyphicon glyphicon-ok" ></span> Order</button>
+      	 <button  type="button" id ="cancel" data-ui-sref="." class="btn btn-default" data-dismiss="modal"><span class="glyphicon glyphicon-remove" ></span> Cancel</button>
+      </div>
+    </div>
+
+  </div>
+</div>
 </div>
