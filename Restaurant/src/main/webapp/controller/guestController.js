@@ -577,6 +577,7 @@ guestModule.controller('guestController', ['$scope', 'guestService','commonServi
 
 		$scope.getInvitedFriends = function(reservationId) {
 			$scope.wereInvited = false;
+			$scope.noInvitations = false;
 
 			var request = guestService.getInvitedFriends(reservationId, $scope.guest.id).then(function(response){
 				$scope.data = response.data;
@@ -586,14 +587,20 @@ guestModule.controller('guestController', ['$scope', 'guestService','commonServi
 			request.then(function (data) {
 					if($scope.data != "") {
 						$scope.wereInvited = false;
-						$scope.invitedFriends = $scope.data;
-						console.log ($scope.data.length + $scope.wereInvited);
+						if($scope.data[0].friendName == "nema poziva" && $scope.data.length == 1) {
+							$scope.invitedFriends = [];
+							$scope.noInvitations = true;
+
+						} else {
+							$scope.noInvitations = false;
+							$scope.invitedFriends = $scope.data;
+						}
+						
 
 					} else {
 						
 						$scope.invitedFriends = [];
 						$scope.wereInvited = true;
-						console.log ("else " + $scope.data.length + $scope.wereInvited);
 
 					}
 					

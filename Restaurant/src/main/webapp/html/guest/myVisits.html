@@ -64,10 +64,10 @@
         </tbody>
     </table> 
 		
-		<label ng-show="invitedFriends.length == 0 && !wereInvited">
+		<label ng-show="noInvitations">
 		You haven't sent any invitations.
 		</label>
-		<label ng-show="invitedFriends.length == 0 && wereInvited">
+		<label ng-show="wereInvited">
 		You accepted friend invitation.
 		</label>
 	

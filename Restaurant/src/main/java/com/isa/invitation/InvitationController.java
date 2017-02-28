@@ -115,16 +115,17 @@ public class InvitationController {
 		if (reservation.getGuestId() == guestId) {
 			System.out.println("treba da prikazes prijatelje");
 			invitations = (ArrayList<Invitation>)invitationService.findAllByReservationId(reservationId);
-			System.out.println("invitations pre " + invitations.size());
 
-			if (invitations == null)
-				invitations = new ArrayList<Invitation>();
-			System.out.println("invitations posle " + invitations);
+			if (invitations.size() == 0) {
+				Invitation inv = new Invitation();
+				inv.setFriendName("nema poziva");
+				invitations.add(inv);
+			}
+
 		}
 		else {
 			invitations = null;
 		}
-		System.out.println("invitations kraj " + invitations);
 
 		
 		return invitations;
