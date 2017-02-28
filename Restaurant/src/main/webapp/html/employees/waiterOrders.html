@@ -3,7 +3,7 @@
 	
 	.bill {text-align : left}
 	
-	.endOrder {text-align: right}
+	.endOrder {text-align: right}	
 </style>
 
 <div>
@@ -25,27 +25,173 @@
       </tr>
     </thead>
     <tbody>
-      
+    
  
       <tr ng-repeat = "order in orders">       
         <td>{{order.id}}</td>         
-        <td ng-if = "order.orderStatus == 'ordered'"><button class = "btn btn-primary" ng-click = "acceptOrder(order)">Accept</button></td>
+        <td><button class = "btn btn-primary" ng-click = "inspectOrder(order, false)"><span class = "glyphicon glyphicon-search"></span></button></td>
+        <td ng-if = "order.orderStatus == 'ordered'"><button class = "btn btn-primary"  ng-click = "acceptOrder(order)">Accept</button></td>
         <td ng-if = "order.orderStatus == 'accepted'"><i>Order is being prepared.</i></td>
-       	<td ng-if = "order.orderStatus == 'ready'"><button class = "btn btn-primary" ng-if = "checkWaiter(order)" ng-click = "serveOrder(order)">Serve</button></td>
+       	<td ng-if = "order.orderStatus == 'ready'"><button class = "btn btn-primary" ng-if = "checkWaiter(order)" ng-disabled = "!allowAction" ng-click = "serveOrder(order)">Serve</button></td>
        	<td ng-if = "order.orderStatus == 'served' && mode != 'servedOrders'"><i>Order is being served.</i></td>
        	<td ng-if = "order.orderStatus == 'paid'"><i>Order has been paid.</i></td>
-       	<td ng-if = "order.orderStatus != 'served' && order.orderStatus != 'paid'"><button class = "btn btn-primary" ng-if = "checkWaiter(order)">Change</td></button>         	
-       	<td ng-if = "order.orderStatus == 'served' && mode == 'servedOrders'"><button class = "btn btn-primary" ng-click = "buttonShowBill(order)">Create bill</button></td>              	
-    
-        
-       </tr>
-       
+       	<td ng-if = "order.orderStatus != 'served' && order.orderStatus != 'paid'"><button class = "btn btn-primary" ng-click = "inspectOrder(order, true)"  ng-if = "checkWaiter(order)">Change</button></td>         	
+       	<td ng-if = "order.orderStatus == 'served' && mode == 'servedOrders'"><button class = "btn btn-primary" ng-disabled = "!allowAction" ng-click = "buttonShowBill(order)">Create bill</button></td>       	                          
+       </tr>      
     </tbody>
   </table>
   
+  <br><br><br>
+  <table class="table table-hover" ng-show = "seeOrder">
+    <thead>
+      <tr>
+        <th>Order</th>                
+        <th>Table</th>  
+        <th>Drink name</th>
+        <th>Drink type</th>
+        <th>Quantity</th>
+        <th ng-if = "changeOrder"></th>
+        <th>Dish name</th>
+        <th>Dish type</th>     
+        <th>Quantity</th>
+        <th ng-if = "changeOrder"></th> 
+      </tr>
+    </thead>
+    <tbody>
+    
+    <tr>       
+        <td>{{order.id}}</td> 
+        <td>aaaa</td>
+        <td><p ng-repeat = "drink in order.drinks">{{drink.name}}</p></td>
+        <td><p ng-repeat = "drink in order.drinks">{{drink.drinkType}}</p></td>
+        <td><p ng-repeat = "drink in order.drinks">{{order.drinkQuantity[drink.id]}}</p></td>         
+        <td ng-if = "changeOrder"><p ng-repeat = "drink in order.drinks"><button class = "btn btn-link btn-xs" id={{drink.id}} ng-click = "removeDrink(drink, order)"><span class = "glyphicon glyphicon-remove" style="color:#e60000;"></span></button></p></td> 
+        <td><p ng-repeat = "dish in order.dishes">{{dish.name}}</p></td>
+        <td><p ng-repeat = "dish in order.dishes">{{dish.dishType}}</p></td>  
+        <td><p ng-repeat = "dish in order.dishes">{{order.dishQuantity[dish.id]}}</p></td>
+        <td ng-if = "changeOrder"><p ng-repeat = "dish in order.dishes"><button class = "btn btn-link btn-xs" id={{dish.id}} ng-click = "removeDish(dish, order)"><span class = "glyphicon glyphicon-remove" style="color:#e60000;"></span></button></p></td>
+              
+    </tr>
+    <tr>
+    <td colspan = "8" class = "endOrder" ng-if = "changeOrder"><button ng-click = "showDrinkCard(order)" class = "btn btn-primary"><span class = "glyphicon glyphicon-plus"></span>Add Drink</button>
+    <td colspan = "1" class = "endOrder" ng-if = "changeOrder"><button ng-click = "showMenu(order)" class = "btn btn-primary"><span class = "glyphicon glyphicon-plus"></span>Add Dish</button>
+    <td ng-if = "changeOrder" colspan = "1" class = "endOrder"><button ng-click = "hideOrder()" class = "btn btn-primary">Hide</button>
+    <td ng-if = "!changeOrder" colspan = "10" class = "endOrder"><button ng-click = "hideOrder()" class = "btn btn-primary">Hide</button>
+    </tr>
+    </tbody>
+  </table>
 
  </div>
  </div>
+ 
+<!-- ------------------------------------------------------------------------------------- -->
+<button type="button" id = "modalDrinks" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myDrinksModal" style="display:none"></button>
+<div id="myDrinksModal" class="modal fade "  >
+  <div class="modal-dialog modal-admin ">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title" id="modalTitle">Add drinks</h4>
+      </div>
+            
+      <div class="modal-body">		   
+		<h4>Drink card:</h4>
+		<table  class="table table-bordered tableBG" border="1">
+		<tbody>
+	        <tr>
+				<th>Id</th>
+				<th>Name</th>
+                <th>Text</th>
+                <th>Price</th>
+                <th>Type</th>
+                <th></th>
+            </tr>
+			<tr ng-repeat="drink in drinks">
+				<td> 
+					{{drink.id}}
+				</td>
+				<td>
+		    		{{drink.name}}	
+				</td>
+            	<td>
+		    		{{drink.text}}	
+				</td>
+				<td>
+		    		{{drink.price}}	
+				</td>
+            	<td>
+		    		{{drink.drinkType}}	
+				</td>
+				<td>
+				<button class = "btn btn-link"  ng-click="addDrink(drink.id)" data-dismiss="modal"><span class = "glyphicon glyphicon-ok" style="color:green;"></span></button>				
+				</td>
+			</tr>
+        </tbody>
+    	</table> 
+		</div>
+      <div class="modal-footer">      
+      	 <button  type="button" id ="cancel" data-ui-sref="." class="btn btn-default" data-dismiss="modal"><span class="glyphicon glyphicon-remove" ></span> Cancel</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ------------------------------------------------------------------------------------- -->
+<button type="button" id = "modalDishes" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myDishesModal" style="display:none"></button>
+<div id="myDishesModal" class="modal fade "  >
+  <div class="modal-dialog modal-admin ">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title" id="modalTitle">Add dishes</h4>
+      </div>
+            
+      <div class="modal-body">		   
+		<h4>Menu:</h4>
+		<table  class="table table-bordered tableBG" border="1">
+		<tbody>
+	        <tr>
+				<th>Id</th>
+				<th>Name</th>
+                <th>Text</th>
+                <th>Price</th>
+                <th>Type</th>
+                <th></th>
+            </tr>
+			<tr ng-repeat="dish in dishes">
+				<td> 
+					{{dish.id}}
+				</td>
+				<td>
+		    		{{dish.name}}	
+				</td>
+            	<td>
+		    		{{dish.text}}	
+				</td>
+				<td>
+		    		{{dish.price}}	
+				</td>
+            	<td>
+		    		{{dish.dishType}}	
+				</td>
+				<td>
+				<button class = "btn btn-link"  ng-click="addDish(dish.id)"><span class = "glyphicon glyphicon-ok" style="color:green;"></span></button>				
+				</td>
+			</tr>
+        </tbody>
+    	</table> 
+		</div>
+      <div class="modal-footer">      
+      	 <button  type="button" id ="cancel" data-ui-sref="." class="btn btn-default" data-dismiss="modal"><span class="glyphicon glyphicon-remove" ></span> Cancel</button>
+      </div>
+    </div>
+  </div>
+</div>
+ 
  
  <!-- ---------------------------------------------------------------------------- -->
 <button type="button" id = "modalCreateBill" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal" style="display:none"></button>

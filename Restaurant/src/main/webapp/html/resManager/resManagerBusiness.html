@@ -1,8 +1,46 @@
-
+<div>
 <div class = "col-sm-2">
 </div>
 <div class = "col-sm-8">
+<form name="formBusiness">
+<label> Date </label>
+		    <div  ng-class="{ 'has-error': formBusiness.endDate.$dirty && formBusiness.endDate.$error.required }">
+		    <input type="date" ng-model="$parent.day" class="form-control"name="endDate"ng-readonly="$parent.infoMode" required >
+		   </div>
+		    <span class="help-block" ng-show = "formBusiness.endDate.$dirty && formBusiness.endDate.$invalid">
+			<span ng-show = "formBusiness.endDate.$error.required">Date is required.</span>
+			</span> 
+			</form>
+ <button  class="btn btn-default" ng-disabled="formBusiness.$invalid" ng-click="dayBusiness()"><span class="glyphicon glyphicon-ok"  ></span> Look</button> 
+<br>
+<div id ="datum" hidden="true">
+<h2>Income</h2>
 <canvas id="bar" class="chart chart-bar"
   chart-data="data" chart-labels="labels"> chart-series="series"
 </canvas>
+<br>
+<h2>Visit</h2>
+<canvas id="bar3" class="chart chart-bar"
+  chart-data="data3" chart-labels="labels3"> chart-series="series"
+</canvas>
+<br>
+</div>
+<h2>Visits - past 7 days</h2>
+<canvas id="bar4" class="chart chart-bar"
+  chart-data="data4" chart-labels="labels4"> chart-series="series"
+</canvas>
+<br>
+<h2>Incomes - past 7 days</h2>
+<canvas id="bar1" class="chart chart-bar"
+  chart-data="data1" chart-labels="labels1"> chart-series="series"
+</canvas>
+<br>
+<h2>Incomes - past 7 days according to waiters</h2>
+<canvas id="bar" class="chart chart-bar"
+  chart-data="data2" chart-labels="labels2"> chart-series="series"
+</canvas>
+
+
+
+</div>
 </div>

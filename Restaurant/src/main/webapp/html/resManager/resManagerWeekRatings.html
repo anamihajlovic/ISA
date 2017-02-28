@@ -1,0 +1,82 @@
+<!-- ---------------------------------------------------------------------------- -->
+  <!-- Trigger the modal with a button -->
+<button type="button" id="modalBtnWeekRatings" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModalWeekRatings" style="display:none"></button>
+
+<!-- Modal -->
+<div id="myModalWeekRatings" class="modal fade"  >
+  <div class="modal-dialog ">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title" id="modalTitle">Week ratings</h4>
+      </div>
+      <div class="modal-body">
+     	<form action=""  name = "form"> 
+    
+    <label>Waiter</label>
+     <div  ng-class="{ 'has-error': form.type.$dirty && form.type.$error.required}">
+     <select class="form-control" name='res' ng-model="$parent.idWaiterWeek"  name = "type" ng-readonly="$parent.infoMode" required > 
+   		<option value="" disabled="" selected="">Select waiter</option>
+  `<option ng-repeat="waiter in waiters" value="{{ waiter.id}}">{{waiter.firstName}}   {{waiter.lastName}}</option>
+	</select> 
+	 </div>
+	<span class="help-block" ng-show = "form.type.$dirty && form.type.$invalid">
+	<span ng-show = "form.type.$error.required">Waiter is required.</span>
+	</span>	
+	
+	
+	<label>Dish</label>
+     <div  ng-class="{ 'has-error': form.dish.$dirty && form.dish.$error.required}">
+     <select class="form-control" name='res' ng-model="$parent.idDishWeek"  name = "dish" ng-readonly="$parent.infoMode" required > 
+   		<option value="" disabled="" selected="">Select dish</option>
+  `<option ng-repeat="dish in dishes" value="{{ dish.id}}">{{dish.name}}   </option>
+	</select> 
+	 </div>
+	<span class="help-block" ng-show = "form.dish.$dirty && form.dish.$invalid">
+	<span ng-show = "form.dish.$error.required">Dish is required.</span>
+	</span>	
+<br>
+
+</form> 
+	         			
+      </div>
+      <div class="modal-footer">
+      <button class="btn btn-default"  ng-disabled="form.$invalid" ng-click="findWeekRatings()"><span class="glyphicon glyphicon-ok" ></span> Create</button>
+		 <button type="button" id ="cancelDrink"class="btn btn-default" data-dismiss="modal">Cancel</button>
+      </div>
+    </div>
+
+  </div>
+</div>	
+
+<!-- ---------------------------------------------------------------------------- -->
+  <!-- Trigger the modal with a button -->
+<button type="button" id="modalBtnShowWeekRatings" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModalShowWeekRatings" style="display:none"></button>
+
+<!-- Modal -->
+<div id="myModalShowWeekRatings" class="modal fade"  >
+  <div class="modal-dialog ">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title" id="modalTitle">Report - Week ratings</h4>
+      </div>
+      <div class="modal-body">
+     	Restaurant: {{weekRatings.resRating}}
+     	<br>
+     	{{weekRatings.waiter}}: {{weekRatings.waiterRating}}
+     	<br>
+     	{{weekRatings.dish}}:{{weekRatings.dishRating}} 			
+      </div>
+      <div class="modal-footer">
+      </div>
+    </div>
+
+  </div>
+</div>	
+
+

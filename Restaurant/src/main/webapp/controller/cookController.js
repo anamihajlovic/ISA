@@ -14,6 +14,15 @@ cookModule.controller('cookController', ['$scope', 'cookService', 'employeeServi
 				}
 			);
 		}
+		
+		function checkWorkShift() {		
+			var request = employeeService.checkWorkShift($scope.employee).then(function (response) {				
+				if(response.data != "") 							
+					$scope.allowAction = true;													
+				else 
+					$scope.allowAction = false;														
+			});					
+		}
 	
 		isLoggedIn();
 		

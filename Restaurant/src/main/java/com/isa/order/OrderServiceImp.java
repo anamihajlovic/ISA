@@ -1,5 +1,6 @@
 package com.isa.order;
 
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,6 +36,14 @@ public class OrderServiceImp implements OrderService {
 	public void delete(Long id) {
 		repository.delete(id);
 	}
+
+	@Override
+	public List<Order> findByOrderDateAndRestaurantId(Date d, Long i) {
+		// TODO Auto-generated method stub
+		return repository.findByOrderDateAndRestaurantId(d,i);
+	}
+
+
 	
 	
 

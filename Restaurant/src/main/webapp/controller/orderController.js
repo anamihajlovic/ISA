@@ -11,8 +11,7 @@ orderModule.controller('orderController', ['$scope', 'orderService', 'employeeSe
 			return response;						
 		}); 
 		
-		request.then(function(data) {
-			alert($scope.data)
+		request.then(function(data) {			
 			if($scope.data != null) 
 				$scope.orders = $scope.data;
 			else {
@@ -103,9 +102,7 @@ orderModule.controller('orderController', ['$scope', 'orderService', 'employeeSe
 			
 			request.then(function(data) {					
 				if($scope.data != null) {
-					$scope.orders = $scope.data;	
-					
-					alert($scope.orders.length)
+					$scope.orders = $scope.data;											
 					if($scope.orders.length == 0)
 						$scope.noDishes = true;
 					else
@@ -151,11 +148,11 @@ orderModule.controller('orderController', ['$scope', 'orderService', 'employeeSe
 		var request = employeeService.checkWorkShift($scope.employee).then(function (response) {				
 			if(response.data != "") {
 				$scope.currentShift = response.data;				
-				$scope.allowAction = true;
+				//$scope.allowAction = true;
 				return response;
 			}					
 			else {
-				$scope.allowAction = false;
+				//$scope.allowAction = false;
 				//$location.path('bartender');
 			}
 				
@@ -218,8 +215,7 @@ orderModule.controller('orderController', ['$scope', 'orderService', 'employeeSe
 	
 	$scope.serveDish = function(order, dish) {
 		var request = orderService.serveDish(order.id, dish).then(function(response){
-			$scope.data = response.data;
-			alert(order)
+			$scope.data = response.data;			
 			return response;
 		});
 		
@@ -234,8 +230,7 @@ orderModule.controller('orderController', ['$scope', 'orderService', 'employeeSe
 	
 	$scope.acceptOrder = function(order) {
 		var request = orderService.acceptOrder(order.id).then(function(response){
-			$scope.data = response.data;
-			alert(order)
+			$scope.data = response.data;			
 			return response;
 		});
 		
@@ -320,8 +315,7 @@ orderModule.controller('orderController', ['$scope', 'orderService', 'employeeSe
 		
 	}
 	
-	$scope.createBill = function (order, bill) {
-		alert(order.id);
+	$scope.createBill = function (order, bill) {	
 		
 		var request = orderService.finishOrder(order.id).then(function(response){
 			$scope.data = response.data;			
@@ -342,6 +336,26 @@ orderModule.controller('orderController', ['$scope', 'orderService', 'employeeSe
 					
 			}								
 		});
+	}
+	
+	$scope.inspectOrder = function(order, flag) {
+		$scope.order = order;
+		$scope.seeOrder = true;	
+		$scope.changeOrder = flag;
+	}
+	
+	$scope.hideOrder = function() {
+		$scope.seeOrder = false;
+		$scope.changeOrder = false;
+	}
+	
+	
+	$scope.removeDrink = function(drink, order) {
+		alert(drink.id);
+	}
+	
+	$scope.removeDish = function(dish, order) {
+		alert(dish.id);
 	}
 	
 }]);	

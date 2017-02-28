@@ -46,6 +46,7 @@ public class OrderController {
 	private final ReservationService reservationService;
 	private final DrinkService drinkService;
 	
+	
 	@Autowired		
 	public OrderController(HttpSession httpSession, OrderService orderService, OrderedDishService orderedDishService,
 			DishService dishService, RestaurantService restaurantService, WaiterService waiterService,
@@ -80,6 +81,7 @@ public class OrderController {
 		order.setOrderDate(reservation.getDate());
 		order.setOrderStatus(OrderStatus.ordered);
 		order.setDrinksStatus(OrderItemStatus.ordered);
+		order.setDishStatus(OrderItemStatus.ordered);
 		
 		try {
 			order = orderService.save(order);
@@ -88,22 +90,26 @@ public class OrderController {
 			return null;
 		}
 		
+		
 		if(!dishes.equals("")) {
-			Integer[] dishesId = makeIntegerArray(dishes);
-			ArrayList<OrderedDish> ordered = new ArrayList<OrderedDish>();
+			Integer[] dishesId = makeIntegerArray(dishes);			
 			for(Integer id: dishesId) {
 				OrderedDish od = new OrderedDish();
 				od.setOrderId(order.getId());
 				od.setDishId(id);
 				od.setStatus(DishStatus.ordered);
-				System.out.println("od " + od.getOrderId() + " " + od.getDishId() + " " +  od.getStatus());
-				ordered.add(od);
-			}
-			order.setOrderedDish(ordered);
-			System.out.println("orderedDrinks " + order.getOrderedDish().size());
-
+				//ordered.add(od);
+				try {
+					orderedDishService.save(od);
+				} catch(Exception e) {
+					System.out.println("Neuspesno cuvanje porucenog jela");
+					return null;
+				}				
+				order.getOrderedDish().add(od);
+			}			
 		}
-		
+
+				
 		if (!drinks.equals("")) {
 			Integer[] drinksId = makeIntegerArray(drinks);
 			ArrayList<Drink> ordered = new ArrayList<Drink>();
@@ -113,10 +119,9 @@ public class OrderController {
 				ordered.add(drink);
 			}
 			order.setOrderedDrinks(ordered);
-			System.out.println("orderedDrinks " + order.getOrderedDrinks().size());
 		}
 		
-		try {//ovo zakomentarisati
+		try {
 			order = orderService.save(order);
 		} catch (Exception e) {
 			System.out.println("Neuspesno cuvanje porudzbine-drugo cuvanje");
@@ -190,8 +195,7 @@ public class OrderController {
 	public Waiter compareWaiters(@PathVariable Long orderId) {
 						
 		try{
-			Date today = new Date();
-			String dbFormat = "yyyy-MM-dd";
+			Date today = new Date();			
 			
 			SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
 			String format = formatter.format(today);						
@@ -357,8 +361,33 @@ public class OrderController {
 			List<Order> allOrders = orderService.findAll();			
 			
 			for(Order order : allOrders)
-				if(order.getRestaurantId().equals(restaurantId) && !order.getOrderStatus().equals(OrderStatus.paid)) 														
+				if(order.getRestaurantId().equals(restaurantId) && !order.getOrderStatus().equals(OrderStatus.paid)) {
+					for(Drink drink : order.getOrderedDrinks()) {
+						if(!order.getDrinks().contains(drink)) {
+							order.getDrinks().add(drink);
+							order.getDrinkQuantity().put(drink.getId(), new Integer(1));						
+						
+						} else {
+							int value = order.getDrinkQuantity().get(drink.getId());
+							value++;
+							order.getDrinkQuantity().put(drink.getId(), new Integer(value));						
+						}						
+					}
+					for(OrderedDish orderedDish : order.getOrderedDish()) {
+						Dish dish = dishService.findOne(orderedDish.getDishId());
+						if(!order.getDishes().contains(dish)) {
+							order.getDishes().add(dish);
+							order.getDishQuantity().put(dish.getId(), new Integer(1));							
+							
+						} else {
+							int value = order.getDishQuantity().get(dish.getId());						
+							value++;
+							order.getDishQuantity().put(dish.getId(), new Integer(value));												
+						}	
+					}
 					restaurantOrders.add(order);
+				}
+					
 				
 		} catch(Exception e) {
 			System.out.println(e);
@@ -513,7 +542,60 @@ public class OrderController {
 			}
 		}					
 		return "success";
+	}	
+	
+	@PutMapping(path = "/addDrink/{drinkId}")
+	public Order addDrink(@PathVariable Integer drinkId, @RequestBody Order order) {
+		
+		try{
+			Drink drink = drinkService.findOne(drinkId);
+			order.getOrderedDrinks().add(drink);
+			order.setDrinksStatus(OrderItemStatus.ordered);
+			order.setOrderStatus(OrderStatus.accepted);
+			orderService.save(order);
+			return order;
+		}catch(Exception e) {
+			return null;
+		}					
 	}
+	
+	@PostMapping(path = "/addDish/{dishId}")
+	public Order addDish(@PathVariable Integer dishId, @RequestBody Order order) {
+		
+		OrderedDish orderedDish = new OrderedDish();		
+		
+		try{
+			Dish dish = dishService.findOne(dishId);
+			orderedDish.setDishId(dish.getId());
+			orderedDish.setOrderId(order.getId());
+			orderedDish.setStatus(DishStatus.ordered);
+			
+			try{
+				orderedDishService.save(orderedDish);
+				
+				order.getOrderedDish().add(orderedDish);
+				order.setDishStatus(OrderItemStatus.ordered);
+				order.setOrderStatus(OrderStatus.accepted);
+				
+			}catch(Exception e){
+				System.out.println(e);
+				return null;
+			}			
+								
+			orderService.save(order);
+			return order;
+		}catch(Exception e) {
+			System.out.println(e);
+			return null;
+		}					
+	}
+	
+	@PutMapping(path = "/removeDrink/{drinkId}")
+	public String removeDrink(@PathVariable Integer drinkId, @RequestBody Order order) {
+		
+		return "success";
+	}
+	
 	
 	public void dishOrderReady(Order order) {		
 		boolean flag = true;

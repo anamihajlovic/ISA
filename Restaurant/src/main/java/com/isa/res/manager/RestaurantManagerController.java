@@ -1,11 +1,10 @@
 package com.isa.res.manager;
 
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.forwardedUrl;
-
-
+import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -21,11 +20,15 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.isa.Rating;
+import com.isa.Report;
 import com.isa.Transfer;
+import com.isa.Visit;
 import com.isa.bartender.Bartender;
 import com.isa.bartender.BartenderService;
 import com.isa.bidder.Bidder;
 import com.isa.bidder.BidderService;
+import com.isa.bill.Bill;
 import com.isa.cook.Cook;
 import com.isa.cook.CookService;
 import com.isa.dish.Dish;
@@ -34,10 +37,16 @@ import com.isa.drink.Drink;
 import com.isa.drink.DrinkService;
 import com.isa.foodstuf.Foodstuff;
 import com.isa.foodstuf.FoodstuffService;
+import com.isa.grade.GradeService;
+import com.isa.invitation.InvitationService;
+import com.isa.invitation.InvitationStatus;
 import com.isa.offer.Offer;
 import com.isa.offer.OfferService;
 import com.isa.offer.StateOffer;
 import com.isa.offer.unit.OfferUnitService;
+import com.isa.order.Order;
+import com.isa.order.OrderService;
+import com.isa.ordered.dish.OrderedDish;
 import com.isa.res.order.ResOrder;
 import com.isa.res.order.ResOrderService;
 import com.isa.res.order.unit.ResOrderUnit;
@@ -49,18 +58,13 @@ import com.isa.res.table.ResTable;
 import com.isa.res.table.ResTableService;
 import com.isa.res.table.SizeTable;
 import com.isa.res.table.StateTable;
+import com.isa.reservation.Reservation;
+import com.isa.reservation.ReservationService;
 
 import com.isa.responsability.Responsability;
 import com.isa.responsability.ResponsabilityService;
-import com.isa.restaurant.*;
-import com.isa.res.order.*;
-import com.isa.res.order.unit.ResOrderUnit;
-import com.isa.res.order.unit.ResOrderUnitService;
-import com.isa.offer.*;
-
 import com.isa.restaurant.Restaurant;
 import com.isa.restaurant.RestaurantService;
-
 import com.isa.user.Role;
 import com.isa.waiter.Waiter;
 import com.isa.waiter.WaiterService;
@@ -69,6 +73,7 @@ import com.isa.work.day.WorkDayService;
 import com.isa.work.shift.ShiftType;
 import com.isa.work.shift.WorkShift;
 import com.isa.work.shift.WorkShiftService;
+
 
 
 
@@ -95,6 +100,10 @@ public class RestaurantManagerController {
 	private final WorkShiftService workShiftService;
 	private final WorkDayService workDayService;
 	private final ResponsabilityService responsabilityService;
+	private final ReservationService reservationService;
+	private final InvitationService invitationService;
+	private final GradeService gradeService;
+	private final OrderService orderService;
 	private RestaurantManager restaurantManager;
 	private int visina = 0;
 	private int sirina = 0 ;
@@ -106,7 +115,9 @@ public class RestaurantManagerController {
 			DrinkService drinkService, DishService dishService,ResTableService resTableService,
 			ResSegmentService resSegmentService,ResOrderService resOrderService,OfferService offerService,
 			ResOrderUnitService resOrderUnitService,OfferUnitService offerUnitService,WorkShiftService workShiftService,
-			WorkDayService workDayService,ResponsabilityService responsabilityService
+			WorkDayService workDayService,ResponsabilityService responsabilityService,
+			ReservationService reservationService,InvitationService invitationService,GradeService gradeService,
+			OrderService orderService
 			) {
 		super();
 		this.httpSession = httpSession;
@@ -128,6 +139,10 @@ public class RestaurantManagerController {
 		this.workShiftService = workShiftService;
 		this.workDayService = workDayService;
 		this.responsabilityService =responsabilityService;
+		this.reservationService = reservationService;
+		this.invitationService = invitationService;
+		this.gradeService = gradeService;
+		this.orderService = orderService;
 	}
 
 	@GetMapping("/checkRights")
@@ -939,5 +954,367 @@ public class RestaurantManagerController {
 				return "nije";
 					
 		}
+	
+	private List<String> getYesterdayDateString() {
+		List<String> datumi = new ArrayList<String>();
+        DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        for(int i = 7;i>0;i--){
+        	Calendar cal = Calendar.getInstance();
+        	cal.add(Calendar.DATE, -i);
+        	datumi.add(dateFormat.format(cal.getTime()));
+        }
+		
+		 return datumi;
+     
+	}
+	
+	private List<String> getMonthDateString() {
+		List<String> datumi = new ArrayList<String>();
+        DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        for(int i = 31;i>0;i--){
+        	Calendar cal = Calendar.getInstance();
+        	cal.add(Calendar.DATE, -i);
+        	datumi.add(dateFormat.format(cal.getTime()));
+        }
+		
+		 return datumi;
+     
+	}
+	@GetMapping(path = "/getDayBusiness/{datum}")
+	public List<Bill> getDayBusiness(@PathVariable String datum) {
+		Restaurant restaurant = restaurantService.findOne(restaurantManager.getIdRestaurant());	
+		List<Bill> allDayBills= new ArrayList<Bill>();
+		Bill b1 = new Bill();
+		Bill b2 = new Bill();
+		Bill b3 = new Bill();
+		Bill b4 = new Bill();
+		Long suma1 =Long.parseLong("0");
+		Long suma2 =Long.parseLong("0");
+		Long suma3 =Long.parseLong("0");
+		Long suma4=Long.parseLong("0");
+		String vreme1 ="12:00:00";
+		String vreme2="16:00:00"; 
+		String vreme3 ="20:00:00";
+		String vreme4 ="23:00:00";
+		for(Bill bill:restaurant.getBills()){
+			
+			if(bill.getBillDate().equals(datum)){
+				String [] tokens = bill.getTime().split(":");
+				if(Integer.parseInt(tokens[0])<12){
+					suma1=suma1+bill.getTotalPrice();
+				}else if(Integer.parseInt(tokens[0])>=12 &&Integer.parseInt(tokens[0])<16){
+					suma2=suma2+bill.getTotalPrice();
+				}else if(Integer.parseInt(tokens[0])>=16 &&Integer.parseInt(tokens[0])<20){
+					suma3=suma3+bill.getTotalPrice();
+				}else{
+					suma4=suma4+bill.getTotalPrice();
+				}
+				
+			}
+		}
+		b1.setBillDate(datum);
+		b1.setTime(vreme1);
+		b1.setTotalPrice(suma1);
+		
+		b2.setBillDate(datum);
+		b2.setTime(vreme2);
+		b2.setTotalPrice(suma2);
+		
+		b3.setBillDate(datum);
+		b3.setTime(vreme3);
+		b3.setTotalPrice(suma3);
+		
+		b4.setBillDate(datum);
+		b4.setTime(vreme4);
+		b4.setTotalPrice(suma4);
+		
+		allDayBills.add(b1);
+		allDayBills.add(b2);
+		allDayBills.add(b3);
+		allDayBills.add(b4);
+		
+		return allDayBills;	
+	}
+	
+	@GetMapping(path = "/getWeekBusiness")
+	public List<Bill> getWeekBusiness() {
+		Restaurant restaurant = restaurantService.findOne(restaurantManager.getIdRestaurant());	
+		List<Bill> allDayBills= new ArrayList<Bill>();
+		List<String> datumi =getYesterdayDateString();
+		
+		for(String datum:datumi){
+			Bill b = new Bill();
+			Long suma =Long.parseLong("0");
+			for(Bill bill:restaurant.getBills()){
+				if(bill.getBillDate().equals(datum)){
+					suma=suma+bill.getTotalPrice();
+				}
+				
+			}
+			b.setTotalPrice(suma);
+			b.setBillDate(datum);
+			allDayBills.add(b);
+		}
+		return allDayBills;	
+	}
+	
+	
+	@GetMapping(path = "/getWeekBusinessForWaiters")
+	public List<Report> getWeekBusinessForWaiters() {
+
+		Restaurant restaurant = restaurantService.findOne(restaurantManager.getIdRestaurant());	
+		List<Report> allReports= new ArrayList<Report>();
+		List<Report> result= new ArrayList<Report>();
+		List<String> datumi =getYesterdayDateString();
+		List<Long>sifreKonobar = new ArrayList<Long>();
+		for(String datum:datumi){
+			for(Bill bill:restaurant.getBills()){
+				if(bill.getBillDate().equals(datum)){
+					if(!sifreKonobar.contains(bill.getWaiterId())){
+						sifreKonobar.add(bill.getWaiterId());
+					}
+				}
+				
+			}
+		}
+		for(Long sifra:sifreKonobar){
+			Report r = new Report();
+			Long suma = Long.parseLong("0");
+			for(String datum:datumi){
+				
+				
+				for(Bill bill:restaurant.getBills()){
+					if(bill.getBillDate().equals(datum)){
+						if(sifra.equals(bill.getWaiterId())){
+							suma = suma+ bill.getTotalPrice();
+							
+						}
+						
+					}
+					
+				}				
+			}
+		
+			
+			r.setWaiter(sifra);
+			r.setIncome(suma);
+			allReports.add(r);
+		}
+		
+		for(Report r:allReports){
+			r.setWaiterName(waiterService.findOne(r.getWaiter()).getFirstName()+" "+
+					waiterService.findOne(r.getWaiter()).getLastName());
+		}
+		
+		return allReports;	
+	}
+	
+	@GetMapping(path = "/getDayVisits/{datum}")
+	public List<Visit> getDayVisits(@PathVariable String datum) {
+		//samo zbog prenosa je pogodno
+		
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+		String[] dpTokens = datum.split("-");
+		Date workDay = null; 
+		try {
+			workDay = sdf.parse(dpTokens[0]+"-"+dpTokens[1]+"-"+dpTokens[2]);
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		List<Visit> result = new ArrayList<Visit>();
+		Restaurant restaurant = restaurantService.findOne(restaurantManager.getIdRestaurant());	
+		Visit v1 = new Visit();
+		Visit v2 = new Visit();
+		String vreme1 = "16:00:00"; 
+		String vreme2 ="23:00:00";
+		int broj_rez1 = 0;
+		int broj_inv1 = 0;
+		int broj_rez2 = 0;
+		int broj_inv2 = 0;
+		for(Reservation r: reservationService.findAll()){
+			if(r.getResId().equals(restaurant.getId())){
+				if(r.getDate().equals(workDay)){
+						String [] vreme = r.getStartTime().split(":");
+						if(Integer.parseInt(vreme[0])<17){
+						broj_rez1 = broj_rez1+1;
+						broj_inv1 = broj_inv1+ invitationService.findAllByReservationIdAndStatus(r.getId(), InvitationStatus.accepted).size();
+						}else{
+						broj_rez2 = broj_rez2+1;
+						broj_inv2 = broj_inv2+ invitationService.findAllByReservationIdAndStatus(r.getId(), InvitationStatus.accepted).size();	
+							
+						}
+				}
+			}
+			
+		}
+		v1.setDate(vreme1);
+		v1.setNumber(broj_rez1+broj_inv1);
+		v2.setDate(vreme2);
+		v2.setNumber(broj_rez2+broj_inv2);
+		result.add(v1);
+		result.add(v2);
+
+		return result;
+	}
+	
+	@GetMapping(path = "/getWeekVisit")
+	public List<Visit> getWeekVisits() {
+		Restaurant restaurant = restaurantService.findOne(restaurantManager.getIdRestaurant());	
+		List<Visit> result = new ArrayList<Visit>();
+		List<String> datumi =getYesterdayDateString();
+		for(String datum:datumi){
+			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+			String[] dpTokens = datum.split("-");
+			Date workDay = null; 
+			try {
+				workDay = sdf.parse(dpTokens[0]+"-"+dpTokens[1]+"-"+dpTokens[2]);
+			} catch (ParseException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			Visit v = new Visit();
+			int sumaRes = 0;
+			int sumaInv = 0;
+			for(Reservation r: reservationService.findAll()){
+				if(r.getResId().equals(restaurant.getId())){
+					if(r.getDate().equals(workDay)){
+						
+							sumaRes = sumaRes+1;
+							sumaInv = sumaInv+ invitationService.findAllByReservationIdAndStatus(r.getId(), InvitationStatus.accepted).size();	
+					}
+				}
+				
+			}
+			v.setDate(datum);
+			v.setNumber(sumaRes+sumaInv);
+			result.add(v);
+		}
+
+		return result;
+	}
+	
+	@GetMapping(path = "/getWeekRatings/{waiter}/{dish}")
+	public Rating getWeekRatings(@PathVariable("waiter") Long waiter, @PathVariable("dish") Integer dish) {
+		Restaurant restaurant = restaurantService.findOne(restaurantManager.getIdRestaurant());	
+		
+		List<String> datumi =getYesterdayDateString();
+		
+		int brojacDish = 0;
+		Double sumaDish = 0.0;
+		int brojacWaiter = 0;
+		Double sumaWaiter = 0.0;
+		int brojacRes = 0;
+		Double sumaRes = 0.0;
+		
+		for(String datum:datumi){
+			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+			String[] dpTokens = datum.split("-");
+			Date workDay = null; 
+			try {
+				workDay = sdf.parse(dpTokens[0]+"-"+dpTokens[1]+"-"+dpTokens[2]);
+			} catch (ParseException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}	
+			for(Order o:orderService.findByOrderDateAndRestaurantId(workDay, restaurant.getId())){
+				Double ocenaDish = gradeService.findByOrderId(o.getId()).getOrderGrade();
+				Double ocenaWaiter = gradeService.findByOrderId(o.getId()).getWaiterGrade();
+				Double ocenaRes = gradeService.findByOrderId(o.getId()).getRestaurantGrade();
+				for(OrderedDish od:o.getOrderedDish()){
+					if(od.getDishId().equals(dish)){
+						sumaDish = sumaDish+ocenaDish;
+						brojacDish++;
+					}
+				}
+				if(o.getWaiterId().equals(waiter)){
+					sumaWaiter = sumaWaiter+ocenaWaiter;
+					brojacWaiter++;
+				}
+				sumaRes = sumaRes+ocenaRes;
+				brojacRes++;	
+			}
+
+		}
+		Double prosekDish = sumaDish/brojacDish;
+		
+		Double prosekWaiter = sumaWaiter/brojacWaiter;
+		
+		Double prosekRes = sumaRes/brojacRes;
+		
+		Rating result = new Rating();
+		
+		result.setDish(dishService.findOne(dish).getName());
+		result.setDishRating(prosekDish);
+		result.setWaiter(waiterService.findOne(waiter).getFirstLogIn()+" "+waiterService.findOne(waiter).getLastName());
+		result.setWaiterRating(prosekWaiter);
+		result.setRestaurant(restaurant.getName());
+		result.setResRating(prosekRes);
+		
+		
+		
+	return result;
+	}
+	/////
+	@GetMapping(path = "/getMonthRatings/{waiter}/{dish}")
+	public Rating getMonthRatings(@PathVariable("waiter") Long waiter, @PathVariable("dish") Integer dish) {
+		Restaurant restaurant = restaurantService.findOne(restaurantManager.getIdRestaurant());	
+		
+		List<String> datumi =getMonthDateString();
+		int brojacDish = 0;
+		Double sumaDish = 0.0;
+		int brojacWaiter = 0;
+		Double sumaWaiter = 0.0;
+		int brojacRes = 0;
+		Double sumaRes = 0.0;
+		
+		for(String datum:datumi){
+			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+			String[] dpTokens = datum.split("-");
+			Date workDay = null; 
+			try {
+				workDay = sdf.parse(dpTokens[0]+"-"+dpTokens[1]+"-"+dpTokens[2]);
+			} catch (ParseException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}	
+			for(Order o:orderService.findByOrderDateAndRestaurantId(workDay, restaurant.getId())){
+				Double ocenaDish = gradeService.findByOrderId(o.getId()).getOrderGrade();
+				Double ocenaWaiter = gradeService.findByOrderId(o.getId()).getWaiterGrade();
+				Double ocenaRes = gradeService.findByOrderId(o.getId()).getRestaurantGrade();
+				for(OrderedDish od:o.getOrderedDish()){
+					if(od.getDishId().equals(dish)){
+						sumaDish = sumaDish+ocenaDish;
+						brojacDish++;
+					}
+				}
+				if(o.getWaiterId().equals(waiter)){
+					sumaWaiter = sumaWaiter+ocenaWaiter;
+					brojacWaiter++;
+				}
+				sumaRes = sumaRes+ocenaRes;
+				brojacRes++;	
+			}
+
+		}
+		Double prosekDish = sumaDish/brojacDish;
+		
+		Double prosekWaiter = sumaWaiter/brojacWaiter;
+		
+		Double prosekRes = sumaRes/brojacRes;
+		
+		Rating result = new Rating();
+		
+		result.setDish(dishService.findOne(dish).getName());
+		result.setDishRating(prosekDish);
+		result.setWaiter(waiterService.findOne(waiter).getFirstLogIn()+" "+waiterService.findOne(waiter).getLastName());
+		result.setWaiterRating(prosekWaiter);
+		result.setRestaurant(restaurant.getName());
+		result.setResRating(prosekRes);
+		
+		
+		
+	return result;
+	}
 	
 }

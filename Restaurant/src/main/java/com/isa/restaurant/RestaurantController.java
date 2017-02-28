@@ -65,8 +65,7 @@ public class RestaurantController {
 	@GetMapping(path = "/dishes/{id}")
 	public List<Dish> getDishes(@PathVariable Long id) {
 		System.out.println("Pogodjena metoda getDishes " + id);
-		List<Dish> dishes =restaurantService.findOne(id).getDishes();
-	
+		List<Dish> dishes =restaurantService.findOne(id).getDishes();	
 		return dishes;
 		
 	}
@@ -74,8 +73,7 @@ public class RestaurantController {
 	@GetMapping(path = "/drinks/{id}")
 	public List<Drink> getDrinks(@PathVariable Long id) {
 		System.out.println("Pogodjena metoda getDishes " + id);
-		List<Drink> dishes =restaurantService.findOne(id).getDrinks();
-	
+		List<Drink> dishes =restaurantService.findOne(id).getDrinks();	
 		return dishes;
 		
 	}
