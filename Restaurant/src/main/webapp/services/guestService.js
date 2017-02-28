@@ -87,8 +87,12 @@ guestServices.service('guestService', ['$http', function($http) {
 	
 	//za istoriju poseta
 	
-	this.getMyVisits= function(id){
+	this.getMyVisits = function(id){
 		return $http.get("/reservations/getMyVisits/" + id);
+	}
+	
+	this.getInvitedFriends = function(reservationId, guestId) {
+		return $http.get("/invitations/getInvitedFriends/" + reservationId + "/" + guestId);
 	}
 	
 	

@@ -574,6 +574,31 @@ guestModule.controller('guestController', ['$scope', 'guestService','commonServi
 				}
 			});
 		}
+
+		$scope.getInvitedFriends = function(reservationId) {
+			$scope.wereInvited = false;
+
+			var request = guestService.getInvitedFriends(reservationId, $scope.guest.id).then(function(response){
+				$scope.data = response.data;
+				return response;
+			});
+				
+			request.then(function (data) {
+					if($scope.data != "") {
+						$scope.wereInvited = false;
+						$scope.invitedFriends = $scope.data;
+						console.log ($scope.data.length + $scope.wereInvited);
+
+					} else {
+						
+						$scope.invitedFriends = [];
+						$scope.wereInvited = true;
+						console.log ("else " + $scope.data.length + $scope.wereInvited);
+
+					}
+					
+			});
+		}
 		
 		
 		
