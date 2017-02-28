@@ -5,7 +5,7 @@ waiterModule.controller('waiterController', ['$scope', 'waiterService', 'employe
 	
 	function ($scope, waiterService, employeeService, resManagerService, $location) {
 	
-		function isLoggedIn() {
+		function isLoggedIn() {			
 			employeeService.getEmployee().then(function (response) {				
 					if(response.data !="") {
 						$scope.employee = response.data;
@@ -34,7 +34,9 @@ waiterModule.controller('waiterController', ['$scope', 'waiterService', 'employe
 		
 		
 		function showTables(currentShift) {	
-			alert($scope.allowAction)
+			//$scope.table = "";
+			//$scope.table.showTable = true;
+			//$scope.table.reonColor = 'white';
 			$scope.assignedResponsabilites = $scope.currentShift.responsabilites;
 			var waiterReons = [];
 			for(i = 0; i<$scope.assignedResponsabilites.length; i++) {
@@ -46,8 +48,8 @@ waiterModule.controller('waiterController', ['$scope', 'waiterService', 'employe
 				}
 			}
 			
-			resManagerService.getTables().then(					
-					function(response){							
+			resManagerService.getTables().then(						
+					function(response){								
 							var stolovi = [];
 							var red = [];
 							var lastXPos = 0;
@@ -91,7 +93,6 @@ waiterModule.controller('waiterController', ['$scope', 'waiterService', 'employe
 										table.showTable = true;
 								}
 							}
-						
 					});	
 											
 		}
@@ -99,7 +100,8 @@ waiterModule.controller('waiterController', ['$scope', 'waiterService', 'employe
 	
 		
 		isLoggedIn();
-				
+		
+		
 		$scope.updateInfo = function () {    							
 			var request = employeeService.updateInfo($scope.employee).then(function(response){
 				$scope.data = response.data;				
@@ -203,5 +205,36 @@ waiterModule.controller('waiterController', ['$scope', 'waiterService', 'employe
 			});
 		}
 		
+		$scope.removeDrink = function(drink, order) {
+			var request = waiterService.removeDrink(drink.id, order).then(function(response){
+				$scope.data = response.data;
+				return response;
+			});
+				
+			request.then(function (data) {
+				if($scope.data != "") {
+					$scope.order = $scope.data;					
+					toastr.success("You have removed drinks from order.");
+				} else {
+					toastr.info("Selected drinks have not been removed from order.");
+				}			
+			});		
+		}
 		
+		$scope.removeDish = function(dish, order) {
+			var request = waiterService.removeDish(dish.id, order.id).then(function(response){
+				$scope.data = response.data;
+				return response;
+			});
+				
+			request.then(function (data) {
+				if($scope.data != "") {
+					$scope.order = $scope.data;					
+					toastr.success("You have removed dishes from order.");
+				} else {
+					toastr.info("Selected dishes have not been removed from order.");
+				}			
+			});	
+				
+		}				
 }]);

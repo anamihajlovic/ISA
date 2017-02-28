@@ -14,4 +14,6 @@ public interface OrderedDishService {
 	
 	List<OrderedDish> findByOrderIdAndDishId(Long orderId, Integer dishId);
 	
+	void delete(Long id);
+	
 }

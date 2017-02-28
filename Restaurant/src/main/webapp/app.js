@@ -289,6 +289,11 @@ angular.module('restaurants', [ 'ui.router','ui.calendar' ,'chart.js',
         	 
            })
            
+            .state('waiter.regionArrangement', {
+        	   url : '/regionArrangement',
+        	   templateUrl : 'html/employees/waiterTableChart.html',        	  
+           })
+           
            .state('waiter.changePassword', {
         	   url : '/changePassword',
         	   templateUrl : 'changePassword.html',
@@ -300,12 +305,7 @@ angular.module('restaurants', [ 'ui.router','ui.calendar' ,'chart.js',
         	   templateUrl : 'html/employees/calendarView.html',
         	   controller: 'calendarController'        	  
            })  
-           
-           .state('waiter.regionArrangement', {
-        	   url : '/regionArrangement',
-        	   templateUrl : 'html/employees/waiterTableChart.html',        	  
-           })
-           
+                                
            
            .state('waiter.receviedOrders', {
         	   url : '/receviedOrders',

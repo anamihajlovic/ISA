@@ -350,12 +350,6 @@ orderModule.controller('orderController', ['$scope', 'orderService', 'employeeSe
 	}
 	
 	
-	$scope.removeDrink = function(drink, order) {
-		alert(drink.id);
-	}
 	
-	$scope.removeDish = function(dish, order) {
-		alert(dish.id);
-	}
 	
 }]);	

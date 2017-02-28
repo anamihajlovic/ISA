@@ -3,11 +3,13 @@ package com.isa.order;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.Iterator;
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -48,9 +50,9 @@ public class OrderController {
 	
 	
 	@Autowired		
-	public OrderController(HttpSession httpSession, OrderService orderService, OrderedDishService orderedDishService,
-			DishService dishService, RestaurantService restaurantService, WaiterService waiterService,
-			ReservationService reservationService, DrinkService drinkService) {
+	public OrderController(HttpSession httpSession, final OrderService orderService, final OrderedDishService orderedDishService,
+			final DishService dishService, final RestaurantService restaurantService, final WaiterService waiterService,
+			final ReservationService reservationService, final DrinkService drinkService) {
 		super();
 		this.httpSession = httpSession;
 		this.orderService = orderService;
@@ -166,11 +168,9 @@ public class OrderController {
 			order.setOrderStatus(OrderStatus.accepted);
 						
 			Date now = new Date();
-			SimpleDateFormat timeFormatter = new SimpleDateFormat("hh:mm:ss");
+			SimpleDateFormat timeFormatter = new SimpleDateFormat("kk:mm:ss");
 			String currentTime = timeFormatter.format(now);						
-			order.setAcceptanceTime(currentTime);						
-			
-			
+			order.setAcceptanceTime(currentTime);												
 			order.setWaiterId(activeWaiter.getId());
 			orderService.save(order);
 			return order;
@@ -593,9 +593,56 @@ public class OrderController {
 	}
 	
 	@PutMapping(path = "/removeDrink/{drinkId}")
-	public String removeDrink(@PathVariable Integer drinkId, @RequestBody Order order) {
+	public Order removeDrink(@PathVariable Integer drinkId, @RequestBody Order order) {
 		
-		return "success";
+		Iterator<Drink> it = order.getOrderedDrinks().iterator();
+		while (it.hasNext()) {
+		    Drink drink = it.next();
+		    if (drink.getId().equals(drinkId)) 
+		        it.remove();
+		}
+		
+		try{
+			orderService.save(order);
+			return order;
+		}catch(Exception e) {
+			System.out.println(e);
+			return null;
+		}				
+	}
+	
+	@DeleteMapping(path = "/removeDish/{dishId}/{orderId}")
+	public Order removeDish(@PathVariable("dishId") Integer dishId, @PathVariable("orderId") Long orderId) {			
+		try{
+			Order order = orderService.findOne(orderId);			
+			OrderedDish removingDish = order.getODish(dishId);
+			
+			Iterator<OrderedDish> it = order.getOrderedDish().iterator();
+			while (it.hasNext()) {
+				OrderedDish orderedDish = it.next();
+			    if (orderedDish.getId().equals(removingDish.getId())) 
+			        it.remove();
+			}
+			
+			try{
+				orderedDishService.delete(removingDish.getId());		
+			}catch(Exception e) {
+				System.out.println(e);
+				return null;
+			}
+					
+			try{
+				orderService.save(order);
+				return order;
+			}catch(Exception e) {
+				System.out.println(e);
+				return null;
+			}
+			
+		}catch(Exception e) {
+			System.out.println(e);
+			return null;
+		}
 	}
 	
 	
