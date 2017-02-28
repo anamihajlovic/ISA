@@ -45,7 +45,7 @@ public class Grade {
 	private Double restaurantGrade;
 		
 	@Temporal(TemporalType.DATE)
-	@Column (name= "date", nullable=false)
+	@Column (name= "grade_date", nullable=false)
 	private Date date;
 		
 	

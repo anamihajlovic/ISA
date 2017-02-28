@@ -424,3 +424,10 @@ insert into restaurant_bills values(1,35)
 insert into restaurant_bills values(1,36)
 insert into restaurant_bills values(1,37)
 
+--GRADES
+insert into grades(guest_id, restaurant_id, reservation_id, waiter_id, order_id, order_grade, waiter_grade, restaurant_grade, grade_date) values (1, 1, 1, 1, 1, 5, 3, 4, '2017-02-26')
+insert into grades(guest_id, restaurant_id, reservation_id, waiter_id, order_id, order_grade, waiter_grade, restaurant_grade, grade_date) values (2, 1, 1, 1, 2, 5, 5, 4, '2017-02-26')
+insert into grades(guest_id, restaurant_id, reservation_id, waiter_id, order_id, order_grade, waiter_grade, restaurant_grade, grade_date) values (3, 3, 2, 3, 4, 2, 3, 3, '2016-02-26')
+insert into grades(guest_id, restaurant_id, reservation_id, waiter_id, order_id, order_grade, waiter_grade, restaurant_grade, grade_date) values (1, 3, 2, 3, 3, 5, 3, 4, '2016-02-26')
+insert into grades(guest_id, restaurant_id, reservation_id, waiter_id, order_id, order_grade, waiter_grade, restaurant_grade, grade_date) values (3, 2, 3, 2, 6, 3, 3, 3, '2017-01-10')
+insert into grades(guest_id, restaurant_id, reservation_id, waiter_id, order_id, order_grade, waiter_grade, restaurant_grade, grade_date) values (4, 2, 3, 2, 5, 1, 2, 2, '2017-01-10')

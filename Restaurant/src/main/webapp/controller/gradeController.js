@@ -72,8 +72,7 @@ gradeModule.controller('gradeController', ['$scope', 'employeeService', 'gradeSe
 		request.then(function (data) {					
 			if($scope.data != null)	 {
 				$scope.grade = $scope.data;	
-			
-				alert("Postavi")
+							
 				if($scope.grade.waiterGrade == 5.00) 
 					$scope.waiterFiveClick();
 				else if($scope.grade.waiterGrade == 4.00)

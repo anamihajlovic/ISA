@@ -613,8 +613,7 @@ guestModule.controller('guestController', ['$scope', 'guestService', 'orderServi
 		
 		
 		$scope.goToRatePage = function(reservation) {	
-			gradeService.setReservation(reservation);
-			alert(reservation.id)
+			gradeService.setReservation(reservation);			
 			var request = orderService.getOrder(reservation.id).then(function(response) {
 				$scope.data = response.data;
 				return response;
