@@ -120,6 +120,13 @@ angular.module('restaurants', [ 'ui.router','ui.calendar' ,'chart.js',
         	templateUrl: 'html/guest/activeReservations.html'
         })
         
+        .state('guest.rateVisit', {
+        	   url : '/rateVisit',
+        	   templateUrl : 'html/guest/ratePage.html', 
+        	   controller: 'gradeController'
+           })
+          
+        
         .state('confirmInvitation', {
         	url: '/confirmInvitation/:invitationId/:reservationId',
         	templateUrl: 'html/guest/confirmInvitation.html',
@@ -274,12 +281,7 @@ angular.module('restaurants', [ 'ui.router','ui.calendar' ,'chart.js',
         	   controller: 'orderController'
            })
            
-           .state('bartender.rateVisit', {
-        	   url : '/rateVisit',
-        	   templateUrl : 'html/guest/ratePage.html', 
-        	   controller: 'gradeController'
-           })
-          
+           
            
            .state('waiter' , {
         	  url: '/waiter',
