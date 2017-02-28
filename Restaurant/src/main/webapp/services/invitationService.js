@@ -16,4 +16,16 @@ invitationServices.service('invitationService', ['$http', function($http) {
 
 	}
 	
+	this.getDrinks= function(id){
+		return $http.get("/restaurants/drinks/" + id);
+	}
+	
+	this.getDishes= function(id){
+		return $http.get("/restaurants/dishes/" + id);
+	}
+		
+	this.order = function(reservationId, dishesAndDrinks) {
+		return $http.post("/orders/addOrder/" + reservationId, dishesAndDrinks);
+	}
+	
 }]);

@@ -431,6 +431,7 @@ guestModule.controller('guestController', ['$scope', 'guestService','commonServi
 						$scope.createdReservation = $scope.data;
 						$scope.createdReservation.date = $filter('date')($scope.createdReservation.date, "yyyy-MM-dd");
 						$scope.reservation = new Object();
+						$scope.invitedFriends = [];
 						$scope.getMyFriends('invite');
 						$state.go('guest.inviteFriends');
 
@@ -449,7 +450,7 @@ guestModule.controller('guestController', ['$scope', 'guestService','commonServi
 
 		}
 		
-		function makeArrayString(array) {//preimenovati u makeArrayString da bih za sve mogla da koristim
+		function makeArrayString(array) {
 			var string= "";
 			for (x in array)
 				string += array[x] + ";";
@@ -491,8 +492,6 @@ guestModule.controller('guestController', ['$scope', 'guestService','commonServi
 		$scope.getDrinks = function() {
 			$scope.showDishes = false;
 			$scope.showDrinks = true;
-
-			console.log("getDrinks " + $scope.createdReservation.resId);
 			
 			var request = guestService.getDrinks($scope.createdReservation.resId).then(function(response){
 				$scope.data = response.data;
@@ -512,7 +511,6 @@ guestModule.controller('guestController', ['$scope', 'guestService','commonServi
 		$scope.getDishes = function() {
 			$scope.showDrinks = false;
 			$scope.showDishes = true;
-			console.log("getDishes " + $scope.createdReservation.resId);
 			
 			var request = guestService.getDishes($scope.createdReservation.resId).then(function(response){
 				$scope.data = response.data;
@@ -531,25 +529,19 @@ guestModule.controller('guestController', ['$scope', 'guestService','commonServi
 		
 		$scope.chosenDrinks = [];
 		$scope.addDrink = function(id) {
-			console.log("add drink " + id);
 			$scope.chosenDrinks.push(id);
-			console.log("chosenDrinks " + $scope.chosenDrinks);
 
 		}
 		
 		$scope.chosenDishes = [];
 		$scope.addDish = function(id) {
-			console.log("add dish " + id);
 			$scope.chosenDishes.push(id);
-			console.log("chosenDishes " + $scope.chosenDishes);
 		}
 		
 		$scope.order = function() {
 			console.log("order");
 			var dishesString = makeArrayString($scope.chosenDishes);
-			console.log("dishesString " + dishesString);
 			var drinksString = makeArrayString($scope.chosenDrinks);
-			console.log("drinksString " + drinksString);
 			var dishesAndDrinks = dishesString + "-" + drinksString;
 
 			var request = guestService.order($scope.createdReservation.id, dishesAndDrinks).then(function(response){

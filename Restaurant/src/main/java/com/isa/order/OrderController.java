@@ -82,6 +82,8 @@ public class OrderController {
 		order.setOrderStatus(OrderStatus.ordered);
 		order.setDrinksStatus(OrderItemStatus.ordered);
 		order.setDishStatus(OrderItemStatus.ordered);
+		order.setOrderedDish(new ArrayList<OrderedDish>());
+		order.setOrderedDrinks(new ArrayList<Drink>());
 		
 		try {
 			order = orderService.save(order);
