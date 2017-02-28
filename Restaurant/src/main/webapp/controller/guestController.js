@@ -544,7 +544,7 @@ guestModule.controller('guestController', ['$scope', 'guestService','commonServi
 			var drinksString = makeArrayString($scope.chosenDrinks);
 			var dishesAndDrinks = dishesString + "-" + drinksString;
 
-			var request = guestService.order($scope.createdReservation.id, dishesAndDrinks).then(function(response){
+			var request = guestService.order($scope.createdReservation.id, $scope.createdReservation.guestId, dishesAndDrinks).then(function(response){
 				$scope.data = response.data;
 				return response;
 			});

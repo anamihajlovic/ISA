@@ -58,6 +58,7 @@ public class Reservation {
 	@OneToMany(cascade = CascadeType.ALL)
 	@JoinTable(name = "reservation_orders", joinColumns = @JoinColumn(name = "reservation_id"), inverseJoinColumns = @JoinColumn(name = "order_id"))
 	private List<Order> orders;
+	
 
 	
 	public Reservation() {}

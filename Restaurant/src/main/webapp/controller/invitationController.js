@@ -172,7 +172,7 @@ invitationModule.controller('invitationController', ['$scope', 'invitationServic
 		var drinksString = makeArrayString($scope.chosenDrinks);
 		var dishesAndDrinks = dishesString + "-" + drinksString;
 
-		var request = invitationService.order($scope.invitationRes.id, dishesAndDrinks).then(function(response){
+		var request = invitationService.order($scope.invitationRes.id, $scope.invitation.friendId, dishesAndDrinks).then(function(response){
 			$scope.data = response.data;
 			return response;
 		});

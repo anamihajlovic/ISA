@@ -70,8 +70,8 @@ public class OrderController {
 		return order;
 	}
 	
-	@PostMapping(path = "/addOrder/{reservationId}", consumes="application/json; charset=utf8")
-	public Order addOrder(@PathVariable Long reservationId, @RequestBody String items) {
+	@PostMapping(path = "/addOrder/{reservationId}/{guestId}", consumes="application/json; charset=utf8")
+	public Order addOrder(@PathVariable Long reservationId, @PathVariable Long guestId, @RequestBody String items) {
 		String dishes = items.split("-")[0];
 		String drinks = items.split("-")[1];
 
@@ -81,6 +81,7 @@ public class OrderController {
 		Order order = new Order();
 		order.setRestaurantId(reservation.getResId());
 		order.setReservationId(reservationId);
+		order.setGuestId(guestId);
 		order.setOrderDate(reservation.getDate());
 		order.setOrderStatus(OrderStatus.ordered);
 		order.setDrinksStatus(OrderItemStatus.ordered);
