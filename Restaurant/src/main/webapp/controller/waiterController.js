@@ -5,13 +5,12 @@ waiterModule.controller('waiterController', ['$scope', 'waiterService', 'employe
 	
 	function ($scope, waiterService, employeeService, resManagerService, $location) {
 	
-		function isLoggedIn() {			
+		function isLoggedIn() {						
 			employeeService.getEmployee().then(function (response) {				
 					if(response.data !="") {
 						$scope.employee = response.data;
 						checkWorkShift($scope.employee);						
-					}
-						
+					}						
 					else
 						$location.path('login');
 				}
@@ -33,10 +32,7 @@ waiterModule.controller('waiterController', ['$scope', 'waiterService', 'employe
 		}
 		
 		
-		function showTables(currentShift) {	
-			//$scope.table = "";
-			//$scope.table.showTable = true;
-			//$scope.table.reonColor = 'white';
+		function showTables(currentShift) {				
 			$scope.assignedResponsabilites = $scope.currentShift.responsabilites;
 			var waiterReons = [];
 			for(i = 0; i<$scope.assignedResponsabilites.length; i++) {
@@ -48,7 +44,7 @@ waiterModule.controller('waiterController', ['$scope', 'waiterService', 'employe
 				}
 			}
 			
-			resManagerService.getTables().then(						
+			waiterService.getTables().then(						
 					function(response){								
 							var stolovi = [];
 							var red = [];
@@ -77,7 +73,7 @@ waiterModule.controller('waiterController', ['$scope', 'waiterService', 'employe
 								lastXPos = value.xPos;
 							});
 							$scope.tables = stolovi;
-							
+													
 							for(i = 0; $scope.tables.length; i++) {
 								var row =$scope.tables[i];
 								for(j = 0; j<row.length; j++) {
@@ -86,13 +82,13 @@ waiterModule.controller('waiterController', ['$scope', 'waiterService', 'employe
 										table.reonColor = '#c9c9ff';
 									else
 										table.reonColor = 'white';
-									
+										
 									if(table.state == 'not_exists')
 										table.showTable = false;
 									else 
 										table.showTable = true;
 								}
-							}
+							}		
 					});	
 											
 		}
@@ -182,6 +178,7 @@ waiterModule.controller('waiterController', ['$scope', 'waiterService', 'employe
 				if($scope.data != "") {
 					$scope.order = $scope.data;
 					toastr.success("You have added new drink.");
+					$location.path("waiter/receviedOrders");
 					
 				} else {
 					toastr.info("Selected drink hasn't been added to order.");
@@ -197,8 +194,9 @@ waiterModule.controller('waiterController', ['$scope', 'waiterService', 'employe
 				
 			request.then(function (data) {
 				if($scope.data != "") {
-					$scope.order = $scope.data;
+					//$scope.order = $scope.data;
 					toastr.success("You have added new dish.");
+					$location.path('waiter/receviedOrders');
 				} else {
 					toastr.info("Selected dish hasn't been added to order.");
 				}
@@ -214,7 +212,8 @@ waiterModule.controller('waiterController', ['$scope', 'waiterService', 'employe
 			request.then(function (data) {
 				if($scope.data != "") {
 					$scope.order = $scope.data;					
-					toastr.success("You have removed drinks from order.");
+					toastr.success("You have removed drinks from order.");					
+					$location.path("waiter/receviedOrders");
 				} else {
 					toastr.info("Selected drinks have not been removed from order.");
 				}			

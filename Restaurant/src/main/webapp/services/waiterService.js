@@ -26,4 +26,10 @@ waiterServices.service('waiterService',['$http', function($http) {
 		return $http.delete("/orders/removeDish/" + dishId + "/" + orderId);
 	}
 	
+	this.getTables = function(){
+		return $http.get("/waiters/getTables");
+	}
+	
+	
+	
 }]); 

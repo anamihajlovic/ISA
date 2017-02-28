@@ -19,7 +19,8 @@
 	<table class="table table-hover">
     <thead>
       <tr>
-        <th>Order</th>                
+        <th>Order</th> 
+        <th>Reservation</th>                  
         <th></th>  
         <th></th>      
       </tr>
@@ -28,9 +29,10 @@
     
  
       <tr ng-repeat = "order in orders">       
-        <td>{{order.id}}</td>         
+        <td>{{order.id}}</td>     
+        <td>{{order.reservationId}}    
         <td><button class = "btn btn-primary" ng-click = "inspectOrder(order, false)"><span class = "glyphicon glyphicon-search"></span></button></td>
-        <td ng-if = "order.orderStatus == 'ordered'"><button class = "btn btn-primary"  ng-click = "acceptOrder(order)">Accept</button></td>
+        <td ng-if = "order.orderStatus == 'ordered'"><button class = "btn btn-primary"  ng-click = "chooseTable(order)">Accept</button></td>
         <td ng-if = "order.orderStatus == 'accepted'"><i>Order is being prepared.</i></td>
        	<td ng-if = "order.orderStatus == 'ready'"><button class = "btn btn-primary" ng-if = "checkWaiter(order)" ng-disabled = "!allowAction" ng-click = "serveOrder(order)">Serve</button></td>
        	<td ng-if = "order.orderStatus == 'served' && mode != 'servedOrders'"><i>Order is being served.</i></td>
@@ -61,7 +63,7 @@
     
     <tr>       
         <td>{{order.id}}</td> 
-        <td>aaaa</td>
+        <td>{{order.tableId}}</td>
         <td><p ng-repeat = "drink in order.drinks">{{drink.name}}</p></td>
         <td><p ng-repeat = "drink in order.drinks">{{drink.drinkType}}</p></td>
         <td><p ng-repeat = "drink in order.drinks">{{order.drinkQuantity[drink.id]}}</p></td>         
@@ -83,6 +85,35 @@
 
  </div>
  </div>
+ 
+ 
+ <!-- ------------------------------------------------------------------------------------- -->
+<button type="button" id = "modalTables" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myChooseTableModal"style="display:none"></button>
+
+<!-- Modal -->
+<div id="myChooseTableModal" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">Choose table</h4>
+      </div>
+      <div class="modal-body">
+        <label>Reserved tables: </label>
+        <select class="form-control" ng-model = "selectedTable">
+   		<option value = "{{table}}" ng-repeat = "table in reservedTables">{{table}}</option>    	  
+  		</select>
+      </div>
+      <div class="modal-footer">
+      	<button type="button" class="btn btn-default" ng-click = "acceptOrder()" data-dismiss="modal">Ok</button>
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+
+  </div>
+</div>
  
 <!-- ------------------------------------------------------------------------------------- -->
 <button type="button" id = "modalDrinks" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myDrinksModal" style="display:none"></button>
@@ -212,7 +243,7 @@
       <table>
       <tr>
       <th class = "bill">Table:</th>
-      <td class = "bill">aaa</td>
+      <td class = "bill">{{order.tableId}}</td>
       </tr>
       <tr>
       <th class = "bill">Date:</th>

@@ -80,6 +80,7 @@ public class OrderController {
 		
 		Order order = new Order();
 		order.setRestaurantId(reservation.getResId());
+		order.setReservationId(reservationId);
 		order.setOrderDate(reservation.getDate());
 		order.setOrderStatus(OrderStatus.ordered);
 		order.setDrinksStatus(OrderItemStatus.ordered);
@@ -159,8 +160,8 @@ public class OrderController {
 		return integerArray;
 	}
 
-	@PutMapping(path = "/acceptOrder/{id}")
-	public Order acceptOrder(@PathVariable Long id) {
+	@PutMapping(path = "/acceptOrder/{id}/{tableId}")
+	public Order acceptOrder(@PathVariable("id") Long id, @PathVariable("tableId") String tableId) {
 		
 		try{
 			Waiter activeWaiter = (Waiter) httpSession.getAttribute("user");
@@ -172,6 +173,7 @@ public class OrderController {
 			String currentTime = timeFormatter.format(now);						
 			order.setAcceptanceTime(currentTime);												
 			order.setWaiterId(activeWaiter.getId());
+			order.setTableId(tableId);
 			orderService.save(order);
 			return order;
 		}catch(Exception e) {
@@ -552,6 +554,7 @@ public class OrderController {
 		try{
 			Drink drink = drinkService.findOne(drinkId);
 			order.getOrderedDrinks().add(drink);
+			order.getDrinks().add(drink);
 			order.setDrinksStatus(OrderItemStatus.ordered);
 			order.setOrderStatus(OrderStatus.accepted);
 			orderService.save(order);
@@ -578,6 +581,7 @@ public class OrderController {
 				order.getOrderedDish().add(orderedDish);
 				order.setDishStatus(OrderItemStatus.ordered);
 				order.setOrderStatus(OrderStatus.accepted);
+				order.getDishes().add(dish);
 				
 			}catch(Exception e){
 				System.out.println(e);
@@ -601,7 +605,7 @@ public class OrderController {
 		    if (drink.getId().equals(drinkId)) 
 		        it.remove();
 		}
-		
+				
 		try{
 			orderService.save(order);
 			return order;
