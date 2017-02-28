@@ -58,5 +58,7 @@ guestServices.service('orderService', ['$http', function($http) {
 	this.createBill = function(bill) {
 		return $http.post('/bills/createBill', bill);
 	}
+	
+	
 
 }]);

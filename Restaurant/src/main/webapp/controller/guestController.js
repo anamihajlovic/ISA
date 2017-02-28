@@ -487,8 +487,7 @@ guestModule.controller('guestController', ['$scope', 'guestService','commonServi
 			return false;
 		}
 		
-		//ZA NARUCIVANJE
-		
+		//ZA NARUCIVANJE		
 		$scope.getDrinks = function() {
 			$scope.showDishes = false;
 			$scope.showDrinks = true;

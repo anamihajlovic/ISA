@@ -134,4 +134,74 @@ waiterModule.controller('waiterController', ['$scope', 'waiterService', 'employe
 				});	
 		  }
 		
+		$scope.showDrinkCard = function(order) {
+			$scope.order = order;
+			document.getElementById("modalDrinks").click();
+			
+			var request = waiterService.getDrinks($scope.employee.restaurantId).then(function(response){
+				$scope.data = response.data;
+				return response;
+			});
+				
+			request.then(function (data) {
+				if($scope.data.length != 0) {
+					$scope.drinks = $scope.data;
+				} else {
+						toastr.info("There's no drink for order.");
+				}
+			});						
+		}
+		
+		$scope.showMenu = function(order) {
+			$scope.order = order;
+			document.getElementById("modalDishes").click();
+			
+			var request = waiterService.getDishes($scope.employee.restaurantId).then(function(response){
+				$scope.data = response.data;
+				return response;
+			});
+				
+			request.then(function (data) {
+				if($scope.data.length != 0) {
+					$scope.dishes = $scope.data;
+				} else {
+						toastr.info("There's no dishes for order.");
+				}
+			});
+		}
+		
+		$scope.addDrink = function(drinkId) {			
+			var request = waiterService.addDrink(drinkId, $scope.order).then(function(response){
+				$scope.data = response.data;				
+				return response;
+			});
+				
+			request.then(function (data) {
+				if($scope.data != "") {
+					$scope.order = $scope.data;
+					toastr.success("You have added new drink.");
+					
+				} else {
+					toastr.info("Selected drink hasn't been added to order.");
+				}
+			});
+		}
+		
+		$scope.addDish = function(dishId) {
+			var request = waiterService.addDish(dishId, $scope.order).then(function(response){
+				$scope.data = response.data;
+				return response;
+			});
+				
+			request.then(function (data) {
+				if($scope.data != "") {
+					$scope.order = $scope.data;
+					toastr.success("You have added new dish.");
+				} else {
+					toastr.info("Selected dish hasn't been added to order.");
+				}
+			});
+		}
+		
+		
 }]);

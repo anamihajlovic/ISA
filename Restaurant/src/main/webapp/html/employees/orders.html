@@ -11,7 +11,8 @@
 
 	<h4 ng-show = "employee.userRole == 'bartender'"><b>Ordered drinks</b></h4>
 	<h4 ng-show = "employee.userRole == 'cook'"><b>Ordered dish</b></h4>
-
+fwwfewe
+      
 	<br/>
 	<table class="table table-hover">
     <thead>
@@ -32,12 +33,11 @@
         <td>{{order.drinkQuantity[drink.id]}}</td>
       </tr>
       <tr>
-      <td class ="endOrder" colspan = "5" ng-show = "order.drinksStatus != 'prepared' && employee.userRole == 'bartender' "><button class = "btn btn-primary" ng-disabled = "order.drinksStatus == 'prepared' || !allowAction" ng-click = "prepareDrinks(order)">Prepare</button></td>     
+      <td class ="endOrder" colspan = "5" ng-show = "order.drinksStatus != 'prepared' && employee.userRole == 'bartender' "><button class = "btn btn-primary"  ng-click = "prepareDrinks(order)">Prepare</button></td>     
       <td class ="endOrder" colspan = "5" ng-show = "order.drinksStatus == 'prepared' && employee.userRole == 'bartender'"><p><i>Drinks have been prepared</i></p></td>
       </tr>
       
    
-      
       <tr ng-if = "employee.userRole == 'cook'" ng-repeat = "dish in order.dishes">  
       	
         <td>{{order.id}}</td>         
