@@ -319,6 +319,18 @@ insert into reservations(res_id, res_name, guest_id, date, start_time, end_time,
 insert into reservations(res_id, res_name, guest_id, date, start_time, end_time, tables_id) values (1, 'Lanterna', 1, '2017-02-28', '17:30', '19:45', '7')
 
 
+--PROBA SA POZIVNICAMA--
+insert into invitations(reservation_id,sender_id,friend_id,friend_name,status)values(1,1,2,'jelena','accepted')
+insert into invitations(reservation_id,sender_id,friend_id,friend_name,status)values(1,1,2,'jelena','accepted')
+insert into invitations(reservation_id,sender_id,friend_id,friend_name,status)values(2,1,2,'jelena','accepted')
+insert into invitations(reservation_id,sender_id,friend_id,friend_name,status)values(2,1,2,'jelena','accepted')
+insert into invitations(reservation_id,sender_id,friend_id,friend_name,status)values(2,1,2,'jelena','accepted')
+insert into invitations(reservation_id,sender_id,friend_id,friend_name,status)values(1,1,2,'jelena','accepted')
+insert into invitations(reservation_id,sender_id,friend_id,friend_name,status)values(3,1,2,'jelena','accepted')
+insert into invitations(reservation_id,sender_id,friend_id,friend_name,status)values(3,1,2,'jelena','accepted')
+insert into invitations(reservation_id,sender_id,friend_id,friend_name,status)values(3,1,2,'jelena','accepted')
+insert into invitations(reservation_id,sender_id,friend_id,friend_name,status)values(3,1,2,'jelena','accepted')
+
 --RESERVATION TABLES
 insert into reservation_tables(table_id, reservation_id) values (1,1)
 insert into reservation_tables(table_id, reservation_id) values (2,1)

@@ -11,8 +11,6 @@ resManagerModule.controller('resManagerController', ['$scope', 'resManagerServic
 				$scope.restaurantManager = response.data;
 				
 				if(response.data!="") {
-					var dugme = document.getElementById("bar");
-					dugme.style.display = "none";
 				} else {					
 					 $location.path('login');
 				}
@@ -1148,23 +1146,40 @@ $scope.dayBusiness = function(){
 	
 	document.getElementById("bar").show();
 	}); 
+		
+	 /////////////////////////////////////////
+	 var request =  resManagerService.getDayVisits($scope.day).then(function(response) {  
+			
+		 var visits = response.data;
+	
+		 $scope.labels3=[];		 
+		 $scope.series3=['Income'];
+		 $scope.data3=[];
+		 for(i=0; i<visits.length; i++) {	
+			 $scope.labels3.push(visits[i].date)
+			 $scope.data3.push(visits[i].number);	
+			 
+		 }	
+	return response;
+	
+	}); 
+	 $("#datum").show();
  
 }
 
-var request =  resManagerService.getWeekBills().then(function(response) {  
-	
-	 var bills = response.data;
-
-	 $scope.labels1=[];		 
-	 $scope.series1=['Income'];
-	 $scope.data1=[];
-	 for(i=0; i<bills.length; i++) {	
-		 $scope.labels1.push(bills[i].billDate);
-		 $scope.data1.push(bills[i].totalPrice);	
+var request =  resManagerService.getWeekVisit().then(function(response) {  
+	 var visits = response.data;
+	 $scope.labels4=[];		 
+	 $scope.series4=['Income'];
+	 $scope.data4=[];
+	 for(i=0; i<visits.length; i++) {	
+		 $scope.labels4.push(visits[i].date)
+		 $scope.data4.push(visits[i].number);	
 		 
 	 }	
 return response;
 }); 
+
 
 var request =  resManagerService.getWeekBills().then(function(response) {  
 	
@@ -1197,5 +1212,43 @@ var request =  resManagerService.getWeekBusinessForWaiters().then(function(respo
 	 }	
 return response;
 }); 
+
+
+$scope.weekRating = function(){
+	AllWaiters();
+	AllDishes();
+	document.getElementById("modalBtnWeekRatings").click();
+}
+$scope.monthRatings = function(){
+	AllWaiters();
+	AllDishes();
+	document.getElementById("modalBtnMonthRatings").click();
+	
+}
+
+$scope.findWeekRatings = function(){
+	
+	 resManagerService.getWeekRatings($scope.idWaiterWeek,$scope.idDishWeek).then(
+				function (response) {
+					$scope.weekRatings = response.data;
+					document.getElementById("modalBtnShowWeekRatings").click();
+				}
+			);
+	
+	
+	
+}
+
+$scope.findMonthRatings = function(){
+	 resManagerService.getMonthRatings($scope.idWaiterMonth,$scope.idDishMonth).then(
+				function (response) {
+					$scope.monthRatings = response.data;
+					document.getElementById("modalBtnShowMonthRatings").click();
+				}
+			);
+	
+	
+}
+
  
 }]);

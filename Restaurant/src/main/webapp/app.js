@@ -165,6 +165,7 @@ angular.module('restaurants', [ 'ui.router','ui.calendar' ,'chart.js',
            	url : '/calendar',
             templateUrl : 'html/resManager/resManagerCalendar.html',
             }) 
+         
         .state('resManager.updateRestaurant', {
            	url : '/updateRestaurant',
             templateUrl : 'html/resManager/resManagerUpdateRestaurant.html',
@@ -202,9 +203,13 @@ angular.module('restaurants', [ 'ui.router','ui.calendar' ,'chart.js',
               url : '/drinkCard',
              templateUrl : 'html/resManager/resManagerDrinkCard.html',
           })
-          .state('resManager.ratings', {
-              url : '/ratings',
-             templateUrl : 'html/resManager/resManagerRatings.html',
+          .state('resManager.weekRatings', {
+              url : '/weekRatings',
+             templateUrl : 'html/resManager/resManagerWeekRatings.html',
+          })
+          .state('resManager.monthRatings', {
+              url : '/monthRatings',
+             templateUrl : 'html/resManager/resManagerMonthRatings.html',
           })
        
         .state('bidder', {

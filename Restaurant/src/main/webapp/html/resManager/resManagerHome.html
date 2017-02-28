@@ -16,10 +16,20 @@
 	<button data-ui-sref=".calendar"  data-ng-click = "calendar()"class="btn btn-default navbar-btn"><span class="glyphicon glyphicon-calendar"></span> Work calendar</button>
 	<button data-ui-sref=".purchase"  data-ng-click = "restaurantOrders()"class="btn btn-default navbar-btn"><span class="glyphicon glyphicon-shopping-cart"></span> 	Purchase</button>
 	 <button data-ui-sref=".statistic"  data-ng-click = "statistic()"class="btn btn-default navbar-btn"><span class="glyphicon glyphicon-stats"></span> Business</button>
-	<button data-ui-sref=".ratings"  data-ng-click = "ratings()"class="btn btn-default navbar-btn"><span class="glyphicon glyphicon-star"></span> Ratings</button>
+	
 	</a></li>
 	</ul>
 	<ul class="nav navbar-nav navbar-right">
+	
+	
+	<li><button type="button" class="btn btn-default dropdown-toggle navbar-btn glyphicon glyphicon-star" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true"> <span class="caret"></span></button>      	
+        	<ul class="dropdown-menu">
+        	<li><a data-ui-sref=".weekRatings" data-ng-click = "weekRating()"><span class="glyphicon glyphicon-star"></span> Week ratings</a></li>
+        	<li><a data-ui-sref=".monthRatings" data-ng-click = "monthRatings()"><span class="glyphicon glyphicon-star"></span> Month ratings</a></li>   	
+        	</ul>
+        
+        	</li>
+	  <li><a ></a></li>
 
 	
 	<li><button type="button" class="btn btn-default dropdown-toggle navbar-btn glyphicon glyphicon-plus" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true"> <span class="caret"></span></button>      	

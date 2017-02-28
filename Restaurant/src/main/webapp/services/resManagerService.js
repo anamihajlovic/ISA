@@ -162,10 +162,24 @@ resManagerServices.service('resManagerService',['$http', function($http) {
 	}
 	this.getWeekBills = function() {
 		return $http.get("/resManager/getWeekBusiness");
-	}
-	
+	}	
 	this.getWeekBusinessForWaiters = function() {
 		return $http.get("/resManager/getWeekBusinessForWaiters");
+	}
+	
+	this.getDayVisits = function(day) {
+		return $http.get("/resManager/getDayVisits/"+day);
+	}	
+	this.getWeekVisit = function() {
+		return $http.get("/resManager/getWeekVisit");
+	}
+	
+	this.getWeekRatings = function(idWaiterWeek,idDishWeek) {
+		return $http.get("/resManager/getWeekRatings/"+idWaiterWeek+"/"+idDishWeek);
+	}
+	
+	this.getMonthRatings = function(idWaiterMonth,idDishMonth) {
+		return $http.get("/resManager/getMonthRatings/"+idWaiterMonth+"/"+idDishMonth);
 	}
 	
 }]); 
