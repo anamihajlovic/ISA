@@ -44,4 +44,9 @@ public class ReservationServiceImp implements ReservationService {
 		return Lists.newArrayList(repository.findAll());
 
 	}
+
+	@Override
+	public List<Reservation> findByGuestId(Long guestId) {
+		return Lists.newArrayList(repository.findAll());
+	}
 }

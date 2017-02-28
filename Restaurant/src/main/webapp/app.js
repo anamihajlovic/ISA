@@ -110,12 +110,17 @@ angular.module('restaurants', [ 'ui.router','ui.calendar' ,'chart.js',
         	templateUrl: 'html/guest/inviteFriends.html'
         })
         
+        .state('guest.myVisits', {
+        	url: '/myVisits',
+        	templateUrl: 'html/guest/myVisits.html'
+        })
+        
         .state('confirmInvitation', {
         	url: '/confirmInvitation/:invitationId/:reservationId',
         	templateUrl: 'html/guest/confirmInvitation.html',
         	controller: 'invitationController'
         })
-         
+                 
          .state('sysManager', {
          	url : '/sysManager',
            	templateUrl : 'html/sysManager/sysManagerHome.html',

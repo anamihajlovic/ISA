@@ -85,6 +85,12 @@ guestServices.service('guestService', ['$http', function($http) {
 		return $http.post("/orders/addOrder/" + reservationId, dishesAndDrinks);
 	}
 	
+	//za istoriju poseta
+	
+	this.getMyVisits= function(id){
+		return $http.get("/reservations/getMyVisits/" + id);
+	}
+	
 	
 	
 }]);
