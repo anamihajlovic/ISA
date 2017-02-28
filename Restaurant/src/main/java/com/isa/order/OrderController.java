@@ -82,7 +82,7 @@ public class OrderController {
 		order.setDrinksStatus(OrderItemStatus.ordered);
 		
 		try {
-			orderService.save(order);
+			order = orderService.save(order);
 		} catch (Exception e) {
 			System.out.println("Neuspesno cuvanje porudzbine-prvo cuvanje");
 			return null;
@@ -96,9 +96,12 @@ public class OrderController {
 				od.setOrderId(order.getId());
 				od.setDishId(id);
 				od.setStatus(DishStatus.ordered);
+				System.out.println("od " + od.getOrderId() + " " + od.getDishId() + " " +  od.getStatus());
 				ordered.add(od);
 			}
 			order.setOrderedDish(ordered);
+			System.out.println("orderedDrinks " + order.getOrderedDish().size());
+
 		}
 		
 		if (!drinks.equals("")) {
@@ -110,10 +113,11 @@ public class OrderController {
 				ordered.add(drink);
 			}
 			order.setOrderedDrinks(ordered);
+			System.out.println("orderedDrinks " + order.getOrderedDrinks().size());
 		}
 		
-		try {
-			orderService.save(order);
+		try {//ovo zakomentarisati
+			order = orderService.save(order);
 		} catch (Exception e) {
 			System.out.println("Neuspesno cuvanje porudzbine-drugo cuvanje");
 			orderService.delete(order.getId());
