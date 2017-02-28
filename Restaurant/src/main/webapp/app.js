@@ -115,6 +115,11 @@ angular.module('restaurants', [ 'ui.router','ui.calendar' ,'chart.js',
         	templateUrl: 'html/guest/myVisits.html'
         })
         
+        .state('guest.activeReservations', {
+        	url: '/activeReservations',
+        	templateUrl: 'html/guest/activeReservations.html'
+        })
+        
         .state('confirmInvitation', {
         	url: '/confirmInvitation/:invitationId/:reservationId',
         	templateUrl: 'html/guest/confirmInvitation.html',

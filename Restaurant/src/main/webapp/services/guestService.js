@@ -95,6 +95,16 @@ guestServices.service('guestService', ['$http', function($http) {
 		return $http.get("/invitations/getInvitedFriends/" + reservationId + "/" + guestId);
 	}
 	
+	//brisanje rezervacija
+
+	this.getActiveReservations = function(guestId) {
+		return $http.get("/reservations/getActiveReservations/" + guestId);
+	}
+
+	this.deleteReservation = function(id) {
+		return $http.delete("/reservations/deleteReservation/" + id)
+	}
+	
 	
 	
 }]);

@@ -42,4 +42,9 @@ public class InvitationServiceImp implements InvitationService {
 		return Lists.newArrayList(repository.findAllByReservationId(reservationId));
 	}
 
+	@Override
+	public List<Invitation> findAll() {
+		return Lists.newArrayList(repository.findAll());
+	}
+
 }

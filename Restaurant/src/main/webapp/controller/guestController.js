@@ -560,17 +560,21 @@ guestModule.controller('guestController', ['$scope', 'guestService','commonServi
 		}
 		
 		//ISTORIJA POSETA
+		$scope.myVisits = [];
 		$scope.getMyVisits = function() {
+			$scope.myVisits = [];
+
 			var request = guestService.getMyVisits($scope.guest.id).then(function(response){
 				$scope.data = response.data;
 				return response;
 			});
 				
 			request.then(function (data) {
-				if($scope.data.size != 0) {
+				if($scope.data != "") {
 					$scope.myVisits = $scope.data;
 				} else {
-						toastr.info("You haven't visited any restaurant.");
+					$scope.myVisits = [];
+					toastr.info("You haven't visited any restaurant.");
 				}
 			});
 		}
@@ -608,10 +612,41 @@ guestModule.controller('guestController', ['$scope', 'guestService','commonServi
 		}
 		
 		
-		
-		
 		//KRAJ ISTORIJE POSETA
 		
+		//AKTIVNE REZERVACIJE
+		$scope.activeReservations = [];
+		$scope.getActiveReservations = function() {
+			var request = guestService.getActiveReservations($scope.guest.id).then(function(response){
+				$scope.data = response.data;
+				return response;
+			});
+				
+			request.then(function (data) {
+				if($scope.data != "") {
+					$scope.activeReservations = $scope.data;
+				} else {
+					$scope.activeReservations = [];
+					toastr.info("There's no active reservations.");
+				}
+			});
+		}
+		
+		$scope.deleteReservation = function(id) {
+			var request = guestService.deleteReservation(id).then(function(response){
+				$scope.data = response.data;
+				return response;
+			});
+				
+			request.then(function (data) {
+				if($scope.data == "OK") {
+					toastr.success("Successfully deleted reservations.")
+					$scope.getActiveReservations();
+				} else {
+						toastr.error("Deleting reservation was unsuccessful. Please, try again.");
+				}
+			});
+		}
 
 
 		

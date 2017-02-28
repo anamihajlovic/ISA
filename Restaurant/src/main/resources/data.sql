@@ -309,10 +309,10 @@ insert into work_shift_responsabilites values(2,4)
 
 
 --RESERVATIONS
-insert into reservations(res_id, res_name, guest_id, date, start_time, end_time, tables_id) values (1, 'Lanterna', 1, '2017-02-26', '17:30', '19:45', '1;2')
-insert into reservations(res_id, res_name, guest_id, date, start_time, end_time, tables_id) values (1, 'Lanterna', 1, '2017-02-26', '18:30', '20:00', '6')
-insert into reservations(res_id, res_name, guest_id, date, start_time, end_time, tables_id) values (1, 'Lanterna', 1, '2017-02-27', '17:30', '19:45', '7')
-insert into reservations(res_id, res_name, guest_id, date, start_time, end_time, tables_id) values (1, 'Lanterna', 1, '2017-02-28', '17:30', '19:45', '7')
+insert into reservations(res_id, res_name, guest_id, date, start_time, end_time, tables_id, deleted) values (1, 'Lanterna', 1, '2017-02-26', '17:30', '19:45', '1;2', false)
+insert into reservations(res_id, res_name, guest_id, date, start_time, end_time, tables_id, deleted) values (1, 'Lanterna', 1, '2017-02-26', '18:30', '20:00', '6', false)
+insert into reservations(res_id, res_name, guest_id, date, start_time, end_time, tables_id, deleted) values (1, 'Lanterna', 1, '2017-02-27', '17:30', '19:45', '7', false)
+insert into reservations(res_id, res_name, guest_id, date, start_time, end_time, tables_id, deleted) values (1, 'Lanterna', 1, '2017-02-28', '17:30', '19:45', '7', false)
 
 --RESERVATION_ORDERS
 insert into reservation_orders(reservation_id, order_id) values (1, 1)
