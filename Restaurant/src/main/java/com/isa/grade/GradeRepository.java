@@ -9,5 +9,5 @@ public interface GradeRepository extends PagingAndSortingRepository<Grade, Long>
 
 	public Grade findByOrderId(Long id);
 	
-	
+	public Grade findByGuestIdAndReservationId(Long guestId, Long reservationId);
 }

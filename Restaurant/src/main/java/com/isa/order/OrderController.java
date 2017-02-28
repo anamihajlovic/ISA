@@ -78,14 +78,11 @@ public class OrderController {
 		Reservation reservation = reservationService.findById(resId);
 		Guest currentGuest = (Guest) httpSession.getAttribute("user");
 				
-		//for(Order order : reservation.getOrders()) {
-			//if(order.getGuestId().equals(currentGuest.getId()))
-			//return order;
-		//}
-		
-		
-		//Order order = (Order) orderService.findOne(id);
-		//return order;
+		for(Order order : reservation.getOrders()) {
+			if(order.getGuestId().equals(currentGuest.getId()))
+				return order;
+		}
+				
 		return null;
 	}
 

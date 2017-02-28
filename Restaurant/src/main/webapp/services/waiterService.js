@@ -30,6 +30,8 @@ waiterServices.service('waiterService',['$http', function($http) {
 		return $http.get("/waiters/getTables");
 	}
 	
-	
+	this.getWaiter = function(waiterId) {
+		return $http.get("/waiters/getWaiter/"+waiterId);
+	}
 	
 }]); 

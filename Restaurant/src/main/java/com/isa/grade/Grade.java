@@ -22,6 +22,9 @@ public class Grade {
 	@Column(name = "restaurant_id", nullable = false)
 	private Long restaurantId;
 	
+	@Column(name = "reservation_id", nullable = false)
+	private Long reservationId;
+	
 	@Column(name = "waiter_id", nullable = false)
 	private Long waiterId;
 	
@@ -39,18 +42,23 @@ public class Grade {
 	
 	public Grade() {}
 
-	public Grade(Long id, Long guestId, Long restaurantId, Long waiterId, Long orderId, Double orderGrade,
-			Double waiterGrade, Double restaurantGrade) {
+	
+	
+	public Grade(Long id, Long guestId, Long restaurantId, Long reservationId, Long waiterId, Long orderId,
+			Double orderGrade, Double waiterGrade, Double restaurantGrade) {
 		super();
 		this.id = id;
 		this.guestId = guestId;
 		this.restaurantId = restaurantId;
+		this.reservationId = reservationId;
 		this.waiterId = waiterId;
 		this.orderId = orderId;
 		this.orderGrade = orderGrade;
 		this.waiterGrade = waiterGrade;
 		this.restaurantGrade = restaurantGrade;
 	}
+
+
 
 	public Long getId() {
 		return id;
@@ -114,6 +122,14 @@ public class Grade {
 
 	public void setRestaurantGrade(Double restaurantGrade) {
 		this.restaurantGrade = restaurantGrade;
+	}
+
+	public Long getReservationId() {
+		return reservationId;
+	}
+
+	public void setReservationId(Long reservationId) {
+		this.reservationId = reservationId;
 	}	
-	
+		
 }

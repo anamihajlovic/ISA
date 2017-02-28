@@ -2,8 +2,8 @@ var guestModule = angular.module('guest.controller', []);
 
 
 
-guestModule.controller('guestController', ['$scope', 'guestService', 'orderService', 'commonService', '$location','$interval', '$filter', '$state',
-	function($scope, guestService, orderService, commonService,  $location, $interval, $filter, $state) {
+guestModule.controller('guestController', ['$scope', 'guestService', 'orderService', 'gradeService', 'commonService', '$location','$interval', '$filter', '$state',
+	function($scope, guestService, orderService, gradeService, commonService,  $location, $interval, $filter, $state) {
 	
 		$scope.numOfFriendRequest= 0;
 		
@@ -606,22 +606,38 @@ guestModule.controller('guestController', ['$scope', 'guestService', 'orderServi
 					
 			});
 		}
-		
-		
-		$scope.rateVisit = function(reservation) {			
+				
+		$scope.goToRatePage = function(reservation) {	
+			gradeService.setReservation(reservation);
+			alert(reservation.id)
 			var request = orderService.getOrder(reservation.id).then(function(response) {
 				$scope.data = response.data;
 				return response;
 			
 			});
 			
-			request.then(function (data) {
-				$scope.order = $scope.data;
-				$state.go('guest.rateVisit');
-			});
-			
-			
+			request.then(function (data) {				
+				gradeService.setOrder($scope.data);
+				
+				var request = gradeService.getRatedReservation(reservation.id, $scope.guest.id).then(function(response) {
+					$scope.data = response.data;
+					return response;			
+				});			
+				request.then(function (data) {		
+					$scope.grade = $scope.data;
+					if($scope.data != "") {
+						$state.go('guest.seeRating');						
+					}								
+						
+					else {
+						$state.go('guest.rateVisit');						
+					}
+						
+				});									
+			});						
 		}
+		
+		
 		
 		//KRAJ ISTORIJE POSETA
 		

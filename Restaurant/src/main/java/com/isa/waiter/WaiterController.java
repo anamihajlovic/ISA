@@ -51,6 +51,17 @@ public class WaiterController {
 		return waiter;					
 	}
 	
+	@GetMapping(path = "/getWaiter/{waiterId}")
+	public Waiter getWaiter(@PathVariable Long waiterId) {
+		
+		try{
+			Waiter waiter = waiterService.findOne(waiterId);
+			return waiter;
+		} catch(Exception e){
+			return null;
+		}		
+	}
+	
 	@PutMapping(path = "/changePassword")
 	public Waiter changeWaiterPassword(@RequestBody Waiter waiter) {
 		

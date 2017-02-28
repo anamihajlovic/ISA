@@ -14,7 +14,7 @@ angular.module('restaurants', [ 'ui.router','ui.calendar' ,'chart.js',
 								'calendar.controller',
 								'order.services', 'order.controller',								
 								'invitation.services', 'invitation.controller',
-								'grade.controller'
+								 'grade.services', 'grade.controller'
 
 							   ])
 							   
@@ -120,6 +120,13 @@ angular.module('restaurants', [ 'ui.router','ui.calendar' ,'chart.js',
         	   templateUrl : 'html/guest/ratePage.html', 
         	   controller: 'gradeController'
            })
+           
+        .state('guest.seeRating', {
+        	   url : '/seeRating',
+        	   templateUrl : 'html/guest/ratePage.html', 
+        	   controller: 'gradeController'
+           })
+           
           
         
         .state('confirmInvitation', {
