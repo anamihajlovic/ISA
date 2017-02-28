@@ -14,6 +14,8 @@ public interface InvitationRepository extends PagingAndSortingRepository<Invitat
 	public Invitation findById(Long id);
 
 	public List<Invitation> findAllByReservationIdAndStatus(Long id, InvitationStatus is);
+	
+	public List<Invitation> findAllByReservationId(Long reservationId);
 
 
 }

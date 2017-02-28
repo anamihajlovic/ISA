@@ -64,30 +64,6 @@ public class ReservationController {
 		}
 		
 
-		int hours = Integer.parseInt(reservation.getStartTime().split(":")[0]);
-		int minutes = Integer.parseInt(reservation.getStartTime().split(":")[1]);
-		
-		Calendar cal = Calendar.getInstance();
-		cal.set(Calendar.HOUR_OF_DAY,hours);
-		cal.set(Calendar.MINUTE,minutes);
-		//cal.set(Calendar.SECOND,0);
-		//cal.set(Calendar.MILLISECOND,0);
-
-		Date st = cal.getTime();
-		System.out.println("startTime cal" + cal.getTime());
-		System.out.println("startTime " + st);
-		
-		hours = Integer.parseInt(reservation.getEndTime().split(":")[0]);
-		minutes = Integer.parseInt(reservation.getEndTime().split(":")[1]);
-		cal.set(Calendar.HOUR_OF_DAY,hours);
-		cal.set(Calendar.MINUTE,minutes);
-		
-		Date et = cal.getTime();
-		System.out.println("endTime cal" + cal.getTime());
-		System.out.println("endTime " + et);
-		
-		System.out.println(st.before(et) + " " + st.after(et) + " " + et.after(st));
-
 		return reservation;
 	}
 	

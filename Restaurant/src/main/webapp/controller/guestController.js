@@ -544,7 +544,7 @@ guestModule.controller('guestController', ['$scope', 'guestService', 'orderServi
 			var drinksString = makeArrayString($scope.chosenDrinks);
 			var dishesAndDrinks = dishesString + "-" + drinksString;
 
-			var request = guestService.order($scope.createdReservation.id, dishesAndDrinks).then(function(response){
+			var request = guestService.order($scope.createdReservation.id, $scope.createdReservation.guestId, dishesAndDrinks).then(function(response){
 				$scope.data = response.data;
 				return response;
 			});
@@ -572,6 +572,38 @@ guestModule.controller('guestController', ['$scope', 'guestService', 'orderServi
 				} else {
 						toastr.info("You haven't visited any restaurant.");
 				}
+			});
+		}
+
+		$scope.getInvitedFriends = function(reservationId) {
+			$scope.wereInvited = false;
+			$scope.noInvitations = false;
+
+			var request = guestService.getInvitedFriends(reservationId, $scope.guest.id).then(function(response){
+				$scope.data = response.data;
+				return response;
+			});
+				
+			request.then(function (data) {
+					if($scope.data != "") {
+						$scope.wereInvited = false;
+						if($scope.data[0].friendName == "nema poziva" && $scope.data.length == 1) {
+							$scope.invitedFriends = [];
+							$scope.noInvitations = true;
+
+						} else {
+							$scope.noInvitations = false;
+							$scope.invitedFriends = $scope.data;
+						}
+						
+
+					} else {
+						
+						$scope.invitedFriends = [];
+						$scope.wereInvited = true;
+
+					}
+					
 			});
 		}
 		

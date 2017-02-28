@@ -44,6 +44,9 @@ public class Order {
 	@Column(name = "table_id")
 	private String tableId;
 	
+	@Column(name = "guest_id")
+	private Long guestId;
+	
 	@Column (name = "acceptance_time")
 	private String acceptanceTime;
 	
@@ -96,7 +99,7 @@ public class Order {
 	
 
 	public Order(Long id, Long restaurantId, Long reservationId, Long waiterId, String tableId, String acceptanceTime, Date orderDate, OrderStatus orderStatus, OrderItemStatus drinksStatus,
-			List<Drink> orderedDrinks, OrderItemStatus dishStatus, List<OrderedDish> orderedDish) {
+			List<Drink> orderedDrinks, OrderItemStatus dishStatus, List<OrderedDish> orderedDish, Long guestId) {
 		super();
 		this.id = id;
 		this.restaurantId = restaurantId;
@@ -110,6 +113,7 @@ public class Order {
 		this.orderedDrinks = orderedDrinks;
 		this.dishStatus = dishStatus;
 		this.orderedDish = orderedDish;		
+		this.guestId = guestId;
 	}
 
 
@@ -290,6 +294,18 @@ public class Order {
 				return oDish;
 		}		
 		return null;
+	}
+
+
+
+	public Long getGuestId() {
+		return guestId;
+	}
+
+
+
+	public void setGuestId(Long guestId) {
+		this.guestId = guestId;
 	}
 	
 	

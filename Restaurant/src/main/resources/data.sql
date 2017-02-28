@@ -235,8 +235,8 @@ insert into units(offer_id,unit_id)values(1,1)
 insert into units(offer_id,unit_id)values(1,2)
 
 --ORDERS
-insert into orders(restaurant_id,reservation_id,acceptance_time,order_date,order_status,drinks_status,dish_status) values (1, 1,'19:00:00','2017-02-27','ordered', 'ordered', 'ordered')
-insert into orders(restaurant_id,reservation_id,acceptance_time,order_date,order_status,drinks_status,dish_status) values (1, 1,'19:30:00','2017-02-27', 'ordered', 'ordered', 'ordered')
+insert into orders(restaurant_id,reservation_id,acceptance_time,order_date,order_status,drinks_status,dish_status, guest_id) values (1, 1,'19:00:00','2017-02-27','ordered', 'ordered', 'ordered', 2)
+insert into orders(restaurant_id,reservation_id,acceptance_time,order_date,order_status,drinks_status,dish_status, guest_id) values (1, 1,'19:30:00','2017-02-27', 'ordered', 'ordered', 'ordered', 3)
 
 insert into ordered_drinks(order_id,drink_id) values (1,1)
 insert into ordered_drinks(order_id,drink_id) values (1,1)
@@ -321,7 +321,7 @@ insert into reservation_orders(reservation_id, order_id) values (1, 2)
 
 --PROBA SA POZIVNICAMA--
 insert into invitations(reservation_id,sender_id,friend_id,friend_name,status)values(1,1,2,'Jelena Kalabic','accepted')
-insert into invitations(reservation_id,sender_id,friend_id,friend_name,status)values(1,1,3,'Tamara Mrksic','pending')
+insert into invitations(reservation_id,sender_id,friend_id,friend_name,status)values(1,1,3,'Tamara Mrksic','accepted')
 insert into invitations(reservation_id,sender_id,friend_id,friend_name,status)values(2,1,2,'Jelena Kalabic','accepted')
 insert into invitations(reservation_id,sender_id,friend_id,friend_name,status)values(2,1,3,'Tamara Mrksic','accepted')
 insert into invitations(reservation_id,sender_id,friend_id,friend_name,status)values(2,1,8,'Bakir Niksic','pending')

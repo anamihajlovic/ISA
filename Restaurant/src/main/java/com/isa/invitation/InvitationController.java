@@ -1,5 +1,8 @@
 package com.isa.invitation;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
@@ -100,6 +103,32 @@ public class InvitationController {
 		Invitation invitation = invitationService.findById(id);
 		
 		return invitation;
+	}
+	
+	@GetMapping(path = "/getInvitedFriends/{reservationId}/{guestId}")
+	public List<Invitation> getInvitedFriends(@PathVariable Long reservationId, @PathVariable Long guestId) {
+		System.out.println("Pogodjena metoda getInvitedFriends ");
+		ArrayList<Invitation> invitations = new ArrayList<Invitation>();
+		
+		Reservation reservation = reservationService.findById(reservationId);
+		
+		if (reservation.getGuestId() == guestId) {
+			System.out.println("treba da prikazes prijatelje");
+			invitations = (ArrayList<Invitation>)invitationService.findAllByReservationId(reservationId);
+
+			if (invitations.size() == 0) {
+				Invitation inv = new Invitation();
+				inv.setFriendName("nema poziva");
+				invitations.add(inv);
+			}
+
+		}
+		else {
+			invitations = null;
+		}
+
+		
+		return invitations;
 	}
 
 }
