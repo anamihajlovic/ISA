@@ -12,8 +12,6 @@ import javax.persistence.JoinTable;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
-
-import com.isa.offer.Offer;
 import com.isa.res.order.unit.ResOrderUnit;
 
 @Entity

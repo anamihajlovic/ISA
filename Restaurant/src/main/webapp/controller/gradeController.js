@@ -309,6 +309,7 @@ gradeModule.controller('gradeController', ['$scope', 'employeeService', 'gradeSe
 		var reservation = gradeService.getReservation();
 		
 		grade.reservationId = reservation.id;
+		grade.date = $scope.order.orderDate;
 		grade.guestId = $scope.guest.id;		
 		grade.orderId = $scope.order.id;
 		grade.waiterId = $scope.waiter.id;		

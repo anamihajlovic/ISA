@@ -1,11 +1,15 @@
 package com.isa.grade;
 
+import java.util.Date;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 @Entity
 @Table(name = "grades")
@@ -39,13 +43,18 @@ public class Grade {
 	
 	@Column(name = "restaurant_grade", nullable = true)
 	private Double restaurantGrade;
+		
+	@Temporal(TemporalType.DATE)
+	@Column (name= "date", nullable=false)
+	private Date date;
+		
 	
-	public Grade() {}
+	
+	public Grade() {}	
 
-	
-	
+
 	public Grade(Long id, Long guestId, Long restaurantId, Long reservationId, Long waiterId, Long orderId,
-			Double orderGrade, Double waiterGrade, Double restaurantGrade) {
+			Double orderGrade, Double waiterGrade, Double restaurantGrade, Date date) {
 		super();
 		this.id = id;
 		this.guestId = guestId;
@@ -56,7 +65,12 @@ public class Grade {
 		this.orderGrade = orderGrade;
 		this.waiterGrade = waiterGrade;
 		this.restaurantGrade = restaurantGrade;
+		this.date = date;
 	}
+
+
+
+
 
 
 
@@ -130,6 +144,18 @@ public class Grade {
 
 	public void setReservationId(Long reservationId) {
 		this.reservationId = reservationId;
+	}
+
+
+	public Date getDate() {
+		return date;
+	}
+
+
+	public void setDate(Date date) {
+		this.date = date;
 	}	
+	
+	
 		
 }

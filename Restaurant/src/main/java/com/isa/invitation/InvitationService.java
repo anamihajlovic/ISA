@@ -13,6 +13,9 @@ public interface InvitationService {
 	List<Invitation> findAllByReservationIdAndStatus(Long id,InvitationStatus is);
 	
 	List<Invitation> findAllByReservationId(Long reservationId);
+	
+	List<Invitation> findAll();
+
 
 
 
