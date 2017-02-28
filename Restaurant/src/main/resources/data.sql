@@ -51,7 +51,7 @@ insert into waiters(email, password, first_name, last_name,birthday,shoes_size,c
 insert into bartenders(email, password, first_name, last_name,birthday,shoes_size,clothes_size,first_login,user_role, restaurant_id) values ('bar4@gmail.com','bar4','bar4','bar4','1994-07-25','no39','M',false,'bartender',4)
 
 insert into cooks(email, password, first_name, last_name,birthday,shoes_size,clothes_size,first_login,user_role, restaurant_id, cook_type) values ('cook5@gmail.com','cook5','cook5','cook5','1994-07-27','no39','M',true,'cook',1,'pastaCook')
-insert into waiters(email, password, first_name, last_name,birthday,shoes_size,clothes_size,first_login,user_role, restaurant_id) values ('waiter5@gmail.com','waiter5','waiter5','waiter5','1994-07-25','no39','M',true,'waiter',1)
+insert into waiters(email, password, first_name, last_name,birthday,shoes_size,clothes_size,first_login,user_role, restaurant_id) values ('waiter5@gmail.com','waiter5','waiter5','waiter5','1994-07-25','no39','M',false,'waiter',1)
 insert into bartenders(email, password, first_name, last_name,birthday,shoes_size,clothes_size,first_login,user_role, restaurant_id) values ('bar5@gmail.com','bar5','bar5','bar5','1994-07-25','no39','M',false,'bartender',1)
 
 insert into restaurant_managers(email, password, first_name, last_name,first_login,user_role,restaurant_id) values ('resman1@gmail.com','resman1','first 1','last 1',false,'resManager',1)
@@ -150,19 +150,15 @@ insert into restaurant_drink_card(restaurant_id,drink_id)values(2,3)
 
 
 --WORK SHIFTS
-insert into work_shifts (start_time,end_time,shift_type,day)values('08:00:00','14:00:00','firstShift','2017-02-27')
-insert into work_shifts (start_time,end_time,shift_type,day)values('14:00:01','23:55:00','secondShift','2017-02-27')
+insert into work_shifts (start_time,end_time,shift_type,day)values('08:00:00','14:00:00','firstShift','2017-02-28')
+insert into work_shifts (start_time,end_time,shift_type,day)values('14:00:01','23:55:00','secondShift','2017-02-28')
 insert into work_shifts (start_time,end_time,shift_type,day)values('08:00:00','14:00:00','firstShift','2017-03-01')
 insert into work_shifts (start_time,end_time,shift_type,day)values('14:00:01','20:00:00','secondShift','2017-03-01')
 insert into work_shifts (start_time,end_time,shift_type,day)values('08:00:00','14:00:00','firstShift','2017-03-02')
 insert into work_shifts (start_time,end_time,shift_type,day)values('14:00:01','20:00:00','secondShift','2017-03-02')
 
 insert into work_shift_waiters values(1, 1)
-
-insert into work_shift_waiters values(2, 2)
-
 insert into work_shift_waiters values(2, 5)
-
 insert into work_shift_waiters values(3, 1)
 insert into work_shift_waiters values(4, 2)
 insert into work_shift_waiters values(5, 1)
@@ -184,7 +180,7 @@ insert into work_shift_bartenders values(4, 2)
 
 
 --WORK DAYS
-insert into work_days (day)values('2017-02-27')
+insert into work_days (day)values('2017-02-28')
 insert into work_days(day)values('2017-03-01')
 insert into work_days(day)values('2017-03-02')
 

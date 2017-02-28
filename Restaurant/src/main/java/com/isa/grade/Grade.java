@@ -114,8 +114,6 @@ public class Grade {
 
 	public void setRestaurantGrade(Double restaurantGrade) {
 		this.restaurantGrade = restaurantGrade;
-	}
-	
-	
+	}	
 	
 }

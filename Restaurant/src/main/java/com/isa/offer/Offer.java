@@ -19,8 +19,6 @@ import javax.persistence.TemporalType;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 
-import org.hibernate.validator.constraints.NotBlank;
-
 import com.isa.offer.unit.OfferUnit;
 
 @Entity

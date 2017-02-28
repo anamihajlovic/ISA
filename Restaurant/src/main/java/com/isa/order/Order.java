@@ -254,7 +254,13 @@ public class Order {
 		this.orderStatus = orderStatus;
 	}
 	
-	
+	public OrderedDish getODish(Integer dishId) {			
+		for(OrderedDish oDish : this.orderedDish) {
+			if(oDish.getDishId().equals(dishId))
+				return oDish;
+		}		
+		return null;
+	}
 	
 	
 }

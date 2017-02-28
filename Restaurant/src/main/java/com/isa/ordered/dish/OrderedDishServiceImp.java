@@ -42,5 +42,11 @@ public class OrderedDishServiceImp implements OrderedDishService {
 		return repository.findByOrderIdAndDishId(orderId, dishId);
 	}
 
+	@Override
+	public void delete(Long id) {
+		repository.delete(id);
+		
+	}
+
 
 }

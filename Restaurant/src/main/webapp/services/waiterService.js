@@ -18,4 +18,12 @@ waiterServices.service('waiterService',['$http', function($http) {
 		return $http.post("/orders/addDish/"+dishId, order);
 	}
 	
+	this.removeDrink = function(drinkId, order){
+		return $http.put("/orders/removeDrink/"+drinkId, order);
+	}
+	
+	this.removeDish = function(dishId, orderId){
+		return $http.delete("/orders/removeDish/" + dishId + "/" + orderId);
+	}
+	
 }]); 
