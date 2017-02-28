@@ -235,8 +235,8 @@ insert into units(offer_id,unit_id)values(1,1)
 insert into units(offer_id,unit_id)values(1,2)
 
 --ORDERS
-insert into orders(restaurant_id,acceptance_time,order_date,order_status,drinks_status,dish_status) values (1,'19:00:00','2017-02-27','ordered', 'ordered', 'ordered')
-insert into orders(restaurant_id,acceptance_time,order_date,order_status,drinks_status,dish_status) values (1,'19:30:00','2017-02-27', 'ordered', 'ordered', 'ordered')
+insert into orders(restaurant_id,reservation_id,acceptance_time,order_date,order_status,drinks_status,dish_status) values (1, 1,'19:00:00','2017-02-27','ordered', 'ordered', 'ordered')
+insert into orders(restaurant_id,reservation_id,acceptance_time,order_date,order_status,drinks_status,dish_status) values (1, 1,'19:30:00','2017-02-27', 'ordered', 'ordered', 'ordered')
 
 insert into ordered_drinks(order_id,drink_id) values (1,1)
 insert into ordered_drinks(order_id,drink_id) values (1,1)
@@ -313,6 +313,10 @@ insert into reservations(res_id, res_name, guest_id, date, start_time, end_time,
 insert into reservations(res_id, res_name, guest_id, date, start_time, end_time, tables_id) values (1, 'Lanterna', 1, '2017-02-26', '18:30', '20:00', '6')
 insert into reservations(res_id, res_name, guest_id, date, start_time, end_time, tables_id) values (1, 'Lanterna', 1, '2017-02-27', '17:30', '19:45', '7')
 insert into reservations(res_id, res_name, guest_id, date, start_time, end_time, tables_id) values (1, 'Lanterna', 1, '2017-02-28', '17:30', '19:45', '7')
+
+--RESERVATION_ORDERS
+insert into reservation_orders(reservation_id, order_id) values (1, 1)
+insert into reservation_orders(reservation_id, order_id) values (1, 2)
 
 
 --PROBA SA POZIVNICAMA--

@@ -228,8 +228,11 @@ orderModule.controller('orderController', ['$scope', 'orderService', 'employeeSe
 	}
 	
 	
-	$scope.acceptOrder = function(order) {
-		var request = orderService.acceptOrder(order.id).then(function(response){
+	
+	$scope.acceptOrder = function() {
+		alert($scope.order.id)
+		alert($scope.selectedTable)
+		var request = orderService.acceptOrder($scope.order.id, $scope.selectedTable).then(function(response){
 			$scope.data = response.data;			
 			return response;
 		});
@@ -238,6 +241,30 @@ orderModule.controller('orderController', ['$scope', 'orderService', 'employeeSe
 			if($scope.data != 'failure') {
 				getOrders();					
 			} 			
+		});
+		
+		
+	}
+	
+	
+	$scope.chooseTable = function(order) {
+		$scope.order = order;
+		document.getElementById("modalTables").click();
+		
+		var request = orderService.getReservation(order.reservationId).then(function(response) {
+			$scope.data = response.data;			
+			return response;
+		});		
+		request.then(function (data) {
+			if($scope.data != "") {
+				$scope.reservation = $scope.data;	
+				$scope.reservedTables = [];
+				for(i = 0; i<$scope.reservation.tables.length; i++) {
+					var table = $scope.reservation.tables[i];
+					if(table != ';')
+						$scope.reservedTables.push(table);
+				}									
+			} 				
 		});
 	}
 	

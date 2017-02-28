@@ -94,7 +94,7 @@ public class ReservationController {
 	@GetMapping(path = "getReservation/{id}")
 	public Reservation getReservation(@PathVariable Long id) {
 		Reservation reservation = reservationService.findById(id);
-		
+	
 		return reservation;
 	}
 	
