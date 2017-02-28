@@ -52,11 +52,11 @@
         <th>Drink name</th>
         <th>Drink type</th>
         <th>Quantity</th>
-        <th ng-if = "changeOrder"></th>
+        <th ng-if = "changeOrder && order.orderStatus == 'ordered'"></th>
         <th>Dish name</th>
         <th>Dish type</th>     
         <th>Quantity</th>
-        <th ng-if = "changeOrder"></th> 
+        <th ng-if = "changeOrder && order.orderStatus == 'ordered'"></th> 
       </tr>
     </thead>
     <tbody>
@@ -67,11 +67,11 @@
         <td><p ng-repeat = "drink in order.drinks">{{drink.name}}</p></td>
         <td><p ng-repeat = "drink in order.drinks">{{drink.drinkType}}</p></td>
         <td><p ng-repeat = "drink in order.drinks">{{order.drinkQuantity[drink.id]}}</p></td>         
-        <td ng-if = "changeOrder"><p ng-repeat = "drink in order.drinks"><button class = "btn btn-link btn-xs" id={{drink.id}} ng-click = "removeDrink(drink, order)"><span class = "glyphicon glyphicon-remove" style="color:#e60000;"></span></button></p></td> 
+        <td ng-if = "changeOrder && order.orderStatus == 'ordered'"><p ng-repeat = "drink in order.drinks"><button class = "btn btn-link btn-xs" id={{drink.id}} ng-click = "removeDrink(drink, order)"><span class = "glyphicon glyphicon-remove" style="color:#e60000;"></span></button></p></td> 
         <td><p ng-repeat = "dish in order.dishes">{{dish.name}}</p></td>
         <td><p ng-repeat = "dish in order.dishes">{{dish.dishType}}</p></td>  
         <td><p ng-repeat = "dish in order.dishes">{{order.dishQuantity[dish.id]}}</p></td>
-        <td ng-if = "changeOrder"><p ng-repeat = "dish in order.dishes"><button class = "btn btn-link btn-xs" id={{dish.id}} ng-click = "removeDish(dish, order)"><span class = "glyphicon glyphicon-remove" style="color:#e60000;"></span></button></p></td>
+        <td ng-if = "changeOrder && order.orderStatus == 'ordered'"><p ng-repeat = "dish in order.dishes"><button class = "btn btn-link btn-xs" id={{dish.id}} ng-click = "removeDish(dish, order)"><span class = "glyphicon glyphicon-remove" style="color:#e60000;"></span></button></p></td>
               
     </tr>
     <tr>

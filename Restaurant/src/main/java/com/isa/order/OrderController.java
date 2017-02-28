@@ -23,6 +23,7 @@ import com.isa.dish.Dish;
 import com.isa.dish.DishService;
 import com.isa.drink.Drink;
 import com.isa.drink.DrinkService;
+import com.isa.guest.Guest;
 import com.isa.ordered.dish.DishStatus;
 import com.isa.ordered.dish.OrderedDish;
 import com.isa.ordered.dish.OrderedDishService;
@@ -68,6 +69,23 @@ public class OrderController {
 	public Order getOrder(@PathVariable Long id) {		
 		Order order = (Order) orderService.findOne(id);
 		return order;
+	}
+	
+	@GetMapping(path = "/getOrderByReservation/{resId}")
+	public Order getOrderByReservation(@PathVariable Long resId) {	
+		
+		Reservation reservation = reservationService.findById(resId);
+		Guest currentGuest = (Guest) httpSession.getAttribute("user");
+				
+		//for(Order order : reservation.getOrders()) {
+			//if(order.getGuestId().equals(currentGuest.getId()))
+			//return order;
+		//}
+		
+		
+		//Order order = (Order) orderService.findOne(id);
+		//return order;
+		return null;
 	}
 	
 	@PostMapping(path = "/addOrder/{reservationId}", consumes="application/json; charset=utf8")

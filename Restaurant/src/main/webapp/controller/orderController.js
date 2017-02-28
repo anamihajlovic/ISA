@@ -229,9 +229,7 @@ orderModule.controller('orderController', ['$scope', 'orderService', 'employeeSe
 	
 	
 	
-	$scope.acceptOrder = function() {
-		alert($scope.order.id)
-		alert($scope.selectedTable)
+	$scope.acceptOrder = function() {		
 		var request = orderService.acceptOrder($scope.order.id, $scope.selectedTable).then(function(response){
 			$scope.data = response.data;			
 			return response;

@@ -2,8 +2,8 @@ var guestModule = angular.module('guest.controller', []);
 
 
 
-guestModule.controller('guestController', ['$scope', 'guestService','commonService', '$location','$interval', '$filter', '$state',
-	function($scope, guestService, commonService,  $location, $interval, $filter, $state) {
+guestModule.controller('guestController', ['$scope', 'guestService', 'orderService', 'commonService', '$location','$interval', '$filter', '$state',
+	function($scope, guestService, orderService, commonService,  $location, $interval, $filter, $state) {
 	
 		$scope.numOfFriendRequest= 0;
 		
@@ -576,7 +576,20 @@ guestModule.controller('guestController', ['$scope', 'guestService','commonServi
 		}
 		
 		
-		
+		$scope.rateVisit = function(reservation) {			
+			var request = orderService.getOrder(reservation.id).then(function(response) {
+				$scope.data = response.data;
+				return response;
+			
+			});
+			
+			request.then(function (data) {
+				$scope.order = $scope.data;
+				$state.go('guest.rateVisit');
+			});
+			
+			
+		}
 		
 		//KRAJ ISTORIJE POSETA
 		

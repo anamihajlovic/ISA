@@ -62,5 +62,9 @@ guestServices.service('orderService', ['$http', function($http) {
 	this.getReservation = function(reservationId) {
 		return $http.get("/reservations/getReservation/"+reservationId);
 	}
+	
+	this.getOrder = function(reservationId) {
+		return $http.get("/orders/getOrderByReservation/"+reservationId);
+	}
 
 }]);
