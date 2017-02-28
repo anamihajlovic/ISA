@@ -14,6 +14,9 @@ public interface ReservationService {
 	Reservation findById(Long id);
 
 	List<Reservation> findAll();
+	
+	List<Reservation> findByGuestId(Long guestId);
+
 
 
 

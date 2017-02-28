@@ -15,6 +15,8 @@ public interface ReservationRepository extends PagingAndSortingRepository<Reserv
 	public List<Reservation> findByResIdAndDate(Long resId, Date date);
 	
 	public Reservation findById(Long id);
+	
+	public List<Reservation> findByGuestId(Long guestId);
 
 
 

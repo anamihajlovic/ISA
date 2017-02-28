@@ -1,0 +1,64 @@
+<div class = "col-sm-2">
+</div>
+<div class = "col-sm-8">
+	<h4>My visits</h4>
+	<table  class="table table-bordered tableBG" border="1">
+		<tbody>
+	        <tr>
+				<th>Restaurant</th>
+				<th>Date</th>
+                <th>Start time</th>
+                <th>End time</th>
+                <th></th>
+            </tr>
+			<tr ng-repeat="reservation in myVisits">
+				<td>
+		    		{{reservation.resName}}	
+				</td>
+            	<td>
+		    		{{reservation.date}}	
+				</td>
+				<td>
+		    		{{reservation.startTime}}	
+				</td>
+            	<td>
+		    		{{reservation.endTime}}	
+				</td>
+				<td>
+				<!-- Trigger the modal with a button -->
+				<button type="button" id="modalBtnFriends" ng-click="getInvitations(reservation.id)"class="btn btn-default navbar-btn" data-toggle="modal" data-target="#myModalFriends" title="See friends"><span class="glyphicon glyphicon-user"></span></button>					
+				</td>
+			</tr>
+        </tbody>
+    </table> 
+    </div>
+    
+    
+    
+ <!-- Modal -->
+<div id="myModalFriends" class="modal fade "  >
+  <div class="modal-dialog modal-admin ">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title" id="modalTitle">Friends who were with you in restaurant</h4>
+      </div>
+      <div class="modal-body">
+		<label>Ovde tabela sa invitation podacima<br>
+		</label>
+		
+		<label>ovde poruka ako je pozvan u restoran bio<br>
+		</label>
+	
+	
+      </div>
+      <div class="modal-footer">
+      <button type="button" class="btn btn-default" data-dismiss="modal" data-ui-sref="."><span class="glyphicon glyphicon-ok" ></span> OK</button>
+      </div>
+    </div>
+
+  </div>
+</div>
+ 

@@ -559,6 +559,27 @@ guestModule.controller('guestController', ['$scope', 'guestService','commonServi
 			});
 		}
 		
+		//ISTORIJA POSETA
+		$scope.getMyVisits = function() {
+			var request = guestService.getMyVisits($scope.guest.id).then(function(response){
+				$scope.data = response.data;
+				return response;
+			});
+				
+			request.then(function (data) {
+				if($scope.data.size != 0) {
+					$scope.myVisits = $scope.data;
+				} else {
+						toastr.info("You haven't visited any restaurant.");
+				}
+			});
+		}
+		
+		
+		
+		
+		//KRAJ ISTORIJE POSETA
+		
 
 
 		

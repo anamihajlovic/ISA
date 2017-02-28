@@ -320,16 +320,16 @@ insert into reservation_orders(reservation_id, order_id) values (1, 2)
 
 
 --PROBA SA POZIVNICAMA--
-insert into invitations(reservation_id,sender_id,friend_id,friend_name,status)values(1,1,2,'jelena','accepted')
-insert into invitations(reservation_id,sender_id,friend_id,friend_name,status)values(1,1,2,'jelena','accepted')
-insert into invitations(reservation_id,sender_id,friend_id,friend_name,status)values(2,1,2,'jelena','accepted')
-insert into invitations(reservation_id,sender_id,friend_id,friend_name,status)values(2,1,2,'jelena','accepted')
-insert into invitations(reservation_id,sender_id,friend_id,friend_name,status)values(2,1,2,'jelena','accepted')
-insert into invitations(reservation_id,sender_id,friend_id,friend_name,status)values(1,1,2,'jelena','accepted')
-insert into invitations(reservation_id,sender_id,friend_id,friend_name,status)values(3,1,2,'jelena','accepted')
-insert into invitations(reservation_id,sender_id,friend_id,friend_name,status)values(3,1,2,'jelena','accepted')
-insert into invitations(reservation_id,sender_id,friend_id,friend_name,status)values(3,1,2,'jelena','accepted')
-insert into invitations(reservation_id,sender_id,friend_id,friend_name,status)values(3,1,2,'jelena','accepted')
+insert into invitations(reservation_id,sender_id,friend_id,friend_name,status)values(1,1,2,'Jelena Kalabic','accepted')
+insert into invitations(reservation_id,sender_id,friend_id,friend_name,status)values(1,1,3,'Tamara Mrksic','pending')
+insert into invitations(reservation_id,sender_id,friend_id,friend_name,status)values(2,1,2,'Jelena Kalabic','accepted')
+insert into invitations(reservation_id,sender_id,friend_id,friend_name,status)values(2,1,3,'Tamara Mrksic','accepted')
+insert into invitations(reservation_id,sender_id,friend_id,friend_name,status)values(2,1,8,'Bakir Niksic','pending')
+insert into invitations(reservation_id,sender_id,friend_id,friend_name,status)values(3,1,2,'Jelena Kalabic','rejected')
+insert into invitations(reservation_id,sender_id,friend_id,friend_name,status)values(3,1,5,'Carna Stevic','accepted')
+insert into invitations(reservation_id,sender_id,friend_id,friend_name,status)values(4,1,2,'Jelena Kalabic','accepted')
+insert into invitations(reservation_id,sender_id,friend_id,friend_name,status)values(4,1,5,'Carna Stevic','accepted')
+insert into invitations(reservation_id,sender_id,friend_id,friend_name,status)values(4,1,6,'Tijana Djukic','accepted')
 
 --RESERVATION TABLES
 insert into reservation_tables(table_id, reservation_id) values (1,1)
