@@ -29,7 +29,7 @@ public class WaiterController {
 	private final WaiterService waiterService;
 	private final RestaurantService restaurantService;
 	private int visina = 0;
-	private int sirina = 0 ;
+	private int sirina = 0;
 	
 	@Autowired
 	public WaiterController(final HttpSession httpSession, final WaiterService waiterService, final RestaurantService restaurantService) {

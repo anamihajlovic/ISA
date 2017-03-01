@@ -1,9 +1,13 @@
-package com.isa.user;
+package com.isa.grade;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+
+import java.util.Calendar;
+import java.util.Date;
+import java.util.GregorianCalendar;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -18,10 +22,9 @@ import org.springframework.web.context.WebApplicationContext;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-
 @RunWith(SpringRunner.class)
 @SpringBootTest
-public class UserTests {
+public class GradeTests {
 	
 	@Autowired
 	public WebApplicationContext context;
@@ -32,21 +35,24 @@ public class UserTests {
 	public void setUp() {
 		this.mvc = MockMvcBuilders.webAppContextSetup(this.context).build();
 	}
-
+	
+	
 	@Test
-	public void testLogin() throws Exception {
+	public void testNewGrade() throws Exception {
+		Date day = new GregorianCalendar(2017, Calendar.MARCH, 01).getTime();		
+		Grade newGrade = new Grade(6L, 4L, 2L, 3L, 2L, 4L, 3D, 4D, 3D, day);
 		
-		LoginData loginData =new LoginData("ana@gmail.com", "ana");
-
-		this.mvc.perform(post("/users/login").contentType(MediaType.APPLICATION_JSON).content(asJsonString(loginData))).andExpect(status().isOk());
-
+		this.mvc.perform(post("/grades/addNew").contentType(MediaType.APPLICATION_JSON).content(asJsonString(newGrade)))
+		.andExpect(status().isOk());		
 	}
 	
 	@Test
-	public void testLogout() throws Exception {
-
-		this.mvc.perform(get("/users/logout")).andExpect(status().isOk())
-				.andExpect(content().string("OK"));
+	public void testGetRatedReservation() throws Exception {
+		
+		Long reservationId = 3L;
+		Long guestId = 4L;
+		
+		this.mvc.perform(get("/grades/getRatedReservation/" + reservationId + "/" +  guestId)).andExpect(status().isOk());
 	}
 	
 	public static String asJsonString(final Object obj) {
@@ -57,6 +63,5 @@ public class UserTests {
 	    } catch (Exception e) {
 	        throw new RuntimeException(e);
 	    }
-	}  
-
+	}
 }

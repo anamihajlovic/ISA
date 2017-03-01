@@ -1,7 +1,8 @@
-package com.isa.user;
+package com.isa.order;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -17,11 +18,11 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-
+import com.isa.bill.Bill;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
-public class UserTests {
+public class OrderTests {
 	
 	@Autowired
 	public WebApplicationContext context;
@@ -32,22 +33,49 @@ public class UserTests {
 	public void setUp() {
 		this.mvc = MockMvcBuilders.webAppContextSetup(this.context).build();
 	}
-
+	
 	@Test
-	public void testLogin() throws Exception {
+	public void testAcceptOrder() throws Exception {
 		
-		LoginData loginData =new LoginData("ana@gmail.com", "ana");
-
-		this.mvc.perform(post("/users/login").contentType(MediaType.APPLICATION_JSON).content(asJsonString(loginData))).andExpect(status().isOk());
-
+		Long orderId = 4L;
+		String tableId = "2";
+		
+		this.mvc.perform(put("/orders/acceptOrder/"+orderId+"/"+tableId)).andExpect(status().isOk());				
 	}
 	
 	@Test
-	public void testLogout() throws Exception {
-
-		this.mvc.perform(get("/users/logout")).andExpect(status().isOk())
-				.andExpect(content().string("OK"));
+	public void testFinishOrder() throws Exception {
+		Long orderId = 3L;
+		this.mvc.perform(put("/orders/finishOrder/"+orderId)).andExpect(status().isOk()).andExpect(content().string("success"));
 	}
+	
+	@Test
+	public void testGetRestaurantDishOrders() throws Exception {
+		Long restaurantId = 1L;
+		this.mvc.perform(get("/orders/getRestaurantDishOrders/"+restaurantId)).andExpect(status().isOk());
+	}
+	
+	@Test
+	public void testGetRestaurantDrinkOrders() throws Exception {
+		Long restaurantId = 1L;
+		this.mvc.perform(get("/orders/getRestaurantDrinkOrders/"+restaurantId)).andExpect(status().isOk());
+	}
+	
+	@Test
+	public void testCreateBill() throws Exception {		
+		
+		Bill bill = new Bill();
+		bill.setId(38L);
+		bill.setBillDate("2017-02-27");
+		bill.setTime("12:10:01");
+		bill.setTotalPrice(4000L);
+		bill.setWaiterId(2L);
+		
+		this.mvc.perform(post("/bills/createBill").contentType(MediaType.APPLICATION_JSON).content(asJsonString(bill)))
+		.andExpect(status().isOk()).andExpect(content().string("success"));
+
+	}
+	
 	
 	public static String asJsonString(final Object obj) {
 	    try {
@@ -57,6 +85,5 @@ public class UserTests {
 	    } catch (Exception e) {
 	        throw new RuntimeException(e);
 	    }
-	}  
-
+	}
 }

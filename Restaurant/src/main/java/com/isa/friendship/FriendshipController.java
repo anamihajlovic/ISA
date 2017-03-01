@@ -42,7 +42,6 @@ public class FriendshipController {
 			if (guests.get(i).getId() == id) {// uklanjanje gosta koji trazi
 												// prijatelje
 				guests.remove(i);
-				System.out.println("Uklonjen korisnik sa id-jem iz liste " + id);
 			}
 
 		for (Friendship f : friendships) {

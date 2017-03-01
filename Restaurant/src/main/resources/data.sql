@@ -8,6 +8,7 @@ insert into guests(email, password, first_name, last_name,user_role, first_login
 insert into guests(email, password, first_name, last_name,user_role, first_login, active, guest_a_code) values ('danilo@gmail.com', 'danilo', 'Danilo', 'Dimitrijevic','guest', false, true, 'mki566tgt')
 insert into guests(email, password, first_name, last_name,user_role, first_login, active, guest_a_code) values ('bakir@gmail.com', 'baki', 'Bakir', 'Niksic','guest',false, true, 'lwe267cfr')
 insert into guests(email, password, first_name, last_name,user_role, first_login, active, guest_a_code) values ('mirko@gmail.com', 'mirko', 'Mirko', 'Odalovic','guest', false, true, 'law369zde')
+insert into guests(email, password, first_name, last_name,user_role, first_login, active, guest_a_code) values ('mika@gmail.com', 'mika', 'Mika', 'Mikic','guest', false, false, 'ljy769zde')
 
 
 
@@ -113,11 +114,13 @@ insert into restaurant_bidders(restaurant_id,bidder_id)values(1,2)
 insert into dishes(name,text, price,dish_type)values('Pica','opis',250,'pasta')
 insert into dishes(name,text, price,dish_type)values('Testo','opis',400,'pasta')
 insert into dishes(name,text, price,dish_type)values('Palacinke','opis',200,'dessert')
+insert into dishes(name,text, price,dish_type)values('Saran','opis',800,'fish')
 
 --DRINK
 insert into drinks(name,text, price,drink_type)values('Sok','opis',130,'soda')
 insert into drinks(name,text, price,drink_type)values('Kafa','opis',120,'coffee')
 insert into drinks(name,text, price,drink_type)values('Caj','opis',110,'coffee')
+insert into drinks(name,text, price,drink_type)values('Limunada','opis',90,'soda')
 
 
 --WARENHOUSE
@@ -141,48 +144,63 @@ insert into foodstuffs_in_restuarants(restaurant_id,foodstuff_id)values(2,6)
 --MENU
 insert into restuarant_menu(restaurant_id,dish_id)values(1,1)
 insert into restuarant_menu(restaurant_id,dish_id)values(1,2)
+insert into restuarant_menu(restaurant_id,dish_id)values(1,4)
 insert into restuarant_menu(restaurant_id,dish_id)values(2,3)
 
 --DRINK_CARD
 insert into restaurant_drink_card(restaurant_id,drink_id)values(1,1)
 insert into restaurant_drink_card(restaurant_id,drink_id)values(1,2)
+insert into restaurant_drink_card(restaurant_id,drink_id)values(1,4)
 insert into restaurant_drink_card(restaurant_id,drink_id)values(2,3)
 
 
 --WORK SHIFTS
-insert into work_shifts (start_time,end_time,shift_type,day)values('08:00:00','14:00:00','firstShift','2017-02-28')
-insert into work_shifts (start_time,end_time,shift_type,day)values('14:00:01','23:55:00','secondShift','2017-02-28')
+insert into work_shifts (start_time,end_time,shift_type,day)values('08:00:00','14:00:00','firstShift','2017-02-27')
+insert into work_shifts (start_time,end_time,shift_type,day)values('14:00:01','23:55:00','secondShift','2017-02-27')
 insert into work_shifts (start_time,end_time,shift_type,day)values('08:00:00','14:00:00','firstShift','2017-03-01')
 insert into work_shifts (start_time,end_time,shift_type,day)values('14:00:01','20:00:00','secondShift','2017-03-01')
 insert into work_shifts (start_time,end_time,shift_type,day)values('08:00:00','14:00:00','firstShift','2017-03-02')
 insert into work_shifts (start_time,end_time,shift_type,day)values('14:00:01','20:00:00','secondShift','2017-03-02')
+insert into work_shifts (start_time,end_time,shift_type,day)values('07:00:00','12:00:00','firstShift','2017-03-02')
+insert into work_shifts (start_time,end_time,shift_type,day)values('14:00:00','18:00:00','secondShift','2017-03-02')
 
-insert into work_shift_waiters values(1, 1)
-insert into work_shift_waiters values(2, 5)
-insert into work_shift_waiters values(3, 1)
-insert into work_shift_waiters values(4, 2)
+
+
+insert into work_shift_waiters values(1, 5)
+insert into work_shift_waiters values(2, 1)
+insert into work_shift_waiters values(3, 5)
+insert into work_shift_waiters values(4, 5)
 insert into work_shift_waiters values(5, 1)
-insert into work_shift_waiters values(6, 2)
+insert into work_shift_waiters values(6, 5)
+
+insert into work_shift_waiters values(7, 2)
+insert into work_shift_waiters values(8, 2)
 
 insert into work_shift_cooks values(1, 1)
-insert into work_shift_cooks values(1, 3)
-insert into work_shift_cooks values(2, 2)
-insert into work_shift_cooks values(3, 1)
-insert into work_shift_cooks values(4, 3)
-insert into work_shift_cooks values(4, 2)
+insert into work_shift_cooks values(1, 1)
+insert into work_shift_cooks values(2, 5)
+insert into work_shift_cooks values(3, 5)
+insert into work_shift_cooks values(5, 5)
+insert into work_shift_cooks values(6, 1)
+
+insert into work_shift_cooks values(7, 2)
+
 
 insert into work_shift_bartenders values(1, 1)
 insert into work_shift_bartenders values(2, 5)
-insert into work_shift_bartenders values(2, 2)
+insert into work_shift_bartenders values(2, 1)
 insert into work_shift_bartenders values(3, 1)
-insert into work_shift_bartenders values(4, 3)
-insert into work_shift_bartenders values(4, 2)
+insert into work_shift_bartenders values(5, 5)
+insert into work_shift_bartenders values(6, 1)
 
+insert into work_shift_bartenders values(8, 2)
 
 --WORK DAYS
-insert into work_days (day)values('2017-02-28')
+insert into work_days(day)values('2017-02-27')
 insert into work_days(day)values('2017-03-01')
 insert into work_days(day)values('2017-03-02')
+insert into work_days(day)values('2017-03-02')
+
 
 insert into work_shifts_in_work_days (work_day_id,work_shift_id)values (1,1)
 insert into work_shifts_in_work_days (work_day_id,work_shift_id)values (1,2)
@@ -194,9 +212,15 @@ insert into work_shifts_in_work_days (work_day_id,work_shift_id)values (3,5)
 insert into work_shifts_in_work_days (work_day_id,work_shift_id)values (3,6)
 
 
+insert into work_shifts_in_work_days (work_day_id,work_shift_id)values (4, 7)
+insert into work_shifts_in_work_days (work_day_id,work_shift_id)values (4, 8)
+
+
+
 insert into restaurant_work_days(restaurant_id,work_day_id)values(1,1)
 insert into restaurant_work_days(restaurant_id,work_day_id)values(1,2)
 insert into restaurant_work_days(restaurant_id,work_day_id)values(1,3)
+insert into restaurant_work_days(restaurant_id,work_day_id)values(2,4)
 ------------------------------------------------------------------------------------------------------
 
 
@@ -238,13 +262,35 @@ insert into order_foodstuffs(order_id,unit_id)values(2,3)
 insert into orders(restaurant_id,reservation_id,acceptance_time,order_date,order_status,drinks_status,dish_status, guest_id, accepted_waiter) values (1, 1,'19:00:00','2017-02-27','ordered', 'ordered', 'ordered', 2, 1)
 insert into orders(restaurant_id,reservation_id,acceptance_time,order_date,order_status,drinks_status,dish_status, guest_id, accepted_waiter) values (1, 1,'19:30:00','2017-02-27', 'ordered', 'ordered', 'ordered', 3, 5)
 
+insert into orders(restaurant_id,reservation_id,acceptance_time,order_date,order_status,drinks_status,dish_status) values (1, 1,'19:00:00','2017-03-01','ordered', 'ordered', 'ordered')
+insert into orders(restaurant_id,reservation_id,acceptance_time,order_date,order_status,drinks_status,dish_status) values (1, 1,'19:30:00','2017-03-01', 'ordered', 'ordered', 'ordered')
+insert into orders(restaurant_id,reservation_id,acceptance_time,order_date,order_status,drinks_status,dish_status) values (1, 1,'11:00:00','2017-03-02','ordered', 'ordered', 'ordered')
+insert into orders(restaurant_id,reservation_id,acceptance_time,order_date,order_status,drinks_status,dish_status) values (1, 1,'12:00:00','2017-03-02', 'ordered', 'ordered', 'ordered')
+
 insert into ordered_drinks(order_id,drink_id) values (1,1)
 insert into ordered_drinks(order_id,drink_id) values (1,1)
 insert into ordered_drinks(order_id,drink_id) values (1,2)
 
 insert into ordered_drinks(order_id,drink_id) values (2,2)
-insert into ordered_drinks(order_id,drink_id) values (2,3)
-insert into ordered_drinks(order_id,drink_id) values (2,3)
+insert into ordered_drinks(order_id,drink_id) values (2,2)
+insert into ordered_drinks(order_id,drink_id) values (2,1)
+--**********************01.03*****************************
+insert into ordered_drinks(order_id,drink_id) values (3,1)
+insert into ordered_drinks(order_id,drink_id) values (3,1)
+insert into ordered_drinks(order_id,drink_id) values (3,2)
+
+insert into ordered_drinks(order_id,drink_id) values (4,2)
+insert into ordered_drinks(order_id,drink_id) values (4,2)
+insert into ordered_drinks(order_id,drink_id) values (4,1)
+---************************02.03**************************
+insert into ordered_drinks(order_id,drink_id) values (5,1)
+insert into ordered_drinks(order_id,drink_id) values (5,1)
+insert into ordered_drinks(order_id,drink_id) values (5,2)
+
+insert into ordered_drinks(order_id,drink_id) values (6,2)
+insert into ordered_drinks(order_id,drink_id) values (6,2)
+insert into ordered_drinks(order_id,drink_id) values (6,1)
+--********************************************************
 
 insert into all_ordered_dishes(order_id, dish_id, dish_status) values(2, 1, 'ordered')
 insert into all_ordered_dishes(order_id, dish_id, dish_status) values(2, 1, 'ordered')
@@ -253,6 +299,24 @@ insert into all_ordered_dishes(order_id, dish_id, dish_status) values(2, 2, 'ord
 insert into ordered_dish(order_id,dish_order_id) values (2,1)
 insert into ordered_dish(order_id,dish_order_id) values (2,2)
 insert into ordered_dish(order_id,dish_order_id) values (2,3)
+
+--**********************01.03***************************************
+insert into all_ordered_dishes(order_id, dish_id, dish_status) values(4, 1, 'ordered')
+insert into all_ordered_dishes(order_id, dish_id, dish_status) values(4, 1, 'ordered')
+insert into all_ordered_dishes(order_id, dish_id, dish_status) values(4, 2, 'ordered')
+
+insert into ordered_dish(order_id,dish_order_id) values (4,4)
+insert into ordered_dish(order_id,dish_order_id) values (4,5)
+insert into ordered_dish(order_id,dish_order_id) values (4,6)
+--**********************02.03***************************************
+insert into all_ordered_dishes(order_id, dish_id, dish_status) values(6, 1, 'ordered')
+insert into all_ordered_dishes(order_id, dish_id, dish_status) values(6, 1, 'ordered')
+insert into all_ordered_dishes(order_id, dish_id, dish_status) values(6, 2, 'ordered')
+
+insert into ordered_dish(order_id,dish_order_id) values (6,7)
+insert into ordered_dish(order_id,dish_order_id) values (6,8)
+insert into ordered_dish(order_id,dish_order_id) values (6,9)
+
 
 ---CONFIGURATION 
 
@@ -300,35 +364,31 @@ insert into waiter_responsabilities values(3,5)
 insert into waiter_responsabilities values(4,1)
 
 
-insert into work_shift_responsabilites values(1,1)
-insert into work_shift_responsabilites values(1,2)
-insert into work_shift_responsabilites values(2,3)
-insert into work_shift_responsabilites values(2,4)
+insert into work_shift_responsabilites values(3,3)
+insert into work_shift_responsabilites values(3,4)
+insert into work_shift_responsabilites values(4,1)
+insert into work_shift_responsabilites values(4,2)
 
 
 
 --RESERVATIONS
 
-insert into reservations(res_id, res_name, guest_id, date, start_time, end_time, tables_id) values (1, 'Lanterna', 1, '2017-02-26', '17:30', '19:45', '1;2')
-insert into reservations(res_id, res_name, guest_id, date, start_time, end_time, tables_id) values (1, 'Lanterna', 1, '2017-02-26', '18:30', '20:00', '6')
-insert into reservations(res_id, res_name, guest_id, date, start_time, end_time, tables_id) values (1, 'Lanterna', 1, '2017-02-27', '17:30', '19:45', '7')
-insert into reservations(res_id, res_name, guest_id, date, start_time, end_time, tables_id) values (1, 'Lanterna', 1, '2017-02-28', '17:30', '19:45', '7')
-insert into reservations(res_id, res_name, guest_id, date, start_time, end_time, tables_id) values (1, 'Lanterna', 1, '2017-03-03', '17:30', '19:45', '10')
-insert into reservations(res_id, res_name, guest_id, date, start_time, end_time, tables_id) values (1, 'Lanterna', 1, '2017-03-03', '12:30', '13:45', '9')
-insert into reservations(res_id, res_name, guest_id, date, start_time, end_time, tables_id) values (1, 'Lanterna', 1, '2017-03-04', '17:30', '19:45', '2')
-insert into reservations(res_id, res_name, guest_id, date, start_time, end_time, tables_id) values (1, 'Lanterna', 1, '2017-03-04', '12:30', '13:45', '1;3')
-
 insert into reservations(res_id, res_name, guest_id, date, start_time, end_time, tables_id, deleted) values (1, 'Lanterna', 1, '2017-02-26', '17:30', '19:45', '1;2', false)
 insert into reservations(res_id, res_name, guest_id, date, start_time, end_time, tables_id, deleted) values (1, 'Lanterna', 1, '2017-02-26', '18:30', '20:00', '6', false)
 insert into reservations(res_id, res_name, guest_id, date, start_time, end_time, tables_id, deleted) values (1, 'Lanterna', 1, '2017-02-27', '17:30', '19:45', '7', false)
 insert into reservations(res_id, res_name, guest_id, date, start_time, end_time, tables_id, deleted) values (1, 'Lanterna', 1, '2017-02-28', '17:30', '19:45', '7', false)
+insert into reservations(res_id, res_name, guest_id, date, start_time, end_time, tables_id, deleted) values (1, 'Lanterna', 1, '2017-03-03', '17:30', '19:45', '10', false)
+insert into reservations(res_id, res_name, guest_id, date, start_time, end_time, tables_id, deleted) values (1, 'Lanterna', 1, '2017-03-03', '12:30', '13:45', '9', false)
+insert into reservations(res_id, res_name, guest_id, date, start_time, end_time, tables_id, deleted) values (1, 'Lanterna', 1, '2017-03-02', '17:30', '19:45', '2', false)
+insert into reservations(res_id, res_name, guest_id, date, start_time, end_time, tables_id, deleted) values (1, 'Lanterna', 1, '2017-03-02', '12:30', '13:45', '1;3', false)
+
 
 --RESERVATION_ORDERS
 insert into reservation_orders(reservation_id, order_id) values (1, 1)
 insert into reservation_orders(reservation_id, order_id) values (1, 2)
 
 
---PROBA SA POZIVNICAMA--
+--POZIVNICE--
 insert into invitations(reservation_id,sender_id,friend_id,friend_name,status)values(1,1,2,'Jelena Kalabic','accepted')
 insert into invitations(reservation_id,sender_id,friend_id,friend_name,status)values(1,1,3,'Tamara Mrksic','accepted')
 insert into invitations(reservation_id,sender_id,friend_id,friend_name,status)values(2,1,2,'Jelena Kalabic','accepted')
@@ -438,12 +498,9 @@ insert into restaurant_bills values(1,36)
 insert into restaurant_bills values(1,37)
 
 --GRADES
-insert into grades(guest_id, restaurant_id, reservation_id, waiter_id, order_id, order_grade, waiter_grade, restaurant_grade, grade_date) values (1, 1, 1, 1, 1, 5.0, 3.0, 4.0, '2017-02-26')
-insert into grades(guest_id, restaurant_id, reservation_id, waiter_id, order_id, order_grade, waiter_grade, restaurant_grade, grade_date) values (2, 1, 1, 1, 2, 5.0, 5.0, 4.0, '2017-02-26')
 insert into grades(guest_id, restaurant_id, reservation_id, waiter_id, order_id, order_grade, waiter_grade, restaurant_grade, grade_date) values (3, 3, 2, 3, 4, 2.0, 3.0, 3.0, '2016-02-26')
 insert into grades(guest_id, restaurant_id, reservation_id, waiter_id, order_id, order_grade, waiter_grade, restaurant_grade, grade_date) values (1, 3, 2, 3, 3, 5.0, 3.0, 4.0, '2016-02-26')
 insert into grades(guest_id, restaurant_id, reservation_id, waiter_id, order_id, order_grade, waiter_grade, restaurant_grade, grade_date) values (3, 2, 3, 2, 6, 3.0, 3.0, 3.0, '2017-02-10')
 insert into grades(guest_id, restaurant_id, reservation_id, waiter_id, order_id, order_grade, waiter_grade, restaurant_grade, grade_date) values (4, 2, 3, 2, 5, 1.0, 2.0, 2.0, '2017-02-10')
-
 
 

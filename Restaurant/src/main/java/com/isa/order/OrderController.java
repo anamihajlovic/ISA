@@ -6,9 +6,12 @@ import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 
+import javax.persistence.OptimisticLockException;
 import javax.servlet.http.HttpSession;
 
+import org.hibernate.StaleObjectStateException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.orm.ObjectOptimisticLockingFailureException;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -68,6 +71,31 @@ public class OrderController {
 	@GetMapping(path = "/getOrder/{id}")
 	public Order getOrder(@PathVariable Long id) {		
 		Order order = (Order) orderService.findOne(id);
+		
+		for(Drink drink : order.getOrderedDrinks()) {
+			if(!order.getDrinks().contains(drink)) {
+				order.getDrinks().add(drink);
+				order.getDrinkQuantity().put(drink.getId(), new Integer(1));						
+			
+			} else {
+				int value = order.getDrinkQuantity().get(drink.getId());
+				value++;
+				order.getDrinkQuantity().put(drink.getId(), new Integer(value));						
+			}						
+		}
+		for(OrderedDish orderedDish : order.getOrderedDish()) {
+			Dish dish = dishService.findOne(orderedDish.getDishId());
+			if(!order.getDishes().contains(dish)) {
+				order.getDishes().add(dish);
+				order.getDishQuantity().put(dish.getId(), new Integer(1));							
+				
+			} else {
+				int value = order.getDishQuantity().get(dish.getId());						
+				value++;
+				order.getDishQuantity().put(dish.getId(), new Integer(value));												
+			}	
+		}
+			
 		return order;
 	}
 	
@@ -185,6 +213,8 @@ public class OrderController {
 			Waiter activeWaiter = (Waiter) httpSession.getAttribute("user");
 			Order order = (Order) orderService.findOne(id);
 			order.setOrderStatus(OrderStatus.accepted);
+			
+			System.out.println("tu sam");
 						
 			Date now = new Date();
 			SimpleDateFormat timeFormatter = new SimpleDateFormat("kk:mm:ss");
@@ -195,6 +225,7 @@ public class OrderController {
 			orderService.save(order);
 			return order;
 		}catch(Exception e) {
+			System.out.println(e);
 			return null;
 		}			
 	}
@@ -276,6 +307,19 @@ public class OrderController {
 		}
 		
 	}
+	
+	public Date convertDate() {
+		try{
+			Date today = new Date();			
+			SimpleDateFormat timeFormatter = new SimpleDateFormat("yyyy-MM-dd");
+			String todayStr = timeFormatter.format(today);						
+			Date currentDate = timeFormatter.parse(todayStr);
+			return currentDate;
+		} catch(Exception e) {
+			System.out.println("Error occured while parsing dates");
+			return null;		
+		}
+	}
 		
 	@GetMapping(path = "/getRestaurantDishOrders/{restaurantId}")
 	public List<Order> getRestaurantDishOrders(@PathVariable Long restaurantId) {		
@@ -283,8 +327,10 @@ public class OrderController {
 		List<Order> allOrders = orderService.findAll();	
 		List<Order> restaurantDishOrders = new ArrayList<Order>();
 		
-		for(Order order : allOrders) 
-			if(order.getRestaurantId().equals(restaurantId) && order.getOrderStatus().equals(OrderStatus.accepted) && order.getOrderedDish().size() > 0) {
+		Date currentDate = convertDate();
+		
+		for(Order order : allOrders) 			
+			if(order.getRestaurantId().equals(restaurantId) && (order.getOrderStatus().equals(OrderStatus.accepted) || order.getOrderStatus().equals(OrderStatus.preparing)) && order.getOrderedDish().size() > 0 && currentDate.compareTo(order.getOrderDate()) == 0) {							
 				
 				for(OrderedDish orderedDish : order.getOrderedDish()) {
 					Dish dish = dishService.findOne(orderedDish.getDishId());
@@ -314,11 +360,12 @@ public class OrderController {
 		
 		List<Order> allOrders = orderService.findAll();	
 		List<Order> preparingDishes = new ArrayList<Order>();
+		Date currentDate = convertDate();
 		
 		Cook activeCook = (Cook) httpSession.getAttribute("user");
 		
 		for(Order order : allOrders) 
-			if(order.getRestaurantId().equals(activeCook.getRestaurantId()) && order.getOrderedDish().size() > 0) {
+			if(order.getRestaurantId().equals(activeCook.getRestaurantId()) && order.getOrderedDish().size() > 0 && currentDate.compareTo(order.getOrderDate()) == 0) {
 				
 				for(OrderedDish orderedDish : order.getOrderedDish()) {
 					Dish dish = dishService.findOne(orderedDish.getDishId());
@@ -350,11 +397,12 @@ public class OrderController {
 	@GetMapping(path = "/getRestaurantDrinkOrders/{restaurantId}")
 	public List<Order> getRestaurantDrinkOrders(@PathVariable Long restaurantId) {
 		
-		List<Order> allOrders = orderService.findAll();
-		
+		List<Order> allOrders = orderService.findAll();		
 		List<Order> restaurantDrinkOrders = new ArrayList<Order>();
+		Date currentDate = convertDate();
+		
 		for(Order order : allOrders)
-			if(order.getRestaurantId().equals(restaurantId) && (order.getOrderStatus().equals(OrderStatus.accepted) || order.getOrderStatus().equals(OrderStatus.ready))  && order.getOrderedDrinks().size() > 0) {
+			if(order.getRestaurantId().equals(restaurantId) && (order.getOrderStatus().equals(OrderStatus.accepted) || order.getOrderStatus().equals(OrderStatus.ready))  && order.getOrderedDrinks().size() > 0 && currentDate.compareTo(order.getOrderDate()) == 0) {
 				
 				for(Drink drink : order.getOrderedDrinks()) {
 					if(!order.getDrinks().contains(drink)) {
@@ -380,10 +428,12 @@ public class OrderController {
 		List<Order> restaurantOrders = new ArrayList<Order>();
 		
 		try{
-			List<Order> allOrders = orderService.findAll();			
+			List<Order> allOrders = orderService.findAll();		
+
+			Date currentDate = convertDate();
 			
 			for(Order order : allOrders)
-				if(order.getRestaurantId().equals(restaurantId) && !order.getOrderStatus().equals(OrderStatus.paid)) {
+				if(order.getRestaurantId().equals(restaurantId) && !order.getOrderStatus().equals(OrderStatus.paid) && currentDate.compareTo(order.getOrderDate()) == 0) {
 					for(Drink drink : order.getOrderedDrinks()) {
 						if(!order.getDrinks().contains(drink)) {
 							order.getDrinks().add(drink);
@@ -424,10 +474,11 @@ public class OrderController {
 		List<Order> restaurantOrders = new ArrayList<Order>();
 		
 		try{
-			List<Order> allOrders = orderService.findAll();			
+			List<Order> allOrders = orderService.findAll();		
+			Date currentDate = convertDate();
 			
 			for(Order order : allOrders)
-				if(order.getRestaurantId().equals(restaurantId) && order.getOrderStatus().equals(OrderStatus.served)) {
+				if(order.getRestaurantId().equals(restaurantId) && order.getOrderStatus().equals(OrderStatus.served) && currentDate.compareTo(order.getOrderDate()) == 0) {
 					
 					for(Drink drink : order.getOrderedDrinks()) 
 						if(!order.getDrinks().contains(drink)) {
@@ -468,10 +519,11 @@ public class OrderController {
 		List<Order> restaurantOrders = new ArrayList<Order>();
 		
 		try{
-			List<Order> allOrders = orderService.findAll();			
+			List<Order> allOrders = orderService.findAll();	
+			Date currentDate = convertDate();
 			
 			for(Order order : allOrders)
-				if(order.getRestaurantId().equals(restaurantId) && order.getOrderStatus().equals(OrderStatus.paid)) {										
+				if(order.getRestaurantId().equals(restaurantId) && order.getOrderStatus().equals(OrderStatus.paid) && currentDate.compareTo(order.getOrderDate()) == 0) {										
 					restaurantOrders.add(order);								
 				}	
 			
@@ -489,12 +541,12 @@ public class OrderController {
 	public Order prepareDrinks(@RequestBody Order order) {			
 		
 		if(order != null) {			
-			order.setDrinksStatus(OrderItemStatus.prepared);			
-			
+			order.setDrinksStatus(OrderItemStatus.prepared);						
 			try{
 				orderService.save(order);	
 				orderReady(order);
 			} catch(Exception e) {
+				System.out.println("blaaaa");
 				System.out.println(e);
 				System.out.println("Greska pri update-u porudzbine");
 				return null;
@@ -524,23 +576,30 @@ public class OrderController {
 	
 	
 	@PutMapping(path = "/prepareDish/{orderId}")
-	public String prepareDish(@PathVariable Long orderId, @RequestBody Dish dish) {
+	public Order prepareDish(@PathVariable Long orderId, @RequestBody Dish dish) {
 		
 		List<OrderedDish> orderedDishes = orderedDishService.findByOrderIdAndDishId(orderId, dish.getId());
 		Cook activeCook = (Cook)httpSession.getAttribute("user");
 		
+		Order order = orderService.findOne(orderId);
+		
 		for(OrderedDish orderedDish : orderedDishes) {
 			orderedDish.setStatus(DishStatus.preparing);
-			orderedDish.setCookId(activeCook.getId());
-			
-			try{
-				orderedDishService.save(orderedDish);
-			} catch(Exception e) {
-				System.out.println(e);
-				return "failure";
-			}
-		}					
-		return "success";
+			orderedDish.setCookId(activeCook.getId());						
+			orderedDishService.save(orderedDish);
+		}
+		
+		try{
+			order.setOrderStatus(OrderStatus.preparing);
+			orderService.save(order);
+			return order;
+		} catch(Exception e) {
+			System.out.println("PREPARE DISH");
+			return null;
+		}
+		
+		
+		
 	}
 	
 	@PutMapping(path = "/serveDish/{orderId}")
@@ -571,100 +630,123 @@ public class OrderController {
 		
 		try{
 			Drink drink = drinkService.findOne(drinkId);
-			order.getOrderedDrinks().add(drink);
-			order.getDrinks().add(drink);
+			order.getOrderedDrinks().add(drink);			
 			order.setDrinksStatus(OrderItemStatus.ordered);
 			order.setOrderStatus(OrderStatus.accepted);
-			orderService.save(order);
-			return order;
-		}catch(Exception e) {
-			return null;
-		}					
+			
+			try{
+				orderService.save(order);
+				return order;
+			} catch (OptimisticLockException | StaleObjectStateException | ObjectOptimisticLockingFailureException e) {
+				
+				Order dbOrder = orderService.findOne(order.getId());
+				dbOrder.getOrderedDrinks().add(drink);
+				dbOrder.setDrinksStatus(OrderItemStatus.ordered);
+				dbOrder.setOrderStatus(OrderStatus.accepted);
+				orderService.save(dbOrder);
+				return order;
+			} 
+						
+		} catch(Exception e) {
+				return null;
+		}
+					
 	}
 	
 	@PostMapping(path = "/addDish/{dishId}")
 	public Order addDish(@PathVariable Integer dishId, @RequestBody Order order) {
 		
-		OrderedDish orderedDish = new OrderedDish();		
+		OrderedDish orderedDish = new OrderedDish();
 		
-		try{
-			Dish dish = dishService.findOne(dishId);
-			orderedDish.setDishId(dish.getId());
-			orderedDish.setOrderId(order.getId());
-			orderedDish.setStatus(DishStatus.ordered);
 			
-			try{
-				orderedDishService.save(orderedDish);
-				
-				order.getOrderedDish().add(orderedDish);
-				order.setDishStatus(OrderItemStatus.ordered);
-				order.setOrderStatus(OrderStatus.accepted);
-				order.getDishes().add(dish);
-				
-			}catch(Exception e){
-				System.out.println(e);
-				return null;
-			}			
-								
-			orderService.save(order);
-			return order;
-		}catch(Exception e) {
+		Dish dish = dishService.findOne(dishId);
+		orderedDish.setDishId(dish.getId());
+		orderedDish.setOrderId(order.getId());
+		orderedDish.setStatus(DishStatus.ordered);
+			
+		try{
+			orderedDishService.save(orderedDish);				
+			order.getOrderedDish().add(orderedDish);
+			order.setDishStatus(OrderItemStatus.ordered);
+			order.setOrderStatus(OrderStatus.accepted);
+			order.getDishes().add(dish);
+			
+		}catch(Exception e){
 			System.out.println(e);
 			return null;
-		}					
+		}								
+		
+		try{
+			orderService.save(order);
+			return order;
+			
+		} catch (OptimisticLockException | StaleObjectStateException | ObjectOptimisticLockingFailureException e) {
+			
+			Order dbOrder = orderService.findOne(order.getId());
+			dbOrder.getOrderedDish().add(orderedDish);
+			dbOrder.setDishStatus(OrderItemStatus.ordered);
+			dbOrder.setOrderStatus(OrderStatus.accepted);
+			dbOrder.getDishes().add(dish);
+			orderService.save(dbOrder);
+			return order;
+		} 
+		catch(Exception e) {
+			System.out.println(e);
+			return null;
+		}
+
 	}
 	
 	@PutMapping(path = "/removeDrink/{drinkId}")
 	public Order removeDrink(@PathVariable Integer drinkId, @RequestBody Order order) {
 		
-		Iterator<Drink> it = order.getOrderedDrinks().iterator();
+		Iterator<Drink> it = order.getOrderedDrinks().iterator();			
+		
 		while (it.hasNext()) {
-		    Drink drink = it.next();
-		    if (drink.getId().equals(drinkId)) 
-		        it.remove();
+		    Drink orderedDrink = it.next();
+		    if (orderedDrink.getId().equals(drinkId)) {		    			    	
+		    	it.remove();
+		    }		     
 		}
 				
 		try{
 			orderService.save(order);
 			return order;
+			
+		} catch (OptimisticLockException | StaleObjectStateException | ObjectOptimisticLockingFailureException e) {
+			System.out.println("Tu saaaam hrana.");
+			return null;			
 		}catch(Exception e) {
 			System.out.println(e);
 			return null;
 		}				
 	}
 	
-	@DeleteMapping(path = "/removeDish/{dishId}/{orderId}")
-	public Order removeDish(@PathVariable("dishId") Integer dishId, @PathVariable("orderId") Long orderId) {			
+	@DeleteMapping(path = "/removeDish/{dishId}/{orderId}/{orderVersion}")
+	public Order removeDish(@PathVariable("dishId") Integer dishId, @PathVariable("orderId") Long orderId, @PathVariable("orderVersion") Long orderVersion) {			
+		
+		Order order = orderService.findOne(orderId);												
+		Iterator<OrderedDish> it = order.getOrderedDish().iterator();
+		while (it.hasNext()) {
+			OrderedDish orderedDish = it.next();
+			if(orderedDish.getDishId().equals(dishId)) {			    	
+			    it.remove();
+			   }			       
+		}						
+				
+		if(!order.getVersion().equals(orderVersion))
+			return null;
+		
 		try{
-			Order order = orderService.findOne(orderId);			
-			OrderedDish removingDish = order.getODish(dishId);
+			orderService.save(order);
+			return order;
 			
-			Iterator<OrderedDish> it = order.getOrderedDish().iterator();
-			while (it.hasNext()) {
-				OrderedDish orderedDish = it.next();
-			    if (orderedDish.getId().equals(removingDish.getId())) 
-			        it.remove();
-			}
-			
-			try{
-				orderedDishService.delete(removingDish.getId());		
-			}catch(Exception e) {
-				System.out.println(e);
-				return null;
-			}
-					
-			try{
-				orderService.save(order);
-				return order;
-			}catch(Exception e) {
-				System.out.println(e);
-				return null;
-			}
-			
-		}catch(Exception e) {
+		} catch (Exception e) {
 			System.out.println(e);
+			System.out.println("Aaaaa");
 			return null;
 		}
+						
 	}
 	
 	

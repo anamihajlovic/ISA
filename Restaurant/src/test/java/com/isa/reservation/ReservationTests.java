@@ -1,7 +1,7 @@
-package com.isa.user;
+package com.isa.reservation;
 
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -10,18 +10,14 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.http.MediaType;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-
-
 @RunWith(SpringRunner.class)
 @SpringBootTest
-public class UserTests {
+public class ReservationTests {
 	
 	@Autowired
 	public WebApplicationContext context;
@@ -32,31 +28,41 @@ public class UserTests {
 	public void setUp() {
 		this.mvc = MockMvcBuilders.webAppContextSetup(this.context).build();
 	}
-
+	
+	
 	@Test
-	public void testLogin() throws Exception {
+	public void testGetReservation() throws Exception {
+
+		Long id = 3L;
 		
-		LoginData loginData =new LoginData("ana@gmail.com", "ana");
-
-		this.mvc.perform(post("/users/login").contentType(MediaType.APPLICATION_JSON).content(asJsonString(loginData))).andExpect(status().isOk());
-
+		this.mvc.perform(get("/reservations/getReservation/" + id)).andExpect(status().isOk())
+		.andReturn().getResponse().getContentAsString();
 	}
 	
 	@Test
-	public void testLogout() throws Exception {
-
-		this.mvc.perform(get("/users/logout")).andExpect(status().isOk())
-				.andExpect(content().string("OK"));
+	public void testGetMyVisits() throws Exception {
+		
+		Long guestId = 1L;
+		
+		this.mvc.perform(get("/reservations/getMyVisits/" + guestId)).andExpect(status().isOk());
 	}
 	
-	public static String asJsonString(final Object obj) {
-	    try {
-	        final ObjectMapper mapper = new ObjectMapper();
-	        final String jsonContent = mapper.writeValueAsString(obj);
-	        return jsonContent;
-	    } catch (Exception e) {
-	        throw new RuntimeException(e);
-	    }
-	}  
+	@Test
+	public void testGetActiveReservations() throws Exception {
+		Long guestId = 2L;
+				
+		this.mvc.perform(get("/reservations/getActiveReservations/" + guestId)).andExpect(status().isOk());
+
+
+	}
+	
+
+	@Test
+	public void testDeleteReservation() throws Exception {
+		Long id = 7L;
+		
+		this.mvc.perform(delete("/reservations/deleteReservation/" + id))
+		.andExpect(status().isOk()).andExpect(content().string("OK"));
+	}
 
 }

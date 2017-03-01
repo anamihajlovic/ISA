@@ -20,6 +20,7 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.persistence.Transient;
+import javax.persistence.Version;
 
 import com.isa.dish.Dish;
 import com.isa.drink.Drink;
@@ -77,6 +78,12 @@ public class Order {
 	@JoinTable(name = "ordered_dish", joinColumns = @JoinColumn(name = "order_id"), inverseJoinColumns = @JoinColumn(name = "dish_order_id"))
 	private List<OrderedDish> orderedDish;
 	
+	
+	@Version
+	@Column(columnDefinition = "integer DEFAULT 0", nullable = false)
+	private Long version = 0L;
+	
+	
 	@Transient
 	private List<Dish> dishes = new ArrayList<Dish>();
 	
@@ -99,7 +106,7 @@ public class Order {
 	
 
 	public Order(Long id, Long restaurantId, Long reservationId, Long waiterId, String tableId, String acceptanceTime, Date orderDate, OrderStatus orderStatus, OrderItemStatus drinksStatus,
-			List<Drink> orderedDrinks, OrderItemStatus dishStatus, List<OrderedDish> orderedDish, Long guestId) {
+			List<Drink> orderedDrinks, OrderItemStatus dishStatus, List<OrderedDish> orderedDish, Long guestId, Long version) {
 		super();
 		this.id = id;
 		this.restaurantId = restaurantId;
@@ -114,6 +121,7 @@ public class Order {
 		this.dishStatus = dishStatus;
 		this.orderedDish = orderedDish;		
 		this.guestId = guestId;
+		this.version = version;
 	}
 
 
@@ -307,6 +315,10 @@ public class Order {
 	public void setGuestId(Long guestId) {
 		this.guestId = guestId;
 	}
-	
-	
+
+
+
+	public Long getVersion() {
+		return version;
+	}	
 }

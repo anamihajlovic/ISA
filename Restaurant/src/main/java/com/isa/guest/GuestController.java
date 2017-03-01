@@ -127,8 +127,6 @@ public class GuestController {
 	@PutMapping(path = "/changePassword")
 	public Guest changePassword(@RequestBody Guest guest) {
 		
-		/*if(guest.getFirstLogIn())
-			guest.setFirstLogIn(false);*/
 		
 		try{
 			guestService.save(guest);

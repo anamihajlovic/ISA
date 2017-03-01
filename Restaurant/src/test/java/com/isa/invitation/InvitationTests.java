@@ -1,4 +1,4 @@
-package com.isa.user;
+package com.isa.invitation;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
@@ -18,10 +18,9 @@ import org.springframework.web.context.WebApplicationContext;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-
 @RunWith(SpringRunner.class)
 @SpringBootTest
-public class UserTests {
+public class InvitationTests {
 	
 	@Autowired
 	public WebApplicationContext context;
@@ -32,23 +31,38 @@ public class UserTests {
 	public void setUp() {
 		this.mvc = MockMvcBuilders.webAppContextSetup(this.context).build();
 	}
+	
+	
 
 	@Test
-	public void testLogin() throws Exception {
+	public void testSendInvitation() throws Exception {
+		Long reservationId = 2L;
+		Long friendId = 5L;
 		
-		LoginData loginData =new LoginData("ana@gmail.com", "ana");
-
-		this.mvc.perform(post("/users/login").contentType(MediaType.APPLICATION_JSON).content(asJsonString(loginData))).andExpect(status().isOk());
-
+		this.mvc.perform(post("/invitations/sendInvitation/" + friendId).contentType(MediaType.APPLICATION_JSON).content(asJsonString(reservationId)))
+		.andExpect(status().isOk()).andExpect(content().string("OK"));
 	}
 	
 	@Test
-	public void testLogout() throws Exception {
-
-		this.mvc.perform(get("/users/logout")).andExpect(status().isOk())
-				.andExpect(content().string("OK"));
+	public void testConfirmInvitation() throws Exception {
+		Long invitationId = 5L;
+		String operation = "accept";
+		
+		this.mvc.perform(post("/invitations/confirmInvitation/" + invitationId + "/" + operation))
+		.andExpect(status().isOk());
 	}
 	
+
+	@Test
+	public void testGetInvitedFriends() throws Exception {
+		
+		Long reservationId = 1L;
+		Long guestId = 1L;
+		
+		this.mvc.perform(get("/invitations/getInvitedFriends/" + reservationId + "/" + guestId)).andExpect(status().isOk());
+
+	}
+
 	public static String asJsonString(final Object obj) {
 	    try {
 	        final ObjectMapper mapper = new ObjectMapper();
