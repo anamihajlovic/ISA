@@ -22,7 +22,8 @@ resManagerModule.controller('resManagerController', ['$scope', 'resManagerServic
 			function (response) {
 				$scope.restaurant = response.data;
 				if(response.data!="") {	
-					myMap();
+					//myMap();
+					initMap();
 				} else {					
 					 $location.path('login');
 				}
@@ -35,8 +36,8 @@ resManagerModule.controller('resManagerController', ['$scope', 'resManagerServic
 	
 	
 	//////////////////////////////////////GOOGLE MAPS//////////////////////////////////////////////////////////////
-	/* function initMap() {
-	        var uluru = {lat: -25.363, lng: 131.044};
+	function initMap() {
+	        var uluru = {lat: parseFloat($scope.restaurant.latitude), lng: parseFloat($scope.restaurant.longitude)};
 	        var map = new google.maps.Map(document.getElementById('map'), {
 	          zoom: 4,
 	          center: uluru
@@ -47,7 +48,7 @@ resManagerModule.controller('resManagerController', ['$scope', 'resManagerServic
 	        });
 	      }
 
-	*/
+	
 	
 	
 	function myMap() {
@@ -76,7 +77,7 @@ resManagerModule.controller('resManagerController', ['$scope', 'resManagerServic
 		
 		map=new google.maps.Map(document.getElementById("googleMap1"),mapProp);
 		geocoder = new google.maps.Geocoder();
-		address = $scope.restaurant.street +  $scope.restaurant.number + " , " + $scope.restaurant.city + " , " + $scope.restaurant.country; 
+		address = $scope.restaurant.street + " "+ $scope.restaurant.number + " , " + $scope.restaurant.city + " , " + $scope.restaurant.country; 
 		geocoder.geocode( { 'address': address}, function(results, status) {
 		      if (status == 'OK') {
 		        map.setCenter(results[0].geometry.location);
@@ -1286,6 +1287,7 @@ $scope.findWeekRatings = function(){
 				function (response) {
 					$scope.weekRatings = response.data;
 					document.getElementById("modalBtnShowWeekRatings").click();
+					   $('.modal-star').css('width', '250px');
 				}
 			);
 	
@@ -1298,6 +1300,7 @@ $scope.findMonthRatings = function(){
 				function (response) {
 					$scope.monthRatings = response.data;
 					document.getElementById("modalBtnShowMonthRatings").click();
+					   $('.modal-star').css('width', '250px');
 				}
 			);
 	
