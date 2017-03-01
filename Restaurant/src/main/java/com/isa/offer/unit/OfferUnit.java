@@ -17,7 +17,6 @@ import com.isa.res.order.unit.ResOrderUnit;
 public class OfferUnit {
 	
 	@Id
-	@GeneratedValue
 	@Column(name = "unit_id")
 	private Long id;
 	

@@ -5,7 +5,7 @@
 <nav class="navbar  navbar-inverse" role="navigation" > 
 
       <div class="navbar-header navbar-left">
-      	<p class="navbar-brand" >{{restaurantManager.firstName+" "+ restaurantManager.lastName}}</p>
+      	<p class="navbar-brand" >Welcome, {{restaurantManager.firstName+" "+ restaurantManager.lastName}}</p>
    	 </div>
       <ul class="nav navbar-nav navbar-center">
      <li><a><button data-ui-sref=".list"  data-ng-click ="viewAll()"class="btn btn-default navbar-btn" ><span class="glyphicon glyphicon-list"></span> List </button>
@@ -28,7 +28,7 @@
         	</ul>
         
         	</li>
-	  <li><a ></a></li>
+	  
 
 	
 	<li><button type="button" class="btn btn-default dropdown-toggle navbar-btn glyphicon glyphicon-plus" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true"> <span class="caret"></span></button>      	
@@ -39,7 +39,7 @@
         	</ul>
         
         	</li>
-	  <li><a ></a></li>
+	
 	<li><button type="button" class="btn btn-default dropdown-toggle navbar-btn glyphicon glyphicon-cog" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true"> <span class="caret"></span></button>      	
         	<ul class="dropdown-menu">
           	<li><a data-ui-sref=".updateRestaurant" data-ng-click = "updateRestaurant()"><span class="glyphicon glyphicon-grain"></span> Update restaurant </a></li>
@@ -47,7 +47,7 @@
         	</ul>
         
         	</li>
-	  <li><a ></a></li>
+	 
 	
          <li><a  data-ui-sref="logout"><span class="glyphicon glyphicon-log-out"></span> Log out </a></li>
     <li><a ></a></li>

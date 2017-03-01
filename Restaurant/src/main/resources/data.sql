@@ -240,9 +240,9 @@ insert into order_foodstuffs(order_id,unit_id)values(1,1)
 insert into order_foodstuffs(order_id,unit_id)values(1,2)
 insert into order_foodstuffs(order_id,unit_id)values(2,3)
 
---insert into offer_units(unit_id,price)values(1,10)
---insert into offer_units(unit_id,price)values(2,10)
---insert into offer_units(unit_id,price)values(3,null)
+insert into offer_units (unit_id,order_foodstuff,order_quantity,res_order,price) values(1,'kafa',50,1,10)
+insert into offer_units (unit_id,order_foodstuff,order_quantity,res_order,price) values(2,'mleko',20,1,10)
+insert into offer_units (unit_id,order_foodstuff,order_quantity,res_order,price) values(3,'caj',30,1,null)
 
 --insert into offers(id_bidder,id_res_order,accepted,delivery_time,garancy,total_price)values(1,1,'waiting','2017-03-03','garancy',20)
 --insert into offers(id_bidder,id_res_order,accepted,delivery_time,garancy,total_price)values(2,1,'waiting','2017-04-03','garancy',10)

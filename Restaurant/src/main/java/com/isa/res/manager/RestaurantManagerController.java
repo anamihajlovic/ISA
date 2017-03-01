@@ -445,12 +445,12 @@ public class RestaurantManagerController {
 	@PutMapping(path = "/update/{id}")
 	public Restaurant updateRestaurant(@PathVariable Long id,@RequestBody Restaurant res) {
 		restaurantManager =  (RestaurantManager) httpSession.getAttribute("user");
-	if(res!=null){
-			res.setId(res.getId());
-			return restaurantService.save(res);
-	}else
-		return null;
-	//res.setId(id);
+		Restaurant r = restaurantService.findOne(res.getId());
+		r.setName(res.getName());
+		r.setRestaurant_type(res.getRestaurant_type());
+		r.setId(res.getId());
+		restaurantService.save(r);
+		return r;
 		
 	}
 	

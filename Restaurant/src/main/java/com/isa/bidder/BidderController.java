@@ -292,7 +292,7 @@ public class BidderController {
 	@GetMapping(path = "/getAlert")
 	public List<Offer> getAlerts() {
 		List<Offer> result = new ArrayList<Offer> ();
-		try {
+
 			for(Offer o: bidder.getOffers()){			
 				
 				if(o.getSeen().equals("nije")){	
@@ -303,10 +303,6 @@ public class BidderController {
 			}
 			return result;	
 			
-			
-		} catch (Exception e) {
-		return null;	// TODO: handle exception
-		}
 		
 	}
 	
