@@ -57,20 +57,69 @@
 
 <!-- Modal -->
 <div id="myModalShowWeekRatings" class="modal fade"  >
-  <div class="modal-dialog ">
+  <div class="modal-dialog modal-star">
 
     <!-- Modal content-->
-    <div class="modal-content">
-      <div class="modal-header">
+    <div class="modal-content ">
+      <div class="modal-header ">
         <button type="button" class="close" data-dismiss="modal">&times;</button>
         <h4 class="modal-title" id="modalTitle">Report - Week ratings</h4>
       </div>
-      <div class="modal-body">
-     	Restaurant: {{weekRatings.resRating}}
+      <div class="modal-body" align="center" >
+ 			Restaurant
+    	<div ng-if="weekRatings.resRating == '1'" class ="star">
+     	<span class = "glyphicon glyphicon-star" > </span><span class = "glyphicon glyphicon-star-empty" > </span> <span class = "glyphicon glyphicon-star-empty" > </span> <span class = "glyphicon glyphicon-star-empty" > </span> <span class = "glyphicon glyphicon-star-empty" > </span>
+     	</div>
+     	<div ng-if="weekRatings.resRating == '2'" class ="star">
+     	<span class = "glyphicon glyphicon-star" class ="star" > </span><span class = "glyphicon glyphicon-star" > </span> <span class = "glyphicon glyphicon-star-empty" > </span> <span class = "glyphicon glyphicon-star-empty" > </span> <span class = "glyphicon glyphicon-star-empty" > </span>
+     	</div>
+     	<div ng-if="weekRatings.resRating == '3'" class ="star">
+     	<span class = "glyphicon glyphicon-star" > </span><span class = "glyphicon glyphicon-star" > </span> <span class = "glyphicon glyphicon-star" > </span> <span class = "glyphicon glyphicon-star-empty" > </span> <span class = "glyphicon glyphicon-star-empty" > </span>
+     	</div>
+     	<div ng-if="weekRatings.resRating == '4'" class ="star">
+     	<span class = "glyphicon glyphicon-star" > </span><span class = "glyphicon glyphicon-star" > </span> <span class = "glyphicon glyphicon-star" > </span> <span class = "glyphicon glyphicon-star" > </span> <span class = "glyphicon glyphicon-star-empty" > </span>
+     	</div>
+     	<div ng-if="weekRatings.resRating == '5'" class ="star">
+     	<span class = "glyphicon glyphicon-star" > </span><span class = "glyphicon glyphicon-star" > </span> <span class = "glyphicon glyphicon-star" > </span> <span class = "glyphicon glyphicon-star" > </span> <span class = "glyphicon glyphicon-star" > </span>
+     	</div>
      	<br>
-     	{{weekRatings.waiter}}: {{weekRatings.waiterRating}}
+     	{{weekRatings.waiter}} 
+     	<div ng-if="weekRatings.waiterRating == '1'" class ="star">
+     	<span class = "glyphicon glyphicon-star" > </span><span class = "glyphicon glyphicon-star-empty" > </span> <span class = "glyphicon glyphicon-star-empty" > </span> <span class = "glyphicon glyphicon-star-empty" > </span> <span class = "glyphicon glyphicon-star-empty" > </span>
+     	</div>
+     	<div ng-if="weekRatings.waiterRating == '2'" class ="star">
+     	<span class = "glyphicon glyphicon-star" > </span><span class = "glyphicon glyphicon-star" > </span> <span class = "glyphicon glyphicon-star-empty" > </span> <span class = "glyphicon glyphicon-star-empty" > </span> <span class = "glyphicon glyphicon-star-empty" > </span>
+     	</div>
+     	<div ng-if="weekRatings.waiterRating == '3'"class ="star" >
+     	<span class = "glyphicon glyphicon-star" > </span><span class = "glyphicon glyphicon-star" > </span> <span class = "glyphicon glyphicon-star" > </span> <span class = "glyphicon glyphicon-star-empty" > </span> <span class = "glyphicon glyphicon-star-empty" > </span>
+     	</div>
+     	<div ng-if="weekRatings.waiterRating == '4'"class ="star">
+     	<span class = "glyphicon glyphicon-star" > </span><span class = "glyphicon glyphicon-star" > </span> <span class = "glyphicon glyphicon-star" > </span> <span class = "glyphicon glyphicon-star" > </span> <span class = "glyphicon glyphicon-star-empty" > </span>
+     	</div>
+     	<div ng-if="weekRatings.waiterRating == '5'"class ="star">
+     	<span class = "glyphicon glyphicon-star" > </span><span class = "glyphicon glyphicon-star" > </span> <span class = "glyphicon glyphicon-star" > </span> <span class = "glyphicon glyphicon-star" > </span> <span class = "glyphicon glyphicon-star" > </span>
+     	</div>
+     	
+     	
      	<br>
-     	{{weekRatings.dish}}:{{weekRatings.dishRating}} 			
+     	{{weekRatings.dish}}
+     	
+     	<div ng-if="weekRatings.dishRating == '1'"class ="star">
+     	<span class = "glyphicon glyphicon-star" > </span><span class = "glyphicon glyphicon-star-empty" > </span> <span class = "glyphicon glyphicon-star-empty" > </span> <span class = "glyphicon glyphicon-star-empty" > </span> <span class = "glyphicon glyphicon-star-empty" > </span>
+     	</div>
+     	<div ng-if="weekRatings.dishRating == '2'"class ="star">
+     	<span class = "glyphicon glyphicon-star" > </span><span class = "glyphicon glyphicon-star" > </span> <span class = "glyphicon glyphicon-star-empty" > </span> <span class = "glyphicon glyphicon-star-empty" > </span> <span class = "glyphicon glyphicon-star-empty" > </span>
+     	</div>
+     	<div ng-if="weekRatings.dishRating == '3'"class ="star">
+     	<span class = "glyphicon glyphicon-star" > </span><span class = "glyphicon glyphicon-star" > </span> <span class = "glyphicon glyphicon-star" > </span> <span class = "glyphicon glyphicon-star-empty" > </span> <span class = "glyphicon glyphicon-star-empty" > </span>
+     	</div>
+     	<div ng-if="weekRatings.dishRating == '4'"class ="star">
+     	<span class = "glyphicon glyphicon-star" > </span><span class = "glyphicon glyphicon-star" > </span> <span class = "glyphicon glyphicon-star" > </span> <span class = "glyphicon glyphicon-star" > </span> <span class = "glyphicon glyphicon-star-empty" > </span>
+     	</div>
+     	<div ng-if="weekRatings.dishRating == '5'"class ="star">
+     	<span class = "glyphicon glyphicon-star" > </span><span class = "glyphicon glyphicon-star" > </span> <span class = "glyphicon glyphicon-star" > </span> <span class = "glyphicon glyphicon-star" > </span> <span class = "glyphicon glyphicon-star" > </span>
+     	</div>
+     				
       </div>
       <div class="modal-footer">
       </div>
@@ -78,5 +127,4 @@
 
   </div>
 </div>	
-
 

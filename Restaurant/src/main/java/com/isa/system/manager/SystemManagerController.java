@@ -17,6 +17,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import org.springframework.web.bind.annotation.RestController;
 
+import com.google.maps.GeoApiContext;
+import com.google.maps.GeocodingApi;
+import com.google.maps.model.GeocodingResult;
 import com.isa.res.manager.*;
 import com.isa.restaurant.Restaurant;
 import com.isa.restaurant.RestaurantService;
@@ -30,6 +33,7 @@ public class SystemManagerController {
 	private final RestaurantManagerService restaurantManagerService;
 	private final RestaurantService restaurantService;
 	private final SystemManagerService systemManagerService;
+	private static GeoApiContext context = new GeoApiContext().setApiKey("AIzaSyBADESmODwTqoPRb_F62MHne1_KHdBlZig");
 //	private  Long idRestaurant;
 	@Autowired
 	public SystemManagerController(final RestaurantManagerService restaurantManagerService,
@@ -97,11 +101,23 @@ public class SystemManagerController {
 	    List<Restaurant> restaurants =restaurantService.findAll();
 		return restaurants;
 	}
-	
+
+	//////////////////////////
 	@PostMapping(path = "/newRestaurant")
 	public Restaurant saveRestaurant(@RequestBody Restaurant restaurant) {
 		System.out.println("uslo u restorane");
 		if (restaurant != null){
+			String adresa = restaurant.getStreet()+" "+restaurant.getNumber()+" , "+restaurant.getCity()+" , "+restaurant.getCountry();
+			GeocodingResult[] results;
+			try {
+				results = GeocodingApi.geocode(context, adresa).await();
+				restaurant.setLatitude(results[0].geometry.location.lat);
+				restaurant.setLongitude(results[0].geometry.location.lng);
+			} catch (Exception e) {
+				restaurant.setLatitude(0.0);
+				restaurant.setLongitude(0.0);
+			}
+			
 			restaurant.setRatings(0.0);
 			restaurantService.save(restaurant);
 		return restaurant;

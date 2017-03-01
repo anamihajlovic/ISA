@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.google.maps.GeoApiContext;
 import com.isa.Rating;
 import com.isa.Report;
 import com.isa.Transfer;
@@ -108,6 +109,7 @@ public class RestaurantManagerController {
 	private int visina = 0;
 	private int sirina = 0 ;
 	private Long sifra;
+
 	@Autowired
 	public RestaurantManagerController(HttpSession httpSession, RestaurantService restaurantService,
 			RestaurantManagerService restaurantManagerService, WaiterService waiterService, CookService cookService,
@@ -1272,17 +1274,17 @@ public class RestaurantManagerController {
 			}
 
 		}
-		Double prosekDish = sumaDish/brojacDish;
+		Double prosekDish = (double)(sumaDish/brojacDish);
 		
-		Double prosekWaiter = sumaWaiter/brojacWaiter;
+		Double prosekWaiter = (double)(sumaWaiter/brojacWaiter);
 		
-		Double prosekRes = sumaRes/brojacRes;
+		Double prosekRes = (double)(sumaRes/brojacRes);
 		
 		Rating result = new Rating();
 		
 		result.setDish(dishService.findOne(dish).getName());
 		result.setDishRating(prosekDish);
-		result.setWaiter(waiterService.findOne(waiter).getFirstLogIn()+" "+waiterService.findOne(waiter).getLastName());
+		result.setWaiter(waiterService.findOne(waiter).getFirstName()+" "+waiterService.findOne(waiter).getLastName());
 		result.setWaiterRating(prosekWaiter);
 		result.setRestaurant(restaurant.getName());
 		result.setResRating(prosekRes);
@@ -1343,7 +1345,7 @@ public class RestaurantManagerController {
 		
 		result.setDish(dishService.findOne(dish).getName());
 		result.setDishRating(prosekDish);
-		result.setWaiter(waiterService.findOne(waiter).getFirstLogIn()+" "+waiterService.findOne(waiter).getLastName());
+		result.setWaiter(waiterService.findOne(waiter).getFirstName()+" "+waiterService.findOne(waiter).getLastName());
 		result.setWaiterRating(prosekWaiter);
 		result.setRestaurant(restaurant.getName());
 		result.setResRating(prosekRes);

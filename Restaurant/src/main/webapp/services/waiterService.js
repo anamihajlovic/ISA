@@ -22,8 +22,8 @@ waiterServices.service('waiterService',['$http', function($http) {
 		return $http.put("/orders/removeDrink/"+drinkId, order);
 	}
 	
-	this.removeDish = function(dishId, orderId){
-		return $http.delete("/orders/removeDish/" + dishId + "/" + orderId);
+	this.removeDish = function(dishId, orderId, orderVer){
+		return $http.delete("/orders/removeDish/" + dishId + "/" + orderId + "/" + orderVer);
 	}
 	
 	this.getTables = function(){

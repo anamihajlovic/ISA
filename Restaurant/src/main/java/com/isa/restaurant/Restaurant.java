@@ -66,6 +66,12 @@ public class Restaurant {
 	@Column
 	private Double ratings;
 	
+	@Column
+	private Double latitude;
+	
+	@Column
+	private Double longitude;
+	
 	
 	@OneToMany(cascade = CascadeType.ALL)
 	@JoinTable(name = "res_managers_in_restuarants", joinColumns = @JoinColumn(name = "restaurant_id"), inverseJoinColumns = @JoinColumn(name = "res_manager_id"))
@@ -129,8 +135,9 @@ public class Restaurant {
 
 
 	public Restaurant(Long id, String name, String restaurant_type, String country, String city, String street,
-			Integer number, Double ratings, List<RestaurantManager> restaurantManagers, List<Foodstuff> foodstuffs,
-			List<Dish> dishes, List<Drink> drinks, List<Bidder> bidders, List<Waiter> waiters, List<Cook> cooks,
+			Integer number, Double ratings, Double latitude, Double longitude,
+			List<RestaurantManager> restaurantManagers, List<Foodstuff> foodstuffs, List<Dish> dishes,
+			List<Drink> drinks, List<Bidder> bidders, List<Waiter> waiters, List<Cook> cooks,
 			List<Bartender> bartenders, List<WorkDay> workDays, List<ResSegment> segments, List<ResOrder> orders,
 			List<Bill> bills) {
 		super();
@@ -142,7 +149,9 @@ public class Restaurant {
 		this.street = street;
 		this.number = number;
 		this.ratings = ratings;
-		this.restaurantManagers =restaurantManagers;
+		this.latitude = latitude;
+		this.longitude = longitude;
+		this.restaurantManagers = restaurantManagers;
 		this.foodstuffs = foodstuffs;
 		this.dishes = dishes;
 		this.drinks = drinks;
@@ -234,6 +243,26 @@ public class Restaurant {
 
 	public void setRatings(Double ratings) {
 		this.ratings = ratings;
+	}
+
+
+	public Double getLatitude() {
+		return latitude;
+	}
+
+
+	public void setLatitude(Double latitude) {
+		this.latitude = latitude;
+	}
+
+
+	public Double getLongitude() {
+		return longitude;
+	}
+
+
+	public void setLongitude(Double longitude) {
+		this.longitude = longitude;
 	}
 
 
@@ -344,7 +373,6 @@ public class Restaurant {
 
 	public void setOrders(List<ResOrder> orders) {
 		this.orders = orders;
-
 	}
 
 
@@ -358,7 +386,7 @@ public class Restaurant {
 	}
 
 
-
+	
 	
 
 		

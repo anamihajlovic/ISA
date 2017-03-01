@@ -15,6 +15,9 @@ tr,td,th {text-align:center;}
 	height: 30px;
 	
 }
+.star {
+	color:red;
+}
 .yellow {
    background-color: yellow;
 }
