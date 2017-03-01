@@ -22,8 +22,6 @@ resManagerModule.controller('resManagerController', ['$scope', 'resManagerServic
 			function (response) {
 				$scope.restaurant = response.data;
 				if(response.data!="") {	
-					//myMap();
-					initMap();
 				} else {					
 					 $location.path('login');
 				}
@@ -35,69 +33,7 @@ resManagerModule.controller('resManagerController', ['$scope', 'resManagerServic
 	
 	
 	
-	//////////////////////////////////////GOOGLE MAPS//////////////////////////////////////////////////////////////
-	function initMap() {
-	        var uluru = {lat: parseFloat($scope.restaurant.latitude), lng: parseFloat($scope.restaurant.longitude)};
-	        var map = new google.maps.Map(document.getElementById('map'), {
-	          zoom: 4,
-	          center: uluru
-	        });
-	        var marker = new google.maps.Marker({
-	          position: uluru,
-	          map: map
-	        });
-	      }
-
 	
-	
-	
-	function myMap() {
-		var mapProp= {
-		    zoom:15,
-		    mapTypeId: google.maps.MapTypeId.ROADMAP
-		};
-		pos = [];
-		if (navigator.geolocation) {
-		    navigator.geolocation.getCurrentPosition(function(position) {
-		    	pos = {
-		            lat: position.coords.latitude,
-		            lng: position.coords.longitude
-		        };
-		        var marker = new google.maps.Marker({
-		        	position:pos,
-		        });
-
-		        marker.setMap(map);
-		        map.setCenter(pos);
-		    }, function() {
-		        handleLocationError(true, infoWindow, map.getCenter());
-		    });
-		}
-	
-		
-		map=new google.maps.Map(document.getElementById("googleMap1"),mapProp);
-		geocoder = new google.maps.Geocoder();
-		address = $scope.restaurant.street + " "+ $scope.restaurant.number + " , " + $scope.restaurant.city + " , " + $scope.restaurant.country; 
-		geocoder.geocode( { 'address': address}, function(results, status) {
-		      if (status == 'OK') {
-		        map.setCenter(results[0].geometry.location);
-		        var marker = new google.maps.Marker({
-		            map: map,
-		            position: results[0].geometry.location
-		        });
-		        
-		        var flightPath = new google.maps.Polyline({
-				    path: [results[0].geometry.location, pos],
-				    strokeColor: "#0000FF",
-				    strokeOpacity: 0.8,
-				    strokeWeight: 2
-				  });
-		        flightPath.setMap(map);
-		      } else {
-		        alert('Geocode was not successful for the following reason: ' + status);
-		      }
-		    });
-	}
 	
 	//////////////////////////////////////////////////////////////
 	checkRights();	
@@ -1002,11 +938,12 @@ resManagerModule.controller('resManagerController', ['$scope', 'resManagerServic
 	}
 	
 /////////////////////////////////////////////////////KALENDARSKI PRIKAZ///////////////////////////////////////////////////
+
+
+	
 	$scope.eventSources = [];
 	$scope.eventVisible = false;
-
-$scope.calendar = function(){
-	checkRights();	
+	
 			var newRequest = resManagerService.readWorkSchedule().then(function (response){
 				var shifts = response.data;
 				$scope.events = [];
@@ -1026,8 +963,8 @@ $scope.calendar = function(){
 				}
 				 $scope.eventSources.push($scope.events); 																	
 			});
-}
-		
+
+
 	
 var datum ; 
 $scope.dayClick = function( date, allDay, jsEvent, view ){ 
@@ -1165,7 +1102,7 @@ $scope.MakeShift = function(){
 			if($scope.data != "nije") {
 				toastr.success("Success!");	
 				document.getElementById("cancelShift").click();
-				
+				//smene();
 				window.location.reload();
 				
 			} else {

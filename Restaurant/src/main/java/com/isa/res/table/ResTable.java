@@ -30,7 +30,7 @@ public class ResTable {
 	
 	@Version
     @Column(name = "version", columnDefinition = "integer DEFAULT 0", nullable = false)
-	private Long version;
+	private Long version = 0L;
 
 	@Enumerated(EnumType.STRING)
 	@NotNull
@@ -62,7 +62,7 @@ public class ResTable {
 	private int yPos;
 	
 
-	@Transient
+	@Column (name="enable_del")
 	private Boolean enableDel;
 	
 
@@ -77,29 +77,20 @@ public class ResTable {
 	public ResTable(Long id, SizeTable size, StateTable state, String segment, ReonTable reon, String segColor,
 			int xPos, int yPos) {}
 
-	public ResTable(Long id, SizeTable size, StateTable state, int xPos, int yPos, String segment, String segColor,  List<Reservation> reservations,Boolean enableDel) {
-
+	public ResTable(Long id, Long version, SizeTable size, StateTable state, String segment, ReonTable reon,
+			String segColor, int xPos, int yPos, Boolean enableDel, List<Reservation> reservations) {
 		super();
 		this.id = id;
+		this.version = version;
 		this.size = size;
 		this.state = state;
 		this.segment = segment;
-		//this.reon = reon;
+		this.reon = reon;
 		this.segColor = segColor;
-		this.enableDel = enableDel;
 		this.xPos = xPos;
 		this.yPos = yPos;
-		this.reservations = reservations;
-	}
-	
-	
-
-	public Boolean getEnableDel() {
-		return enableDel;
-	}
-
-	public void setEnableDel(Boolean enableDel) {
 		this.enableDel = enableDel;
+		this.reservations = reservations;
 	}
 
 	public Long getId() {
@@ -108,6 +99,14 @@ public class ResTable {
 
 	public void setId(Long id) {
 		this.id = id;
+	}
+
+	public Long getVersion() {
+		return version;
+	}
+
+	public void setVersion(Long version) {
+		this.version = version;
 	}
 
 	public SizeTable getSize() {
@@ -166,6 +165,14 @@ public class ResTable {
 		this.yPos = yPos;
 	}
 
+	public Boolean getEnableDel() {
+		return enableDel;
+	}
+
+	public void setEnableDel(Boolean enableDel) {
+		this.enableDel = enableDel;
+	}
+
 	public List<Reservation> getReservations() {
 		return reservations;
 	}
@@ -174,18 +181,6 @@ public class ResTable {
 		this.reservations = reservations;
 	}
 
-	public Long getVersion() {
-		return version;
-	}
-
-	public void setVersion(Long version) {
-		this.version = version;
-	}
-
-	
-	
-	
-	
 	
 
 }

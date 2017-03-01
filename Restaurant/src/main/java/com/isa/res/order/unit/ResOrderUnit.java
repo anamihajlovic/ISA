@@ -14,7 +14,6 @@ import org.hibernate.validator.constraints.NotBlank;
 
 @Entity
 @Table(name="res_order_units")
-@Inheritance(strategy = JOINED)
 public class ResOrderUnit {
 	
 	@Id

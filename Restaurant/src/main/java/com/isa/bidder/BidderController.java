@@ -135,14 +135,31 @@ public class BidderController {
 		idResOrder = id;
 		List<OfferUnit> units = new ArrayList <OfferUnit>();
 		sifre = new ArrayList<Long>();
+		Long sifrica ;
 		for(ResOrderUnit rou:resOrder.getResOrderFoodstuffs()){
 			sifre.add(rou.getId());
 		}
-		
+		for(Long s:sifre){
+			System.out.println("sifra "+s);
+		}
+		if(sifre.size()>1){
 		for(OfferUnit ou:offerUnitService.findAll()){
+		
 			if(sifre.contains(ou.getId())){
 				units.add(ou);
+				System.out.println(ou.getId());
+				
 			}
+		}
+		}else{
+			for(OfferUnit ou:offerUnitService.findAll()){			
+				if(sifre.get(0).equals(ou.getId())){
+					units.add(ou);
+					System.out.println(ou.getId());
+					
+				}
+			}
+			
 		}
 		
 		return units;
@@ -275,16 +292,22 @@ public class BidderController {
 	@GetMapping(path = "/getAlert")
 	public List<Offer> getAlerts() {
 		List<Offer> result = new ArrayList<Offer> ();
-		
-		for(Offer o: bidder.getOffers()){			
-			
-			if(o.getSeen().equals("nije")){	
-				System.out.println("ponuda "+o.getId()+ " "+o.getSeen());
-				result.add(o);
+		try {
+			for(Offer o: bidder.getOffers()){			
+				
+				if(o.getSeen().equals("nije")){	
+					System.out.println("ponuda "+o.getId()+ " "+o.getSeen());
+					result.add(o);
+				}
+				
 			}
+			return result;	
 			
+			
+		} catch (Exception e) {
+		return null;	// TODO: handle exception
 		}
-		return result;	
+		
 	}
 	
 	@PutMapping(path = "setSeen/{id}")

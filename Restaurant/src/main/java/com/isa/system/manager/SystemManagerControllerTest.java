@@ -62,7 +62,7 @@ public class SystemManagerControllerTest {
 	public void setUp() {
 		this.mvc = MockMvcBuilders.webAppContextSetup(this.context).build();
 		
-		SystemManager sysman1 = new SystemManager();
+		/*SystemManager sysman1 = new SystemManager();
 		sysman1.setId(Long.parseLong("1"));
 		sysman1.setEmail("sysman1@gmail.com");
 		sysman1.setPassword("sysman1");
@@ -81,7 +81,7 @@ public class SystemManagerControllerTest {
 		res1.setStreet("Zeleznicka");
 		res1.setNumber(5);
 		res1.setRestaurant_type("kineski");
-		resRepository.save(res1);
+		resRepository.save(res1);*/
 	}
 	
 	@Test

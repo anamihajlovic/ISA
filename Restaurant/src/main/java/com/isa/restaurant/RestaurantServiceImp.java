@@ -16,7 +16,6 @@ import jersey.repackaged.com.google.common.collect.Lists;
 
 
 @Service
-@Transactional
 public class RestaurantServiceImp implements RestaurantService{
 
 	@Autowired

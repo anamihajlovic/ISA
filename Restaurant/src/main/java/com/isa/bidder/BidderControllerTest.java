@@ -42,7 +42,7 @@ public class BidderControllerTest {
 	public void setUp() {
 		this.mvc = MockMvcBuilders.webAppContextSetup(this.context).build();
 		
-		Bidder bid1 = new Bidder();
+	/*	Bidder bid1 = new Bidder();
 		bid1.setId(Long.parseLong("1"));
 		bid1.setEmail("bid1@gmail.com");
 		bid1.setFirstName("bid1");
@@ -61,7 +61,7 @@ public class BidderControllerTest {
 		bid2.setUserRole(Role.bidder);
 		bidderRepository.save(bid1);
 		bidderRepository.save(bid2);
-		
+		*/
 
 		
 	}

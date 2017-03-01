@@ -109,8 +109,10 @@ guestServices.service('guestService', ['$http', function($http) {
 
 	this.deleteReservation = function(id) {
 		return $http.delete("/reservations/deleteReservation/" + id)
+	}	
+	this.buttonShowResPos = function(event) {
+		return $http.get("/resManager/getRestaurant/"+event.target.id);
 	}
-	
 	
 	
 }]);

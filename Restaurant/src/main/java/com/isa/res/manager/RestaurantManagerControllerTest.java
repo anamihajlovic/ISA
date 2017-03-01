@@ -74,7 +74,7 @@ public class RestaurantManagerControllerTest {
 	public void setUp() {
 		this.mvc = MockMvcBuilders.webAppContextSetup(this.context).build();
 		
-		Restaurant res1 = new Restaurant();		
+		/*Restaurant res1 = new Restaurant();		
 		res1.setId(Long.parseLong("1"));
 		res1.setName("Ime");
 		res1.setCountry("Srbija");
@@ -116,7 +116,7 @@ public class RestaurantManagerControllerTest {
 		dishes.add(dish2);
 		resRepository.findOne(Long.parseLong("1")).setDishes(dishes);
 		
-		
+		*/
 	}
 	
 	@Test

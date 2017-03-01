@@ -70,26 +70,7 @@
 		        </tbody>
 		    </table>
 		    </div>
-		    <div "col-sm-2">
-			<table  class="table table-bordered tableBG" border="1">
-				<tbody>
-			        <tr>				
-						<th>Price</th>
-		                <th></th>
-		            </tr>
-					<tr ng-repeat="unit in OfferUnits">
-						<td>
-				    		{{unit.price}}	
-						</td>
-							<td>
-		    			<button class = "btn btn-link" id={{unit.id}} ng-click="buttonChangeOfferUnit($event)"><span class = "glyphicon pencil" style="color:yellow;"></span></button>
-					
-						</td>
-					</tr>
-					
-		        </tbody>
-		    </table>
-		    </div>
+	
 		    
 		    
 		    
@@ -212,7 +193,7 @@
 
 <!-- Modal -->
 <div id="myModalShowActuallOffers" class="modal fade"  >
-  <div class="modal-dialog  modal-table modal-showOrderUnit">
+  <div class="modal-dialog  modal-table ">
 
     <!-- Modal content-->
     <div class="modal-content">

@@ -200,8 +200,8 @@ insert into restaurant_work_days(restaurant_id,work_day_id)values(1,3)
 ------------------------------------------------------------------------------------------------------
 
 
-insert into res_orders(end_date,restaurant_name)values('29/02/2017','Lanterna')
-insert into res_orders(end_date,restaurant_name)values('23/01/2017','Lanterna')
+insert into res_orders(end_date,restaurant_name)values('06/03/2017','Lanterna')
+insert into res_orders(end_date,restaurant_name)values('05/03/2017','Lanterna')
 insert into res_orders(end_date,restaurant_name)values('13/01/2017','Veliki')
 
 insert into restaurant_orders(restaurant_id,order_id)values (1,1)
@@ -216,23 +216,23 @@ insert into order_foodstuffs(order_id,unit_id)values(1,1)
 insert into order_foodstuffs(order_id,unit_id)values(1,2)
 insert into order_foodstuffs(order_id,unit_id)values(2,3)
 
-insert into offer_units(unit_id,price)values(1,10)
-insert into offer_units(unit_id,price)values(2,10)
-insert into offer_units(unit_id,price)values(3,null)
+--insert into offer_units(unit_id,price)values(1,10)
+--insert into offer_units(unit_id,price)values(2,10)
+--insert into offer_units(unit_id,price)values(3,null)
 
-insert into offers(id_bidder,id_res_order,accepted,delivery_time,garancy,total_price)values(1,1,'waiting','2017-03-03','garancy',20)
-insert into offers(id_bidder,id_res_order,accepted,delivery_time,garancy,total_price)values(2,1,'waiting','2017-04-03','garancy',10)
+--insert into offers(id_bidder,id_res_order,accepted,delivery_time,garancy,total_price)values(1,1,'waiting','2017-03-03','garancy',20)
+--insert into offers(id_bidder,id_res_order,accepted,delivery_time,garancy,total_price)values(2,1,'waiting','2017-04-03','garancy',10)
 
-insert into offers(id_bidder,id_res_order,accepted,delivery_time,garancy,total_price)values(1,2,'yes','2017-04-03','garancy',30)
-insert into offers(id_bidder,id_res_order,accepted,delivery_time,garancy,total_price)values(2,2,'no','2017-04-03','garancy',10)
+--insert into offers(id_bidder,id_res_order,accepted,delivery_time,garancy,total_price)values(1,2,'yes','2017-04-03','garancy',30)
+--insert into offers(id_bidder,id_res_order,accepted,delivery_time,garancy,total_price)values(2,2,'no','2017-04-03','garancy',10)
 
-insert into bidder_offers(bidder_id,offer_id)values(1,1)
-insert into bidder_offers(bidder_id,offer_id)values(1,2)
-insert into bidder_offers(bidder_id,offer_id)values(2,3)
-insert into bidder_offers(bidder_id,offer_id)values(2,4)
+--insert into bidder_offers(bidder_id,offer_id)values(1,1)
+--insert into bidder_offers(bidder_id,offer_id)values(1,2)
+--insert into bidder_offers(bidder_id,offer_id)values(2,3)
+--insert into bidder_offers(bidder_id,offer_id)values(2,4)
 
-insert into units(offer_id,unit_id)values(1,1)
-insert into units(offer_id,unit_id)values(1,2)
+--insert into units(offer_id,unit_id)values(1,1)
+--insert into units(offer_id,unit_id)values(1,2)
 
 --ORDERS
 insert into orders(restaurant_id,reservation_id,acceptance_time,order_date,order_status,drinks_status,dish_status, guest_id, accepted_waiter) values (1, 1,'19:00:00','2017-02-27','ordered', 'ordered', 'ordered', 2, 1)
@@ -260,17 +260,17 @@ insert into segments(segment_type,color) values ('Inside','#00bfff')
 insert into segments(segment_type,color) values ('Smoke','#ffff00')
 
 
-insert into tables(table_size, table_state, segment, x_pos, y_pos,segment_color,reon) values ('four', 'exists', 'Smoke', 0, 0,'#00bfff','first')
-insert into tables(table_size, table_state, segment, x_pos, y_pos,segment_color,reon) values ('four', 'exists', 'Smoke', 0, 1,'#00bfff','first')
-insert into tables(table_size, table_state, segment, x_pos, y_pos,segment_color,reon) values ('four', 'exists', 'Inside', 0, 2,'#00bfff','first')
-insert into tables(table_size, table_state, segment, x_pos, y_pos,segment_color,reon) values ('four', 'not_exists','Inside', 0, 3,'#00bfff','first')
-insert into tables(table_size, table_state, segment, x_pos, y_pos,segment_color,reon) values ('four', 'exists','Inside', 0, 4,'#00bfff','first')
+insert into tables(table_size, table_state, segment, x_pos, y_pos,segment_color,reon,enable_del) values ('four', 'exists', 'Smoke', 0, 0,'#00bfff','first',true)
+insert into tables(table_size, table_state, segment, x_pos, y_pos,segment_color,reon,enable_del) values ('four', 'exists', 'Smoke', 0, 1,'#00bfff','first',true)
+insert into tables(table_size, table_state, segment, x_pos, y_pos,segment_color,reon,enable_del) values ('four', 'exists', 'Inside', 0, 2,'#00bfff','first',true)
+insert into tables(table_size, table_state, segment, x_pos, y_pos,segment_color,reon,enable_del) values ('four', 'not_exists','Inside', 0, 3,'#00bfff','first',true)
+insert into tables(table_size, table_state, segment, x_pos, y_pos,segment_color,reon,enable_del) values ('four', 'exists','Inside', 0, 4,'#00bfff','first',true)
 
-insert into tables(table_size, table_state, segment, x_pos, y_pos,segment_color,reon) values ('two', 'exists','Inside', 1, 0,'#ffff00','second')
-insert into tables(table_size, table_state, segment, x_pos, y_pos,segment_color,reon) values ('two', 'exists','Inside', 1, 1,'#ffff00','second')
-insert into tables(table_size, table_state, segment, x_pos, y_pos,segment_color,reon) values ('two', 'not_exists','Inside', 1, 2,'#ffff00','second')
-insert into tables(table_size, table_state, segment, x_pos, y_pos,segment_color,reon) values ('two', 'exists','Inside', 1, 3,'#ffff00','second')
-insert into tables(table_size, table_state, segment, x_pos, y_pos,segment_color,reon) values ('two', 'exists','Inside', 1, 4,'#ffff00','second')
+insert into tables(table_size, table_state, segment, x_pos, y_pos,segment_color,reon,enable_del) values ('two', 'exists','Inside', 1, 0,'#ffff00','second',true)
+insert into tables(table_size, table_state, segment, x_pos, y_pos,segment_color,reon,enable_del) values ('two', 'exists','Inside', 1, 1,'#ffff00','second',true)
+insert into tables(table_size, table_state, segment, x_pos, y_pos,segment_color,reon,enable_del) values ('two', 'not_exists','Inside', 1, 2,'#ffff00','second',true)
+insert into tables(table_size, table_state, segment, x_pos, y_pos,segment_color,reon,enable_del) values ('two', 'exists','Inside', 1, 3,'#ffff00','second',true)
+insert into tables(table_size, table_state, segment, x_pos, y_pos,segment_color,reon,enable_del) values ('two', 'exists','Inside', 1, 4,'#ffff00','second',true)
 
 insert into segment_tables(segment_id,table_id) values(1,1)
 insert into segment_tables(segment_id,table_id) values(1,2)

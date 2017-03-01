@@ -12,6 +12,7 @@ guestModule.controller('guestController', ['$scope', 'guestService', 'orderServi
 				if(response.data !="") {
 					$scope.guest = response.data;
 					$scope.getNumOfFriendRequest();
+				
 				}
 				//else
 					//$scope.callIsLoggedIn = false;
@@ -731,10 +732,34 @@ guestModule.controller('guestController', ['$scope', 'guestService', 'orderServi
 				}
 			});
 		}
-
-
-		
-		
+	var la ;
+	var ln;
+		$scope.showPositon = function(event){
+			//alert(event.target.id);
+			var request = guestService.buttonShowResPos(event).then(function(response) {
+				$scope.res = response.data;
+				 la = parseFloat($scope.res.latitude);
+			    ln  = parseFloat($scope.res.longitude);
+			   Map();
+				document.getElementById("modalBtnShowResPos").click();
+				
+				return response;
+			});
+		}
+	
+		function Map(){
+			 var uluru = {lat:la, lng:ln};
+		        var map = new google.maps.Map(document.getElementById('map'), {
+		          zoom: 14,
+		          center: uluru
+		        });
+		        map.setCenter(uluru);
+		        var marker = new google.maps.Marker({
+		          position: uluru,
+		          map: map
+		        });
+			
+		}
 		
 }]);
 

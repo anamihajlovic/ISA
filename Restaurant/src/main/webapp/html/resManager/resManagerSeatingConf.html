@@ -3,7 +3,7 @@
   <hr/>
 <div align="center" >
 <br><br><br>
-<table  ng-init ="showTables()"class = "tablesTable">
+<table class = "tablesTablesss">
 	<tr ng-repeat="row in tables">
 		<td ng-repeat="table in row">                        
 			<button ng-if="table.enableDel == true"  id={{table.id}}  ng-click="buttonShowTable($event)"  class = "tableBtns" style="background:{{table.segColor}}"><label ng-if="table.state == 'not_exists'"  >X</label><label ng-if="table.enableDel == false"  >rez</label></button>

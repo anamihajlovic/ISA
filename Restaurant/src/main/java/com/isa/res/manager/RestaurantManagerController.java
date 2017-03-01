@@ -44,6 +44,7 @@ import com.isa.invitation.InvitationStatus;
 import com.isa.offer.Offer;
 import com.isa.offer.OfferService;
 import com.isa.offer.StateOffer;
+import com.isa.offer.unit.OfferUnit;
 import com.isa.offer.unit.OfferUnitService;
 import com.isa.order.Order;
 import com.isa.order.OrderService;
@@ -444,10 +445,13 @@ public class RestaurantManagerController {
 	@PutMapping(path = "/update/{id}")
 	public Restaurant updateRestaurant(@PathVariable Long id,@RequestBody Restaurant res) {
 		restaurantManager =  (RestaurantManager) httpSession.getAttribute("user");
-		restaurantService.findOne(id);
-			
-	res.setId(id);
-		return restaurantService.save(res);
+	if(res!=null){
+			res.setId(res.getId());
+			return restaurantService.save(res);
+	}else
+		return null;
+	//res.setId(id);
+		
 	}
 	
 	@PutMapping(path = "/updateFoodstuff")
@@ -512,6 +516,7 @@ public class RestaurantManagerController {
 				t.setState(StateTable.exists);
 				t.setxPos(x);
 				t.setyPos(y);
+				t.setEnableDel(true);
 				if(y %2==0){
 					t.setReon(ReonTable.first);
 				}else{
@@ -703,8 +708,16 @@ public class RestaurantManagerController {
 		 for(ResOrderUnit r : resOrderUnitService.findAll()){
 			 if(r.getResOrder()==resOrder.getId()){
 				 newUnits.add(r);
+				 OfferUnit ou = new OfferUnit();
+				 ou.setId(r.getId());
+				 ou.setOrderFoodstuff(r.getOrderFoodstuff());
+				 ou.setOrderQuantity(r.getOrderQuantity());
+				 ou.setResOrder(r.getResOrder());
+				 ou.setPrice(null);
+				 offerUnitService.save(ou);
 			 }
 		 }
+		 
 		
 		 resOrder.setResOrderFoodstuffs(newUnits);
 		 resOrder.setResName(restaurant.getName());
@@ -1353,6 +1366,12 @@ public class RestaurantManagerController {
 		
 		
 	return result;
+	}
+
+
+	@GetMapping(path = "/getRestaurant/{id}")
+	public Restaurant getRes(@PathVariable Long id) {
+		return restaurantService.findOne(id);	
 	}
 	
 }
