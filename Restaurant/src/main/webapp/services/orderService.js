@@ -1,7 +1,6 @@
 var orderServices = angular.module('order.services', ['ngResource']);
 
-guestServices.service('orderService', ['$http', function($http) {
-	
+guestServices.service('orderService', ['$http', function($http) {		
 	
 	this.getAllRestaurantOrders = function(restaurantId) {
 		return $http.get('/orders/getAllRestaurantOrders/'+restaurantId);
@@ -65,6 +64,10 @@ guestServices.service('orderService', ['$http', function($http) {
 	
 	this.getOrder = function(reservationId) {
 		return $http.get("/orders/getOrderByReservation/"+reservationId);
+	}
+	
+	this.getOrderById = function(orderId) {
+		return $http.get("/orders/getOrder/"+orderId);
 	}
 
 }]);

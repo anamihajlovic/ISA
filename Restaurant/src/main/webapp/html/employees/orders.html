@@ -11,7 +11,6 @@
 
 	<h4 ng-show = "employee.userRole == 'bartender'"><b>Ordered drinks</b></h4>
 	<h4 ng-show = "employee.userRole == 'cook'"><b>Ordered dish</b></h4>
-fwwfewe
       
 	<br/>
 	<table class="table table-hover">
@@ -44,7 +43,7 @@ fwwfewe
         <td>{{dish.name}}</td>
         <td>{{dish.dishType}}</td>
         <td>{{order.dishQuantity[dish.id]}}</td>
-        <td ng-if = "order.dishStatusMap[dish.id] == 'ordered'"><button class = "btn btn-primary" ng-if = "checkCook(dish)" ng-disabled = "!allowAction" ng-click = "prepareDish(order, dish)">Prepare</button></td>
+        <td ng-if = "order.dishStatusMap[dish.id] == 'ordered'"><button class = "btn btn-primary" ng-if = "checkCook(dish)"  ng-click = "prepareDish(order, dish)">Prepare</button></td>
         <td ng-if = "order.dishStatusMap[dish.id] == 'preparing'"><i>Dish is being prepared.</i></td>
        	<td ng-if = "order.dishStatusMap[dish.id] == 'ready'"><i>Dish is ready to be served.</i></td>
        </tr>

@@ -1,9 +1,9 @@
 var orderModule = angular.module('order.controller', ['ui.calendar']);
 
 
-orderModule.controller('orderController', ['$scope', 'orderService', 'employeeService', '$location',
+orderModule.controller('orderController', ['$scope', 'orderService', 'employeeService', 'waiterService', '$location', '$state',
 	
-	function ($scope, orderService, employeeService, $location) {
+	function ($scope, orderService, employeeService, waiterService, $location, $state) {
 	
 	function getDrinks() {
 		var request = orderService.getRestaurantDrinkOrders($scope.employee.restaurantId).then(function(response){					
@@ -70,6 +70,23 @@ orderModule.controller('orderController', ['$scope', 'orderService', 'employeeSe
 				}
 			});						
 		}
+	}
+	
+	function getOrder(orderId) {
+		var request = orderService.getOrderById(orderId).then(function(response){					
+			$scope.data = response.data;				
+			return response;						
+		}); 
+		
+		request.then(function(data) {
+			if($scope.data != null) {
+				$scope.order = $scope.data;				
+			}				
+			else {
+				toastr.info("Order hasn't been found.");
+				$location.path('waiter');
+			}
+		});
 	}
 	
 	
@@ -148,11 +165,11 @@ orderModule.controller('orderController', ['$scope', 'orderService', 'employeeSe
 		var request = employeeService.checkWorkShift($scope.employee).then(function (response) {				
 			if(response.data != "") {
 				$scope.currentShift = response.data;				
-				//$scope.allowAction = true;
+				$scope.allowAction = true;
 				return response;
 			}					
 			else {
-				//$scope.allowAction = false;
+				$scope.allowAction = false;
 				//$location.path('bartender');
 			}
 				
@@ -206,7 +223,7 @@ orderModule.controller('orderController', ['$scope', 'orderService', 'employeeSe
 		});
 		
 		request.then(function (data) {
-			if($scope.data != 'failure') {
+			if($scope.data != null) {
 				getDishes();				
 			} 
 				
@@ -221,8 +238,7 @@ orderModule.controller('orderController', ['$scope', 'orderService', 'employeeSe
 		
 		request.then(function (data) {
 			if($scope.data != 'failure') {
-				getDishes();
-				getOrders();	
+				getDishes();				
 			} 			
 		});
 	}
@@ -237,7 +253,7 @@ orderModule.controller('orderController', ['$scope', 'orderService', 'employeeSe
 		
 		request.then(function (data) {
 			if($scope.data != 'failure') {
-				getOrders();					
+				getOrders();						
 			} 			
 		});
 		
@@ -357,16 +373,30 @@ orderModule.controller('orderController', ['$scope', 'orderService', 'employeeSe
 				
 				if($scope.data != 'failure') {
 					toastr.success("The order has been paid.");
+					$state.go('bartender');
 				}
 					
 			}								
 		});
 	}
 	
-	$scope.inspectOrder = function(order, flag) {
-		$scope.order = order;
-		$scope.seeOrder = true;	
-		$scope.changeOrder = flag;
+	$scope.inspectOrder = function(order, flag) {			
+		var request = orderService.getOrderById(order.id).then(function(response){					
+			$scope.data = response.data;				
+			return response;						
+		}); 		
+		request.then(function(data) {
+			if($scope.data != null) {
+				$scope.order = $scope.data;	
+				$scope.seeOrder = true;	
+				$scope.changeOrder = flag;
+			}				
+			else {
+				toastr.info("Order hasn't been found.");
+				$location.path('waiter');
+			}
+		});	
+		
 	}
 	
 	$scope.hideOrder = function() {
@@ -375,6 +405,77 @@ orderModule.controller('orderController', ['$scope', 'orderService', 'employeeSe
 	}
 	
 	
+	$scope.addDrink = function(drinkId) {			
+		var request = waiterService.addDrink(drinkId, $scope.order).then(function(response){
+			$scope.data = response.data;				
+			return response;
+		});
+			
+		request.then(function (data) {
+			if($scope.data != "") {		
+				getOrder($scope.data.id);								
+				$scope.seeOrder = false;
+				$scope.changeOrder = false;				
+				toastr.success("You have added new drink.");								
+			} else {
+				toastr.info("Selected drink hasn't been added to order.");
+			}
+		});
+	}
 	
+	$scope.addDish = function(dishId) {
+		var request = waiterService.addDish(dishId, $scope.order).then(function(response){
+			$scope.data = response.data;
+			return response;
+		});
+			
+		request.then(function (data) {
+			if($scope.data != "") {
+				getOrder($scope.data.id);								
+				$scope.seeOrder = false;
+				$scope.changeOrder = false;	
+				toastr.success("You have added new dish.");
+			} else {
+				toastr.info("Selected dish hasn't been added to order.");
+			}
+		});
+	}
+	
+	
+	$scope.removeDrink = function(drink, order) {
+		var request = waiterService.removeDrink(drink.id, order).then(function(response){
+			$scope.data = response.data;
+			return response;
+		});			
+		request.then(function (data) {
+			if($scope.data != "") {
+				getOrder($scope.data.id);								
+				$scope.seeOrder = false;
+				$scope.changeOrder = false;				
+				toastr.success("You have removed drinks from order.");				
+			} else {
+				toastr.info("Selected drinks have not been removed from order.");
+			}			
+		});		
+	}
+	
+	$scope.removeDish = function(dish, order) {
+		var request = waiterService.removeDish(dish.id, order.id, order.version).then(function(response){
+			$scope.data = response.data;
+			return response;
+		});
+			
+		request.then(function (data) {
+			if($scope.data != "") {
+				getOrder($scope.data.id);								
+				$scope.seeOrder = false;
+				$scope.changeOrder = false;				
+				toastr.success("You have removed dishes from order.");
+			} else {
+				toastr.info("Selected dishes have not been removed from order.");
+			}			
+		});	
+			
+	}			
 	
 }]);	
