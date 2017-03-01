@@ -62,6 +62,7 @@ public class Reservation {
 	@Column (name= "deleted")
 	private Boolean deleted;
 	
+	
 	public Reservation() {}
 	
 	public Reservation(Long resId, String resName, Long guestId, Date date,  String startTime, String endTime, String tables, List<Order> orders) {
@@ -155,6 +156,10 @@ public class Reservation {
 	public void setDeleted(Boolean deleted) {
 		this.deleted = deleted;
 	}
+
+
+
+	
 	
 	
 

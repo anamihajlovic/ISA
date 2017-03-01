@@ -51,10 +51,7 @@
 				<a class="btn btn-xs" ng-click="sortResBy('country')" data-ui-sref="."><label> Country </label></a>  
       			<span class="sortorder" ng-show="propertyNameRes === 'country'" ng-class="{reverse: reverseRes}"></span>
 				</th>
-				<th>
-				<a class="btn btn-xs" ng-click="sortResBy('rate')" data-ui-sref="."><label> Rate </label></a>  
-      			<span class="sortorder" ng-show="propertyNameRes === 'rate'" ng-class="{reverse: reverseRes}"></span>
-				</th>
+				
                 <th></th>
             </tr>
 			<tr ng-repeat="restaurant in filteredRes">
@@ -74,9 +71,7 @@
 				<td>
             	{{restaurant.country}}	
 				</td>
-				<td> 
-					{{restaurant.ratings}}
-				</td>
+
 				<td>
 				
 				<button class = "btn btn-link" ng-click="chooseRes(restaurant)" title="Make reservation" data-ui-sref="guest.startReservation"><span class = "glyphicon glyphicon-ok"></span></button>

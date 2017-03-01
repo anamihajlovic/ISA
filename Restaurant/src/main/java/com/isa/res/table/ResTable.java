@@ -14,6 +14,7 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 import javax.persistence.Transient;
+import javax.persistence.Version;
 import javax.validation.constraints.NotNull;
 
 import com.isa.reservation.Reservation;
@@ -26,6 +27,10 @@ public class ResTable {
 	@GeneratedValue
 	@Column(name = "table_id")
 	private Long id;
+	
+	@Version
+    @Column(name = "version", columnDefinition = "integer DEFAULT 0", nullable = false)
+	private Long version;
 
 	@Enumerated(EnumType.STRING)
 	@NotNull
@@ -64,6 +69,8 @@ public class ResTable {
 	@ManyToMany(cascade ={CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
 	@JoinTable(name = "reservation_tables", joinColumns = @JoinColumn(name = "table_id"), inverseJoinColumns = @JoinColumn(name = "reservation_id"))
 	private List<Reservation> reservations;
+	
+
 	
 	public ResTable(){}
 
@@ -165,6 +172,14 @@ public class ResTable {
 
 	public void setReservations(List<Reservation> reservations) {
 		this.reservations = reservations;
+	}
+
+	public Long getVersion() {
+		return version;
+	}
+
+	public void setVersion(Long version) {
+		this.version = version;
 	}
 
 	
