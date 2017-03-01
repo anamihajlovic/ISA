@@ -70,7 +70,6 @@ public class InvitationController {
 			return "FAILURE";
 		}
 		
-		//ako budem imala listu invitationa u reservation-u, onda ovde dodati u tu listu kreiran invitation
 		
 		
 		return "OK";
