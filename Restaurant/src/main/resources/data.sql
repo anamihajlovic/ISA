@@ -307,13 +307,15 @@ insert into work_shift_responsabilites values(2,4)
 
 
 
-
 --RESERVATIONS
 insert into reservations(res_id, res_name, guest_id, date, start_time, end_time, tables_id) values (1, 'Lanterna', 1, '2017-02-26', '17:30', '19:45', '1;2')
 insert into reservations(res_id, res_name, guest_id, date, start_time, end_time, tables_id) values (1, 'Lanterna', 1, '2017-02-26', '18:30', '20:00', '6')
 insert into reservations(res_id, res_name, guest_id, date, start_time, end_time, tables_id) values (1, 'Lanterna', 1, '2017-02-27', '17:30', '19:45', '7')
 insert into reservations(res_id, res_name, guest_id, date, start_time, end_time, tables_id) values (1, 'Lanterna', 1, '2017-02-28', '17:30', '19:45', '7')
-
+insert into reservations(res_id, res_name, guest_id, date, start_time, end_time, tables_id) values (1, 'Lanterna', 1, '2017-03-03', '17:30', '19:45', '10')
+insert into reservations(res_id, res_name, guest_id, date, start_time, end_time, tables_id) values (1, 'Lanterna', 1, '2017-03-03', '12:30', '13:45', '9')
+insert into reservations(res_id, res_name, guest_id, date, start_time, end_time, tables_id) values (1, 'Lanterna', 1, '2017-03-04', '17:30', '19:45', '2')
+insert into reservations(res_id, res_name, guest_id, date, start_time, end_time, tables_id) values (1, 'Lanterna', 1, '2017-03-04', '12:30', '13:45', '1;3')
 
 --PROBA SA POZIVNICAMA--
 insert into invitations(reservation_id,sender_id,friend_id,friend_name,status)values(1,1,2,'Jelena Kalabic','accepted')
@@ -333,7 +335,11 @@ insert into reservation_tables(table_id, reservation_id) values (2,1)
 insert into reservation_tables(table_id, reservation_id) values (6,2)
 insert into reservation_tables(table_id, reservation_id) values (7,3)
 insert into reservation_tables(table_id, reservation_id) values (7,4)
-
+insert into reservation_tables(table_id, reservation_id) values (10,5)
+insert into reservation_tables(table_id, reservation_id) values (9,6)
+insert into reservation_tables(table_id, reservation_id) values (2,7)
+insert into reservation_tables(table_id, reservation_id) values (1,8)
+insert into reservation_tables(table_id, reservation_id) values (3,8)
 --BILLS
 insert into bills(bill_date,bill_time,waiter_id,total_price)values('2017-02-19','09:05:00',1,500)
 insert into bills(bill_date,bill_time,waiter_id,total_price)values('2017-02-19','09:15:00',1,4500)

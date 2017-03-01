@@ -2,7 +2,6 @@ package com.isa.system.manager;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
@@ -31,7 +30,7 @@ public class SystemManagerController {
 	private final RestaurantManagerService restaurantManagerService;
 	private final RestaurantService restaurantService;
 	private final SystemManagerService systemManagerService;
-	private  Long idRestaurant;
+//	private  Long idRestaurant;
 	@Autowired
 	public SystemManagerController(final RestaurantManagerService restaurantManagerService,
 			 final RestaurantService restaurantService, HttpSession session,
@@ -55,7 +54,7 @@ public class SystemManagerController {
 	
 	
 	@PostMapping(path = "/newResManager")
-	public RestaurantManager saveResManager(@Valid @RequestBody RestaurantManager restaurantManager) {
+	public RestaurantManager saveResManager(@RequestBody RestaurantManager restaurantManager) {
 		//System.out.println("uslo");
 		if (restaurantManager != null){
 		//restaurantManager.setId(null);//mozda ovo ne bi trebalo dirati jer ovo baza sama regulise
@@ -63,7 +62,18 @@ public class SystemManagerController {
 		restaurantManager.setUserRole(Role.resManager);		
 		restaurantManagerService.save(restaurantManager);
 		Restaurant r = restaurantService.findOne(restaurantManager.getIdRestaurant());
-		r.getRestaurantManagers().add(restaurantManager);
+		try {
+			if(r.getRestaurantManagers().equals(null)){
+				List<RestaurantManager> lista = new ArrayList<RestaurantManager>();
+				lista.add(restaurantManager);
+				r.setRestaurantManagers(lista);
+			}else{
+			r.getRestaurantManagers().add(restaurantManager);
+			}
+			
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
 		r.setId(restaurantManager.getIdRestaurant());
 		restaurantService.save(r);		
 		return restaurantManager;
@@ -75,7 +85,8 @@ public class SystemManagerController {
 	@GetMapping(path = "/ResManagers/{id}")
 	public List<RestaurantManager> findAllRestaurantManagers(@PathVariable Long id) {
 		//System.out.println("uslo");
-		idRestaurant = id;
+		//idRestaurant = id;
+		
 	    List<RestaurantManager> managers = restaurantService.findOne(id).getRestaurantManagers();
 	    //System.out.println("velicina " +managers.size());
 		return managers;
@@ -131,21 +142,35 @@ public class SystemManagerController {
 	
 	@DeleteMapping(path = "/deleteResMen/{id}")
 	public String deleteResManager(@PathVariable Long id) {
-		if(id!=null){
-		RestaurantManager menager = restaurantManagerService.findOne(id);
-		restaurantService.findOne(idRestaurant).getRestaurantManagers().remove(menager);	
-		restaurantManagerService.delete(id);
-	return "yes";
-		}else return "no";	
+		try {
+			if(id!=null){
+				RestaurantManager menager = restaurantManagerService.findOne(id);
+				Restaurant r = restaurantService.findOne(menager.getIdRestaurant());
+				restaurantService.findOne(r.getId()).getRestaurantManagers().remove(menager);	
+				restaurantManagerService.delete(id);
+			}
+			return "yes";
+		} catch (Exception e) {
+			return "no";
+		}
+		
+		
 	}
 	
 	@DeleteMapping(path = "/deleteRestaurant/{id}")
 	public String deleteRestaurant(@PathVariable Long id) {
-		if(id!=null){		
-			restaurantService.delete(id);
-		return "yes";
-			}else return "no";	
+		
+		try {
+				if(id!=null)
+					restaurantService.delete(id);
+			
+				return "yes";
+
+			
+		} catch (Exception e) {
+			return "no";	
+		}
+		
 	}
-	
 	
 }

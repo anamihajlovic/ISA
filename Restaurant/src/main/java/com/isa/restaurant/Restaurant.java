@@ -1,4 +1,5 @@
 package com.isa.restaurant;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -39,23 +40,23 @@ public class Restaurant {
 	private Long id;
 
 	@Column
-	@NotBlank
+	@NotNull
 	private String name;	
 	
 	@Column
-	@NotBlank
+	@NotNull
 	private String restaurant_type;
 	
 	@Column
-	@NotBlank
+	@NotNull
 	private String country;
 
 	@Column
-	@NotBlank
+	@NotNull
 	private String city;
 	
 	@Column
-	@NotBlank
+	@NotNull
 	private String street;
 	
 	@Column
@@ -116,7 +117,15 @@ public class Restaurant {
 	private List<Bill> bills;
 	
 
-	public Restaurant() {}
+	public Restaurant() {
+		this.restaurantManagers = new ArrayList<RestaurantManager>();
+		this.waiters = new ArrayList<Waiter>();
+		this.cooks = new ArrayList<Cook>();
+		this.bartenders = new ArrayList<Bartender>();
+		this.bidders = new ArrayList<Bidder>();
+		this.segments = new ArrayList<ResSegment>();
+		this.orders =new ArrayList<ResOrder>();
+	}
 
 
 	public Restaurant(Long id, String name, String restaurant_type, String country, String city, String street,
@@ -133,7 +142,7 @@ public class Restaurant {
 		this.street = street;
 		this.number = number;
 		this.ratings = ratings;
-		this.restaurantManagers = restaurantManagers;
+		this.restaurantManagers =restaurantManagers;
 		this.foodstuffs = foodstuffs;
 		this.dishes = dishes;
 		this.drinks = drinks;
