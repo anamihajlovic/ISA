@@ -58,7 +58,9 @@ public class Reservation {
 	@OneToMany(cascade = CascadeType.ALL)
 	@JoinTable(name = "reservation_orders", joinColumns = @JoinColumn(name = "reservation_id"), inverseJoinColumns = @JoinColumn(name = "order_id"))
 	private List<Order> orders;
-
+	
+	@Column (name= "deleted")
+	private Boolean deleted;
 	
 	public Reservation() {}
 	
@@ -71,6 +73,7 @@ public class Reservation {
 		this.endTime = endTime;
 		this.tables = tables;
 		this.orders = orders;
+		this.deleted = false;
 	}
 
 	public Long getId() {
@@ -143,6 +146,14 @@ public class Reservation {
 
 	public void setOrders(List<Order> orders) {
 		this.orders = orders;
+	}
+
+	public Boolean getDeleted() {
+		return deleted;
+	}
+
+	public void setDeleted(Boolean deleted) {
+		this.deleted = deleted;
 	}
 	
 	

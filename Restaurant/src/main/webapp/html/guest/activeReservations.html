@@ -1,8 +1,8 @@
 <div class = "col-sm-2">
 </div>
-<div class = "col-sm-8" ng-show="myVisits.length != 0">
-	<h4>My visits</h4>
-	<table  class="table table-bordered tableBG" border="1">
+<div class = "col-sm-8" ng-show="activeReservations.length != 0">
+	<h4>Active reservations: </h4>
+	<table  class="table table-bordered tableBG" border="1" >
 		<tbody>
 	        <tr>
 				<th>Restaurant</th>
@@ -10,9 +10,8 @@
                 <th>Start time</th>
                 <th>End time</th>
                 <th></th>
-                <th></th>
             </tr>
-			<tr ng-repeat="reservation in myVisits">
+			<tr ng-repeat="reservation in activeReservations">
 				<td>
 		    		{{reservation.resName}}	
 				</td>
@@ -26,11 +25,9 @@
 		    		{{reservation.endTime}}	
 				</td>
 				<td>
+           	<a  class="btn btn-danger  btn-xs glyphicon glyphicon-trash" ng-click="deleteReservation(reservation.id)" data-ui-sref="." title="Delete"></a>
 				<!-- Trigger the modal with a button -->
-				<button type="button" id="modalBtnFriends" ng-click="getInvitedFriends(reservation.id)"class="btn btn-default btn-info btn-xs navbar-btn" data-toggle="modal" data-target="#myModalFriends" title="See friends"><span class="glyphicon glyphicon-user"></span></button>					
-				</td>
-				<td>
-		    		<button ng-click = "goToRatePage(reservation)"  class="btn btn-default"><span class="glyphicon glyphicon-star"></span></button>		    		
+				<button type="button" id="modalBtnFriends" ng-click="getInvitedFriends(reservation.id)"class="btn btn-default btn-info btn-xs navbar-btn" data-toggle="modal" data-target="#myModalFriends" title="See friends"><span class="glyphicon glyphicon-user"></span></button>
 				</td>
 			</tr>
         </tbody>
@@ -39,7 +36,7 @@
     
     
     
- <!-- Modal -->
+    <!-- Modal -->
 <div id="myModalFriends" class="modal fade "  >
   <div class="modal-dialog modal-admin ">
 
@@ -83,4 +80,3 @@
 
   </div>
 </div>
- 

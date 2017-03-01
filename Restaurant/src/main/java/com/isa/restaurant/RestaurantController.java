@@ -77,6 +77,11 @@ public class RestaurantController {
 		return dishes;
 		
 	}
+	
+	@GetMapping(path = "/getRestaurant/{id}")
+	public Restaurant getRestaurant(@PathVariable Long id) {
+		return restaurantService.findOne(id);
+	}
 
 
 }

@@ -1,9 +1,11 @@
 <style type = "text/css">
-h1 {text-align : left}
+h2 {text-align : center}
 
 th,td {text-align : left}
 
 .lastRow {text-align: right}	
+
+.bill {text-align : left}
 
 </style>
 
@@ -12,24 +14,26 @@ th,td {text-align : left}
 <div class = "col-md-4">
 </div>
 <div class = "col-md-6">
+<br>
+<h2>{{restaurant.name}}</h2>
 
-<h1>Restaurant name</h1>
-<br><br><br>
-<table>
+<br>
+<table border = "1" ng-show = "mode == 'rateVisit'">
 <tbody>
 <tr>
 <th>Date:</th>
-<td>26.02.2017</td>
+<td colspan = "7">{{order.orderDate}}</td>
 </tr>
 
 <tr>
 <th>Waiter grade:</th>
-<td><button class = "btn btn-link btn-lg" ng-click = "waiterOneClick()"><span class = "{{waiterOne ? 'glyphicon glyphicon glyphicon-star' : 'glyphicon glyphicon-star-empty'}}" style="color:#FFDF00;"></span></button></td>
-<td><button class = "btn btn-link btn-lg" ng-click = "waiterTwoClick()"><span class = "{{waiterTwo ? 'glyphicon glyphicon glyphicon-star' : 'glyphicon glyphicon-star-empty'}}" style="color:#FFDF00;"></span></button></td>
-<td><button class = "btn btn-link btn-lg" ng-click = "waiterThreeClick()"><span class = "{{waiterThree ? 'glyphicon glyphicon glyphicon-star' : 'glyphicon glyphicon-star-empty'}}" style="color:#FFDF00;"></span></button></td>
-<td><button class = "btn btn-link btn-lg" ng-click = "waiterFourClick()"><span class = "{{waiterFour ? 'glyphicon glyphicon glyphicon-star' : 'glyphicon glyphicon-star-empty'}}" style="color:#FFDF00;"></span></button></td>
-<td><button class = "btn btn-link btn-lg" ng-click = "waiterFiveClick()"><span class = "{{waiterFive ? 'glyphicon glyphicon glyphicon-star' : 'glyphicon glyphicon-star-empty'}}" style="color:#FFDF00;"></span></button></td>
-<td><button class = "btn btn-primary" ng-click = "resetWaiter()" style="background:black"><span class = "glyphicon glyphicon glyphicon-refresh"></span></button></td>
+<td><button class = "btn btn-link btn-lg" ng-click = "waiterOneClick()"><span class = "{{waiterOne ? 'glyphicon glyphicon-star' : 'glyphicon glyphicon-star-empty'}}" style="color:#FFDF00;"></span></button></td>
+<td><button class = "btn btn-link btn-lg" ng-click = "waiterTwoClick()"><span class = "{{waiterTwo ? 'glyphicon  glyphicon-star' : 'glyphicon glyphicon-star-empty'}}" style="color:#FFDF00;"></span></button></td>
+<td><button class = "btn btn-link btn-lg" ng-click = "waiterThreeClick()"><span class = "{{waiterThree ? 'glyphicon glyphicon-star' : 'glyphicon glyphicon-star-empty'}}" style="color:#FFDF00;"></span></button></td>
+<td><button class = "btn btn-link btn-lg" ng-click = "waiterFourClick()"><span class = "{{waiterFour ? 'glyphicon  glyphicon-star' : 'glyphicon glyphicon-star-empty'}}" style="color:#FFDF00;"></span></button></td>
+<td><button class = "btn btn-link btn-lg" ng-click = "waiterFiveClick()"><span class = "{{waiterFive ? 'glyphicon glyphicon-star' : 'glyphicon glyphicon-star-empty'}}" style="color:#FFDF00;"></span></button></td>
+<td><button class = "btn btn-primary" ng-click = "resetWaiter()" style="background:black"><span class = "glyphicon  glyphicon-refresh"></span></button></td>
+<td><button class = "btn btn-primary" ng-click = "showWaiter()" style="background:black"><span class = "glyphicon  glyphicon-search"></span></button></td>
 </tr>
 
 <tr>
@@ -40,6 +44,7 @@ th,td {text-align : left}
 <td><button class = "btn btn-link btn-lg" ng-click = "mealFourClick()"><span class = "{{mealFour ? 'glyphicon glyphicon glyphicon-star' : 'glyphicon glyphicon-star-empty'}}" style="color:#FFDF00;"></span></button></td>
 <td><button class = "btn btn-link btn-lg" ng-click = "mealFiveClick()"><span class = "{{mealFive ? 'glyphicon glyphicon glyphicon-star' : 'glyphicon glyphicon-star-empty'}}" style="color:#FFDF00;"></span></button></td>
 <td><button class = "btn btn-primary" ng-click = "resetMeal()" style="background:black"><span class = "glyphicon glyphicon glyphicon-refresh"></span></button></td>
+<td><button class = "btn btn-primary" ng-click = "showOrder()" style="background:black"><span class = "glyphicon  glyphicon-search"></span></button></td>
 </tr>
 
 <tr>
@@ -50,18 +55,210 @@ th,td {text-align : left}
 <td><button class = "btn btn-link btn-lg" ng-click = "restaurantFourClick()"><span class = "{{restaurantFour ? 'glyphicon glyphicon glyphicon-star' : 'glyphicon glyphicon-star-empty'}}" style="color:#FFDF00;"></span></button></td>
 <td><button class = "btn btn-link btn-lg" ng-click = "restaurantFiveClick()"><span class = "{{restaurantFive ? 'glyphicon glyphicon glyphicon-star' : 'glyphicon glyphicon-star-empty'}}" style="color:#FFDF00;"></span></button></td>
 <td><button class = "btn btn-primary" ng-click = "resetRestaurant()" style="background:black"><span class = "glyphicon glyphicon glyphicon-refresh"></span></button></td>
+<td><button class = "btn btn-primary" ng-click = "showRestaurant()" style="background:black"><span class = "glyphicon  glyphicon-search"></span></button></td>
 </tr>
 </tbody>
 
 <br><br>
 <tfoot>
 <tr>
-<td colspan = "5" class ="lastRow"><button class = "btn btn-primary" style="background:black" ng-click="buttonAddDrink()">Ok</button></td>
-<td colspan = "2" class ="lastRow"><button class = "btn btn-primary" style="background:black" ng-click="buttonAddDrink()">Cancel</button></td>
+<td colspan = "5" class ="lastRow"><button class = "btn btn-primary" ng-disabled = "mode == 'seeRating'"style="background:black" ng-click="submit()">Ok</button></td>
+<td colspan = "2" class ="lastRow"><button class = "btn btn-primary" style="background:black" ng-click="cancel()">Cancel</button></td>
 </tr>
 </tfoot>
-
 </table>
 
+
+
+<table border = "1" ng-show = "mode == 'seeRating'">
+<tbody>
+<tr>
+<th>Date:</th>
+<td colspan = "6">{{order.orderDate}}</td>
+</tr>
+
+<tr>
+<th>Waiter grade:</th>
+<td><button class = "btn btn-link btn-lg" ng-disabled><span class = "{{waiterOne ? 'glyphicon glyphicon-star' : 'glyphicon glyphicon-star-empty'}}" style="color:#FFDF00;"></span></button></td>
+<td><button class = "btn btn-link btn-lg" ng-disabled><span class = "{{waiterTwo ? 'glyphicon  glyphicon-star' : 'glyphicon glyphicon-star-empty'}}" style="color:#FFDF00;"></span></button></td>
+<td><button class = "btn btn-link btn-lg" ng-disabled><span class = "{{waiterThree ? 'glyphicon glyphicon-star' : 'glyphicon glyphicon-star-empty'}}" style="color:#FFDF00;"></span></button></td>
+<td><button class = "btn btn-link btn-lg" ng-disabled><span class = "{{waiterFour ? 'glyphicon  glyphicon-star' : 'glyphicon glyphicon-star-empty'}}" style="color:#FFDF00;"></span></button></td>
+<td><button class = "btn btn-link btn-lg" ng-disabled><span class = "{{waiterFive ? 'glyphicon glyphicon-star' : 'glyphicon glyphicon-star-empty'}}" style="color:#FFDF00;"></span></button></td>
+<td><button class = "btn btn-primary" ng-click = "showWaiter()" style="background:black"><span class = "glyphicon  glyphicon-search"></span></button></td>
+</tr>
+
+<tr>
+<th>Meal grade:</th>
+<td><button class = "btn btn-link btn-lg" ng-disabled><span class = "{{mealOne ? 'glyphicon glyphicon glyphicon-star' : 'glyphicon glyphicon-star-empty'}}" style="color:#FFDF00;"></span></button></td>
+<td><button class = "btn btn-link btn-lg" ng-disabled><span class = "{{mealTwo ? 'glyphicon glyphicon glyphicon-star' : 'glyphicon glyphicon-star-empty'}}" style="color:#FFDF00;"></span></button></td>
+<td><button class = "btn btn-link btn-lg" ng-disabled><span class = "{{mealThree ? 'glyphicon glyphicon glyphicon-star' : 'glyphicon glyphicon-star-empty'}}" style="color:#FFDF00;"></span></button></td>
+<td><button class = "btn btn-link btn-lg" ng-disabled><span class = "{{mealFour ? 'glyphicon glyphicon glyphicon-star' : 'glyphicon glyphicon-star-empty'}}" style="color:#FFDF00;"></span></button></td>
+<td><button class = "btn btn-link btn-lg" ng-disabled><span class = "{{mealFive ? 'glyphicon glyphicon glyphicon-star' : 'glyphicon glyphicon-star-empty'}}" style="color:#FFDF00;"></span></button></td>
+<td><button class = "btn btn-primary" ng-click = "showOrder()" style="background:black"><span class = "glyphicon  glyphicon-search"></span></button></td>
+</tr>
+
+<tr>
+<th>Restaurant grade:</th>
+<td><button class = "btn btn-link btn-lg" ng-disabled><span class = "{{restaurantOne ? 'glyphicon glyphicon glyphicon-star' : 'glyphicon glyphicon-star-empty'}}" style="color:#FFDF00;"></span></button></td>
+<td><button class = "btn btn-link btn-lg" ng-disabled><span class = "{{restaurantTwo ? 'glyphicon glyphicon glyphicon-star' : 'glyphicon glyphicon-star-empty'}}" style="color:#FFDF00;"></span></button></td>
+<td><button class = "btn btn-link btn-lg" ng-disabled><span class = "{{restaurantThree ? 'glyphicon glyphicon glyphicon-star' : 'glyphicon glyphicon-star-empty'}}" style="color:#FFDF00;"></span></button></td>
+<td><button class = "btn btn-link btn-lg" ng-disabled><span class = "{{restaurantFour ? 'glyphicon glyphicon glyphicon-star' : 'glyphicon glyphicon-star-empty'}}" style="color:#FFDF00;"></span></button></td>
+<td><button class = "btn btn-link btn-lg" ng-disabled><span class = "{{restaurantFive ? 'glyphicon glyphicon glyphicon-star' : 'glyphicon glyphicon-star-empty'}}" style="color:#FFDF00;"></span></button></td>
+<td><button class = "btn btn-primary" ng-click = "showRestaurant()" style="background:black"><span class = "glyphicon  glyphicon-search"></span></button></td>
+</tr>
+</tbody>
+
+<br><br>
+<tfoot>
+<tr>
+<td colspan = "7" class ="lastRow"><button class = "btn btn-primary" style="background:black" ng-click="cancel()">Cancel</button></td>
+</tr>
+</tfoot>
+</table>
+
+
 </div>
 </div>
+
+
+<!-- ------------------------------------------------------------------------------------- -->
+<button type="button" id = "modalWaiter" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myWaiterModal"style="display:none"></button>
+
+<!-- Modal -->
+<div id="myWaiterModal" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+      
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">Waiter info</h4>
+      </div>
+      
+      <div class="modal-body">
+        <label>Your waiter was: {{waiter.firstName}}&nbsp{{waiter.lastName}} </label>        
+      </div>
+      <div class="modal-footer">
+      	<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>      
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ------------------------------------------------------------------------------------- -->
+<button type="button" id = "modalOrder" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myOrderModal"style="display:none"></button>
+
+<!-- Modal -->
+<div id="myOrderModal" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+      
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">Waiter info</h4>
+      </div>
+      
+      <div class="modal-body">        
+      <table>
+      <tr>
+      <th class = "bill">Order:</th>
+      <td class = "bill">{{order.id}}</td>
+      </tr>
+      <tr>
+      <th class = "bill">Table:</th>
+      <td class = "bill">{{order.tableId}}</td>
+      </tr>
+      <tr>
+      <th class = "bill">Drinks:</th>
+      <td class = "bill" ng-repeat = "drink in order.orderedDrinks">{{drink.name}}</td>
+      </tr>
+      <tr>
+      <th class = "bill">Dishes:</th>
+      <td class = "bill" ng-repeat = "dish in order.orderedDish">{{dish.name}}</td>      
+      </tr>            
+      </table>
+      </div>
+      
+      <div class="modal-footer">
+      	<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>      
+      </div>
+      
+    </div>
+
+  </div>
+</div>
+
+ <!-- ---------------------------------------------------------------------------- -->
+<button type="button" id = "modalRestaurant" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myRestaurantModal" style="display:none"></button>
+
+<!-- Modal -->
+<div id="myRestaurantModal" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+    
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">Restaurant info</h4>
+      </div>
+      
+      <div class="modal-body">
+      <table>
+      <tr>
+      <th class = "bill">Name:</th>
+      <td class = "bill">{{restaurant.name}}</td>
+      </tr>
+      <tr>
+      <th class = "bill">Type:</th>
+      <td class = "bill">{{restaurant.restaurant_type}}</td>
+      </tr>
+      <tr>
+      <th class = "bill">Country:</th>
+      <td class = "bill">{{restaurant.country}}</td>
+      </tr>
+      <tr>
+      <th class = "bill">City:</th>
+      <td class = "bill">{{restaurant.city}}</td>      
+      </tr>            
+      </table>
+      </div>
+      
+      <div class="modal-footer">      	      	
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+
+  </div>
+</div>
+ 
+
+
+<!-- ------------------------------------------------------------------------------------- -->
+<button type="button" id = "modalInvalid" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myGradeInvalidModal"style="display:none"></button>
+
+<!-- Modal -->
+<div id="myGradeInvalidModal" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">Error</h4>
+      </div>
+      <div class="modal-body">
+        <label>You must rate waiter, meals and restaurant</label>        
+      </div>
+      <div class="modal-footer">
+      	<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>      
+      </div>
+    </div>
+
+  </div>
+</div>
+ 

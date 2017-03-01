@@ -39,8 +39,8 @@ guestServices.service('orderService', ['$http', function($http) {
 		return $http.put("/orders/serveDish/"+orderId, dish);
 	}
 	
-	this.acceptOrder = function(orderId) {
-		return $http.put("/orders/acceptOrder/"+orderId);
+	this.acceptOrder = function(orderId, tableId) {
+		return $http.put("/orders/acceptOrder/"+orderId+"/"+tableId);
 	}
 	
 	this.serveOrder = function(order) {
@@ -59,6 +59,12 @@ guestServices.service('orderService', ['$http', function($http) {
 		return $http.post('/bills/createBill', bill);
 	}
 	
+	this.getReservation = function(reservationId) {
+		return $http.get("/reservations/getReservation/"+reservationId);
+	}
 	
+	this.getOrder = function(reservationId) {
+		return $http.get("/orders/getOrderByReservation/"+reservationId);
+	}
 
 }]);

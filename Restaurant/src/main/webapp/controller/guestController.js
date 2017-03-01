@@ -2,8 +2,8 @@ var guestModule = angular.module('guest.controller', []);
 
 
 
-guestModule.controller('guestController', ['$scope', 'guestService','commonService', '$location','$interval', '$filter', '$state',
-	function($scope, guestService, commonService,  $location, $interval, $filter, $state) {
+guestModule.controller('guestController', ['$scope', 'guestService', 'orderService', 'gradeService', 'commonService', '$location','$interval', '$filter', '$state',
+	function($scope, guestService, orderService, gradeService, commonService,  $location, $interval, $filter, $state) {
 	
 		$scope.numOfFriendRequest= 0;
 		
@@ -544,7 +544,7 @@ guestModule.controller('guestController', ['$scope', 'guestService','commonServi
 			var drinksString = makeArrayString($scope.chosenDrinks);
 			var dishesAndDrinks = dishesString + "-" + drinksString;
 
-			var request = guestService.order($scope.createdReservation.id, dishesAndDrinks).then(function(response){
+			var request = guestService.order($scope.createdReservation.id, $scope.createdReservation.guestId, dishesAndDrinks).then(function(response){
 				$scope.data = response.data;
 				return response;
 			});
@@ -560,26 +560,124 @@ guestModule.controller('guestController', ['$scope', 'guestService','commonServi
 		}
 		
 		//ISTORIJA POSETA
+		$scope.myVisits = [];
 		$scope.getMyVisits = function() {
+			$scope.myVisits = [];
+
 			var request = guestService.getMyVisits($scope.guest.id).then(function(response){
 				$scope.data = response.data;
 				return response;
 			});
 				
 			request.then(function (data) {
-				if($scope.data.size != 0) {
+				if($scope.data != "") {
 					$scope.myVisits = $scope.data;
 				} else {
-						toastr.info("You haven't visited any restaurant.");
+					$scope.myVisits = [];
+					toastr.info("You haven't visited any restaurant.");
 				}
+			});
+		}
+
+		$scope.getInvitedFriends = function(reservationId) {
+			$scope.wereInvited = false;
+			$scope.noInvitations = false;
+
+			var request = guestService.getInvitedFriends(reservationId, $scope.guest.id).then(function(response){
+				$scope.data = response.data;
+				return response;
+			});
+				
+			request.then(function (data) {
+					if($scope.data != "") {
+						$scope.wereInvited = false;
+						if($scope.data[0].friendName == "nema poziva" && $scope.data.length == 1) {
+							$scope.invitedFriends = [];
+							$scope.noInvitations = true;
+
+						} else {
+							$scope.noInvitations = false;
+							$scope.invitedFriends = $scope.data;
+						}
+						
+
+					} else {
+						
+						$scope.invitedFriends = [];
+						$scope.wereInvited = true;
+
+					}
+					
 			});
 		}
 		
 		
+		$scope.goToRatePage = function(reservation) {	
+			gradeService.setReservation(reservation);			
+			var request = orderService.getOrder(reservation.id).then(function(response) {
+				$scope.data = response.data;
+				return response;
+			
+			});
+			
+			request.then(function (data) {				
+				gradeService.setOrder($scope.data);
+				
+				var request = gradeService.getRatedReservation(reservation.id, $scope.guest.id).then(function(response) {
+					$scope.data = response.data;
+					return response;			
+				});			
+				request.then(function (data) {		
+					$scope.grade = $scope.data;
+					if($scope.data != "") {
+						$state.go('guest.seeRating');						
+					}								
+						
+					else {
+						$state.go('guest.rateVisit');						
+					}
+						
+				});									
+			});						
+		}
 		
 		
 		//KRAJ ISTORIJE POSETA
+
 		
+		//AKTIVNE REZERVACIJE
+		$scope.activeReservations = [];
+		$scope.getActiveReservations = function() {
+			var request = guestService.getActiveReservations($scope.guest.id).then(function(response){
+				$scope.data = response.data;
+				return response;
+			});
+				
+			request.then(function (data) {
+				if($scope.data != "") {
+					$scope.activeReservations = $scope.data;
+				} else {
+					$scope.activeReservations = [];
+					toastr.info("There's no active reservations.");
+				}
+			});
+		}
+		
+		$scope.deleteReservation = function(id) {
+			var request = guestService.deleteReservation(id).then(function(response){
+				$scope.data = response.data;
+				return response;
+			});
+				
+			request.then(function (data) {
+				if($scope.data == "OK") {
+					toastr.success("Successfully deleted reservations.")
+					$scope.getActiveReservations();
+				} else {
+						toastr.error("Deleting reservation was unsuccessful. Please, try again.");
+				}
+			});
+		}
 
 
 		

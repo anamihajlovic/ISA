@@ -34,8 +34,7 @@ employeeServices.service('employeeService',['$http', function($http) {
 		
 	}
 	
-	this.checkWorkShift = function(employee) {
-		alert(employee.userRole)
+	this.checkWorkShift = function(employee) {		
 		if(employee.userRole == 'bartender')			
 			return $http.get("/bartenders/getWorkShift");	
 		

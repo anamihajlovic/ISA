@@ -9,4 +9,6 @@ public interface GradeService {
 	List<Grade> findAll();
 	
 	Grade findByOrderId(Long id);
+	
+	Grade findByGuestIdAndReservationId(Long guestId, Long reservationId);
 }

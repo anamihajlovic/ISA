@@ -34,6 +34,12 @@ public class GradeServiceImp implements GradeService {
 		// TODO Auto-generated method stub
 		return repository.findByOrderId(id);
 	}
+
+	@Override
+	public Grade findByGuestIdAndReservationId(Long guestId, Long reservationId) {
+		// TODO Auto-generated method stub
+		return repository.findByGuestIdAndReservationId(guestId, reservationId);
+	}
 	
 	
 }

@@ -56,10 +56,12 @@ public class ResTable {
 	@Column 
 	private int yPos;
 	
+
 	@Transient
 	private Boolean enableDel;
 	
-	@ManyToMany(cascade = CascadeType.ALL)
+
+	@ManyToMany(cascade ={CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
 	@JoinTable(name = "reservation_tables", joinColumns = @JoinColumn(name = "table_id"), inverseJoinColumns = @JoinColumn(name = "reservation_id"))
 	private List<Reservation> reservations;
 	

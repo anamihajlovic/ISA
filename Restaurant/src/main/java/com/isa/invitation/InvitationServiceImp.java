@@ -37,4 +37,14 @@ public class InvitationServiceImp implements InvitationService {
 		return Lists.newArrayList(repository.findAllByReservationIdAndStatus(id,is));
 	}
 
+	@Override
+	public List<Invitation> findAllByReservationId(Long reservationId) {
+		return Lists.newArrayList(repository.findAllByReservationId(reservationId));
+	}
+
+	@Override
+	public List<Invitation> findAll() {
+		return Lists.newArrayList(repository.findAll());
+	}
+
 }
