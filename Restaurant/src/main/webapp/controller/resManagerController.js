@@ -22,7 +22,7 @@ resManagerModule.controller('resManagerController', ['$scope', 'resManagerServic
 			function (response) {
 				$scope.restaurant = response.data;
 				if(response.data!="") {	
-					//myMap();
+					myMap();
 				} else {					
 					 $location.path('login');
 				}
@@ -31,7 +31,25 @@ resManagerModule.controller('resManagerController', ['$scope', 'resManagerServic
 	}
 	Restaurant();
 	
+	
+	
+	
 	//////////////////////////////////////GOOGLE MAPS//////////////////////////////////////////////////////////////
+	/* function initMap() {
+	        var uluru = {lat: -25.363, lng: 131.044};
+	        var map = new google.maps.Map(document.getElementById('map'), {
+	          zoom: 4,
+	          center: uluru
+	        });
+	        var marker = new google.maps.Marker({
+	          position: uluru,
+	          map: map
+	        });
+	      }
+
+	*/
+	
+	
 	function myMap() {
 		var mapProp= {
 		    zoom:15,
@@ -637,9 +655,11 @@ resManagerModule.controller('resManagerController', ['$scope', 'resManagerServic
 	
 //////////////////////////////////////	//////////////////////////////////////////////////////////////////////
 	$scope.newConfiguration = function(){
+		checkRights();	
 		document.getElementById("modalBtnCreateConfiguration").click();	
 	}
 	$scope.makeConfig = function(){
+		checkRights();	
 		var width = $("input[name='width']").val();
 		sirina = width;
 		//alert(width)
@@ -691,6 +711,7 @@ resManagerModule.controller('resManagerController', ['$scope', 'resManagerServic
 			});
 	}
 	$scope.showTables = function(){
+		checkRights();	
 		resManagerService.getTables().then(
 				function(response){
 					//tables = response.data;
@@ -791,6 +812,35 @@ resManagerModule.controller('resManagerController', ['$scope', 'resManagerServic
 			return response;
 		});	
   }
+  $scope.buttonShowTableDel = function (event){
+	  
+	  var request = resManagerService.findTable(event).then(function(response) {
+			$scope.table = response.data;
+			//alert($scope.foodstuff.quantity)
+			
+			 $('.modal-admin').css('width', '280px');
+			document.getElementById("modalBtnShowTableDell").click();	
+			AllSegments();
+			return response;
+		});	
+  }
+  $scope.updateTableDel = function(){
+	  var request = resManagerService.updateTable($scope.table).then(function(response) { 
+			$scope.data = response.data;
+			return response;
+		});			
+			request.then(function (data) {
+				if($scope.data != null) {
+					toastr.success("Success!");	
+					document.getElementById("cancelUpdateTableDel").click();	
+					Tables();
+				} else {
+					toastr.error("Something wrong");
+				
+				}
+
+		});
+  }
    $scope.updateTable = function (){
 	   var request = resManagerService.updateTable($scope.table).then(function(response) { 
 		$scope.data = response.data;
@@ -820,6 +870,7 @@ resManagerModule.controller('resManagerController', ['$scope', 'resManagerServic
 	}
    /////////////////////////////////////////RESTAURANT ORDERS/////////////////////////////////////////
   $scope.restaurantOrders= function () {
+		checkRights();	
    	var request = resManagerService.findAllResOrders().then(
 				function (response) {
 					$scope.resOrders = response.data;
@@ -953,8 +1004,8 @@ resManagerModule.controller('resManagerController', ['$scope', 'resManagerServic
 	$scope.eventSources = [];
 	$scope.eventVisible = false;
 
-	
-			
+$scope.calendar = function(){
+	checkRights();	
 			var newRequest = resManagerService.readWorkSchedule().then(function (response){
 				var shifts = response.data;
 				$scope.events = [];
@@ -974,7 +1025,7 @@ resManagerModule.controller('resManagerController', ['$scope', 'resManagerServic
 				}
 				 $scope.eventSources.push($scope.events); 																	
 			});
-
+}
 		
 	
 var datum ; 
@@ -1166,7 +1217,8 @@ $scope.dayBusiness = function(){
 	 $("#datum").show();
  
 }
-
+$scope.statistic = function(){
+	checkRights();	
 var request =  resManagerService.getWeekVisit().then(function(response) {  
 	 var visits = response.data;
 	 $scope.labels4=[];		 
@@ -1213,13 +1265,15 @@ var request =  resManagerService.getWeekBusinessForWaiters().then(function(respo
 return response;
 }); 
 
-
+}
 $scope.weekRating = function(){
+	checkRights();	
 	AllWaiters();
 	AllDishes();
 	document.getElementById("modalBtnWeekRatings").click();
 }
 $scope.monthRatings = function(){
+	checkRights();	
 	AllWaiters();
 	AllDishes();
 	document.getElementById("modalBtnMonthRatings").click();

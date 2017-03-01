@@ -20,20 +20,20 @@ import org.hibernate.validator.constraints.NotBlank;
 @MappedSuperclass
 public class User {
 
-	@NotBlank
+
 	@Email
 	@Column(name="email", unique=true, nullable=false)
 	private String email;
 	
-	@NotBlank
+
 	@Column(name="password", nullable=false)
 	private String password;
 	
-	@NotBlank
+
 	@Column(name="first_name", nullable=false)
 	private String firstName;
 	
-	@NotBlank
+
 	@Column(name="last_name", nullable=false)
 	private String lastName;
 	

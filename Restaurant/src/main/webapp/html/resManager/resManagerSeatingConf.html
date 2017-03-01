@@ -6,12 +6,66 @@
 <table  ng-init ="showTables()"class = "tablesTable">
 	<tr ng-repeat="row in tables">
 		<td ng-repeat="table in row">                        
-			<button id={{table.id}}  ng-click="buttonShowTable($event)"  class = "tableBtns" style="background:{{table.segColor}}"> </button>
+			<button ng-if="table.enableDel == true"  id={{table.id}}  ng-click="buttonShowTable($event)"  class = "tableBtns" style="background:{{table.segColor}}"><label ng-if="table.state == 'not_exists'"  >X</label><label ng-if="table.enableDel == false"  >rez</label></button>
+			<button ng-if="table.enableDel == false"  id={{table.id}}  ng-click="buttonShowTableDel($event)"  class = "tableBtns" style="background:{{table.segColor}}"><label ng-if="table.state == 'not_exists'"  >X</label><label ng-if="table.enableDel == false"  >rez</label></button>
 		</td>				
 	</tr>
 </table>
 <br><br><br>
 </div>
+<!-- ------------------------------------------------------ -->
+ <!-- Trigger the modal with a button -->
+<button type="button" id="modalBtnShowTableDell" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModalShowTableDel" style="display:none"></button>
+
+<!-- Modal -->
+<div id="myModalShowTableDel" class="modal fade "  >
+  <div class="modal-dialog modal-admin ">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title" id="modalTitle">Table</h4>
+      </div>
+      <div class="modal-body">
+      <label>Segment</label>
+    
+      <select class="form-control"  ng-model="$parent.table.segment"name="seg" ng-readonly="$parent.infoMode" required >  
+   		<option value="" disabled="" selected="">Select segment</option>
+      	<option ng-repeat="s in segments" >{{s.segType}}</option> 
+     </select>
+	<label>Size</label>
+	
+	<select class="form-control"  ng-model="$parent.table.size" name="size" ng-readonly="$parent.infoMode" required>
+   		<option value="" disabled="" selected="">Select size</option>
+     	<option value="two">two</option>
+		<option value="four">four</option>
+		<option value="six">six</option>
+		<option value="eight">eight</option>
+	</select>
+	
+	<label>Reon</label>
+	
+	<select class="form-control"  ng-model="$parent.table.reon"name="size" ng-readonly="$parent.infoMode" required>
+   		<option value="" disabled="" selected="">Select reon</option>
+     	<option value="first">first</option>
+		<option value="second">second</option>
+	</select>
+	
+      </div>
+      <div class="modal-footer">
+      <button type="button"  class="btn btn-default"  ng-click="updateTableDel()" ><span class="glyphicon glyphicon-ok" ></span> Update</button>
+      	 <button style="display:none" type="button" id ="cancelUpdateTableDel"class="btn btn-default" data-dismiss="modal">Cancel</button>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+
+
+
+
 
   <!-- Trigger the modal with a button -->
 <button type="button" id="modalBtnShowTable" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModalShowTable" style="display:none"></button>
@@ -47,7 +101,6 @@
    		<option value="" disabled="" selected="">Select state</option>
      	<option value="exists">exists</option>
 		<option value="not_exists">not exists</option>
-		<option value="reserved">reserved</option>
 	</select>
 	<span class="help-block" ng-show = "formS.state.$dirty && formS.state.$invalid">
 	<span ng-show = "formS.state.$error.required">State is required.</span>

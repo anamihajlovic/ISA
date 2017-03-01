@@ -70,7 +70,7 @@ sysManagerModule.controller('sysManagerController', ['$scope', 'sysManagerServic
 						toastr.error("Something wrong");
 					
 					}
-					window.location.reload();
+					
 			});
 				
 		}
@@ -100,11 +100,11 @@ sysManagerModule.controller('sysManagerController', ['$scope', 'sysManagerServic
 
 	
 	$scope.saveRestaurant= function () {    
-		alert("uslo u controller")
+		//alert("uslo u controller")
 		var request = sysManagerService.saveRestaurant($scope.restaurant).then(function(response) {
 	
 		$scope.data = response.data;
-		alert(response.data)
+		//alert(response.data)
 		return response;
 	});			
 		request.then(function (data) {
@@ -122,10 +122,10 @@ sysManagerModule.controller('sysManagerController', ['$scope', 'sysManagerServic
 /////////////////////////////////////
 	$scope.update= function () {    
 		
-		alert("pre requesta " + $scope.systemManager);
+		//alert("pre requesta " + $scope.systemManager);
 		var request = sysManagerService.updateSysManager($scope.systemManager).then(function(response) {
 		$scope.data = response.data;
-		alert(response.data)
+		//alert(response.data)
 		return response;
 	});			
 		request.then(function (data) {
@@ -142,11 +142,11 @@ sysManagerModule.controller('sysManagerController', ['$scope', 'sysManagerServic
 	///////////////////////////////////////////////////
 	$scope.saveSysManager= function () {    
 		
-		alert("pre requesta " + $scope.sysManager);
+		//alert("pre requesta " + $scope.sysManager);
 		var request = sysManagerService.saveSysManager($scope.sysManager).then(function(response) {
 	
 		$scope.data = response.data;
-		alert(response.data)
+		//alert(response.data)
 		return response;
 	});			
 		request.then(function (data) {

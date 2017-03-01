@@ -11,6 +11,7 @@ import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
 import com.isa.system.manager.Preset;
+import com.isa.user.Role;
 import com.isa.user.User;
 @Entity
 @Table(name="system_managers")
@@ -27,9 +28,14 @@ public class SystemManager extends User {
 	private Preset preset;
 
 	SystemManager() {}
-	
-	
-	
+
+	public SystemManager(String email, String password, String firstName, String lastName, Role userRole) {
+		super(email, password, firstName, lastName, userRole);
+		// TODO Auto-generated constructor stub
+	}
+
+
+
 
 	public SystemManager(Long id, Preset preset) {
 		super();
