@@ -25,17 +25,7 @@ public class GradeController {
 	}
 	
 	@PostMapping(path = "/addNew")
-	public Grade addNewGrade(@RequestBody Grade grade) {
-		
-		System.out.println(grade.getGuestId());
-		System.out.println(grade.getOrderId());
-		System.out.println(grade.getRestaurantId());
-		System.out.println(grade.getWaiterId());
-		
-		System.out.println(grade.getWaiterGrade());
-		System.out.println(grade.getOrderGrade());
-		System.out.println(grade.getRestaurantGrade());
-		
+	public Grade addNewGrade(@RequestBody Grade grade) {		
 		try {
 			gradeService.save(grade);
 			return grade;

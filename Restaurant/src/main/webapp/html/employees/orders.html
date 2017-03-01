@@ -32,7 +32,7 @@
         <td>{{order.drinkQuantity[drink.id]}}</td>
       </tr>
       <tr>
-      <td class ="endOrder" colspan = "5" ng-show = "order.drinksStatus != 'prepared' && employee.userRole == 'bartender' "><button class = "btn btn-primary"  ng-click = "prepareDrinks(order)">Prepare</button></td>     
+      <td class ="endOrder" colspan = "5" ng-show = "order.drinksStatus != 'prepared' && employee.userRole == 'bartender' "><button class = "btn btn-primary" ng-disabled = "!allowAction" ng-click = "prepareDrinks(order)">Prepare</button></td>     
       <td class ="endOrder" colspan = "5" ng-show = "order.drinksStatus == 'prepared' && employee.userRole == 'bartender'"><p><i>Drinks have been prepared</i></p></td>
       </tr>
       
