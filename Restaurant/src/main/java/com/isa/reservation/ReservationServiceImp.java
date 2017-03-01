@@ -49,4 +49,11 @@ public class ReservationServiceImp implements ReservationService {
 	public List<Reservation> findByGuestId(Long guestId) {
 		return Lists.newArrayList(repository.findAll());
 	}
+
+	@Override
+	public List<Reservation> findAllByResId(Long id) {
+		// TODO Auto-generated method stub
+		return repository.findAllByResId(id);
+	}
+
 }

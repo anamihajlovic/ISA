@@ -24,10 +24,10 @@ insert into friendships(sender_id, receiver_id, status) values (8, 3, 'sent')
 
 
 -- RESTAURANTS
-insert into restaurants(name, restaurant_type,number, street, city, country,ratings) values ('Lanterna', 'italijanski',55,'Bulevar Oslobodjenja','Novi Sad','Srbija',0.0)
-insert into restaurants(name, restaurant_type,number, street, city, country,ratings) values ('Dva stapica', 'kineski',3,'Sremska','Novi Sad','Srbija',0.0 )
-insert into restaurants(name, restaurant_type,number, street, city, country,ratings) values ('Plava frajla', 'srpski',15,'Strazilovska ','Novi Sad','Srbija',0.0 )
-insert into restaurants(name, restaurant_type,number, street, city, country,ratings) values ('Veliki', 'srpski',15,'Pasiceva','Novi Sad','Srbija',0.0 )
+insert into restaurants(name, restaurant_type,number, street, city, country,ratings,latitude,longitude) values ('Lanterna', 'italijanski',55,'Bulevar Oslobodjenja','Novi Sad','Srbija',0.0,45.2539119,19.8359807)
+insert into restaurants(name, restaurant_type,number, street, city, country,ratings,latitude,longitude) values ('Dva stapica', 'kineski',3,'Sremska','Novi Sad','Srbija',0.0 ,45.2496541,19.841903)
+insert into restaurants(name, restaurant_type,number, street, city, country,ratings,latitude,longitude) values ('Plava frajla', 'srpski',15,'Strazilovska ','Novi Sad','Srbija',0.0,45.24885769999999,19.8487232 )
+insert into restaurants(name, restaurant_type,number, street, city, country,ratings,latitude,longitude) values ('Veliki', 'srpski',15,'Pasiceva','Novi Sad','Srbija',0.0,45.2574419,19.8475388 )
 
 
 insert into bidders(email, password, first_name, last_name,first_login,user_role) values ('bid1@gmail.com', 'bid1', 'bid1', 'bid2',false,'bidder')
@@ -364,8 +364,17 @@ insert into work_shift_responsabilites values(4,2)
 
 
 
-
 --RESERVATIONS
+
+insert into reservations(res_id, res_name, guest_id, date, start_time, end_time, tables_id) values (1, 'Lanterna', 1, '2017-02-26', '17:30', '19:45', '1;2')
+insert into reservations(res_id, res_name, guest_id, date, start_time, end_time, tables_id) values (1, 'Lanterna', 1, '2017-02-26', '18:30', '20:00', '6')
+insert into reservations(res_id, res_name, guest_id, date, start_time, end_time, tables_id) values (1, 'Lanterna', 1, '2017-02-27', '17:30', '19:45', '7')
+insert into reservations(res_id, res_name, guest_id, date, start_time, end_time, tables_id) values (1, 'Lanterna', 1, '2017-02-28', '17:30', '19:45', '7')
+insert into reservations(res_id, res_name, guest_id, date, start_time, end_time, tables_id) values (1, 'Lanterna', 1, '2017-03-03', '17:30', '19:45', '10')
+insert into reservations(res_id, res_name, guest_id, date, start_time, end_time, tables_id) values (1, 'Lanterna', 1, '2017-03-03', '12:30', '13:45', '9')
+insert into reservations(res_id, res_name, guest_id, date, start_time, end_time, tables_id) values (1, 'Lanterna', 1, '2017-03-04', '17:30', '19:45', '2')
+insert into reservations(res_id, res_name, guest_id, date, start_time, end_time, tables_id) values (1, 'Lanterna', 1, '2017-03-04', '12:30', '13:45', '1;3')
+
 insert into reservations(res_id, res_name, guest_id, date, start_time, end_time, tables_id, deleted) values (1, 'Lanterna', 1, '2017-02-26', '17:30', '19:45', '1;2', false)
 insert into reservations(res_id, res_name, guest_id, date, start_time, end_time, tables_id, deleted) values (1, 'Lanterna', 1, '2017-02-26', '18:30', '20:00', '6', false)
 insert into reservations(res_id, res_name, guest_id, date, start_time, end_time, tables_id, deleted) values (1, 'Lanterna', 1, '2017-02-27', '17:30', '19:45', '7', false)
@@ -394,7 +403,11 @@ insert into reservation_tables(table_id, reservation_id) values (2,1)
 insert into reservation_tables(table_id, reservation_id) values (6,2)
 insert into reservation_tables(table_id, reservation_id) values (7,3)
 insert into reservation_tables(table_id, reservation_id) values (7,4)
-
+insert into reservation_tables(table_id, reservation_id) values (10,5)
+insert into reservation_tables(table_id, reservation_id) values (9,6)
+insert into reservation_tables(table_id, reservation_id) values (2,7)
+insert into reservation_tables(table_id, reservation_id) values (1,8)
+insert into reservation_tables(table_id, reservation_id) values (3,8)
 --BILLS
 insert into bills(bill_date,bill_time,waiter_id,total_price)values('2017-02-19','09:05:00',1,500)
 insert into bills(bill_date,bill_time,waiter_id,total_price)values('2017-02-19','09:15:00',1,4500)
@@ -482,8 +495,10 @@ insert into restaurant_bills values(1,36)
 insert into restaurant_bills values(1,37)
 
 --GRADES
-insert into grades(guest_id, restaurant_id, reservation_id, waiter_id, order_id, order_grade, waiter_grade, restaurant_grade, grade_date) values (2, 1, 1, 1, 2, 5, 5, 4, '2017-02-26')
-insert into grades(guest_id, restaurant_id, reservation_id, waiter_id, order_id, order_grade, waiter_grade, restaurant_grade, grade_date) values (3, 3, 2, 3, 4, 2, 3, 3, '2016-02-26')
-insert into grades(guest_id, restaurant_id, reservation_id, waiter_id, order_id, order_grade, waiter_grade, restaurant_grade, grade_date) values (1, 3, 2, 3, 3, 5, 3, 4, '2016-02-26')
-insert into grades(guest_id, restaurant_id, reservation_id, waiter_id, order_id, order_grade, waiter_grade, restaurant_grade, grade_date) values (3, 2, 3, 2, 6, 3, 3, 3, '2017-01-10')
-insert into grades(guest_id, restaurant_id, reservation_id, waiter_id, order_id, order_grade, waiter_grade, restaurant_grade, grade_date) values (4, 2, 3, 2, 5, 1, 2, 2, '2017-01-10')
+insert into grades(guest_id, restaurant_id, reservation_id, waiter_id, order_id, order_grade, waiter_grade, restaurant_grade, grade_date) values (2, 1, 1, 1, 2, 5.0, 5.0, 4.0, '2017-02-26')
+insert into grades(guest_id, restaurant_id, reservation_id, waiter_id, order_id, order_grade, waiter_grade, restaurant_grade, grade_date) values (3, 3, 2, 3, 4, 2.0, 3.0, 3.0, '2016-02-26')
+insert into grades(guest_id, restaurant_id, reservation_id, waiter_id, order_id, order_grade, waiter_grade, restaurant_grade, grade_date) values (1, 3, 2, 3, 3, 5.0, 3.0, 4.0, '2016-02-26')
+insert into grades(guest_id, restaurant_id, reservation_id, waiter_id, order_id, order_grade, waiter_grade, restaurant_grade, grade_date) values (3, 2, 3, 2, 6, 3.0, 3.0, 3.0, '2017-02-10')
+insert into grades(guest_id, restaurant_id, reservation_id, waiter_id, order_id, order_grade, waiter_grade, restaurant_grade, grade_date) values (4, 2, 3, 2, 5, 1.0, 2.0, 2.0, '2017-02-10')
+
+

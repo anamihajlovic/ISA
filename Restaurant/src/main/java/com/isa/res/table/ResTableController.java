@@ -119,6 +119,16 @@ public class ResTableController {
 		}
 	}
 	
+	
+	@GetMapping(path = "/getTable/{id}")
+	public ResTable getResTable(@PathVariable Long id) {
+		System.out.println("Pogodjena metoda getResTable " + id);
+		ResTable table = resTableService.findOne(id);
+		
+		return table;
+		
+	}
+	
 	private Long[] getTablesIds(String tables) {
 		String[] array = tables.split(";");
 		
@@ -155,5 +165,7 @@ public class ResTableController {
 			return false;
 		
 	}
+	
+	
 
 }

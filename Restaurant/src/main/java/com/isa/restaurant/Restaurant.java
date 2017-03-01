@@ -1,4 +1,5 @@
 package com.isa.restaurant;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -39,23 +40,23 @@ public class Restaurant {
 	private Long id;
 
 	@Column
-	@NotBlank
+	@NotNull
 	private String name;	
 	
 	@Column
-	@NotBlank
+	@NotNull
 	private String restaurant_type;
 	
 	@Column
-	@NotBlank
+	@NotNull
 	private String country;
 
 	@Column
-	@NotBlank
+	@NotNull
 	private String city;
 	
 	@Column
-	@NotBlank
+	@NotNull
 	private String street;
 	
 	@Column
@@ -64,6 +65,12 @@ public class Restaurant {
 	
 	@Column
 	private Double ratings;
+	
+	@Column
+	private Double latitude;
+	
+	@Column
+	private Double longitude;
 	
 	
 	@OneToMany(cascade = CascadeType.ALL)
@@ -116,12 +123,21 @@ public class Restaurant {
 	private List<Bill> bills;
 	
 
-	public Restaurant() {}
+	public Restaurant() {
+		this.restaurantManagers = new ArrayList<RestaurantManager>();
+		this.waiters = new ArrayList<Waiter>();
+		this.cooks = new ArrayList<Cook>();
+		this.bartenders = new ArrayList<Bartender>();
+		this.bidders = new ArrayList<Bidder>();
+		this.segments = new ArrayList<ResSegment>();
+		this.orders =new ArrayList<ResOrder>();
+	}
 
 
 	public Restaurant(Long id, String name, String restaurant_type, String country, String city, String street,
-			Integer number, Double ratings, List<RestaurantManager> restaurantManagers, List<Foodstuff> foodstuffs,
-			List<Dish> dishes, List<Drink> drinks, List<Bidder> bidders, List<Waiter> waiters, List<Cook> cooks,
+			Integer number, Double ratings, Double latitude, Double longitude,
+			List<RestaurantManager> restaurantManagers, List<Foodstuff> foodstuffs, List<Dish> dishes,
+			List<Drink> drinks, List<Bidder> bidders, List<Waiter> waiters, List<Cook> cooks,
 			List<Bartender> bartenders, List<WorkDay> workDays, List<ResSegment> segments, List<ResOrder> orders,
 			List<Bill> bills) {
 		super();
@@ -133,6 +149,8 @@ public class Restaurant {
 		this.street = street;
 		this.number = number;
 		this.ratings = ratings;
+		this.latitude = latitude;
+		this.longitude = longitude;
 		this.restaurantManagers = restaurantManagers;
 		this.foodstuffs = foodstuffs;
 		this.dishes = dishes;
@@ -225,6 +243,26 @@ public class Restaurant {
 
 	public void setRatings(Double ratings) {
 		this.ratings = ratings;
+	}
+
+
+	public Double getLatitude() {
+		return latitude;
+	}
+
+
+	public void setLatitude(Double latitude) {
+		this.latitude = latitude;
+	}
+
+
+	public Double getLongitude() {
+		return longitude;
+	}
+
+
+	public void setLongitude(Double longitude) {
+		this.longitude = longitude;
 	}
 
 
@@ -335,7 +373,6 @@ public class Restaurant {
 
 	public void setOrders(List<ResOrder> orders) {
 		this.orders = orders;
-
 	}
 
 
@@ -349,7 +386,7 @@ public class Restaurant {
 	}
 
 
-
+	
 	
 
 		
