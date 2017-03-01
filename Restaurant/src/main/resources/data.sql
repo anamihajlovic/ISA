@@ -8,6 +8,7 @@ insert into guests(email, password, first_name, last_name,user_role, first_login
 insert into guests(email, password, first_name, last_name,user_role, first_login, active, guest_a_code) values ('danilo@gmail.com', 'danilo', 'Danilo', 'Dimitrijevic','guest', false, true, 'mki566tgt')
 insert into guests(email, password, first_name, last_name,user_role, first_login, active, guest_a_code) values ('bakir@gmail.com', 'baki', 'Bakir', 'Niksic','guest',false, true, 'lwe267cfr')
 insert into guests(email, password, first_name, last_name,user_role, first_login, active, guest_a_code) values ('mirko@gmail.com', 'mirko', 'Mirko', 'Odalovic','guest', false, true, 'law369zde')
+insert into guests(email, password, first_name, last_name,user_role, first_login, active, guest_a_code) values ('mika@gmail.com', 'mika', 'Mika', 'Mikic','guest', false, false, 'ljy769zde')
 
 
 
@@ -309,26 +310,22 @@ insert into work_shift_responsabilites values(2,4)
 
 --RESERVATIONS
 
-insert into reservations(res_id, res_name, guest_id, date, start_time, end_time, tables_id) values (1, 'Lanterna', 1, '2017-02-26', '17:30', '19:45', '1;2')
-insert into reservations(res_id, res_name, guest_id, date, start_time, end_time, tables_id) values (1, 'Lanterna', 1, '2017-02-26', '18:30', '20:00', '6')
-insert into reservations(res_id, res_name, guest_id, date, start_time, end_time, tables_id) values (1, 'Lanterna', 1, '2017-02-27', '17:30', '19:45', '7')
-insert into reservations(res_id, res_name, guest_id, date, start_time, end_time, tables_id) values (1, 'Lanterna', 1, '2017-02-28', '17:30', '19:45', '7')
-insert into reservations(res_id, res_name, guest_id, date, start_time, end_time, tables_id) values (1, 'Lanterna', 1, '2017-03-03', '17:30', '19:45', '10')
-insert into reservations(res_id, res_name, guest_id, date, start_time, end_time, tables_id) values (1, 'Lanterna', 1, '2017-03-03', '12:30', '13:45', '9')
-insert into reservations(res_id, res_name, guest_id, date, start_time, end_time, tables_id) values (1, 'Lanterna', 1, '2017-03-04', '17:30', '19:45', '2')
-insert into reservations(res_id, res_name, guest_id, date, start_time, end_time, tables_id) values (1, 'Lanterna', 1, '2017-03-04', '12:30', '13:45', '1;3')
-
 insert into reservations(res_id, res_name, guest_id, date, start_time, end_time, tables_id, deleted) values (1, 'Lanterna', 1, '2017-02-26', '17:30', '19:45', '1;2', false)
 insert into reservations(res_id, res_name, guest_id, date, start_time, end_time, tables_id, deleted) values (1, 'Lanterna', 1, '2017-02-26', '18:30', '20:00', '6', false)
 insert into reservations(res_id, res_name, guest_id, date, start_time, end_time, tables_id, deleted) values (1, 'Lanterna', 1, '2017-02-27', '17:30', '19:45', '7', false)
 insert into reservations(res_id, res_name, guest_id, date, start_time, end_time, tables_id, deleted) values (1, 'Lanterna', 1, '2017-02-28', '17:30', '19:45', '7', false)
+insert into reservations(res_id, res_name, guest_id, date, start_time, end_time, tables_id, deleted) values (1, 'Lanterna', 1, '2017-03-03', '17:30', '19:45', '10', false)
+insert into reservations(res_id, res_name, guest_id, date, start_time, end_time, tables_id, deleted) values (1, 'Lanterna', 1, '2017-03-03', '12:30', '13:45', '9', false)
+insert into reservations(res_id, res_name, guest_id, date, start_time, end_time, tables_id, deleted) values (1, 'Lanterna', 1, '2017-03-04', '17:30', '19:45', '2', false)
+insert into reservations(res_id, res_name, guest_id, date, start_time, end_time, tables_id, deleted) values (1, 'Lanterna', 1, '2017-03-04', '12:30', '13:45', '1;3', false)
+
 
 --RESERVATION_ORDERS
 insert into reservation_orders(reservation_id, order_id) values (1, 1)
 insert into reservation_orders(reservation_id, order_id) values (1, 2)
 
 
---PROBA SA POZIVNICAMA--
+--POZIVNICE--
 insert into invitations(reservation_id,sender_id,friend_id,friend_name,status)values(1,1,2,'Jelena Kalabic','accepted')
 insert into invitations(reservation_id,sender_id,friend_id,friend_name,status)values(1,1,3,'Tamara Mrksic','accepted')
 insert into invitations(reservation_id,sender_id,friend_id,friend_name,status)values(2,1,2,'Jelena Kalabic','accepted')

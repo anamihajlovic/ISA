@@ -36,7 +36,7 @@ public class UserTests {
 	@Test
 	public void testLogin() throws Exception {
 		
-		LoginData loginData =new LoginData("jelena@gmail.com", "jelena");
+		LoginData loginData =new LoginData("ana@gmail.com", "ana");
 
 		this.mvc.perform(post("/users/login").contentType(MediaType.APPLICATION_JSON).content(asJsonString(loginData))).andExpect(status().isOk());
 

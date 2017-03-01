@@ -20,7 +20,7 @@ public class FriendshipRespositoryIntegrationTest {
 	@Test
 	public void checkFriendshipStatus() {
 		
-		Friendship fr = repository.getBySenderIdAndReceiverId(1L, 6L);
+		Friendship fr = repository.getBySenderIdAndReceiverId(1L, 2L);
 		assertThat(fr.getStatus()).isEqualTo(Status.accepted);
 		
 		fr = repository.getBySenderIdAndReceiverId(6L, 2L);
@@ -32,7 +32,7 @@ public class FriendshipRespositoryIntegrationTest {
 	public void countFriendRequests() {
 		
 		List<Friendship> requests = repository.findByReceiverIdAndStatus(2L, Status.sent);
-		assertThat(requests).hasSize(2);//da ima dva zahteva za prijateljstvo
+		assertThat(requests).hasSize(1);//da ima jedan zahteva za prijateljstvo
 		
 		requests = repository.findByReceiverIdAndStatus(1L, Status.sent);
 		assertThat(requests.size()).isGreaterThan(0);//da ima zahteve za prijateljstvo
@@ -64,7 +64,7 @@ public class FriendshipRespositoryIntegrationTest {
 		
 		Friendship fr = repository.save(friendship);
 		
-		assertThat(fr.getId()).isEqualTo(8L);
+		assertThat(fr.getId()).isEqualTo(9L);
 		assertThat(fr.getStatus()).isEqualTo(Status.sent);
 	}
 
