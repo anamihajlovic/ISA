@@ -5,6 +5,8 @@ var ID;
 resManagerModule.controller('resManagerController', ['$scope', 'resManagerService','$location',
   	function ($scope,resManagerService, $location, $filter) {
 	
+	
+	   
 	function checkRights() {
 		resManagerService.checkRights().then(
 			function (response) {
@@ -596,6 +598,7 @@ resManagerModule.controller('resManagerController', ['$scope', 'resManagerServic
 		document.getElementById("modalBtnCreateConfiguration").click();	
 	}
 	$scope.makeConfig = function(){
+		
 		checkRights();	
 		var width = $("input[name='width']").val();
 		sirina = width;
@@ -603,6 +606,10 @@ resManagerModule.controller('resManagerController', ['$scope', 'resManagerServic
 		var height = $("input[name='height']").val();
 		visina = height;
 		//alert(height)
+		if(width =='' || height == ''){
+			
+		}else{
+		
 		resManagerService.makeConfiguration(width, height).then(
 			function(response){	
 				toastr.success("Success!");	
@@ -617,6 +624,7 @@ resManagerModule.controller('resManagerController', ['$scope', 'resManagerServic
 					); 	
 	
 			});
+		}
 	}
     function AllSegments () {
     	var request = resManagerService.findAllSegments().then(
@@ -633,7 +641,9 @@ resManagerModule.controller('resManagerController', ['$scope', 'resManagerServic
 	}
 	$scope.makeSegment = function(){	
 		//alert ($scope.segment.segType)
-		 
+		 if($scope.segment == undefined){
+			 toastr.error("Something wrong!");	
+		 }else{
 		$scope.segment.color = getRandomColor();
 		resManagerService.addSegment($scope.segment).then(
 			function(response){
@@ -646,6 +656,7 @@ resManagerModule.controller('resManagerController', ['$scope', 'resManagerServic
 					toastr.error("Something wrong!");	
 				}
 			});
+	}
 	}
 	$scope.showTables = function(){
 		checkRights();	
@@ -846,11 +857,11 @@ resManagerModule.controller('resManagerController', ['$scope', 'resManagerServic
   }
 
   $scope.makeOrderUnit = function(){
-	  alert($scope.resOrderUnit.orderFoodstuff)
-	  alert($scope.resOrderUnit.orderQuantity)
+	 // alert($scope.resOrderUnit.orderFoodstuff)
+	 // alert($scope.resOrderUnit.orderQuantity)
 	  $('#myModalAddResOrder').modal({backdrop: 'static', keyboard: false}) 
 	  $scope.resOrderUnit.ResOrder = ID;
-	   alert($scope.resOrderUnit.ResOrder)
+	  // alert($scope.resOrderUnit.ResOrder)
 	  var request = resManagerService.saveResOrderUnit($scope.resOrderUnit).then(function(response) {	
 			$scope.newResOrderUnits = response.data;
 			
@@ -860,6 +871,10 @@ resManagerModule.controller('resManagerController', ['$scope', 'resManagerServic
 	  
   }
    $scope.endMakeResOrder = function(){
+	  // alert($scope.resOrder.endDate);
+	   if($scope.resOrder==undefined){
+		   toastr.error("Something wrong");
+	   }else{
 	   $scope.resOrder.id = ID;
 		var request = resManagerService.makeResOrder($scope.resOrder).then(function(response) {
 			$scope.data = response.data;
@@ -885,7 +900,7 @@ resManagerModule.controller('resManagerController', ['$scope', 'resManagerServic
 				}
 
 		});
-	   
+	   }
    }
    $scope.cancelMakeResOrder =function(){
 	   var request = resManagerService.deleteResOrderUnits().then(function(response) {
@@ -1093,6 +1108,10 @@ $scope.MakeShift = function(){
 			secondReon: secondReon
 	}
 	/////////////////////////////////////////
+	
+	if(smena == '' || cookNumbers =='' || bartenderNumbers =='' || firstReon =='' || secondReon==''){
+		toastr.error("Something wrong");
+	}else{
 	var request = resManagerService.makeShift(sve).then(function(response) {
 		$scope.data = response.data;
 	//	alert(response.data)
@@ -1111,6 +1130,7 @@ $scope.MakeShift = function(){
 			}
 
 	});
+	}
 }	
 
 $scope.dayBusiness = function(){
@@ -1219,7 +1239,10 @@ $scope.monthRatings = function(){
 }
 
 $scope.findWeekRatings = function(){
-	
+	//alert($scope.idWaiterWeek)
+	if($scope.idWaiterWeek==undefined || $scope.idDishWeek==undefined){
+		toastr.error("Something wrong");
+	}else{
 	 resManagerService.getWeekRatings($scope.idWaiterWeek,$scope.idDishWeek).then(
 				function (response) {
 					$scope.weekRatings = response.data;
@@ -1228,11 +1251,14 @@ $scope.findWeekRatings = function(){
 				}
 			);
 	
-	
+	}
 	
 }
 
 $scope.findMonthRatings = function(){
+	if($scope.idWaiterMonth==undefined || $scope.idDishMonth==undefined){
+		toastr.error("Something wrong");
+	}else{
 	 resManagerService.getMonthRatings($scope.idWaiterMonth,$scope.idDishMonth).then(
 				function (response) {
 					$scope.monthRatings = response.data;
@@ -1241,7 +1267,7 @@ $scope.findMonthRatings = function(){
 				}
 			);
 	
-	
+}
 }
 
  

@@ -3,7 +3,8 @@
 <div>
 <div class = "col-sm-4">
 </div>
-<div class = "col-sm-4"  class="input-group">
+<div class = "col-sm-4"  class="input-group" ng-style="{'background-color':'white'}">
+<br>
 <form action="" name = "form" method="post">
     <label>Firstname</label>
     <div  ng-class="{ 'has-error': form.firstName.$dirty && form.firstName.$error.required }">
@@ -41,6 +42,6 @@
 <button class="btn btn-default" ng-disabled="form.$invalid" ng-click="saveSysManager()"><span class="glyphicon glyphicon-ok" ></span> Create</button>
 <button class="btn btn-default" ng-click="cancel()"><span class="glyphicon glyphicon-remove" ></span> Cancel</button>
 </form>
-
+<br>
 </div>
 </div>

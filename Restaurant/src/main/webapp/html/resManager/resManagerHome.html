@@ -4,8 +4,8 @@
 
 <nav class="navbar  navbar-inverse" role="navigation" > 
 
-      <div class="navbar-header navbar-left">
-      	<p class="navbar-brand" >Welcome, {{restaurantManager.firstName+" "+ restaurantManager.lastName}}</p>
+      <div class="navbar-header navbar-left g">
+      	<p class="navbar-brand " >Welcome, {{restaurantManager.firstName+" "+ restaurantManager.lastName}}</p>
    	 </div>
       <ul class="nav navbar-nav navbar-center">
      <li><a><button data-ui-sref=".list"  data-ng-click ="viewAll()"class="btn btn-default navbar-btn" ><span class="glyphicon glyphicon-list"></span> List </button>
@@ -23,8 +23,8 @@
 	
 	<li><button type="button" class="btn btn-default dropdown-toggle navbar-btn glyphicon glyphicon-star" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true"> <span class="caret"></span></button>      	
         	<ul class="dropdown-menu">
-        	<li><a data-ui-sref=".weekRatings" data-ng-click = "weekRating()"><span class="glyphicon glyphicon-star"></span> Week ratings</a></li>
-        	<li><a data-ui-sref=".monthRatings" data-ng-click = "monthRatings()"><span class="glyphicon glyphicon-star"></span> Month ratings</a></li>   	
+        	<li><a  data-ng-click = "weekRating()"><span class="glyphicon glyphicon-star"></span> Week ratings</a></li>
+        	<li><a data-ng-click = "monthRatings()"><span class="glyphicon glyphicon-star"></span> Month ratings</a></li>   	
         	</ul>
         
         	</li>
@@ -57,7 +57,7 @@
  
  
  
- <div>
+ <div >
  <div data-ui-view></div>
 </div>
 <!-- ----------------------------------------------------------------------------------------------------------------- -->
@@ -67,7 +67,7 @@
 <button type="button" id="modalBtnCreateConfiguration" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModalCreateConfiguration" style="display:none"></button>
 
 <!-- Modal -->
-<div id="myModalCreateConfiguration" class="modal fade"  >
+<div id="myModalCreateConfiguration" class="modal fade "  >
   <div class="modal-dialog ">
 
     <!-- Modal content-->
@@ -96,7 +96,7 @@
       </div>
    
       <div class="modal-footer">
-      <button  class="btn btn-default" ng-disabled="form.$invalid"   ng-click="makeConfig()" ><span class="glyphicon glyphicon-ok"  ></span> Create</button>
+      <button  class="btn btn-default"   ng-click="makeConfig()" ><span class="glyphicon glyphicon-ok"  ></span> Create</button>
 		 <button style="display:none" type="button" id ="cancelConfil"class="btn btn-default" data-dismiss="modal">Cancel</button>
       </div>
     </div>
@@ -178,3 +178,262 @@
 
   </div>
 </div>
+
+<!-- ---------------------------------------WEEK RATINGS------------------------------------- -->
+  <!-- Trigger the modal with a button -->
+<button type="button" id="modalBtnWeekRatings" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModalWeekRatings" style="display:none"></button>
+
+<!-- Modal -->
+<div id="myModalWeekRatings" class="modal fade"  >
+  <div class="modal-dialog ">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title" id="modalTitle">Week ratings</h4>
+      </div>
+      <div class="modal-body">
+     	<form action=""  name = "form"> 
+    
+    <label>Waiter</label>
+     <div  ng-class="{ 'has-error': form.type.$dirty && form.type.$error.required}">
+     <select class="form-control" name='res' ng-model="$parent.idWaiterWeek"  name = "type" ng-readonly="$parent.infoMode" required > 
+   		<option value="" disabled="" selected="">Select waiter</option>
+  `<option ng-repeat="waiter in waiters" value="{{ waiter.id}}">{{waiter.firstName}}   {{waiter.lastName}}</option>
+	</select> 
+	 </div>
+	<span class="help-block" ng-show = "form.type.$dirty && form.type.$invalid">
+	<span ng-show = "form.type.$error.required">Waiter is required.</span>
+	</span>	
+	
+	
+	<label>Dish</label>
+     <div  ng-class="{ 'has-error': form.dish.$dirty && form.dish.$error.required}">
+     <select class="form-control" name='res' ng-model="$parent.idDishWeek"  name = "dish" ng-readonly="$parent.infoMode" required > 
+   		<option value="" disabled="" selected="">Select dish</option>
+  `<option ng-repeat="dish in dishes" value="{{ dish.id}}">{{dish.name}}   </option>
+	</select> 
+	 </div>
+	<span class="help-block" ng-show = "form.dish.$dirty && form.dish.$invalid">
+	<span ng-show = "form.dish.$error.required">Dish is required.</span>
+	</span>	
+<br>
+
+</form> 
+	         			
+      </div>
+      <div class="modal-footer">
+      <button class="btn btn-default"  ng-click="findWeekRatings()"><span class="glyphicon glyphicon-ok" ></span> Create</button>
+		 <button type="button" id ="cancelDrink"class="btn btn-default" data-dismiss="modal">Cancel</button>
+      </div>
+    </div>
+
+  </div>
+</div>	
+
+<!-- ----------------------------------------SHOW WEEK RATINGS------------------------------------ -->
+  <!-- Trigger the modal with a button -->
+<button type="button" id="modalBtnShowWeekRatings" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModalShowWeekRatings" style="display:none"></button>
+
+<!-- Modal -->
+<div id="myModalShowWeekRatings" class="modal fade"  >
+  <div class="modal-dialog modal-star">
+
+    <!-- Modal content-->
+    <div class="modal-content ">
+      <div class="modal-header ">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title" id="modalTitle">Report - Week ratings</h4>
+      </div>
+      <div class="modal-body" align="center" >
+ 			Restaurant
+    	<div ng-if="weekRatings.resRating == '1'" class ="star">
+     	<span class = "glyphicon glyphicon-star" > </span><span class = "glyphicon glyphicon-star-empty" > </span> <span class = "glyphicon glyphicon-star-empty" > </span> <span class = "glyphicon glyphicon-star-empty" > </span> <span class = "glyphicon glyphicon-star-empty" > </span>
+     	</div>
+     	<div ng-if="weekRatings.resRating == '2'" class ="star">
+     	<span class = "glyphicon glyphicon-star" class ="star" > </span><span class = "glyphicon glyphicon-star" > </span> <span class = "glyphicon glyphicon-star-empty" > </span> <span class = "glyphicon glyphicon-star-empty" > </span> <span class = "glyphicon glyphicon-star-empty" > </span>
+     	</div>
+     	<div ng-if="weekRatings.resRating == '3'" class ="star">
+     	<span class = "glyphicon glyphicon-star" > </span><span class = "glyphicon glyphicon-star" > </span> <span class = "glyphicon glyphicon-star" > </span> <span class = "glyphicon glyphicon-star-empty" > </span> <span class = "glyphicon glyphicon-star-empty" > </span>
+     	</div>
+     	<div ng-if="weekRatings.resRating == '4'" class ="star">
+     	<span class = "glyphicon glyphicon-star" > </span><span class = "glyphicon glyphicon-star" > </span> <span class = "glyphicon glyphicon-star" > </span> <span class = "glyphicon glyphicon-star" > </span> <span class = "glyphicon glyphicon-star-empty" > </span>
+     	</div>
+     	<div ng-if="weekRatings.resRating == '5'" class ="star">
+     	<span class = "glyphicon glyphicon-star" > </span><span class = "glyphicon glyphicon-star" > </span> <span class = "glyphicon glyphicon-star" > </span> <span class = "glyphicon glyphicon-star" > </span> <span class = "glyphicon glyphicon-star" > </span>
+     	</div>
+     	<br>
+     	{{weekRatings.waiter}} 
+     	<div ng-if="weekRatings.waiterRating == '1'" class ="star">
+     	<span class = "glyphicon glyphicon-star" > </span><span class = "glyphicon glyphicon-star-empty" > </span> <span class = "glyphicon glyphicon-star-empty" > </span> <span class = "glyphicon glyphicon-star-empty" > </span> <span class = "glyphicon glyphicon-star-empty" > </span>
+     	</div>
+     	<div ng-if="weekRatings.waiterRating == '2'" class ="star">
+     	<span class = "glyphicon glyphicon-star" > </span><span class = "glyphicon glyphicon-star" > </span> <span class = "glyphicon glyphicon-star-empty" > </span> <span class = "glyphicon glyphicon-star-empty" > </span> <span class = "glyphicon glyphicon-star-empty" > </span>
+     	</div>
+     	<div ng-if="weekRatings.waiterRating == '3'"class ="star" >
+     	<span class = "glyphicon glyphicon-star" > </span><span class = "glyphicon glyphicon-star" > </span> <span class = "glyphicon glyphicon-star" > </span> <span class = "glyphicon glyphicon-star-empty" > </span> <span class = "glyphicon glyphicon-star-empty" > </span>
+     	</div>
+     	<div ng-if="weekRatings.waiterRating == '4'"class ="star">
+     	<span class = "glyphicon glyphicon-star" > </span><span class = "glyphicon glyphicon-star" > </span> <span class = "glyphicon glyphicon-star" > </span> <span class = "glyphicon glyphicon-star" > </span> <span class = "glyphicon glyphicon-star-empty" > </span>
+     	</div>
+     	<div ng-if="weekRatings.waiterRating == '5'"class ="star">
+     	<span class = "glyphicon glyphicon-star" > </span><span class = "glyphicon glyphicon-star" > </span> <span class = "glyphicon glyphicon-star" > </span> <span class = "glyphicon glyphicon-star" > </span> <span class = "glyphicon glyphicon-star" > </span>
+     	</div>
+     	
+     	
+     	<br>
+     	{{weekRatings.dish}}
+     	
+     	<div ng-if="weekRatings.dishRating == '1'"class ="star">
+     	<span class = "glyphicon glyphicon-star" > </span><span class = "glyphicon glyphicon-star-empty" > </span> <span class = "glyphicon glyphicon-star-empty" > </span> <span class = "glyphicon glyphicon-star-empty" > </span> <span class = "glyphicon glyphicon-star-empty" > </span>
+     	</div>
+     	<div ng-if="weekRatings.dishRating == '2'"class ="star">
+     	<span class = "glyphicon glyphicon-star" > </span><span class = "glyphicon glyphicon-star" > </span> <span class = "glyphicon glyphicon-star-empty" > </span> <span class = "glyphicon glyphicon-star-empty" > </span> <span class = "glyphicon glyphicon-star-empty" > </span>
+     	</div>
+     	<div ng-if="weekRatings.dishRating == '3'"class ="star">
+     	<span class = "glyphicon glyphicon-star" > </span><span class = "glyphicon glyphicon-star" > </span> <span class = "glyphicon glyphicon-star" > </span> <span class = "glyphicon glyphicon-star-empty" > </span> <span class = "glyphicon glyphicon-star-empty" > </span>
+     	</div>
+     	<div ng-if="weekRatings.dishRating == '4'"class ="star">
+     	<span class = "glyphicon glyphicon-star" > </span><span class = "glyphicon glyphicon-star" > </span> <span class = "glyphicon glyphicon-star" > </span> <span class = "glyphicon glyphicon-star" > </span> <span class = "glyphicon glyphicon-star-empty" > </span>
+     	</div>
+     	<div ng-if="weekRatings.dishRating == '5'"class ="star">
+     	<span class = "glyphicon glyphicon-star" > </span><span class = "glyphicon glyphicon-star" > </span> <span class = "glyphicon glyphicon-star" > </span> <span class = "glyphicon glyphicon-star" > </span> <span class = "glyphicon glyphicon-star" > </span>
+     	</div>
+     				
+      </div>
+      <div class="modal-footer">
+      </div>
+    </div>
+
+  </div>
+</div>	
+<!-- ------------------------------------MONTH RATINGS---------------------------------------- -->
+  <!-- Trigger the modal with a button -->
+<button type="button" id="modalBtnMonthRatings" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModalMonthRatings" style="display:none"></button>
+
+<!-- Modal -->
+<div id="myModalMonthRatings" class="modal fade"  >
+  <div class="modal-dialog ">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title" id="modalTitle">Month ratings</h4>
+      </div>
+      <div class="modal-body">
+     	<form action=""  name = "formMonth"> 
+    
+    <label>Waiter</label>
+     <div  ng-class="{ 'has-error': formMonth.type.$dirty && formMonth.type.$error.required}">
+     <select class="form-control" name='res' ng-model="$parent.idWaiterMonth"  name = "type" ng-readonly="$parent.infoMode" required > 
+   		<option value="" disabled="" selected="">Select waiter</option>
+  `<option ng-repeat="waiter in waiters" value="{{ waiter.id}}">{{waiter.firstName}}   {{waiter.lastName}}</option>
+	</select> 
+	 </div>
+	<span class="help-block" ng-show = "formMonth.type.$dirty && formMonth.type.$invalid">
+	<span ng-show = "formMonth.type.$error.required">Waiter is required.</span>
+	</span>	
+	
+	
+	<label>Dish</label>
+     <div  ng-class="{ 'has-error': formMonth.dish.$dirty && formMonth.dish.$error.required}">
+     <select class="form-control" name='res' ng-model="$parent.idDishMonth"  name = "dish" ng-readonly="$parent.infoMode" required > 
+   		<option value="" disabled="" selected="">Select dish</option>
+  `<option ng-repeat="dish in dishes" value="{{ dish.id}}">{{dish.name}}   </option>
+	</select> 
+	 </div>
+	<span class="help-block" ng-show = "formMonth.dish.$dirty && formMonth.dish.$invalid">
+	<span ng-show = "formMonth.dish.$error.required">Dish is required.</span>
+	</span>	
+<br>
+
+</form> 
+	         			
+      </div>
+      <div class="modal-footer">
+      <button class="btn btn-default"   ng-click="findMonthRatings()"><span class="glyphicon glyphicon-ok" ></span> Create</button>
+		 <button type="button" id ="cancelDrink"class="btn btn-default" data-dismiss="modal">Cancel</button>
+      </div>
+    </div>
+
+  </div>
+</div>	
+<!-- -------------------------------------SHOW MONTH RATINGS--------------------------------------- -->
+  <!-- Trigger the modal with a button -->
+<button type="button" id="modalBtnShowMonthRatings" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModalShowMonthRatings" style="display:none"></button>
+
+<!-- Modal -->
+<div id="myModalShowMonthRatings" class="modal fade"  >
+  <div class="modal-dialog modal-star ">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title" id="modalTitle">Report - month ratings</h4>
+      </div>
+      <div class="modal-body" align="center">
+     	Restaurant
+     	
+     	<div ng-if="monthRatings.resRating == '1'" class ="star">
+     	<span class = "glyphicon glyphicon-star" > </span><span class = "glyphicon glyphicon-star-empty" > </span> <span class = "glyphicon glyphicon-star-empty" > </span> <span class = "glyphicon glyphicon-star-empty" > </span> <span class = "glyphicon glyphicon-star-empty" > </span>
+     	</div>
+     	<div ng-if="monthRatings.resRating == '2'" class ="star">
+     	<span class = "glyphicon glyphicon-star" > </span><span class = "glyphicon glyphicon-star" > </span> <span class = "glyphicon glyphicon-star-empty" > </span> <span class = "glyphicon glyphicon-star-empty" > </span> <span class = "glyphicon glyphicon-star-empty" > </span>
+     	</div>
+     	<div ng-if="monthRatings.resRating == '3'" class ="star">
+     	<span class = "glyphicon glyphicon-star" > </span><span class = "glyphicon glyphicon-star" > </span> <span class = "glyphicon glyphicon-star" > </span> <span class = "glyphicon glyphicon-star-empty" > </span> <span class = "glyphicon glyphicon-star-empty" > </span>
+     	</div>
+     	<div ng-if="monthRatings.resRating == '4'" class ="star">
+     	<span class = "glyphicon glyphicon-star" > </span><span class = "glyphicon glyphicon-star" > </span> <span class = "glyphicon glyphicon-star" > </span> <span class = "glyphicon glyphicon-star" > </span> <span class = "glyphicon glyphicon-star-empty" > </span>
+     	</div>
+     	<div ng-if="monthRatings.resRating == '5'" class ="star">
+     	<span class = "glyphicon glyphicon-star" > </span><span class = "glyphicon glyphicon-star" > </span> <span class = "glyphicon glyphicon-star" > </span> <span class = "glyphicon glyphicon-star" > </span> <span class = "glyphicon glyphicon-star" > </span>
+     	</div>
+     	<br>
+     	{{monthRatings.waiter}}
+     		
+     	<div ng-if="monthRatings.waiterRating == '1'" class ="star">
+     	<span class = "glyphicon glyphicon-star" > </span><span class = "glyphicon glyphicon-star-empty" > </span> <span class = "glyphicon glyphicon-star-empty" > </span> <span class = "glyphicon glyphicon-star-empty" > </span> <span class = "glyphicon glyphicon-star-empty" > </span>
+     	</div>
+     	<div ng-if="monthRatings.waiterRating == '2'" class ="star">
+     	<span class = "glyphicon glyphicon-star" > </span><span class = "glyphicon glyphicon-star" > </span> <span class = "glyphicon glyphicon-star-empty" > </span> <span class = "glyphicon glyphicon-star-empty" > </span> <span class = "glyphicon glyphicon-star-empty" > </span>
+     	</div>
+     	<div ng-if="monthRatings.waiterRating == '3'" class ="star">
+     	<span class = "glyphicon glyphicon-star" > </span><span class = "glyphicon glyphicon-star" > </span> <span class = "glyphicon glyphicon-star" > </span> <span class = "glyphicon glyphicon-star-empty" > </span> <span class = "glyphicon glyphicon-star-empty" > </span>
+     	</div>
+     	<div ng-if="monthRatings.waiterRating == '4'"class ="star" >
+     	<span class = "glyphicon glyphicon-star" > </span><span class = "glyphicon glyphicon-star" > </span> <span class = "glyphicon glyphicon-star" > </span> <span class = "glyphicon glyphicon-star" > </span> <span class = "glyphicon glyphicon-star-empty" > </span>
+     	</div>
+     	<div ng-if="monthRatings.waiterRating == '5'"class ="star" >
+     	<span class = "glyphicon glyphicon-star" > </span><span class = "glyphicon glyphicon-star" > </span> <span class = "glyphicon glyphicon-star" > </span> <span class = "glyphicon glyphicon-star" > </span> <span class = "glyphicon glyphicon-star" > </span>
+     	</div>
+     	<br>
+     	{{monthRatings.dish}}
+     	
+     	<div ng-if="monthRatings.dishRating == '1'" class ="star">
+     	<span class = "glyphicon glyphicon-star" > </span><span class = "glyphicon glyphicon-star-empty" > </span> <span class = "glyphicon glyphicon-star-empty" > </span> <span class = "glyphicon glyphicon-star-empty" > </span> <span class = "glyphicon glyphicon-star-empty" > </span>
+     	</div>
+     	<div ng-if="monthRatings.dishRating == '2'" class ="star">
+     	<span class = "glyphicon glyphicon-star" > </span><span class = "glyphicon glyphicon-star" > </span> <span class = "glyphicon glyphicon-star-empty" > </span> <span class = "glyphicon glyphicon-star-empty" > </span> <span class = "glyphicon glyphicon-star-empty" > </span>
+     	</div>
+     	<div ng-if="monthRatings.dishRating == '3'" class ="star">
+     	<span class = "glyphicon glyphicon-star" > </span><span class = "glyphicon glyphicon-star" > </span> <span class = "glyphicon glyphicon-star" > </span> <span class = "glyphicon glyphicon-star-empty" > </span> <span class = "glyphicon glyphicon-star-empty" > </span>
+     	</div>
+     	<div ng-if="monthRatings.dishRating == '4'" class ="star">
+     	<span class = "glyphicon glyphicon-star" > </span><span class = "glyphicon glyphicon-star" > </span> <span class = "glyphicon glyphicon-star" > </span> <span class = "glyphicon glyphicon-star" > </span> <span class = "glyphicon glyphicon-star-empty" > </span>
+     	</div>
+     	<div ng-if="monthRatings.dishRating == '5'"class ="star">
+     	<span class = "glyphicon glyphicon-star" > </span><span class = "glyphicon glyphicon-star" > </span> <span class = "glyphicon glyphicon-star" > </span> <span class = "glyphicon glyphicon-star" > </span> <span class = "glyphicon glyphicon-star" > </span>
+     	</div>
+     		 			
+      </div>
+      <div class="modal-footer">
+      </div>
+    </div>
+
+  </div>
+</div>	
+

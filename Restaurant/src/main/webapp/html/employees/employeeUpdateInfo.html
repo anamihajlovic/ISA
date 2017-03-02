@@ -10,7 +10,8 @@
 <div>
 <div class = "col-sm-4">
 </div>
-<div class = "col-sm-4">
+<div class = "col-sm-4" ng-style="{'background-color':'white'}">
+<br>
 <form action="" name = "form" novalidate>
 
 	<div ng-class="{ 'has-error': form.firstName.$dirty && form.firstName.$error.required }">
@@ -81,6 +82,6 @@
 <button class="btn btn-default" ng-disabled="form.$invalid" ng-click="updateInfo()"><span class="glyphicon glyphicon-ok" ></span> Save changes</button>
 <button class="btn btn-default" ng-click = "cancel()"><span class="glyphicon glyphicon-remove" ></span> Cancel</button>
 </form>
-
+<br>
 </div>
 </div>

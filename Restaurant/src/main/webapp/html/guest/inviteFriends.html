@@ -54,11 +54,7 @@
 
 
 
-<div align="center">
-<h4>Restaurant: {{$parent.createdReservation.resName}}</h4>
-<h4>Date: {{$parent.createdReservation.date}}</h4>
-<h4>Start time: {{$parent.createdReservation.startTime}}</h4>
-<h4>End time: {{$parent.createdReservation.endTime}}</h4>
+
 
 
 <!--  <label class="pull-center"><button ng-show="showOrderButton" class="btn btn-default navbar-btn" ng-click="order()" data-ui-sref="."><span class="glyphicon glyphicon-cutlery"></span><span class="glyphicon glyphicon-glass"></span> Order </button></label>-->
@@ -67,19 +63,22 @@
 <label class="pull-center"><button type="button" ng-show="showOrderButton" id="modalBtnOrder" class="btn btn-default navbar-btn" data-toggle="modal" data-target="#myModalOrder"><span class="glyphicon glyphicon-cutlery"></span><span class="glyphicon glyphicon-glass"></span> Order </button>
 </label>
 
-</div>
+
 
 <div class="container bootstrap snippet" align="center">
 
+  <div class="jumbotron list-content" >
+   <h4>Restaurant: {{$parent.createdReservation.resName}}</h4>
+<h4>Date: {{$parent.createdReservation.date}}</h4>
+<h4>Start time: {{$parent.createdReservation.startTime}}</h4>
+<h4>End time: {{$parent.createdReservation.endTime}}</h4>
   <div class="header">
     <h3 class="text-muted prj-name">
         <span class="fa fa-users fa-2x principal-title"></span>
         Find friends and sent invitation
     </h3>
   </div>
-
-
-  <div class="jumbotron list-content" >
+  
     <ul class="list-group">
     <li> 
       <input type="text" ng-change="myFilter(myFriends)"  ng-model="search.searchText"  id="search" placeholder="Search friends...">

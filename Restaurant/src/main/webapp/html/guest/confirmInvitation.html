@@ -11,10 +11,13 @@
     </ul>
 
  </nav>
+<div>
+<div class = "col-sm-3">
+</div>
 
+<div align="center" class = "col-sm-6" ng-style="{'background-color':'white'}">
 <h2 align="center">Invitation details</h2>
  <hr/>
-<div align="center">
 <label>Restaurant: {{invitationRes.resName}}</label><br>
 <label>Date: {{invitationRes.date}}</label><br>
 <label>Start time: {{invitationRes.startTime}}</label><br>
@@ -25,9 +28,10 @@
 <label class="pull-center"><button ng-show="showConfirmButtons" class="btn btn-default navbar-btn" ng-click="rejectInvitation()" data-ui-sref=".">Reject <span class = "glyphicon glyphicon-remove"></span></button></label>
  <!-- Trigger the modal with a button -->
 <label class="pull-center"><button type="button" ng-show="showOrderButton" id="modalBtnOrder" class="btn btn-default navbar-btn" data-toggle="modal" data-target="#myModalOrder"><span class="glyphicon glyphicon-cutlery"></span><span class="glyphicon glyphicon-glass"></span> Order </button>
-</label></div>
+</label>
 
-
+</div>
+</div>
 
 
 

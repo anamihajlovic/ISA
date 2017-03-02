@@ -227,14 +227,7 @@ angular.module('restaurants', [ 'ui.router','ui.calendar' ,'chart.js',
               url : '/drinkCard',
              templateUrl : 'html/resManager/resManagerDrinkCard.html',
           })
-          .state('resManager.weekRatings', {
-              url : '/weekRatings',
-             templateUrl : 'html/resManager/resManagerWeekRatings.html',
-          })
-          .state('resManager.monthRatings', {
-              url : '/monthRatings',
-             templateUrl : 'html/resManager/resManagerMonthRatings.html',
-          })
+          
        
         .state('bidder', {
         	   url : '/bidder',

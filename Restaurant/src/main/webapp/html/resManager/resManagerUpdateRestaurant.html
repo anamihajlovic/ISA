@@ -1,9 +1,9 @@
 <div>
-<div class = "col-sm-4">
+<div class = "col-sm-4 ">
 </div>
-<div class = "col-sm-4">
+<div class = "col-sm-4 " ng-style="{'background-color':'white'}">
 <form action=""name ="form">
-
+<br>
  <label>Name</label>
  <div  ng-class="{ 'has-error': form.name.$dirty && form.name.$error.required }">
     <input type="text" class="form-control" ng-model = "$parent.restaurant.name" name="name" ng-readonly="$parent.infoMode" required>  
@@ -23,5 +23,6 @@
 <button class = "btn btn-default"  ng-disabled="form.$invalid" ng-click = "updateRes()"><span class = "glyphicon glyphicon-ok"></span>Update</button>
 <button class = "btn btn-default" ng-click = "cancel()"><span class = "glyphicon glyphicon-remove"></span>Cancel</button>
 </form>
+<br>
 </div>
 </div>
